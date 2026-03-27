@@ -163,9 +163,9 @@ img {
     margin: 0 auto 18px;
     max-width: 340px;
     font-size: clamp(20px, 5.7vw, 34px);
-    line-height: 1.4;
+    line-height: 1.08;
     font-weight: 700;
-    letter-spacing: -0.001em;
+    letter-spacing: -0.04em;
     color: #111111;
 }
 
@@ -193,7 +193,7 @@ img {
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 600;
     letter-spacing: -0.03em;
     transition: transform 0.18s ease, opacity 0.18s ease;
@@ -347,8 +347,8 @@ img {
     }
 
     .fake-modal__badge {
-        width: 20px;
-        height: 20px;
+        width: 28px;
+        height: 28px;
         font-size: 16px;
     }
 
@@ -358,9 +358,9 @@ img {
     }
 
     .fake-modal__title {
-        font-size: 23px;
+        font-size: 24px;
         margin-bottom: 16px;
-        max-width: 320px;
+        max-width: 310px;
     }
 
     .fake-modal__text {
@@ -415,12 +415,12 @@ img {
     }
 
     .fake-modal__timer {
-        font-size: 20px;
+        font-size: 30px;
         margin-bottom: 12px;
     }
 
     .fake-modal__title {
-        font-size: 21px;
+        font-size: 25px;
         max-width: 290px;
         margin-bottom: 14px;
     }
@@ -632,4 +632,3 @@ img {
   justify-content: center;
   align-items: center;
 }
-
