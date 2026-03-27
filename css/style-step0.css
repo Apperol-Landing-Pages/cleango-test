@@ -544,7 +544,7 @@ img {
     }
 }
 
-@media (min-height: 700px) {
+@media (min-height: 668px) {
     .fake-modal {
         margin-top: 26px;
     }
