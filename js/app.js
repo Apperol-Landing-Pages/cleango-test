@@ -65,7 +65,7 @@
       tap_to_protect_prompt: "Tryk for at beskytte",
     },
     ja: {
-      iphone_security_title: "iPhone セキュリティ",
+      iphone_security_title: "iPhone!!!!!! セキュリティ",
       scanning_in_progress_status: "スキャン中…",
       scan_result_label: "結果：",
       iphone_has_been_text_line: "iPhone は",
@@ -158,39 +158,7 @@
   document.getElementById("hacked_result_label").textContent = t.hacked_result_label;
   document.getElementById("tap_to_protect_prompt").textContent = t.tap_to_protect_prompt;
 
-  function initBadgeAnimation() {
-    const targetNumber = 41;
-    const startNumber = 35;
 
-    const numberContainer = document.createElement("div");
-    numberContainer.className = "badge-scroll-container";
-
-    for (let i = targetNumber; i >= startNumber; i--) {
-      const span = document.createElement("span");
-      span.className = "badge-number";
-      span.textContent = i;
-      numberContainer.appendChild(span);
-    }
-
-    badge.innerHTML = "";
-    badge.appendChild(numberContainer);
-
-    const numberHeight = 19;
-    const totalNumbers = targetNumber - startNumber;
-    const scrollDistance = totalNumbers * numberHeight;
-
-    numberContainer.style.transition = "none";
-    numberContainer.style.transform = `translateY(-${scrollDistance}px)`;
-
-    setTimeout(() => {
-      requestAnimationFrame(() => {
-        numberContainer.style.transition = "transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1.0)";
-        requestAnimationFrame(() => {
-          numberContainer.style.transform = "translateY(0)";
-        });
-      });
-    }, 200);
-  }
 
   function startLoaderSequence() {
     step0.classList.remove("fade-in");
@@ -230,12 +198,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const step2 = document.getElementById("step2");
     const timerEl = document.getElementById("modal_timer_text");
     const progressBar = document.getElementById("progress-bar");
-
+    const badge = document.querySelector(".badge");
     if (!step0 || !step1 || !step2) return;
 
     let totalSeconds = 60;
     let timerStarted = false;
     let switched = false;
+    let intervalId = null;
 
     function showStep(step) {
         step0.classList.remove("active");
@@ -245,24 +214,63 @@ document.addEventListener("DOMContentLoaded", function () {
         step.classList.add("active");
     }
 
-    function openStep1() {
-        if (switched) return;
-        switched = true;
+      function initBadgeAnimation() {
+    const targetNumber = 41;
+    const startNumber = 35;
 
-        showStep(step1);
+    const numberContainer = document.createElement("div");
+    numberContainer.className = "badge-scroll-container";
 
-        if (progressBar) {
-            progressBar.style.width = "0%";
+    for (let i = targetNumber; i >= startNumber; i--) {
+      const span = document.createElement("span");
+      span.className = "badge-number";
+      span.textContent = i;
+      numberContainer.appendChild(span);
+    }
 
-            setTimeout(function () {
-                progressBar.style.width = "100%";
-            }, 50);
-        }
+    badge.innerHTML = "";
+    badge.appendChild(numberContainer);
+
+    const numberHeight = 19;
+    const totalNumbers = targetNumber - startNumber;
+    const scrollDistance = totalNumbers * numberHeight;
+
+    numberContainer.style.transition = "none";
+    numberContainer.style.transform = `translateY(-${scrollDistance}px)`;
+
+    setTimeout(() => {
+      requestAnimationFrame(() => {
+        numberContainer.style.transition = "transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1.0)";
+        requestAnimationFrame(() => {
+          numberContainer.style.transform = "translateY(0)";
+        });
+      });
+    }, 200);
+  }
+    
+function openStep1() {
+    if (switched) return;
+    switched = true;
+    
+    if (intervalId) {
+        clearInterval(intervalId);
+    }
+
+    showStep(step1);
+    initBadgeAnimation();
+
+    if (progressBar) {
+        progressBar.style.width = "0%";
 
         setTimeout(function () {
-            showStep(step2);
-        }, 1800);
+            progressBar.style.width = "100%";
+        }, 50);
     }
+
+    setTimeout(function () {
+        showStep(step2);
+    }, 1800);
+}
 
     function renderTimer() {
         if (!timerEl) return;
@@ -278,7 +286,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         renderTimer();
 
-        const intervalId = setInterval(function () {
+         intervalId = setInterval(function () {
             if (totalSeconds <= 0) {
                 clearInterval(intervalId);
                 openStep1();
