@@ -347,9 +347,9 @@ img {
     }
 
     .fake-modal__badge {
-        width: 15px;
-        height: 15px;
-        font-size: 11px;
+        width: 18px;
+        height: 18px;
+        font-size: 13px;
     }
 
     .fake-modal__timer {
