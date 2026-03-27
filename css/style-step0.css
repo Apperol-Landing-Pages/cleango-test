@@ -550,13 +550,13 @@ img {
     }
 }
 
-@media (min-height: 600px) {
+@media (min-height: 700px) {
     .fake-modal {
         margin-top: 26px;
     }
 
     .bottom-warning {
-        bottom: max(16px, calc(env(safe-area-inset-bottom) + 125px));
+        bottom: calc(env(safe-area-inset-bottom) + 32px);
     }
 }
 
