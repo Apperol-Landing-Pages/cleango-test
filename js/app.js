@@ -1,11 +1,17 @@
-(() => {
-  "use strict";
 
-  const step0 = document.getElementById("step0");
-  const step1 = document.getElementById("step1");
-  const step2 = document.getElementById("step2");
-  const bar = document.getElementById("progress-bar");
-  const badge = document.querySelector(".badge");
+document.addEventListener("DOMContentLoaded", function () {
+    const step0 = document.getElementById("step0");
+    const step1 = document.getElementById("step1");
+    const step2 = document.getElementById("step2");
+    const timerEl = document.getElementById("modal_timer_text");
+    const progressBar = document.getElementById("progress-bar");
+    const badge = document.querySelector(".badge");
+    if (!step0 || !step1 || !step2) return;
+
+    let totalSeconds = 60;
+    let timerStarted = false;
+    let switched = false;
+    let intervalId = null;
 
   const translations = {
     en: {
@@ -333,54 +339,6 @@
   document.getElementById("warning_text_key_last").textContent = t.warning_text_key_last;
   document.getElementById("dismiss_key").textContent = t.dismiss_key;
   document.getElementById("remove_key").textContent = t.remove_key;
-
-
-
-  function startLoaderSequence() {
-    step0.classList.remove("fade-in");
-    step0.classList.add("fade-out");
-
-    setTimeout(() => {
-      step0.style.display = "none";
-      step1.style.display = "flex";
-      step1.classList.add("fade-in");
-
-      initBadgeAnimation();
-
-      setTimeout(() => {
-        bar.style.width = "100%";
-      }, 100);
-
-      setTimeout(() => {
-        step1.classList.remove("fade-in");
-        step1.classList.add("fade-out");
-
-        setTimeout(() => {
-          step1.style.display = "none";
-          step2.style.display = "flex";
-          requestAnimationFrame(() => {
-            step2.classList.add("fade-in");
-          });
-        }, 300);
-      }, 1800);
-    }, 300);
-  }
-
-})();
-
-document.addEventListener("DOMContentLoaded", function () {
-    const step0 = document.getElementById("step0");
-    const step1 = document.getElementById("step1");
-    const step2 = document.getElementById("step2");
-    const timerEl = document.getElementById("modal_timer_text");
-    const progressBar = document.getElementById("progress-bar");
-    const badge = document.querySelector(".badge");
-    if (!step0 || !step1 || !step2) return;
-
-    let totalSeconds = 60;
-    let timerStarted = false;
-    let switched = false;
-    let intervalId = null;
 
     function showStep(step) {
         step0.classList.remove("active");
