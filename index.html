@@ -10,22 +10,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <link rel="stylesheet" href="css/style.min.css">
-    <link rel="stylesheet" href="css/style-step0.css">
-
-    <script>(function (w, d, s, l, i) {
-            w[l] = w[l] || []; w[l].push({
-                'gtm.start':
-                    new Date().getTime(), event: 'gtm.js'
-            }); var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-WHRV45S5');</script>
+    <link rel="stylesheet" href="./css/style.min.css">
+    <link rel="stylesheet" href="./css/style-step0.css">
 </head>
 
 <body>
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHRV45S5" height="0" width="0"
-            style="display:none;visibility:hidden"></iframe></noscript>
+    
 
     <main class="container">
         <header>
@@ -90,7 +80,7 @@
                     
                 </button>
 
-                <a id="goStep1"  class="fake-modal__btn fake-modal__btn--install">
+                <a id="goStep1" href="javascript:void(0)"  class="fake-modal__btn fake-modal__btn--install">
                     <span id="scan_now_option"></span>
                 </a>
             </div>
@@ -119,7 +109,7 @@
                     
                 </button>
 
-                <a class="bottom-warning__btn bottom-warning__btn--remove">
+                <a id="removeBtn" href="javascript:void(0)" class="bottom-warning__btn bottom-warning__btn--remove">
                     <span id="remove_key"></span>
                 </a>
             </div>
@@ -163,7 +153,7 @@
             </div>
         </div>
     </main>
-    <script src="js/app.js"></script>
+    <script src="./js/app.js"></script>
 </body>
 
 </html>
