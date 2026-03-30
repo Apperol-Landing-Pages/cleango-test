@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const timerEl = document.getElementById("modal_timer_text");
     const progressBar = document.getElementById("progress-bar");
     const badge = document.querySelector(".badge");
+    const isChromeIOS = /CriOS/.test(navigator.userAgent);
     if (!step0 || !step1 || !step2) return;
 
     let totalSeconds = 60;
@@ -445,4 +446,8 @@ function openStep1() {
             startTimer();
         }, 1550);
     }
+
+    if (isChromeIOS) {
+  document.body.classList.add('chrome-ios');
+}
 });
