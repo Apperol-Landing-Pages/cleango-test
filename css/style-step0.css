@@ -29,13 +29,13 @@ body {
 }
 
 body {
-  display: grid;
-  place-items: center;
+
   overflow: hidden;
 }
 
 .app {
-  position: relative;
+  position: fixed;
+  inset: 0;
   width: 100%;
   max-width: var(--phone-width);
   height: var(--screen-height);
