@@ -428,13 +428,13 @@ img {
     }
 
     .fake-modal__title {
-        font-size: 21px;
+        font-size: 19px;
         max-width: 290px;
         margin-bottom: 14px;
     }
 
     .fake-modal__text {
-        font-size: 15px;
+        font-size: 14px;
         max-width: 286px;
         margin-bottom: 20px;
     }
@@ -445,11 +445,11 @@ img {
     }
 
     .bottom-warning__text {
-        font-size: 13px;
+        font-size: 12px;
     }
     
     .bottom-warning {
-        bottom: calc(env(safe-area-inset-bottom) + 60px);
+        bottom: calc(env(safe-area-inset-bottom) + 50px);
     }
 }
 
@@ -531,7 +531,7 @@ img {
     }
 
     .bottom-warning__text {
-        font-size: 13px;
+        font-size: 10px;
         line-height: 1.3;
     }
 
@@ -553,6 +553,12 @@ img {
     .bottom-warning {
         left: 16px;
         right: 16px;
+    }
+    
+    .fake-modal__title {
+        font-size: 23px;
+        margin-bottom: 16px;
+        max-width: 320px;
     }
 }
 
