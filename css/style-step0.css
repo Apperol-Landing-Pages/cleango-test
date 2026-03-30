@@ -389,6 +389,10 @@ img {
         padding-left: 8px;
         transform: translateX(1px);
     }
+    
+        .bottom-warning {
+        bottom: calc(env(safe-area-inset-bottom) + 50px);
+    }
 }
 
 @media (max-width: 375px) {
@@ -560,6 +564,10 @@ img {
         margin-bottom: 16px;
         max-width: 320px;
     }
+    
+        .bottom-warning {
+        bottom: calc(env(safe-area-inset-bottom) + 50px);
+    }
 }
 
 @media (min-height: 668px) {
@@ -567,9 +575,7 @@ img {
         margin-top: 26px;
     }
 
-    .bottom-warning {
-        bottom: calc(env(safe-area-inset-bottom) + 50px);
-    }
+
 }
 
 .chrome-ios .bottom-warning {
