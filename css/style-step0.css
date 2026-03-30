@@ -52,8 +52,11 @@ img {
     min-height: 100vh;
     overflow: hidden;
     background: #000;
-    padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
+    padding:
+        max(14px, env(safe-area-inset-top))
+        14px
+        max(100px, env(safe-area-inset-bottom))
+        14px;
 }
 
 .screen-bg {
