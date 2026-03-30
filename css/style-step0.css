@@ -568,7 +568,7 @@ img {
     }
 
     .bottom-warning {
-        bottom: calc(env(safe-area-inset-bottom) + 60px);
+        bottom: calc(env(safe-area-inset-bottom) + 50px);
     }
 }
 
