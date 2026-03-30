@@ -555,7 +555,7 @@ img {
 }
 
 .chrome-ios .bottom-warning {
-  bottom: calc(env(safe-area-inset-bottom) + 100px);
+  bottom: calc(env(safe-area-inset-bottom) + 120px);
 }
 
 .bottom-warning {
