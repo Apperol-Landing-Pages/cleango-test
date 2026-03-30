@@ -392,6 +392,14 @@ img {
 }
 
 @media (max-width: 375px) {
+.fake-modal__badge {
+    
+    right: 5px;
+    top: 5px;
+    width: 16px;
+    height: 16px;
+    }
+    
     .iphone-frame {
         padding-left: 10px;
         padding-right: 10px;
@@ -404,13 +412,13 @@ img {
     }
 
     .fake-modal__icon-wrap {
-        width: 92px;
-        height: 92px;
+        width: 80px;
+        height: 80px;
     }
 
     .fake-modal__icon-slot {
-        width: 92px;
-        height: 92px;
+        width: 80px;
+        height: 80px;
         border-radius: 22px;
     }
 
@@ -432,12 +440,16 @@ img {
     }
 
     .fake-modal__btn {
-        min-height: 66px;
+        min-height: 55px;
         font-size: 21px;
     }
 
     .bottom-warning__text {
-        font-size: 14px;
+        font-size: 13px;
+    }
+    
+    .bottom-warning {
+        bottom: calc(env(safe-area-inset-bottom) + 60px);
     }
 }
 
