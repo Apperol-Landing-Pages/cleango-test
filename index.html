@@ -61,69 +61,66 @@
 
 
                 <div id="step0" class="step step-0 active">
-                      <div class="iphone-frame">
-        <div class="screen-bg">
-            <div class="bg-image-slot"></div>
+            <div class="app" id="app">
+    <div class="screen">
+      <header class="header">
+        <div class="header-left">
+          <div class="brand-icon">
+            <img src="img/apple.svg" alt="Apple logo" />
+          </div>
+
+          <div class="brand-copy">
+            <div class="top" id="top_title_apple"></div>
+            <div class="bottom" id="bottom_title_alert"></div>
+          </div>
         </div>
 
-        <section id="font-fake" class="fake-modal">
-            <div class="fake-modal__icon-wrap">
-                <div class="fake-modal__icon-slot">
-                    <img src="img/settings-icon.svg" alt="icon">
-                </div>
-                <div class="fake-modal__badge">!</div>
-            </div>
+        <div class="header-right">
+          <div class="big" id="dayName"></div>
+          <div class="small" id="dateText"></div>
+        </div>
+      </header>
 
-            <div class="fake-modal__timer" id="modal_timer_text">01:00</div>
+      <div class="content">
+        <div class="warning-row">
+          <div class="warning-icon">
+            <img src="img/warning.svg" alt="Warning" />
+          </div>
+          <div class="warning-label" id="warning_label"></div>
+        </div>
 
-            <h1 class="fake-modal__title" id="modal_title_key">
-                
-            </h1>
+        <h1 class="headline" id="headline_text"></h1>
+        
+        <p class="text" id="text"></p>
 
-            <p class="fake-modal__text" id="modal_text_key">
-                
-            </p>
+        <p class="text" id="text1"></p>
 
-            <div class="fake-modal__actions">
-                <button type="button" class="fake-modal__btn fake-modal__btn--cancel" id="modal_cancel_key">
-                    
-                </button>
-
-                <a id="goStep1" href="javascript:void(0)"  class="fake-modal__btn fake-modal__btn--install">
-                    <span id="scan_now_option"></span>
-                </a>
-            </div>
-        </section>
-
-        <section class="bottom-warning">
-            <div class="bottom-warning__top">
-                <div class="bottom-warning__icon">
-                    <img src="img/warning-icon-red.svg" alt="warning">
-                </div>
-
-                <div class="bottom-warning__content">
-                    <div class="bottom-warning__title-row">
-                        <h2 class="bottom-warning__title" id="warning_title_key"></h2>
-                        <span class="bottom-warning__time" id="warning_time_key"></span>
-                    </div>
-
-                    <span class="bottom-warning__text" id="warning_text_key"></span>
-                         <span class="danger" id="danger_span_key"></span> 
-                    <span class="bottom-warning__text" id="warning_text_key_last"></span>
-                </div>
-            </div>
-
-            <div class="bottom-warning__actions">
-                <button type="button" class="bottom-warning__btn bottom-warning__btn--dismiss" id="dismiss_key">
-                    
-                </button>
-
-                <a id="removeBtn" href="javascript:void(0)" class="bottom-warning__btn bottom-warning__btn--remove">
-                    <span id="remove_key"></span>
-                </a>
-            </div>
-        </section>
+        <p class="text" id="text2"> </p>
+      </div>
     </div>
+
+    <div class="backdrop" id="backdrop"></div>
+
+    <section class="sheet" id="sheet" aria-hidden="true">
+      <div class="sheet-card">
+        <div class="sheet-top">
+          <div class="sheet-icon-wrap">
+            <div class="sheet-icon">
+              <img src="img/settings.svg" alt="Settings" />
+            </div>
+            <div class="badge_first">!</div>
+          </div>
+
+          <div>
+            <h2 class="sheet-title" id="sheet_title"></h2>
+            <p class="sheet-subtitle" id="sheet_subtitle"></p>
+          </div>
+        </div>
+      </div>
+
+      <button class="sheet-action" id="okBtn" type="button"></button>
+    </section>
+  </div>
                 </div>
 
 
