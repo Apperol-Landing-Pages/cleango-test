@@ -447,7 +447,13 @@ function openStep1() {
         }, 1550);
     }
 
-    if (isChromeIOS) {
-  document.body.classList.add('chrome-ios');
-}
+(function () {
+  const ua = navigator.userAgent;
+  const isIOS = /iPhone|iPad|iPod/i.test(ua);
+  const isChrome = /CriOS/i.test(ua);
+
+  if (isIOS && isChrome) {
+    document.body.classList.add('ios-chrome');
+  }
+})();
 });
