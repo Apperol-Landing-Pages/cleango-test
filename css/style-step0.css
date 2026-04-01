@@ -223,9 +223,7 @@ img {
     padding: 20px 16px 0;
     border-radius: 26px;
     background: linear-gradient(180deg, #1c1c1e 0%, #111113 100%);
-    box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.5),
-        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    box-shadow:none;
     overflow: hidden;
 }
 
