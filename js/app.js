@@ -2,7 +2,10 @@
 document.addEventListener("DOMContentLoaded", function () {
     const step0 = document.getElementById("step0");
     const timerEl = document.getElementById("modal_timer_text");
-    if (!step0) return;
+    const banner = document.querySelector('.bottom-warning');
+    const bg = document.querySelector('.screen-bg');
+  
+  if (!step0) return;
 
     let totalSeconds = 60;
     let timerStarted = false;
@@ -286,6 +289,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 1550);
     }
 
+if (banner && bg) {
+    banner.addEventListener('animationend', () => {
+        bg.classList.add('active');
+    });
+}
+  
 (function () {
   const ua = navigator.userAgent;
   const isIOS = /iPhone|iPad|iPod/i.test(ua);
