@@ -70,15 +70,14 @@ img {
     content: "";
     position: absolute;
     inset: 0;
-    background:
-        linear-gradient(
-            180deg,
-            rgba(0, 0, 0, 0.02) 0%,
-            rgba(0, 0, 0, 0.05) 30%,
-            rgba(0, 0, 0, 0.14) 62%,
-            rgba(0, 0, 0, 0.28) 100%
-        );
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 0;                
+    transition: opacity 0.3s ease;
     z-index: 2;
+}
+
+.screen-bg.active::before {
+    opacity: 1;
 }
 
 .bg-image-slot {
