@@ -6,12 +6,11 @@
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
-    <title></title>
+    <title>Security Alert</title>
     <link rel="stylesheet" href="./css/style.css" />
-    
-    <script>(function (w, d, s, l, i) {
+
+      <script>(function (w, d, s, l, i) {
             w[l] = w[l] || []; w[l].push({
                 'gtm.start':
                     new Date().getTime(), event: 'gtm.js'
@@ -36,96 +35,48 @@ fbq('track', 'PageView');
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=636359672211566&ev=PageView&noscript=1"
 /></noscript>
-<!-- End Meta Pixel Code -->
-    
-    
+<!-- End Meta Pixel Code -->  
+
   </head>
   <body>
-
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHRV45S5" height="0" width="0"
+    
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHRV45S5" height="0" width="0"
             style="display:none;visibility:hidden"></iframe></noscript>
+    
+    <main class="app" id="app">
+      <header class="top-header" aria-label="Brand logos">
+        <div class="brand-strip">
+          <img class="brand-logo brand-logo-openai" src="./assets/openai-logo.svg" alt="" />
+          <span class="brand-divider" aria-hidden="true"></span>
+          <img class="brand-logo brand-logo-gemini" src="./assets/gemini-logo.svg" alt="" />
+        </div>
+      </header>
 
-    <main class="page">
-      <section class="screen">
-        <header class="topbar">
-          <div class="topbar__icon" aria-hidden="true">
-            <img src="./assets/icon-phone.svg" alt="" />
-          </div>
-          <a class="topbar__button" href="{offer}" data-i18n="downloadApp">
-          </a>
-        </header>
+      <section class="phone-shell">
+        <section class="alert-card">
+          <img class="alert-icon pulse-icon" src="./assets/alert-icon.svg" alt="" />
 
-        <section class="hero-card">
-          <img src="./assets/image-1.svg" alt="" />
-        </section>
-
-        <section class="copy-block copy-block--hero">
-          <p class="lead" data-i18n="heroLead"></p>
-          <p data-i18n="heroText1"></p>
-          <p data-i18n="heroText2"></p>
-        </section>
-
-        <a class="cta cta--primary" href="{offer}" data-i18n="protectPhone"></a>
-
-        <section class="info-band">
-          <section class="copy-block copy-block--small">
-            <p data-i18n="urgencyText"></p>
-          </section>
-
-          <section class="alert-card">
-            <div class="alert-card__icon" aria-hidden="true">
-              <img src="./assets/icon-apple.svg" alt="" />
-            </div>
-            <div class="alert-card__body">
-              <p class="alert-rich">
-                <span class="alert-rich__lead" data-i18n="alertLead"></span>
-                <span class="alert-rich__rest" data-i18n="alertRest"></span>
-              </p>
-            </div>
-          </section>
-
-          <a class="inline-link" href="{offer}" data-i18n="installApp"></a>
-
-          <a class="cta cta--dark" href="{offer}">
-            <img src="./assets/icon-download.svg" alt="" aria-hidden="true" />
-            <span data-i18n="downloadApp"></span>
-            <img src="./assets/icon-download.svg" alt="" aria-hidden="true" />
-          </a>
-        </section>
-
-        <section class="image-card image-card--mid">
-          <img src="./assets/image-2.svg" alt="" />
-        </section>
-
-        <section class="copy-block copy-block--stats">
-          <p data-i18n-html="statsText1"></p>
-          <p data-i18n-html="statsText2"></p>
-        </section>
-
-        <section class="image-card image-card--bottom">
-          <img src="./assets/image-3.svg" alt="" />
-        </section>
-
-        <section class="bottom-copy">
-          <h1 data-i18n="bottomTitle"></h1>
-          <p data-i18n="bottomSubtitle"></p>
-        </section>
-
-        <section class="download-panel" id="download">
-          <a class="cta cta--primary cta--bottom" href="{offer}" data-i18n="downloadNow"></a>
-
-          <div class="social-proof">
-            <img src="./assets/group-10.svg" alt="" />
-            <span data-i18n="socialProof"></span>
+          <div class="alert-copy">
+            <p class="alert-title" data-i18n="alertTitle"></p>
+            <p class="alert-text" data-i18n="alertBody"></p>
           </div>
 
-          <a class="store-badge-image" href="{offer}" aria-label="Download on the App Store">
-            <img src="./assets/image-34.svg" alt="" />
-          </a>
+          <button class="cta-button" id="cta-button" type="button" data-i18n="buttonLabel"></button>
+        </section>
+
+        <section class="countdown-card" aria-live="polite">
+          <div class="countdown-message">
+            <img class="warning-icon" src="./assets/warning-icon.svg" alt="" />
+            <p class="countdown-text" data-i18n="countdownLabel"></p>
+          </div>
+
+          <span class="countdown-divider" aria-hidden="true"></span>
+          <div class="countdown-time" id="countdown">02:00</div>
         </section>
       </section>
     </main>
 
+    <script src="./js/config.js"></script>
     <script src="./js/script.js"></script>
   </body>
 </html>
