@@ -1,42 +1,49 @@
 :root {
-  --bg: #f6f7fb;
-  --surface: #ffffff;
-  --surface-muted: #f3f4f8;
+  --bg: #FFFFFF;
+  --surface: #F3F3F3;
+  --surface-border: #d9d7d1;
+  --header-line: #d9d7d1;
+  --page-side-gap: 16px;
   --text: #111111;
-  --text-soft: #2c2f36;
-  --text-faint: #717784;
-  --primary: #2f86f6;
-  --primary-deep: #206fdb;
-  --line: rgba(17, 17, 17, 0.05);
-  --shadow-soft: 0 16px 28px rgba(34, 62, 124, 0.08);
-  --shadow-cta: 0 10px 22px rgba(47, 134, 246, 0.34);
-  --radius-card: 18px;
-  --radius-pill: 999px;
-  --max-width: 390px;
+  --muted: #454545;
+  --accent-red: #ff4b3d;
+  --accent-blue-start: #4b8cf8;
+  --accent-blue-end: #2580f0;
+  --timer-blue: #2d7ff4;
+  --shadow-soft: 0 14px 32px rgba(54, 50, 41, 0.08), 0 3px 8px rgba(54, 50, 41, 0.05);
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-html {
-  background: linear-gradient(180deg, #fbfcff 0%, #f2f4f9 100%);
-  -webkit-text-size-adjust: 100%;
+html,
+body {
+  margin: 0;
+  height: 100%;
+  min-height: 100%;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 body {
-  margin: 0;
-  min-width: 320px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: var(--text);
   background:
-    radial-gradient(circle at top, rgba(74, 145, 255, 0.08), transparent 32%),
-    linear-gradient(180deg, #fbfcff 0%, #f2f4f9 100%);
+    radial-gradient(circle at top center, rgba(255, 255, 255, 0.9), rgba(246, 246, 244, 0) 28%),
+    linear-gradient(180deg, #fafaf9 0%, var(--bg) 100%);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow: hidden;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
 
 img {
@@ -44,327 +51,774 @@ img {
   max-width: 100%;
 }
 
-.page {
-  width: 100%;
+.app {
   display: flex;
-  justify-content: center;
-  padding: 0 10px;
-}
-
-.screen {
-  width: min(100%, var(--max-width));
-  padding: calc(env(safe-area-inset-top, 0px) + 10px) 2px calc(env(safe-area-inset-bottom, 0px) + 28px);
-}
-
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 18px;
-}
-
-.topbar__icon {
-  width: 55px;
-  height: 55px;
-  flex: 0 0 55px;
-}
-
-.topbar__icon img {
+  flex-direction: column;
+  min-height: 100vh;
+  height: 100vh;
+  min-height: 100svh;
+  height: 100svh;
+  min-height: 100dvh;
+  height: 100dvh;
   width: 100%;
-  height: 100%;
+  overflow-x: clip;
+  overflow-y: clip;
+  padding:
+    max(0, env(safe-area-inset-top))
+    var(--page-side-gap)
+    max(18px, env(safe-area-inset-bottom))
+    var(--page-side-gap);
 }
 
-.topbar__button {
-  min-width: 147px;
-  padding: 15px 40px;
-  border-radius: var(--radius-pill);
-  border: 1.25px solid rgba(47, 134, 246, 0.75);
-  background: rgba(255, 255, 255, 0.88);
-  color: var(--primary);
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 105%;
-  letter-spacing: 0.44px;
-  text-align: center;
-  box-shadow: 0 6px 14px rgba(47, 134, 246, 0.08);
+.phone-shell {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 366px);
+  max-width: 100%;
+  margin: 24px auto 0;
 }
 
-.hero-card,
-.image-card {
-  overflow: hidden;
-  border-radius: var(--radius-card);
+.alert-card,
+.countdown-card {
+  border: 1px solid var(--surface-border);
+  background: var(--surface);
   box-shadow: var(--shadow-soft);
 }
 
-.hero-card img,
-.image-card img {
+.top-header {
+  position: relative;
+  left: calc(var(--page-side-gap) * -1);
   width: 100%;
-  height: auto;
+  width: calc(100% + (var(--page-side-gap) * 2));
+  max-width: none;
+  padding: 0;
+  background: #F3F3F3;
+  border-bottom: 1px solid var(--header-line);
 }
 
-.copy-block {
-  padding: 12px 2px 0;
-}
-
-.copy-block--hero {
-  padding-top: 10px;
-}
-
-.copy-block p,
-.alert-card p {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.38;
-  color: var(--text-soft);
-}
-
-.copy-block p + p {
-  margin-top: 12px;
-}
-
-.lead {
-  font-weight: 700;
-  color: #171717;
-}
-
-.cta {
+.brand-strip {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  width: 100%;
-  border-radius: var(--radius-pill);
-  font-weight: 500;
-  letter-spacing: 0.01em;
+  gap: 18px;
+  width: min(100%, 366px);
+  max-width: 100%;
+  min-height: 88px;
+  margin: 0 auto;
+  padding: 20px 10px 6px;
 }
 
-.cta--primary {
-  margin-top: 18px;
-  min-height: 55px;
-  padding: 16px 20px;
-  background: linear-gradient(180deg, #3d98ff 0%, #2b7ff0 100%);
-  color: #ffffff;
-  box-shadow: var(--shadow-cta);
-  font-size: 20px;
+.brand-logo {
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
-.copy-block--small {
-  padding-top: 18px;
+.brand-logo-openai {
+  width: min(34vw, 130px);
 }
 
-.info-band {
-  margin: 18px -12px 0;
-  padding: 0 12px 20px;
-  background: #F1F1F1;
+.brand-logo-gemini {
+  width: min(38vw, 142px);
 }
 
-.info-band .copy-block--small {
-  padding-top: 16px;
+.brand-divider {
+  width: 1px;
+  height: 56px;
+  background: linear-gradient(
+    180deg,
+    rgba(17, 17, 17, 0) 0%,
+    rgba(17, 17, 17, 0.18) 22%,
+    rgba(17, 17, 17, 0.18) 78%,
+    rgba(17, 17, 17, 0) 100%
+  );
 }
 
 .alert-card {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-top: 20px;
-  padding: 2px 2px 0;
-}
-
-.alert-card__icon {
-  width: 36px;
-  height: 36px;
-  flex: 0 0 36px;
-  margin-top: 1px;
-}
-
-.alert-card__icon img {
-  width: 100%;
-  height: 100%;
-  transform-origin: center;
-  animation: badge-breathe 1.4s ease-in-out infinite;
-}
-
-.alert-card__body p {
-  font-size: 14px;
-  line-height: 1.35;
-}
-
-.alert-rich__lead {
-  color: #1d63f2;
-  font-weight: 500;
-}
-
-.alert-rich__rest {
-  color: #111111;
-}
-
-.inline-link {
-  display: block;
-  margin-top: 18px;
-  color: #286be6;
-  font-size: 16px;
-  font-weight: 500;
-  text-align: center;
-}
-
-.cta--dark {
-  margin-top: 16px;
-  min-height: 49px;
-  padding: 14px 18px;
-  background: #050505;
-  color: #ffffff;
-  box-shadow: var(--shadow-cta);
-  font-size: 18px;
-}
-
-.cta--dark img {
-  width: 26px;
-  height: 26px;
-}
-
-.image-card--mid {
-  margin-top: 40px;
-}
-
-.copy-block--stats {
-  padding-top: 14px;
-}
-
-.copy-block--stats p {
-  font-size: 14px;
-}
-
-.image-card--bottom {
-  margin-top: 22px;
-  border-radius: 20px;
-}
-
-.bottom-copy {
-  padding: 14px 0 0;
-  text-align: center;
-}
-
-.bottom-copy h1 {
-  margin: 0;
-  font-size: clamp(32px, 9vw, 42px);
-  line-height: 0.98;
-  font-weight: 600;
-  letter-spacing: -0.05em;
-}
-
-.bottom-copy p {
-  margin: 10px 0 0;
-  font-size: clamp(32px, 6.4vw, 30px);
-  line-height: 1.04;
-  font-weight: 600;
-  letter-spacing: -0.04em;
-  color: var(--primary);
-}
-
-.download-panel {
-  padding: 20px 0 0;
-}
-
-.cta--bottom {
-  margin-top: 0;
-  min-height: 52px;
-  font-size: 18px;
-}
-
-.social-proof {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 12px;
-  color: #5c5f67;
-  font-size: 11px;
-  line-height: 1.2;
-}
-
-.social-proof img {
-  width: 46px;
-  height: 23px;
-}
-
-.store-badge {
-  width: fit-content;
-  margin: 8px auto 0;
-  padding: 6px 12px 7px 10px;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  background: #0c0c0f;
-  border-radius: 10px;
-  box-shadow: 0 10px 16px rgba(0, 0, 0, 0.12);
-  color: #ffffff;
-}
-
-.store-badge-image {
-  display: block;
-  width: fit-content;
-  margin: 8px auto 0;
-}
-
-.store-badge-image img {
-  width: 173px;
-  height: auto;
-}
-
-@keyframes badge-breathe {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.24);
-  }
-}
-
-.store-badge__logo {
-  width: 18px;
-  height: 18px;
-  display: grid;
-  place-items: center;
-}
-
-.store-badge__logo span {
-  font-size: 18px;
-  line-height: 1;
-  transform: translateY(-1px);
-}
-
-.store-badge__text {
-  display: flex;
   flex-direction: column;
-  gap: 1px;
-  line-height: 1;
+  padding: 30px 24px 22px;
+  border-radius: 34px;
 }
 
-.store-badge__caption {
-  font-size: 8px;
-  opacity: 0.78;
+.alert-icon {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 20px;
 }
 
-.store-badge__title {
-  font-size: 18px;
-  font-weight: 700;
+.pulse-icon {
+  animation: pulseScale 1.8s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.alert-copy {
+  display: grid;
+  gap: 22px;
+}
+
+.alert-title,
+.alert-text,
+.countdown-text {
+  margin: 0;
+}
+
+.alert-title {
+  font-size: clamp(19px, 5vw, 23px);
+  line-height: 1.17;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+
+.alert-title .accent {
+  color: var(--accent-red);
+}
+
+.alert-text {
+  font-size: clamp(19px, 5vw, 23px);
+  line-height: 1.17;
+  font-weight: 500;
   letter-spacing: -0.03em;
 }
 
-@media (max-width: 359px) {
-  .topbar__button {
-    min-width: 132px;
-    padding-inline: 16px;
+.cta-button {
+  width: 100%;
+  min-height: 72px;
+  margin-top: 28px;
+  border: 0;
+  border-radius: 999px;
+  color: #ffffff;
+  font-size: clamp(17px, 4.8vw, 20px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg, var(--accent-blue-start) 0%, var(--accent-blue-end) 100%);
+  box-shadow: 0 8px 18px rgba(45, 127, 244, 0.24);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cta-button:active {
+  transform: translateY(1px);
+}
+
+.countdown-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1px auto;
+  align-items: center;
+  gap: 20px;
+  margin-top: 22px;
+  padding: 16px 20px 16px 18px;
+  border-radius: 30px;
+  background: #F3F3F3;
+}
+
+.countdown-message {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  max-width: 222px;
+}
+
+.warning-icon {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+}
+
+.countdown-text {
+  font-family: "SF Pro Text", "SF Pro Display", "SF Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 510;
+  color: #30333a;
+  letter-spacing: 0;
+  max-width: 150px;
+}
+
+.countdown-divider {
+  grid-column: 2;
+  display: block;
+  width: 1px;
+  height: 52px;
+  justify-self: center;
+  align-self: center;
+  background: rgba(17, 17, 17, 0.12);
+  border-radius: 999px;
+}
+
+.countdown-time {
+  grid-column: 3;
+  width: 96px;
+  min-width: 96px;
+  padding-left: 2px;
+  text-align: center;
+  font-size: clamp(22px, 5.6vw, 30px);
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--timer-blue);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+@keyframes pulseScale {
+  0%,
+  100% {
+    transform: scale(0.94);
   }
 
-  .bottom-copy h1 {
-    font-size: 25px;
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+/* iPhone SE (older/narrow 320px class). Tweak compact fallback sizes here. */
+@media (max-width: 374px) {
+  :root {
+    --page-side-gap: 14px;
   }
 
-  .bottom-copy p {
+  .app {
+    padding-bottom: max(14px, env(safe-area-inset-bottom));
+  }
+
+  .brand-strip {
+    gap: 14px;
+    width: min(100%, 332px);
+    min-height: 76px;
+    padding: 16px 6px 2px;
+  }
+
+  .brand-divider {
+    height: 46px;
+  }
+
+  .alert-card {
+    padding: 22px 16px 16px;
+    border-radius: 28px;
+  }
+
+  .alert-copy {
+    gap: 18px;
+  }
+
+  .cta-button {
+    min-height: 62px;
+    margin-top: 22px;
+  }
+
+  .countdown-card {
+    margin-top: auto;
+    gap: 12px;
+    padding: 12px 14px;
+  }
+
+  .countdown-divider {
+    height: 50px;
+  }
+
+  .countdown-time {
+    width: 84px;
+    min-width: 84px;
+    padding-left: 0;
+  }
+}
+
+/* iPhone SE 3 / short-height iPhones. Main place to tune SE sizes. */
+@media (max-width: 375px) and (max-height: 700px) {
+  :root {
+    --page-side-gap: 16px;
+  }
+
+  .app {
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+
+  .phone-shell {
+    width: min(100%, 334px);
+    margin-top: 16px;
+  }
+
+  .top-header {
+    border-bottom-width: 0.5px;
+  }
+
+  .brand-strip {
+    width: min(100%, 334px);
+    min-height: 70px;
+    gap: 12px;
+    padding: 12px 8px 3px;
+  }
+
+  .brand-logo-openai {
+    width: min(33vw, 110px);
+  }
+
+  .brand-logo-gemini {
+    width: min(37vw, 118px);
+  }
+
+  .brand-divider {
+    height: 42px;
+  }
+
+  .alert-card {
+    padding: 22px 18px 18px;
+    border-radius: 30px;
+  }
+
+  .alert-icon {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 16px;
+  }
+
+  .alert-copy {
+    gap: 18px;
+  }
+
+  .alert-title {
+    font-size: 14px;
+    line-height: 1.14;
+  }
+
+  .alert-text {
+    font-size: 14px;
+    line-height: 1.14;
+  }
+
+  .cta-button {
+    min-height: 50px;
+    margin-top: 20px;
+    font-size: 15px;
+    border-radius: 999px;
+  }
+
+  .countdown-card {
+    gap: 12px;
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: 24px;
+  }
+
+  .countdown-message {
+    gap: 10px;
+    max-width: 192px;
+  }
+
+  .warning-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .countdown-text {
+    font-size: 12px;
+    line-height: 1.16;
+    max-width: 120px;
+  }
+
+  .countdown-divider {
+    height: 42px;
+  }
+
+  .countdown-time {
+    width: 74px;
+    min-width: 74px;
     font-size: 18px;
+    letter-spacing: 0.02em;
   }
+}
+
+/* iPhone 12 Pro / 13 / 14 / 15 non-Max group. Tweak medium iPhone sizes here. */
+@media (min-width: 376px) and (max-width: 429px) and (min-height: 701px) {
+  :root {
+    --page-side-gap: 10px;
+  }
+
+  .phone-shell {
+    /* Overall vertical distribution and usable height for 12 Pro-sized phones */
+    justify-content: space-between;
+    min-height: calc(100dvh - 170px);
+    width: min(100%, 374px);
+    margin-top: 28px;
+  }
+
+  .brand-strip {
+    width: min(100%, 374px);
+    min-height: 92px;
+    padding-top: 22px;
+    padding-bottom: 8px;
+  }
+
+  .brand-logo-openai {
+    width: min(34vw, 116px);
+  }
+
+  .brand-logo-gemini {
+    width: min(38vw, 122px);
+  }
+
+  .brand-divider {
+    height: 58px;
+  }
+
+  .alert-card {
+    /* Main white card size for 12 Pro-sized phones */
+    padding: 32px 26px 24px;
+  }
+
+  .alert-icon {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 22px;
+  }
+
+  .alert-copy {
+    gap: 24px;
+  }
+
+  .alert-title {
+    font-size: 20px;
+  }
+
+  .alert-text {
+    font-size: 20px;
+    line-height: 1.18;
+  }
+
+  .cta-button {
+    /* Button size for 12 Pro-sized phones */
+    min-height: 74px;
+    margin-top: 30px;
+    font-size: 20px;
+  }
+
+  .countdown-card {
+    /* Bottom alert block position/size for 12 Pro-sized phones */
+    margin-top: 22px;
+    padding: 17px 20px 17px 18px;
+  }
+
+  .countdown-message {
+    max-width: 228px;
+  }
+
+  .warning-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .countdown-text {
+    max-width: 154px;
+  }
+
+  .countdown-divider {
+    height: 54px;
+  }
+
+  .countdown-time {
+    width: 98px;
+    min-width: 98px;
+    font-size: 30px;
+  }
+}
+
+/* iPhone Pro Max / Plus / large iPhones. Tweak 17 Pro Max-like sizes here. */
+@media (min-width: 430px) and (min-height: 701px) {
+  :root {
+    --page-side-gap: 10px;
+  }
+
+  .phone-shell {
+    /* Overall vertical distribution and usable height for large iPhones */
+    justify-content: space-between;
+    min-height: calc(100dvh - 176px);
+    width: min(100%, 418px);
+    margin-top: 28px;
+  }
+
+  .brand-strip {
+    width: min(100%, 418px);
+  }
+
+  .countdown-card {
+    /* Bottom alert block position for large iPhones */
+    margin-top: 22px;
+  }
+}
+
+/* Class-based device targeting. This is the reliable source for simulator/browser cases. */
+html.device-se {
+  --page-side-gap: 16px;
+}
+
+html.device-se .phone-shell {
+  width: min(100%, 334px);
+  margin-top: 16px;
+}
+
+html.device-se .top-header {
+  border-bottom-width: 0.5px;
+}
+
+html.device-se .brand-strip {
+  width: min(100%, 334px);
+  min-height: 70px;
+  gap: 12px;
+  padding: 12px 8px 3px;
+}
+
+html.device-se .brand-logo-openai {
+  width: min(33vw, 110px);
+}
+
+html.device-se .brand-logo-gemini {
+  width: min(37vw, 118px);
+}
+
+html.device-se .brand-divider {
+  height: 42px;
+}
+
+html.device-se .alert-card {
+  padding: 22px 18px 18px;
+  border-radius: 30px;
+}
+
+html.device-se .alert-icon {
+  width: 44px;
+  height: 44px;
+  margin-bottom: 16px;
+}
+
+html.device-se .alert-copy {
+  gap: 18px;
+}
+
+html.device-se .alert-title {
+  font-size: 14px;
+  line-height: 1.14;
+}
+
+html.device-se .alert-text {
+  font-size: 14px;
+  line-height: 1.14;
+}
+
+html.device-se .cta-button {
+  min-height: 50px;
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+html.device-se .countdown-card {
+  gap: 12px;
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 24px;
+}
+
+html.device-se .countdown-message {
+  gap: 10px;
+  max-width: 192px;
+}
+
+html.device-se .warning-icon {
+  width: 24px;
+  height: 24px;
+}
+
+html.device-se .countdown-text {
+  font-size: 12px;
+  line-height: 1.16;
+  max-width: 120px;
+}
+
+html.device-se .countdown-divider {
+  height: 42px;
+}
+
+html.device-se .countdown-time {
+  width: 74px;
+  min-width: 74px;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+}
+
+html.device-medium {
+  --page-side-gap: 10px;
+}
+
+html.device-medium .phone-shell {
+  justify-content: flex-start;
+  min-height: 0;
+  width: min(100%, 374px);
+  margin-top: 28px;
+}
+
+html.device-medium .brand-strip {
+  width: min(100%, 374px);
+  min-height: 92px;
+  padding-top: 22px;
+  padding-bottom: 8px;
+}
+
+html.device-medium .brand-logo-openai {
+  width: min(34vw, 116px);
+}
+
+html.device-medium .brand-logo-gemini {
+  width: min(38vw, 122px);
+}
+
+html.device-medium .brand-divider {
+  height: 58px;
+}
+
+html.device-medium .alert-card {
+  padding: 32px 26px 24px;
+}
+
+html.device-medium .alert-icon {
+  width: 52px;
+  height: 52px;
+  margin-bottom: 22px;
+}
+
+html.device-medium .alert-copy {
+  gap: 24px;
+}
+
+html.device-medium .alert-title {
+  font-size: 20px;
+}
+
+html.device-medium .alert-text {
+  font-size: 20px;
+  line-height: 1.18;
+}
+
+html.device-medium .cta-button {
+  min-height: 74px;
+  margin-top: 30px;
+  font-size: 20px;
+}
+
+html.device-medium .countdown-card {
+  margin-top: 18px;
+  padding: 17px 20px 17px 18px;
+}
+
+html.device-medium .countdown-message {
+  max-width: 228px;
+}
+
+html.device-medium .warning-icon {
+  width: 36px;
+  height: 36px;
+}
+
+html.device-medium .countdown-text {
+  max-width: 154px;
+}
+
+html.device-medium .countdown-divider {
+  height: 54px;
+}
+
+html.device-medium .countdown-time {
+  width: 98px;
+  min-width: 98px;
+  font-size: 30px;
+}
+
+html.device-large {
+  --page-side-gap: 10px;
+}
+
+html.device-large .phone-shell {
+  justify-content: flex-start;
+  min-height: 0;
+  width: min(100%, 418px);
+  margin-top: 28px;
+}
+
+html.device-large .brand-strip {
+  width: min(100%, 418px);
+  min-height: 94px;
+  padding-top: 24px;
+  padding-bottom: 8px;
+}
+
+html.device-large .brand-logo-openai {
+  width: min(34vw, 124px);
+}
+
+html.device-large .brand-logo-gemini {
+  width: min(38vw, 130px);
+}
+
+html.device-large .brand-divider {
+  height: 60px;
+}
+
+html.device-large .alert-card {
+  padding: 34px 28px 26px;
+}
+
+html.device-large .alert-icon {
+  width: 54px;
+  height: 54px;
+  margin-bottom: 24px;
+}
+
+html.device-large .alert-copy {
+  gap: 26px;
+}
+
+html.device-large .alert-title {
+  font-size: 21px;
+}
+
+html.device-large .alert-text {
+  font-size: 21px;
+  line-height: 1.18;
+}
+
+html.device-large .cta-button {
+  min-height: 76px;
+  margin-top: 32px;
+  font-size: 21px;
+}
+
+html.device-large .countdown-card {
+  margin-top: 18px;
+  padding: 18px 22px 18px 20px;
+}
+
+html.device-large .countdown-message {
+  max-width: 236px;
+}
+
+html.device-large .warning-icon {
+  width: 38px;
+  height: 38px;
+}
+
+html.device-large .countdown-text {
+  font-size: 15px;
+  max-width: 160px;
+}
+
+html.device-large .countdown-divider {
+  height: 56px;
+}
+
+html.device-large .countdown-time {
+  width: 104px;
+  min-width: 104px;
+  font-size: 32px;
 }
