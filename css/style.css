@@ -614,3 +614,11 @@ html.fit-ultra .counter-badge {
 .steps {
   margin-bottom: 16px;
 }
+
+html.is-fitting .phone-frame {
+  visibility: hidden;
+}
+
+html.is-ready .phone-frame {
+  visibility: visible;
+}
