@@ -791,6 +791,7 @@
   }
 
   const locale = resolveLocale();
+  document.documentElement.classList.add("is-fitting");
   prepareTimerSession();
   applyTranslations(locale);
   buildCounter();
@@ -799,13 +800,19 @@
 function runFitOnce() {
   if (didInitialFit) return;
   didInitialFit = true;
+
   applyContentFit();
+
+  setTimeout(() => {
+    document.documentElement.classList.remove("is-fitting");
+    document.documentElement.classList.add("is-ready");
+  }, 120);
 }
   bindEvents();
 
   window.addEventListener("load", () => {
     startTimer();
-    applyContentFit();
+    runFitOnce();
   }, { once: true });
   window.addEventListener("pageshow", (event) => {
     if (event.persisted || getNavigationType() === "back_forward") {
