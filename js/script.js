@@ -794,7 +794,7 @@
   prepareTimerSession();
   applyTranslations(locale);
   buildCounter();
-  applyContentFit();
+  // applyContentFit();
   bindEvents();
 
   window.addEventListener("load", () => {
@@ -808,14 +808,14 @@
 
     stopTimer();
     startTimer();
-    applyContentFit();
+    // applyContentFit();
   });
   window.addEventListener("resize", () => {
     if (counterHasFinished) {
       setCounterPosition(counterEnd - counterStart, false);
     }
 
-    applyContentFit();
+    // applyContentFit();
   });
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState !== "visible") {
