@@ -27,6 +27,7 @@
   --steps-top: clamp(22px, 3dvh, 27px);
   --step-gap: clamp(23px, 3.2dvh, 29px);
   --step-font: clamp(17.5px, 4.55vw, 19.5px);
+  --cta-gap: clamp(18px, 2.8dvh, 28px);
   --cta-height: clamp(68px, 8.6dvh, 74px);
   --cta-font: clamp(27px, 6.4vw, 31px);
   --fill-title: 0px;
@@ -263,6 +264,7 @@ button {
 .steps {
   flex: 0 0 auto;
   padding-top: calc(var(--steps-top) + var(--fill-space));
+  margin-bottom: var(--cta-gap);
 }
 
 .step {
@@ -356,6 +358,7 @@ button {
     --steps-top: 10px;
     --step-gap: 10px;
     --step-font: clamp(13px, 2.7vw, 14.5px);
+    --cta-gap: 14px;
     --cta-height: 45px;
     --cta-font: clamp(18px, 1.2vw, 20px);
   }
@@ -375,6 +378,7 @@ button {
     --recommendation-bottom: 10px;
     --steps-top: 10px;
     --step-gap: 10px;
+    --cta-gap: 12px;
     --cta-height: 43px;
   }
 }
@@ -399,6 +403,7 @@ button {
     --steps-top: 25px;
     --step-gap: 28px;
     --step-font: 19.5px;
+    --cta-gap: 28px;
     --cta-height: 74px;
     --cta-font: 31px;
   }
@@ -423,6 +428,7 @@ button {
     --recommendation-bottom: 30px;
     --recommendation-font: 22px;
     --step-font: 21px;
+    --cta-gap: 30px;
     --cta-height: 80px;
     --cta-font: 34px;
   }
@@ -448,6 +454,7 @@ html.fit-tight {
   --steps-top: 14px;
   --step-gap: 14px;
   --step-font: clamp(14.5px, 3.95vw, 16.8px);
+  --cta-gap: 18px;
   --cta-height: clamp(50px, 14vw, 60px);
   --cta-font: clamp(20px, 5.3vw, 24px);
 }
@@ -478,6 +485,7 @@ html.fit-ultra {
   --steps-top: 8px;
   --step-gap: 8px;
   --step-font: clamp(11.6px, 3.35vw, 12.8px);
+  --cta-gap: 10px;
   --cta-height: clamp(38px, 11vw, 44px);
   --cta-font: clamp(16px, 4.5vw, 18px);
 }
@@ -485,4 +493,13 @@ html.fit-ultra {
 html.fit-ultra .counter-badge {
   top: -4px;
   right: -4px;
+}
+
+/* iPhone 12/13/14/15 non-Max width class: keep the CTA off the bottom edge. */
+@media (min-width: 376px) and (max-width: 430px) {
+  .cta-button {
+    margin-top: 18px !important;
+    margin-bottom: 0 !important;
+    transform: translateY(-20px);
+  }
 }
