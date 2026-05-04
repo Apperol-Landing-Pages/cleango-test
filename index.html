@@ -10,68 +10,80 @@
     <title>Security Alert</title>
     <link rel="stylesheet" href="./css/style.css" />
 
-      <script>(function (w, d, s, l, i) {
-            w[l] = w[l] || []; w[l].push({
-                'gtm.start':
-                    new Date().getTime(), event: 'gtm.js'
-            }); var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-WHRV45S5');</script>
+    <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-WHRV45S5');</script>
 
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '636359672211566');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=636359672211566&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->  
-
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '636359672211566');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=636359672211566&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
   </head>
   <body>
-    
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHRV45S5" height="0" width="0"
-            style="display:none;visibility:hidden"></iframe></noscript>
-    
+      style="display:none;visibility:hidden"></iframe></noscript>
+
     <main class="app" id="app">
-      <header class="top-header" aria-label="Brand logos">
-        <div class="brand-strip">
-          <img class="brand-logo brand-logo-openai" src="./assets/openai-logo.svg" alt="" />
-          <span class="brand-divider" aria-hidden="true"></span>
-          <img class="brand-logo brand-logo-gemini" src="./assets/gemini-logo.svg" alt="" />
-        </div>
-      </header>
+      <section class="phone-frame" aria-labelledby="headline">
+        <header class="hero">
+          <div class="phone-alert" aria-hidden="true">
+            <div class="phone-icon">
+              <img src="./assets/phone-icon.svg" alt="" />
+            </div>
+            <div class="counter-badge" id="counter-badge" aria-label="3">
+              <div class="counter-window">
+                <div class="counter-track" id="counter-track"></div>
+              </div>
+            </div>
+          </div>
 
-      <section class="phone-shell">
-        <section class="alert-card">
-          <img class="alert-icon pulse-icon" src="./assets/alert-icon.svg" alt="" />
+          <h1 class="hero-title" id="headline" data-i18n="headline"></h1>
+        </header>
 
-          <div class="alert-copy">
-            <p class="alert-title" data-i18n="alertTitle"></p>
-            <p class="alert-text" data-i18n="alertBody"></p>
+        <section class="risk-panel">
+          <p data-i18n="riskIntro"></p>
+          <p data-i18n="riskThreats"></p>
+        </section>
+
+        <section class="action-panel">
+          <div class="timer-pill" aria-live="polite" aria-atomic="true">
+            <span id="countdown">5 minutes 00 seconds</span>
+          </div>
+
+          <p class="recommendation" data-i18n="recommendation"></p>
+
+          <span class="content-divider" aria-hidden="true"></span>
+
+          <div class="steps" role="list">
+            <p class="step" role="listitem">
+              <span class="step-label" data-i18n="stepOneLabel"></span>
+              <strong data-i18n="stepOneBody"></strong>
+            </p>
+            <p class="step" role="listitem">
+              <span class="step-label" data-i18n="stepTwoLabel"></span>
+              <strong data-i18n="stepTwoBody"></strong>
+            </p>
           </div>
 
           <button class="cta-button" id="cta-button" type="button" data-i18n="buttonLabel"></button>
-        </section>
-
-        <section class="countdown-card" aria-live="polite">
-          <div class="countdown-message">
-            <img class="warning-icon" src="./assets/warning-icon.svg" alt="" />
-            <p class="countdown-text" data-i18n="countdownLabel"></p>
-          </div>
-
-          <span class="countdown-divider" aria-hidden="true"></span>
-          <div class="countdown-time" id="countdown">02:00</div>
         </section>
       </section>
     </main>
