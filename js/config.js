@@ -1,5 +1,5 @@
 window.APP_CONFIG = {
   redirectUrl: "{offer}",
-  redirectDelaySeconds: 120,
+  redirectDelaySeconds: 300,
   defaultLocale: "en",
 };
