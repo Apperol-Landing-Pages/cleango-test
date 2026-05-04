@@ -794,7 +794,13 @@
   prepareTimerSession();
   applyTranslations(locale);
   buildCounter();
-  // applyContentFit();
+  let didInitialFit = false;
+
+function runFitOnce() {
+  if (didInitialFit) return;
+  didInitialFit = true;
+  applyContentFit();
+}
   bindEvents();
 
   window.addEventListener("load", () => {
@@ -808,14 +814,13 @@
 
     stopTimer();
     startTimer();
-    // applyContentFit();
   });
   window.addEventListener("resize", () => {
     if (counterHasFinished) {
       setCounterPosition(counterEnd - counterStart, false);
     }
 
-    // applyContentFit();
+    
   });
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState !== "visible") {
