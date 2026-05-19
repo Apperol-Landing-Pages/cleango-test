@@ -451,3 +451,90 @@ button {
     min-height: 100vh;
   }
 }
+
+@media (min-width: 414px) and (max-width: 480px) and (orientation: portrait) {
+  html,
+  body {
+    height: 100vh;
+    height: 100svh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  #app,
+  .landing,
+  .content {
+    height: 100vh;
+    height: 100svh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .content {
+    padding-top: calc(var(--safe-top) + clamp(50px, 7.2svh, 62px));
+    padding-right: 16px;
+    padding-bottom: calc(var(--safe-bottom) + clamp(10px, 1.8svh, 16px));
+    padding-left: 16px;
+  }
+
+  .title {
+    font-size: 31px;
+    line-height: 1.12;
+  }
+
+  .subtitle {
+    margin-top: 14px;
+    font-size: 20px;
+  }
+
+  .profiles {
+    gap: 10px;
+    margin-top: 30px;
+  }
+
+  .profile-card {
+    aspect-ratio: 1 / 0.98;
+  }
+
+  .cta-wrap {
+    margin-top: 14px;
+  }
+
+  .cta {
+    min-height: 54px;
+  }
+}
+
+@media (min-width: 414px) and (max-width: 480px) and (orientation: portrait) and (max-height: 780px) {
+  .content {
+    padding-top: calc(var(--safe-top) + 40px);
+    padding-bottom: calc(var(--safe-bottom) + 8px);
+  }
+
+  .title {
+    font-size: 29px;
+  }
+
+  .subtitle {
+    margin-top: 11px;
+    font-size: 18px;
+  }
+
+  .profiles {
+    gap: 9px;
+    margin-top: 22px;
+  }
+
+  .profile-card {
+    aspect-ratio: 1 / 0.9;
+  }
+
+  .cta-wrap {
+    margin-top: 10px;
+  }
+
+  .cta {
+    min-height: 48px;
+    font-size: 16px;
+  }
+}
