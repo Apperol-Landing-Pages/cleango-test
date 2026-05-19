@@ -505,7 +505,7 @@ button {
   }
 }
 
-@media (min-width: 414px) and (max-width: 480px) and (orientation: portrait) and (max-height: 780px) {
+@media (min-width: 414px) and (max-width: 480px) and (orientation: portrait) {
   .content {
     padding-top: calc(var(--safe-top) + 40px);
     padding-bottom: calc(var(--safe-bottom) + 8px);
