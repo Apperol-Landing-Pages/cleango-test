@@ -1,5 +1,6 @@
 :root {
   --page-max: 430px;
+  --viewport-height: 100vh;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --bg-image: none;
@@ -18,14 +19,17 @@
 }
 
 html {
-  min-height: 100%;
+  height: var(--viewport-height);
+  min-height: 0;
+  overflow: hidden;
   background: #050201;
 }
 
 body {
-  min-height: 100%;
+  height: var(--viewport-height);
+  min-height: 0;
   margin: 0;
-  overflow-x: hidden;
+  overflow: hidden;
   background: #050201;
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
@@ -38,13 +42,16 @@ button {
 }
 
 #app {
-  min-height: 100svh;
+  height: var(--viewport-height);
+  min-height: 0;
+  overflow: hidden;
 }
 
 .landing {
   position: relative;
   width: min(100%, var(--page-max));
-  min-height: 100svh;
+  height: var(--viewport-height);
+  min-height: 0;
   margin: 0 auto;
   overflow: hidden;
   background:
@@ -98,13 +105,14 @@ button {
   position: relative;
   z-index: 2;
   display: flex;
-  min-height: 100svh;
+  height: var(--viewport-height);
+  min-height: 0;
   flex-direction: column;
   justify-content: flex-start;
   padding:
     calc(var(--safe-top) + clamp(48px, 10.7svh, 83px))
     clamp(16px, 4.35vw, 18px)
-    calc(var(--safe-bottom) + clamp(20px, 4.4svh, 31px));
+    calc(var(--safe-bottom) + clamp(16px, 2.6svh, 24px));
 }
 
 .hero {
@@ -335,15 +343,25 @@ button {
   }
 }
 
-@media (max-height: 700px) {
+@media (max-height: 820px) {
   .content {
-    padding-top: calc(var(--safe-top) + clamp(38px, 6.8svh, 48px));
-    padding-bottom: calc(var(--safe-bottom) + 18px);
+    padding-top: calc(var(--safe-top) + clamp(44px, 7.4svh, 56px));
+    padding-bottom: calc(var(--safe-bottom) + 14px);
+  }
+
+  .title {
+    font-size: clamp(28px, 7.4vw, 31px);
+    line-height: 1.12;
+  }
+
+  .subtitle {
+    margin-top: 14px;
+    font-size: clamp(18px, 4.6vw, 20px);
   }
 
   .profiles {
-    gap: 9px;
-    margin-top: 31px;
+    gap: 10px;
+    margin-top: 32px;
   }
 
   .profile-card {
@@ -351,11 +369,35 @@ button {
   }
 
   .cta-wrap {
-    margin-top: 16px;
+    margin-top: 14px;
   }
 
   .cta {
-    min-height: 53px;
+    min-height: 54px;
+  }
+}
+
+@media (max-height: 700px) {
+  .content {
+    padding-top: calc(var(--safe-top) + clamp(32px, 5.6svh, 40px));
+    padding-bottom: calc(var(--safe-bottom) + 12px);
+  }
+
+  .profiles {
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  .profile-card {
+    aspect-ratio: 1 / 0.92;
+  }
+
+  .cta-wrap {
+    margin-top: 12px;
+  }
+
+  .cta {
+    min-height: 49px;
   }
 }
 
@@ -389,31 +431,31 @@ button {
 
 @media (max-height: 620px) {
   .content {
-    padding-top: calc(var(--safe-top) + 24px);
-    padding-bottom: calc(var(--safe-bottom) + 12px);
+    padding-top: calc(var(--safe-top) + 20px);
+    padding-bottom: calc(var(--safe-bottom) + 8px);
   }
 
   .title {
-    font-size: 24px;
-    line-height: 1.1;
+    font-size: 23px;
+    line-height: 1.08;
   }
 
   .subtitle {
-    margin-top: 8px;
-    font-size: 16px;
+    margin-top: 7px;
+    font-size: 15px;
   }
 
   .profiles {
-    gap: 8px;
-    margin-top: 19px;
+    gap: 7px;
+    margin-top: 14px;
   }
 
   .profile-card {
-    aspect-ratio: 1 / 0.94;
+    aspect-ratio: 1 / 0.82;
   }
 
   .live-badge {
-    height: 27px;
+    height: 25px;
     min-width: 51px;
     font-size: 10px;
   }
@@ -423,13 +465,56 @@ button {
   }
 
   .cta-wrap {
-    margin-top: 11px;
+    margin-top: 8px;
   }
 
   .cta {
-    min-height: 46px;
-    padding: 11px 18px;
+    min-height: 42px;
+    padding: 9px 18px;
     font-size: 14px;
+  }
+}
+
+@media (max-height: 560px) {
+  .content {
+    padding-top: calc(var(--safe-top) + 14px);
+    padding-bottom: calc(var(--safe-bottom) + 6px);
+  }
+
+  .title {
+    font-size: 21px;
+  }
+
+  .subtitle {
+    margin-top: 5px;
+    font-size: 14px;
+  }
+
+  .profiles {
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .profile-card {
+    aspect-ratio: 1 / 0.75;
+  }
+
+  .live-badge {
+    top: 7px;
+    left: 8px;
+    height: 23px;
+    min-width: 47px;
+    padding: 0 7px;
+  }
+
+  .profile-name {
+    bottom: 8px;
+    font-size: 14px;
+  }
+
+  .cta {
+    min-height: 38px;
+    font-size: 13px;
   }
 }
 
@@ -444,10 +529,8 @@ button {
   }
 }
 
-@supports not (height: 100svh) {
-  #app,
-  .landing,
-  .content {
-    min-height: 100vh;
+@supports (height: 100svh) {
+  :root {
+    --viewport-height: 100svh;
   }
 }
