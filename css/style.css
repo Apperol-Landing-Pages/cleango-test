@@ -92,44 +92,43 @@
     --cta-height: 50px;
     --cta-font: 20px;
     --online-font: 18px;
-    --online-dot: 12px;
-    --online-dot-gap: 8px;
+    --online-dot: 11px;
+   
   }
 }
 
 /* iPhone SE 2/3, 6/7/8: 375 x 667 */
 @media (min-width: 341px) and (max-width: 380px) and (max-height: 700px) {
   :root {
-    --tabs-top: 31px;
-    --tabs-font: 23px;
-    --actions-right: 12px;
-    --actions-bottom: 133px;
-    --actions-gap: 12px;
-    --avatar-size: 52px;
-    --plus-size: 30px;
-    --plus-font: 26px;
-    --action-icon-width: 34px;
-    --action-icon-height: 32px;
-    --comment-icon-width: 35px;
-    --comment-icon-height: 33px;
-    --share-icon-width: 34px;
-    --share-icon-height: 30px;
-    --action-count-font: 15px;
-    --copy-left: 15px;
-    --copy-right: 76px;
-    --copy-bottom: 137px;
-    --copy-name-font: 22px;
-    --copy-name-gap: 9px;
-    --copy-text-font: 16px;
-    --copy-line-height: 1.24;
-    --music-top: 10px;
-    --cta-left: 15px;
-    --cta-right: 15px;
-    --cta-bottom: 20px;
-    --cta-gap: 15px;
-    --cta-height: 58px;
-    --cta-font: 22px;
-    --online-font: 19px;
+    --tabs-top: 25px;
+    --tabs-font: 15px;
+    --actions-right: 9px;
+    --actions-bottom: 126px;
+    --actions-gap: 20px;
+    --avatar-size: 40px;
+    --plus-size: 19px;
+    --plus-font: 13px;
+    --action-icon-width: 23px;
+    --action-icon-height: 22px;
+    --comment-icon-width: 23px;
+    --comment-icon-height: 22px;
+    --share-icon-width: 23px;
+    --share-icon-height: 22px;
+    --action-count-font: 9px;
+    --copy-left: 18px;
+    --copy-right: 91px;
+    --copy-bottom: 113px;
+    --copy-name-font: 14px;
+    --copy-text-font: 11px;
+    --music-top: 9px;
+    --cta-left: 18px;
+    --cta-right: 18px;
+    --cta-bottom: 14px;
+    --cta-gap: 20px;
+    --cta-height: 50px;
+    --cta-font: 14px;
+    --online-font: 12px;
+    --online-dot: 8px;
   }
 }
 
@@ -172,12 +171,12 @@
   :root {
     --tabs-top: 34px;
     --tabs-font: 20px;
-    --actions-right: 17px;
+    --actions-right: 10px;
     --actions-bottom: 170px;
     --actions-gap: 20px;
-    --avatar-size: 51px;
+    --avatar-size: 50px;
     --plus-size: 23px;
-    --plus-font: 20px;
+    --plus-font: 18px;
     --action-icon-width: 30px;
     --action-icon-height: 43px;
     --comment-icon-width: 30px;
@@ -228,24 +227,34 @@
 /* iPhone Pro Max: 428/430 x 926/932 */
 @media (min-width: 421px) {
   :root {
-    --phone-max: 430px;
-    --tabs-top: 62px;
-    --tabs-font: 28px;
-    --actions-right: 20px;
-    --actions-bottom: 198px;
-    --actions-gap: 24px;
-    --avatar-size: 61px;
-    --copy-left: 30px;
-    --copy-right: 103px;
-    --copy-bottom: 230px;
-    --copy-name-font: 31px;
-    --copy-text-font: 24px;
-    --cta-left: 30px;
-    --cta-right: 30px;
-    --cta-bottom: 43px;
-    --cta-height: 78px;
-    --cta-font: 31px;
-    --online-font: 29px;
+    --tabs-top: 34px;
+    --tabs-font: 20px;
+    --actions-right: 10px;
+    --actions-bottom: 170px;
+    --actions-gap: 20px;
+    --avatar-size: 50px;
+    --plus-size: 23px;
+    --plus-font: 18px;
+    --action-icon-width: 30px;
+    --action-icon-height: 43px;
+    --comment-icon-width: 30px;
+    --comment-icon-height: 36px;
+    --share-icon-width: 30px;
+    --share-icon-height: 33px;
+    --action-count-font: 13px;
+    --copy-left: 18px;
+    --copy-right: 91px;
+    --copy-bottom: 150px;
+    --copy-name-font: 17px;
+    --copy-text-font: 14px;
+    --music-top: 13px;
+    --cta-left: 18px;
+    --cta-right: 18px;
+    --cta-bottom: 23px;
+    --cta-gap: 24px;
+    --cta-height: 61px;
+    --cta-font: 21px;
+    --online-font: 17px;
   }
 }
 
