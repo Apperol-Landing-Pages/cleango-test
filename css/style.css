@@ -1,113 +1,122 @@
 :root {
-  --phone-max: 448px;
+  --phone-max: 507px;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --text: #ffffff;
+  --ink: #1b191f;
   --pink: #fb3a86;
-  --pink-deep: #f22673;
-  --green: #18f01d;
+  --pink-hot: #ff4593;
+  --pink-deep: #f02b7a;
 
-  /* Base layout knobs. Edit these first. */
-  --video-x: center;
-  --video-y: top;
+  /* Main screen knobs. */
+  --background-x: center;
+  --background-y: top;
 
   --install-height: 86px;
-  --install-padding-x: 18px;
-  --install-icon-size: 48px;
+  --install-padding-x: 21px;
+  --install-gap: 10px;
+  --install-icon-size: 53px;
   --install-icon-radius: 14px;
-  --install-icon-image-width: 80px;
-  --install-icon-image-x: -46%;
+  --install-icon-image-width: 84px;
+  --install-icon-image-x: -47%;
   --install-icon-image-y: -48%;
-  --install-copy-gap: 4px;
-  --install-title-font: 18px;
-  --install-subtitle-font: 14px;
-  --download-size: 48px;
+  --install-copy-gap: 5px;
+  --install-title-font: 21px;
+  --install-subtitle-font: 16px;
+  --download-size: 53px;
   --download-icon-size: 42px;
 
-  --auth-top-gap: 11px;
-  --auth-right: 17px;
-  --auth-gap: 5px;
-  --auth-height: 51px;
-  --auth-login-min: 119px;
-  --auth-signup-min: 116px;
-  --auth-padding-x: 27px;
-  --auth-font: 17px;
-
-  --panel-left: 21px;
-  --panel-right: 18px;
-  --panel-bottom: 11px;
-  --panel-gap: 16px;
-  --cta-height: 68px;
-  --cta-font: 20px;
-  --online-font: 23px;
-  --online-dot: 10px;
-  --online-dot-gap: 8px;
-  --online-count-gap: 7px;
+  /* Age window knobs. Change these values for quick visual tuning. */
+  --age-modal-width: calc(100% - 42px);
+  --age-modal-max-width: 465px;
+  --age-modal-top: 56.6%;
+  --age-card-radius: 38px;
+  --age-card-padding-top: 42px;
+  --age-card-padding-x: 20px;
+  --age-card-padding-bottom: 20px;
+  --age-icon-size: 73px;
+  --age-title-margin-top: 22px;
+  --age-title-font: 31px;
+  --age-title-line: 1.08;
+  --age-text-margin-top: 11px;
+  --age-text-width: 404px;
+  --age-text-font: 23px;
+  --age-text-line: 1.24;
+  --age-actions-margin-top: 31px;
+  --age-button-height: 77px;
+  --age-button-gap: 9px;
+  --age-button-radius: 39px;
+  --age-button-border: 1.5px;
+  --age-button-font: 24px;
 }
 
 /*
   iPhone tuning blocks.
-  Change only the variables in the matching block when a specific device needs nudging.
+  Change only the variables inside a matching block when a device needs nudging.
 */
 
 /* iPhone SE 1st gen, 5/5s: 320 x 568 */
 @media (max-width: 340px) and (max-height: 590px) {
   :root {
-    --install-height: 68px;
-    --install-padding-x: 12px;
-    --install-icon-size: 40px;
+    --install-height: 70px;
+    --install-padding-x: 13px;
+    --install-gap: 8px;
+    --install-icon-size: 42px;
     --install-icon-radius: 12px;
-    --install-icon-image-width: 66px;
-    --install-title-font: 15px;
-    --install-subtitle-font: 11px;
+    --install-icon-image-width: 68px;
+    --install-title-font: 16px;
+    --install-subtitle-font: 12px;
     --download-size: 42px;
-    --download-icon-size: 36px;
-    --auth-top-gap: 8px;
-    --auth-right: 10px;
-    --auth-gap: 5px;
-    --auth-height: 42px;
-    --auth-login-min: 90px;
-    --auth-signup-min: 90px;
-    --auth-padding-x: 18px;
-    --auth-font: 14px;
-    --panel-left: 14px;
-    --panel-right: 14px;
-    --panel-bottom: 10px;
-    --panel-gap: 10px;
-    --cta-height: 52px;
-    --cta-font: 16px;
-    --online-font: 17px;
-    --online-dot: 8px;
+    --download-icon-size: 34px;
+
+    --age-modal-width: calc(100% - 28px);
+    --age-modal-top: 57.5%;
+    --age-card-radius: 28px;
+    --age-card-padding-top: 28px;
+    --age-card-padding-x: 15px;
+    --age-card-padding-bottom: 15px;
+    --age-icon-size: 52px;
+    --age-title-margin-top: 17px;
+    --age-title-font: 24px;
+    --age-text-margin-top: 8px;
+    --age-text-font: 17px;
+    --age-text-line: 1.22;
+    --age-actions-margin-top: 21px;
+    --age-button-height: 58px;
+    --age-button-gap: 8px;
+    --age-button-radius: 30px;
+    --age-button-font: 18px;
   }
 }
 
 /* iPhone SE 2/3, 6/7/8: 375 x 667 */
 @media (min-width: 341px) and (max-width: 380px) and (max-height: 700px) {
   :root {
-    --install-height: 72px;
-    --install-padding-x: 15px;
-    --install-icon-size: 42px;
-    --install-icon-radius: 12px;
-    --install-icon-image-width: 70px;
-    --install-title-font: 16px;
-    --install-subtitle-font: 12px;
-    --download-size: 44px;
-    --download-icon-size: 38px;
-    --auth-top-gap: 9px;
-    --auth-right: 13px;
-    --auth-height: 43px;
-    --auth-login-min: 98px;
-    --auth-signup-min: 98px;
-    --auth-padding-x: 21px;
-    --auth-font: 14px;
-    --panel-left: 17px;
-    --panel-right: 17px;
-    --panel-bottom: 11px;
-    --panel-gap: 12px;
-    --cta-height: 55px;
-    --cta-font: 17px;
-    --online-font: 18px;
-    --online-dot: 8px;
+    --install-height: 76px;
+    --install-padding-x: 16px;
+    --install-icon-size: 45px;
+    --install-icon-radius: 13px;
+    --install-icon-image-width: 72px;
+    --install-title-font: 18px;
+    --install-subtitle-font: 13px;
+    --download-size: 45px;
+    --download-icon-size: 36px;
+
+    --age-modal-width: calc(100% - 34px);
+    --age-modal-top: 57%;
+    --age-card-radius: 31px;
+    --age-card-padding-top: 31px;
+    --age-card-padding-x: 17px;
+    --age-card-padding-bottom: 17px;
+    --age-icon-size: 48px;
+    --age-title-margin-top: 18px;
+    --age-title-font: 20px;
+    --age-text-margin-top: 9px;
+    --age-text-font: 16px;
+    --age-actions-margin-top: 23px;
+    --age-button-height: 50px;
+    --age-button-radius: 32px;
+    --age-button-font: 16px;
   }
 }
 
@@ -116,28 +125,27 @@
   :root {
     --install-height: 84px;
     --install-padding-x: 17px;
-    --install-icon-size: 46px;
-    --install-icon-radius: 13px;
+    --install-icon-size: 48px;
     --install-icon-image-width: 76px;
-    --install-title-font: 17px;
-    --install-subtitle-font: 13px;
-    --download-size: 47px;
-    --download-icon-size: 41px;
-    --auth-top-gap: 10px;
-    --auth-right: 15px;
-    --auth-height: 49px;
-    --auth-login-min: 108px;
-    --auth-signup-min: 105px;
-    --auth-padding-x: 24px;
-    --auth-font: 16px;
-    --panel-left: 20px;
-    --panel-right: 20px;
-    --panel-bottom: 22px;
-    --panel-gap: 14px;
-    --cta-height: 64px;
-    --cta-font: 19px;
-    --online-font: 22px;
-    --online-dot: 9px;
+    --install-title-font: 19px;
+    --install-subtitle-font: 14px;
+    --download-size: 48px;
+    --download-icon-size: 39px;
+
+    --age-modal-width: calc(100% - 36px);
+    --age-modal-top: 56.8%;
+    --age-card-radius: 34px;
+    --age-card-padding-top: 36px;
+    --age-card-padding-x: 18px;
+    --age-card-padding-bottom: 18px;
+    --age-icon-size: 64px;
+    --age-title-margin-top: 20px;
+    --age-title-font: 28px;
+    --age-text-font: 20px;
+    --age-actions-margin-top: 27px;
+    --age-button-height: 68px;
+    --age-button-radius: 35px;
+    --age-button-font: 21px;
   }
 }
 
@@ -146,22 +154,24 @@
   :root {
     --install-height: 86px;
     --install-padding-x: 18px;
-    --install-icon-size: 48px;
-    --download-size: 48px;
-    --auth-top-gap: 10px;
-    --auth-right: 16px;
-    --auth-height: 50px;
-    --auth-login-min: 112px;
-    --auth-signup-min: 110px;
-    --auth-padding-x: 25px;
-    --auth-font: 16px;
-    --panel-left: 20px;
-    --panel-right: 20px;
-    --panel-bottom: 14px;
-    --panel-gap: 15px;
-    --cta-height: 66px;
-    --cta-font: 20px;
-    --online-font: 22px;
+    --install-icon-size: 49px;
+    --install-title-font: 19px;
+    --install-subtitle-font: 14px;
+    --download-size: 49px;
+    --download-icon-size: 39px;
+
+    --age-modal-width: calc(100% - 38px);
+    --age-modal-top: 56.7%;
+    --age-card-radius: 32px;
+    --age-card-padding-top: 37px;
+    --age-card-padding-x: 18px;
+    --age-card-padding-bottom: 18px;
+    --age-icon-size: 51px;
+    --age-title-font: 22px;
+    --age-text-font: 16px;
+    --age-actions-margin-top: 28px;
+    --age-button-height: 70px;
+    --age-button-font: 18px;
   }
 }
 
@@ -169,45 +179,46 @@
 @media (min-width: 401px) and (max-width: 420px) {
   :root {
     --install-height: 86px;
-    --install-padding-x: 18px;
-    --install-icon-size: 48px;
-    --download-size: 48px;
-    --auth-top-gap: 11px;
-    --auth-right: 17px;
-    --auth-height: 51px;
-    --auth-login-min: 119px;
-    --auth-signup-min: 116px;
-    --auth-font: 17px;
-    --panel-left: 21px;
-    --panel-right: 18px;
-    --panel-bottom: 16px;
-    --panel-gap: 16px;
-    --cta-height: 68px;
-    --cta-font: 20px;
-    --online-font: 23px;
+    --install-padding-x: 19px;
+    --install-icon-size: 50px;
+    --install-title-font: 20px;
+    --install-subtitle-font: 15px;
+    --download-size: 50px;
+    --download-icon-size: 40px;
+
+    --age-modal-width: calc(100% - 40px);
+    --age-modal-top: 56.7%;
+    --age-card-radius: 36px;
+    --age-card-padding-top: 39px;
+    --age-card-padding-x: 19px;
+    --age-card-padding-bottom: 19px;
+    --age-icon-size: 69px;
+    --age-title-font: 30px;
+    --age-text-font: 21px;
+    --age-button-height: 73px;
+    --age-button-font: 22px;
   }
 }
 
-/* iPhone Pro Max: 428/430 x 926/932 */
+/* iPhone Pro Max and screenshot width: 428px and wider */
 @media (min-width: 421px) {
   :root {
     --install-height: 86px;
-    --install-padding-x: 18px;
-    --install-icon-size: 48px;
-    --download-size: 48px;
-    --auth-top-gap: 11px;
-    --auth-right: 17px;
-    --auth-height: 51px;
-    --auth-login-min: 119px;
-    --auth-signup-min: 116px;
-    --auth-font: 17px;
-    --panel-left: 21px;
-    --panel-right: 18px;
-    --panel-bottom: 11px;
-    --panel-gap: 16px;
-    --cta-height: 68px;
-    --cta-font: 20px;
-    --online-font: 23px;
+    --install-padding-x: 21px;
+    --install-icon-size: 53px;
+    --download-size: 53px;
+    --age-modal-width: calc(100% - 42px);
+    --age-modal-top: 56.7%;
+    --age-card-radius: 32px;
+    --age-card-padding-top: 37px;
+    --age-card-padding-x: 18px;
+    --age-card-padding-bottom: 18px;
+    --age-icon-size: 51px;
+    --age-title-font: 22px;
+    --age-text-font: 16px;
+    --age-actions-margin-top: 28px;
+    --age-button-height: 70px;
+    --age-button-font: 18px;
   }
 }
 
@@ -235,6 +246,11 @@ a {
   text-decoration: none;
 }
 
+button {
+  border: 0;
+  font: inherit;
+}
+
 #app {
   min-height: 100svh;
 }
@@ -249,29 +265,18 @@ a {
   isolation: isolate;
 }
 
-.landing::after {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
-  height: 190px;
-  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.18) 100%);
-  content: "";
-  pointer-events: none;
-}
-
-.reel-video {
+.background-image {
   position: absolute;
   top: calc(var(--safe-top) + var(--install-height));
   right: 0;
   bottom: 0;
   left: 0;
   z-index: 0;
+  display: block;
   width: 100%;
-  height: calc(100% - var(--safe-top) - var(--install-height));
+  height: calc(100svh - var(--safe-top) - var(--install-height));
   object-fit: cover;
-  object-position: var(--video-x) var(--video-y);
+  object-position: var(--background-x) var(--background-y);
   background: #111111;
 }
 
@@ -280,10 +285,10 @@ a {
   top: 0;
   right: 0;
   left: 0;
-  z-index: 4;
+  z-index: 3;
   display: grid;
   grid-template-columns: var(--install-icon-size) minmax(0, 1fr) var(--download-size);
-  gap: 9px;
+  gap: var(--install-gap);
   align-items: center;
   height: calc(var(--safe-top) + var(--install-height));
   padding: var(--safe-top) var(--install-padding-x) 0;
@@ -307,7 +312,7 @@ a {
   display: block;
   width: var(--install-icon-image-width);
   height: auto;
-  filter: brightness(0) contrast(1.22);
+  filter: brightness(0) contrast(1.2);
   transform: translate(var(--install-icon-image-x), var(--install-icon-image-y));
 }
 
@@ -316,7 +321,6 @@ a {
   min-width: 0;
   flex-direction: column;
   gap: var(--install-copy-gap);
-  padding-top: 1px;
   color: #ffffff;
 }
 
@@ -334,7 +338,7 @@ a {
   color: rgba(255, 255, 255, 0.94);
   font-size: var(--install-subtitle-font);
   font-weight: 400;
-  line-height: 1.16;
+  line-height: 1.14;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -355,124 +359,102 @@ a {
   object-fit: contain;
 }
 
-.auth-actions {
+.age-gate {
   position: absolute;
-  top: calc(var(--safe-top) + var(--install-height) + var(--auth-top-gap));
-  right: var(--auth-right);
-  z-index: 3;
-  display: flex;
-  max-width: calc(100% - (var(--auth-right) * 2));
-  align-items: center;
-  justify-content: flex-end;
-  gap: var(--auth-gap);
+  top: var(--age-modal-top);
+  left: 50%;
+  z-index: 4;
+  width: min(var(--age-modal-width), var(--age-modal-max-width));
+  padding: var(--age-card-padding-top) var(--age-card-padding-x) var(--age-card-padding-bottom);
+  border-radius: var(--age-card-radius);
+  background: #ffffff;
+  color: var(--ink);
+  text-align: center;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  transform: translate3d(-50%, 120vh, 0);
+  transition: transform 680ms cubic-bezier(0.2, 0.82, 0.18, 1);
+  will-change: transform;
 }
 
-.auth-link {
+.age-gate.is-visible {
+  pointer-events: auto;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.age-icon {
+  display: block;
+  width: var(--age-icon-size);
+  height: var(--age-icon-size);
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.age-gate h1 {
+  margin: var(--age-title-margin-top) 0 0;
+  color: var(--ink);
+  font-size: var(--age-title-font);
+  font-weight: 800;
+  line-height: var(--age-title-line);
+}
+
+.age-gate p {
+  max-width: var(--age-text-width);
+  margin: var(--age-text-margin-top) auto 0;
+  color: #17151a;
+  font-size: var(--age-text-font);
+  font-weight: 400;
+  line-height: var(--age-text-line);
+}
+
+.age-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--age-button-gap);
+  margin-top: var(--age-actions-margin-top);
+}
+
+.age-button {
   display: inline-flex;
+  width: 100%;
+  height: var(--age-button-height);
   align-items: center;
   justify-content: center;
-  min-height: var(--auth-height);
-  padding: 0 var(--auth-padding-x);
-  border-radius: 999px;
-  font-size: var(--auth-font);
-  font-weight: 800;
-  line-height: 1;
+  overflow: hidden;
+  padding: 10px 18px;
+  border-radius: var(--age-button-radius);
+  font-size: var(--age-button-font);
+  font-weight: 600;
+  line-height: 1.08;
   text-align: center;
-  white-space: nowrap;
-  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.18);
+  white-space: normal;
+  cursor: pointer;
   transition: transform 160ms ease, filter 160ms ease;
 }
 
-.auth-login {
-  min-width: var(--auth-login-min);
-  background: #050505;
-  color: #ffffff;
-}
-
-.auth-signup {
-  min-width: var(--auth-signup-min);
+.age-button-outline {
+  border: var(--age-button-border) solid var(--pink);
   background: #ffffff;
   color: #111111;
 }
 
-.auth-link:active,
-.cta:active,
-.app-banner:active {
+.age-button-primary {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: linear-gradient(180deg, #ff5ba4 0%, var(--pink-hot) 36%, var(--pink-deep) 100%);
+  color: #ffffff;
+  box-shadow:
+    inset 0 3px 8px rgba(255, 255, 255, 0.46),
+    inset 0 -2px 0 rgba(133, 0, 49, 0.12),
+    0 4px 10px rgba(251, 58, 134, 0.27);
+}
+
+.app-banner:active,
+.age-button:active {
   transform: translateY(1px) scale(0.992);
   filter: brightness(0.97);
 }
 
-.cta-panel {
-  position: absolute;
-  right: var(--panel-right);
-  bottom: calc(var(--safe-bottom) + var(--panel-bottom));
-  left: var(--panel-left);
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--panel-gap);
-  pointer-events: auto;
-}
-
-.online {
-  display: flex;
-  max-width: 100%;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  color: #ffffff;
-  font-size: var(--online-font);
-  font-weight: 800;
-  line-height: 1.05;
-  text-align: center;
-  text-shadow: 0 1px 7px rgba(0, 0, 0, 0.55);
-  white-space: nowrap;
-}
-
-.online span {
-  flex: 0 0 auto;
-  width: var(--online-dot);
-  height: var(--online-dot);
-  margin-right: var(--online-dot-gap);
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 12px rgba(24, 240, 29, 0.7);
-}
-
-.online strong {
-  margin-right: var(--online-count-gap);
-}
-
-.online b {
-  overflow: hidden;
-  font: inherit;
-  text-overflow: ellipsis;
-}
-
-.cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: var(--cta-height);
-  padding: 12px 24px;
-  border: 1px solid rgba(255, 255, 255, 0.38);
-  border-radius: 999px;
-  background: linear-gradient(180deg, #ff4893 0%, var(--pink) 48%, var(--pink-deep) 100%);
-  color: #ffffff;
-  font-size: var(--cta-font);
-  font-weight: 800;
-  line-height: 1.08;
-  text-align: center;
-  box-shadow:
-    inset 0 2px 0 rgba(255, 255, 255, 0.3),
-    inset 0 -2px 0 rgba(118, 0, 42, 0.18),
-    0 5px 16px rgba(0, 0, 0, 0.26);
-  transition: transform 160ms ease, filter 160ms ease;
-}
-
-@media (min-width: 449px) {
+@media (min-width: 508px) {
   body {
     background: radial-gradient(circle at center, #242424 0%, #060606 62%);
   }
@@ -482,9 +464,19 @@ a {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .age-gate {
+    transition-duration: 1ms;
+  }
+}
+
 @supports not (height: 100svh) {
   #app,
   .landing {
     min-height: 100vh;
+  }
+
+  .background-image {
+    height: calc(100vh - var(--safe-top) - var(--install-height));
   }
 }
