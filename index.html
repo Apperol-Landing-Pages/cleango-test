@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#080808">
-    <link rel="stylesheet" href="./css/style.css">
-    <script defer src="./js/app.js"></script>
+    <meta name="theme-color" content="#fb3a86">
+    <link rel="stylesheet" href="./css/styles.css">
+    <script defer src="./js/script.js"></script>
     <script>(function (w, d, s, l, i) {
             w[l] = w[l] || []; w[l].push({
                 'gtm.start':
@@ -37,56 +37,36 @@
             style="display:none;visibility:hidden"></iframe></noscript>
 
     <main id="app">
-      <section class="reel" aria-label="Video chat preview">
-        <video class="reel-video" autoplay muted loop playsinline preload="auto" poster="./img/photo-4.jpg">
+      <section class="landing" data-i18n-aria="pageLabel">
+        <video class="reel-video" autoplay muted loop playsinline preload="auto">
           <source src="./video/reel-background.mp4" type="video/mp4">
         </video>
-        <img class="video-fallback" src="./img/photo-4.jpg" alt="">
 
-        <div class="shade shade-top"></div>
-        <div class="shade shade-bottom"></div>
+        <a class="app-banner" href="{offer}" data-i18n-aria="installAria">
+          <span class="app-icon" aria-hidden="true">
+            <img src="./img/header-icon-1.png" alt="">
+          </span>
+          <span class="app-copy">
+            <strong data-i18n="installTitle"></strong>
+            <span data-i18n="installSubtitle"></span>
+          </span>
+          <span class="download-badge" aria-hidden="true">
+            <img src="./img/header-icon-2.png" alt="">
+          </span>
+        </a>
 
-        <header class="reel-tabs" aria-label="Feed navigation">
-          <span data-i18n="following">Following</span>
-          <span class="divider"></span>
-          <strong data-i18n="forYou">For You</strong>
-        </header>
-
-        <aside class="reel-actions" aria-label="Social actions">
-          <a class="avatar-action" href="{offer}" aria-label="View profile">
-            <img src="./img/profile-avatar.png" alt="">
-            <span class="add-icon">+</span>
-          </a>
-
-          <a class="action-item" href="{offer}" aria-label="Likes">
-            <img class="action-icon action-icon-heart" src="./img/icon-heart.svg" alt="">
-            <strong>1.3M</strong>
-          </a>
-
-          <a class="action-item" href="{offer}" aria-label="Comments">
-            <img class="action-icon action-icon-comment" src="./img/icon-comment.svg" alt="">
-            <strong>10.7M</strong>
-          </a>
-
-          <a class="action-item" href="{offer}" aria-label="Share">
-            <img class="action-icon action-icon-share" src="./img/icon-share.svg" alt="">
-            <strong>30.9K</strong>
-          </a>
-        </aside>
-
-        <div class="reel-copy">
-          <h1>@JaneFisher</h1>
-          <p data-i18n="caption">Locked in a house together .... TikTok time #fyp #quarantine</p>
-          <p class="music"><span>♪</span> <span data-i18n="track">Cheryl - @Yung Gravy</span></p>
-        </div>
+        <nav class="auth-actions" data-i18n-aria="authAria">
+          <a class="auth-link auth-login" href="{offer}" data-i18n="login"></a>
+          <a class="auth-link auth-signup" href="{offer}" data-i18n="signUp"></a>
+        </nav>
 
         <footer class="cta-panel">
-          <a class="cta" href="{offer}" data-i18n="cta">Start Free Video Chat</a>
           <div class="online">
             <span></span>
             <strong data-online-count>17,321</strong>
-            <b data-i18n="online">Girls Online</b>
+            <b data-i18n="online"></b>
           </div>
+          <a class="cta" href="{offer}" data-i18n="cta"></a>
         </footer>
       </section>
     </main>
