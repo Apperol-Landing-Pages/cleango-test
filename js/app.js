@@ -1,407 +1,124 @@
 (function () {
-  const supportedLocales = [
-    "en",
-    "fr",
-    "pt-PT",
-    "pt-BR",
-    "es",
-    "es-419",
-    "da",
-    "ja",
-    "fil",
-    "de",
-    "nb",
-    "sv",
-    "it",
-    "nl",
-    "ro"
-  ];
-
-  const latinAmericaRegions = new Set([
-    "AR",
-    "BO",
-    "BR",
-    "BZ",
-    "CL",
-    "CO",
-    "CR",
-    "CU",
-    "DO",
-    "EC",
-    "GT",
-    "HN",
-    "MX",
-    "NI",
-    "PA",
-    "PE",
-    "PR",
-    "PY",
-    "SV",
-    "UY",
-    "VE"
-  ]);
-
-  const translations = {
-    en: {
-      pageLabel: "Video chat landing page",
-      installAria: "Install the app",
-      authAria: "Account actions",
-      installTitle: "Install App",
-      installSubtitle: "To chat with girls 18+, download the app",
-      login: "Log In",
-      signUp: "Sign Up",
-      cta: "Start Free Video Chat",
-      online: "Girls Online"
-    },
-    fr: {
-      pageLabel: "Page de chat video",
-      installAria: "Installer l'app",
-      authAria: "Actions du compte",
-      installTitle: "Installer l'app",
-      installSubtitle: "Pour discuter avec des filles 18+, telechargez l'app",
-      login: "Connexion",
-      signUp: "Inscription",
-      cta: "Demarrer le chat video gratuit",
-      online: "Filles en ligne"
-    },
-    "pt-PT": {
-      pageLabel: "Pagina de chat de video",
-      installAria: "Instalar a app",
-      authAria: "Acoes da conta",
-      installTitle: "Instalar app",
-      installSubtitle: "Para conversar com mulheres 18+, descarrega a app",
-      login: "Entrar",
-      signUp: "Registar",
-      cta: "Iniciar chat de video gratis",
-      online: "Mulheres online"
-    },
-    "pt-BR": {
-      pageLabel: "Pagina de videochat",
-      installAria: "Instalar o app",
-      authAria: "Acoes da conta",
-      installTitle: "Instalar app",
-      installSubtitle: "Para conversar com garotas 18+, baixe o app",
-      login: "Entrar",
-      signUp: "Cadastrar",
-      cta: "Iniciar videochat gratis",
-      online: "Garotas online"
-    },
-    es: {
-      pageLabel: "Pagina de videochat",
-      installAria: "Instalar la app",
-      authAria: "Acciones de cuenta",
-      installTitle: "Instalar app",
-      installSubtitle: "Para chatear con chicas 18+, descarga la app",
-      login: "Iniciar sesion",
-      signUp: "Registrarse",
-      cta: "Iniciar videochat gratis",
-      online: "Chicas en linea"
-    },
-    "es-419": {
-      pageLabel: "Pagina de videochat",
-      installAria: "Instalar la app",
-      authAria: "Acciones de cuenta",
-      installTitle: "Instalar app",
-      installSubtitle: "Para chatear con chicas 18+, descarga la app",
-      login: "Iniciar sesion",
-      signUp: "Registrarse",
-      cta: "Iniciar videochat gratis",
-      online: "Chicas en linea"
-    },
-    da: {
-      pageLabel: "Videochat landingside",
-      installAria: "Installer appen",
-      authAria: "Konto handlinger",
-      installTitle: "Installer app",
-      installSubtitle: "For at chatte med piger 18+, download appen",
-      login: "Log ind",
-      signUp: "Tilmeld",
-      cta: "Start gratis videochat",
-      online: "Piger online"
-    },
-    ja: {
-      pageLabel: "ビデオチャットのランディングページ",
-      installAria: "アプリをインストール",
-      authAria: "アカウント操作",
-      installTitle: "アプリをインストール",
-      installSubtitle: "18+の女の子とチャットするにはアプリをダウンロード",
-      login: "ログイン",
-      signUp: "登録",
-      cta: "無料ビデオチャット開始",
-      online: "女の子がオンライン"
-    },
-    fil: {
-      pageLabel: "Video chat landing page",
-      installAria: "I-install ang app",
-      authAria: "Account actions",
-      installTitle: "I-install ang app",
-      installSubtitle: "Para makipag-chat sa girls 18+, i-download ang app",
-      login: "Log In",
-      signUp: "Sign Up",
-      cta: "Simulan ang free video chat",
-      online: "Girls online"
-    },
-    de: {
-      pageLabel: "Videochat Landingpage",
-      installAria: "App installieren",
-      authAria: "Kontoaktionen",
-      installTitle: "App installieren",
-      installSubtitle: "Zum Chatten mit Frauen 18+, App herunterladen",
-      login: "Einloggen",
-      signUp: "Registrieren",
-      cta: "Gratis Videochat starten",
-      online: "Frauen online"
-    },
-    nb: {
-      pageLabel: "Videochat landingsside",
-      installAria: "Installer appen",
-      authAria: "Kontohandlinger",
-      installTitle: "Installer app",
-      installSubtitle: "For a chatte med jenter 18+, last ned appen",
-      login: "Logg inn",
-      signUp: "Registrer",
-      cta: "Start gratis videochat",
-      online: "Jenter online"
-    },
-    sv: {
-      pageLabel: "Videochatt landningssida",
-      installAria: "Installera appen",
-      authAria: "Kontoatgarder",
-      installTitle: "Installera appen",
-      installSubtitle: "For att chatta med tjejer 18+, ladda ner appen",
-      login: "Logga in",
-      signUp: "Registrera",
-      cta: "Starta gratis videochatt",
-      online: "Tjejer online"
-    },
-    it: {
-      pageLabel: "Pagina videochat",
-      installAria: "Installa l'app",
-      authAria: "Azioni account",
-      installTitle: "Installa app",
-      installSubtitle: "Per chattare con ragazze 18+, scarica l'app",
-      login: "Accedi",
-      signUp: "Registrati",
-      cta: "Avvia videochat gratis",
-      online: "Ragazze online"
-    },
-    nl: {
-      pageLabel: "Videochat landingspagina",
-      installAria: "App installeren",
-      authAria: "Accountacties",
-      installTitle: "App installeren",
-      installSubtitle: "Om te chatten met meiden 18+, download de app",
-      login: "Inloggen",
-      signUp: "Aanmelden",
-      cta: "Start gratis videochat",
-      online: "Meiden online"
-    },
-    ro: {
-      pageLabel: "Pagina de videochat",
-      installAria: "Instaleaza aplicatia",
-      authAria: "Actiuni cont",
-      installTitle: "Instaleaza aplicatia",
-      installSubtitle: "Ca sa discuti cu fete 18+, descarca aplicatia",
-      login: "Autentificare",
-      signUp: "Inscriere",
-      cta: "Incepe videochat gratuit",
-      online: "Fete online"
-    }
+  const LANDING_CONFIG = {
+    ageGateDelay: 1000,
+    ageGateLockDelay: 760
   };
 
-  function normalizeLocale(locale) {
-    if (!locale) {
-      return "en";
-    }
+  // Edit all visible text here.
+  const LANDING_TEXTS = {
+    pageTitle: "Install App",
+    pageLabel: "Install app landing page",
+    installAria: "Install the app",
+    installTitle: "Install App",
+    installSubtitle: "To chat with girls 18+, download the app",
+    ageAria: "Sensitive content confirmation",
+    ageTitle: "Sensitive content",
+    ageText: "To continue viewing and access adult content, you must confirm that you are over 18 years old.",
+    underButton: "I am under 18 years old",
+    overButton: "I am over 18 years old"
+  };
 
-    const cleanLocale = locale.replace("_", "-");
-    const parts = cleanLocale.split("-");
-    const language = (parts[0] || "").toLowerCase();
-    const region = (parts[1] || "").toUpperCase();
+  window.LANDING_CONFIG = LANDING_CONFIG;
+  window.LANDING_TEXTS = LANDING_TEXTS;
 
-    if (language === "pt") {
-      return region === "BR" ? "pt-BR" : "pt-PT";
-    }
+  function applyCopy() {
+    document.documentElement.lang = "en";
+    document.title = LANDING_TEXTS.pageTitle;
 
-    if (language === "es") {
-      return region === "419" || latinAmericaRegions.has(region) ? "es-419" : "es";
-    }
-
-    if (language === "no") {
-      return "nb";
-    }
-
-    if (language === "tl") {
-      return "fil";
-    }
-
-    return supportedLocales.includes(language) ? language : "en";
-  }
-
-  function getLocale() {
-    const params = new URLSearchParams(window.location.search);
-    const requestedLocale = params.get("lang");
-
-    if (requestedLocale) {
-      return normalizeLocale(requestedLocale);
-    }
-
-    const browserLocales = navigator.languages && navigator.languages.length
-      ? navigator.languages
-      : [navigator.language];
-
-    for (const locale of browserLocales) {
-      const normalized = normalizeLocale(locale);
-
-      if (translations[normalized]) {
-        return normalized;
-      }
-    }
-
-    return "en";
-  }
-
-  function localizePage() {
-    const locale = getLocale();
-    const copy = { ...translations.en, ...(translations[locale] || {}) };
-
-    document.documentElement.lang = locale;
-    document.title = copy.installTitle;
-
-    document.querySelectorAll("[data-i18n]").forEach((element) => {
-      const key = element.dataset.i18n;
-
-      if (copy[key]) {
-        element.textContent = copy[key];
-      }
+    document.querySelectorAll("[data-copy]").forEach((element) => {
+      const key = element.dataset.copy;
+      element.textContent = LANDING_TEXTS[key] || "";
     });
 
-    document.querySelectorAll("[data-i18n-aria]").forEach((element) => {
-      const key = element.dataset.i18nAria;
+    document.querySelectorAll("[data-copy-aria]").forEach((element) => {
+      const key = element.dataset.copyAria;
+      const label = LANDING_TEXTS[key];
 
-      if (copy[key]) {
-        element.setAttribute("aria-label", copy[key]);
+      if (label) {
+        element.setAttribute("aria-label", label);
       }
     });
   }
 
   function fitSingleLineText() {
     const elements = document.querySelectorAll(
-      ".app-copy strong, .app-copy span, .auth-link, .online, .cta"
+      ".app-copy strong, .app-copy span, .age-gate h1, .age-button"
     );
 
     elements.forEach((element) => {
       element.style.fontSize = "";
 
       const minSize = element.matches(".app-copy span")
-        ? 11
-        : element.matches(".auth-link")
-          ? 12
-          : 14;
+        ? 10
+        : element.matches(".age-button")
+          ? 15
+          : 18;
       let size = Number.parseFloat(window.getComputedStyle(element).fontSize);
 
-      while (element.scrollWidth > element.clientWidth + 1 && size > minSize) {
+      while (
+        (element.scrollWidth > element.clientWidth + 1 ||
+          element.scrollHeight > element.clientHeight + 1) &&
+        size > minSize
+      ) {
         size -= 0.5;
         element.style.fontSize = `${size}px`;
       }
     });
   }
 
-  function animateOnlineCount() {
-    const counter = document.querySelector("[data-online-count]");
+  function showAgeGate() {
+    const ageGate = document.querySelector("[data-age-gate]");
 
-    if (!counter) {
+    if (!ageGate || ageGate.classList.contains("is-visible")) {
       return;
     }
 
-    const base = 17321;
-    const next = base + Math.floor(Math.random() * 80);
-    counter.textContent = next.toLocaleString("en-US");
+    ageGate.classList.add("is-visible");
+    ageGate.style.transform = "translate3d(-50%, -50%, 0)";
+    ageGate.setAttribute("aria-hidden", "false");
+
+    window.setTimeout(() => {
+      ageGate.style.transition = "none";
+      ageGate.style.transform = "translate3d(-50%, -50%, 0)";
+    }, LANDING_CONFIG.ageGateLockDelay);
   }
 
-  function initBackgroundVideo() {
-    const video = document.querySelector(".reel-video");
+  function scheduleAgeGate() {
+    const startTimer = () => {
+      window.setTimeout(showAgeGate, LANDING_CONFIG.ageGateDelay);
+    };
 
-    if (!video) {
+    if (document.readyState === "complete") {
+      startTimer();
       return;
     }
 
-    video.defaultMuted = true;
-    video.muted = true;
-    video.loop = true;
-    video.playsInline = true;
-    video.setAttribute("muted", "");
-    video.setAttribute("playsinline", "");
-    video.setAttribute("webkit-playsinline", "");
-
-    const tryPlay = () => {
-      const promise = video.play();
-
-      if (promise && typeof promise.catch === "function") {
-        promise.catch(() => {});
-      }
-    };
-
-    const tryBlobFallback = () => {
-      if (video.dataset.blobFallback === "1" || video.readyState >= 2) {
-        return;
-      }
-
-      video.dataset.blobFallback = "1";
-
-      fetch("./video/reel-background.mp4")
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Video fallback failed");
-          }
-
-          return response.blob();
-        })
-        .then((blob) => {
-          const url = URL.createObjectURL(blob);
-          video.src = url;
-          video.load();
-          tryPlay();
-        })
-        .catch(() => {});
-    };
-
-    tryPlay();
-    window.setTimeout(tryBlobFallback, 1200);
-    video.addEventListener("error", tryBlobFallback, { once: true });
-    document.addEventListener("touchstart", tryPlay, { once: true, passive: true });
-    document.addEventListener("click", tryPlay, { once: true });
+    window.addEventListener("load", startTimer, { once: true });
   }
 
-  function initOfferRedirect() {
-    const landing = document.querySelector(".landing");
+  function initUnderButton() {
+    const underButton = document.querySelector(".age-button-outline");
 
-    if (!landing) {
+    if (!underButton) {
       return;
     }
 
-    landing.addEventListener("click", (event) => {
-      const link = event.target.closest("a");
-
-      if (link) {
-        return;
-      }
-
-      window.location.href = "{offer}";
+    underButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      underButton.blur();
     });
   }
 
   function init() {
-    localizePage();
+    applyCopy();
     fitSingleLineText();
-    animateOnlineCount();
-    initBackgroundVideo();
-    initOfferRedirect();
+    initUnderButton();
+    scheduleAgeGate();
     window.addEventListener("resize", fitSingleLineText);
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
+    document.addEventListener("DOMContentLoaded", init, { once: true });
   } else {
     init();
   }
