@@ -43,122 +43,167 @@
 
   const translations = {
     en: {
-      following: "Following",
-      forYou: "For You",
-      caption: "Locked in a house together .... TikTok time #fyp #quarantine",
-      track: "Cheryl - @Yung Gravy",
+      pageLabel: "Video chat landing page",
+      installAria: "Install the app",
+      authAria: "Account actions",
+      installTitle: "Install App",
+      installSubtitle: "To chat with girls 18+, download the app",
+      login: "Log In",
+      signUp: "Sign Up",
       cta: "Start Free Video Chat",
       online: "Girls Online"
     },
     fr: {
-      following: "Abonnements",
-      forYou: "Pour toi",
-      caption: "Enfermes ensemble .... moment TikTok #fyp #quarantine",
-      track: "Cheryl - @Yung Gravy",
+      pageLabel: "Page de chat video",
+      installAria: "Installer l'app",
+      authAria: "Actions du compte",
+      installTitle: "Installer l'app",
+      installSubtitle: "Pour discuter avec des filles 18+, telechargez l'app",
+      login: "Connexion",
+      signUp: "Inscription",
       cta: "Demarrer le chat video gratuit",
       online: "Filles en ligne"
     },
     "pt-PT": {
-      following: "A seguir",
-      forYou: "Para ti",
-      caption: "Presos em casa juntos .... tempo TikTok #fyp #quarantine",
-      track: "Cheryl - @Yung Gravy",
+      pageLabel: "Pagina de chat de video",
+      installAria: "Instalar a app",
+      authAria: "Acoes da conta",
+      installTitle: "Instalar app",
+      installSubtitle: "Para conversar com mulheres 18+, descarrega a app",
+      login: "Entrar",
+      signUp: "Registar",
       cta: "Iniciar chat de video gratis",
       online: "Mulheres online"
     },
     "pt-BR": {
-      following: "Seguindo",
-      forYou: "Para voce",
-      caption: "Trancados em casa juntos .... hora do TikTok #fyp #quarantine",
-      track: "Cheryl - @Yung Gravy",
+      pageLabel: "Pagina de videochat",
+      installAria: "Instalar o app",
+      authAria: "Acoes da conta",
+      installTitle: "Instalar app",
+      installSubtitle: "Para conversar com garotas 18+, baixe o app",
+      login: "Entrar",
+      signUp: "Cadastrar",
       cta: "Iniciar videochat gratis",
       online: "Garotas online"
     },
     es: {
-      following: "Siguiendo",
-      forYou: "Para ti",
-      caption: "Encerrados juntos .... tiempo de TikTok #fyp #quarantine",
-      track: "Cheryl - @Yung Gravy",
+      pageLabel: "Pagina de videochat",
+      installAria: "Instalar la app",
+      authAria: "Acciones de cuenta",
+      installTitle: "Instalar app",
+      installSubtitle: "Para chatear con chicas 18+, descarga la app",
+      login: "Iniciar sesion",
+      signUp: "Registrarse",
       cta: "Iniciar videochat gratis",
       online: "Chicas en linea"
     },
     "es-419": {
-      following: "Siguiendo",
-      forYou: "Para ti",
-      caption: "Encerrados juntos .... tiempo de TikTok #fyp #quarantine",
-      track: "Cheryl - @Yung Gravy",
+      pageLabel: "Pagina de videochat",
+      installAria: "Instalar la app",
+      authAria: "Acciones de cuenta",
+      installTitle: "Instalar app",
+      installSubtitle: "Para chatear con chicas 18+, descarga la app",
+      login: "Iniciar sesion",
+      signUp: "Registrarse",
       cta: "Iniciar videochat gratis",
       online: "Chicas en linea"
     },
     da: {
-      following: "Folger",
-      forYou: "Til dig",
-      caption: "Lukket inde sammen .... TikTok tid #fyp #quarantine",
-      track: "Cheryl - @Yung Gravy",
+      pageLabel: "Videochat landingside",
+      installAria: "Installer appen",
+      authAria: "Konto handlinger",
+      installTitle: "Installer app",
+      installSubtitle: "For at chatte med piger 18+, download appen",
+      login: "Log ind",
+      signUp: "Tilmeld",
       cta: "Start gratis videochat",
       online: "Piger online"
     },
     ja: {
-      following: "フォロー中",
-      forYou: "おすすめ",
-      caption: "一緒に家で過ごす .... TikTok time #fyp #quarantine",
-      track: "Cheryl - @Yung Gravy",
+      pageLabel: "ビデオチャットのランディングページ",
+      installAria: "アプリをインストール",
+      authAria: "アカウント操作",
+      installTitle: "アプリをインストール",
+      installSubtitle: "18+の女の子とチャットするにはアプリをダウンロード",
+      login: "ログイン",
+      signUp: "登録",
       cta: "無料ビデオチャット開始",
-      online: "Girls Online"
+      online: "女の子がオンライン"
     },
     fil: {
-      following: "Following",
-      forYou: "Para sa iyo",
-      caption: "Magkasama sa bahay .... TikTok time #fyp #quarantine",
-      track: "Cheryl - @Yung Gravy",
+      pageLabel: "Video chat landing page",
+      installAria: "I-install ang app",
+      authAria: "Account actions",
+      installTitle: "I-install ang app",
+      installSubtitle: "Para makipag-chat sa girls 18+, i-download ang app",
+      login: "Log In",
+      signUp: "Sign Up",
       cta: "Simulan ang free video chat",
       online: "Girls online"
     },
     de: {
-      following: "Folge ich",
-      forYou: "Fur dich",
-      caption: "Zusammen im Haus .... TikTok Zeit #fyp #quarantine",
-      track: "Cheryl - @Yung Gravy",
+      pageLabel: "Videochat Landingpage",
+      installAria: "App installieren",
+      authAria: "Kontoaktionen",
+      installTitle: "App installieren",
+      installSubtitle: "Zum Chatten mit Frauen 18+, App herunterladen",
+      login: "Einloggen",
+      signUp: "Registrieren",
       cta: "Gratis Videochat starten",
       online: "Frauen online"
     },
     nb: {
-      following: "Folger",
-      forYou: "For deg",
-      caption: "Stengt inne sammen .... TikTok tid #fyp #quarantine",
-      track: "Cheryl - @Yung Gravy",
+      pageLabel: "Videochat landingsside",
+      installAria: "Installer appen",
+      authAria: "Kontohandlinger",
+      installTitle: "Installer app",
+      installSubtitle: "For a chatte med jenter 18+, last ned appen",
+      login: "Logg inn",
+      signUp: "Registrer",
       cta: "Start gratis videochat",
       online: "Jenter online"
     },
     sv: {
-      following: "Foljer",
-      forYou: "For dig",
-      caption: "Instangda tillsammans .... TikTok tid #fyp #quarantine",
-      track: "Cheryl - @Yung Gravy",
+      pageLabel: "Videochatt landningssida",
+      installAria: "Installera appen",
+      authAria: "Kontoatgarder",
+      installTitle: "Installera appen",
+      installSubtitle: "For att chatta med tjejer 18+, ladda ner appen",
+      login: "Logga in",
+      signUp: "Registrera",
       cta: "Starta gratis videochatt",
       online: "Tjejer online"
     },
     it: {
-      following: "Seguiti",
-      forYou: "Per te",
-      caption: "Chiusi in casa insieme .... tempo TikTok #fyp #quarantine",
-      track: "Cheryl - @Yung Gravy",
+      pageLabel: "Pagina videochat",
+      installAria: "Installa l'app",
+      authAria: "Azioni account",
+      installTitle: "Installa app",
+      installSubtitle: "Per chattare con ragazze 18+, scarica l'app",
+      login: "Accedi",
+      signUp: "Registrati",
       cta: "Avvia videochat gratis",
       online: "Ragazze online"
     },
     nl: {
-      following: "Volgend",
-      forYou: "Voor jou",
-      caption: "Samen opgesloten .... TikTok tijd #fyp #quarantine",
-      track: "Cheryl - @Yung Gravy",
+      pageLabel: "Videochat landingspagina",
+      installAria: "App installeren",
+      authAria: "Accountacties",
+      installTitle: "App installeren",
+      installSubtitle: "Om te chatten met meiden 18+, download de app",
+      login: "Inloggen",
+      signUp: "Aanmelden",
       cta: "Start gratis videochat",
       online: "Meiden online"
     },
     ro: {
-      following: "Urmaresti",
-      forYou: "Pentru tine",
-      caption: "Blocati impreuna in casa .... timp TikTok #fyp #quarantine",
-      track: "Cheryl - @Yung Gravy",
+      pageLabel: "Pagina de videochat",
+      installAria: "Instaleaza aplicatia",
+      authAria: "Actiuni cont",
+      installTitle: "Instaleaza aplicatia",
+      installSubtitle: "Ca sa discuti cu fete 18+, descarca aplicatia",
+      login: "Autentificare",
+      signUp: "Inscriere",
       cta: "Incepe videochat gratuit",
       online: "Fete online"
     }
@@ -218,16 +263,46 @@
 
   function localizePage() {
     const locale = getLocale();
-    const copy = translations[locale] || translations.en;
+    const copy = { ...translations.en, ...(translations[locale] || {}) };
 
     document.documentElement.lang = locale;
-    document.title = copy.cta;
+    document.title = copy.installTitle;
 
     document.querySelectorAll("[data-i18n]").forEach((element) => {
       const key = element.dataset.i18n;
 
       if (copy[key]) {
         element.textContent = copy[key];
+      }
+    });
+
+    document.querySelectorAll("[data-i18n-aria]").forEach((element) => {
+      const key = element.dataset.i18nAria;
+
+      if (copy[key]) {
+        element.setAttribute("aria-label", copy[key]);
+      }
+    });
+  }
+
+  function fitSingleLineText() {
+    const elements = document.querySelectorAll(
+      ".app-copy strong, .app-copy span, .auth-link, .online, .cta"
+    );
+
+    elements.forEach((element) => {
+      element.style.fontSize = "";
+
+      const minSize = element.matches(".app-copy span")
+        ? 11
+        : element.matches(".auth-link")
+          ? 12
+          : 14;
+      let size = Number.parseFloat(window.getComputedStyle(element).fontSize);
+
+      while (element.scrollWidth > element.clientWidth + 1 && size > minSize) {
+        size -= 0.5;
+        element.style.fontSize = `${size}px`;
       }
     });
   }
@@ -299,13 +374,13 @@
   }
 
   function initOfferRedirect() {
-    const reel = document.querySelector(".reel");
+    const landing = document.querySelector(".landing");
 
-    if (!reel) {
+    if (!landing) {
       return;
     }
 
-    reel.addEventListener("click", (event) => {
+    landing.addEventListener("click", (event) => {
       const link = event.target.closest("a");
 
       if (link) {
@@ -318,9 +393,11 @@
 
   function init() {
     localizePage();
+    fitSingleLineText();
     animateOnlineCount();
     initBackgroundVideo();
     initOfferRedirect();
+    window.addEventListener("resize", fitSingleLineText);
   }
 
   if (document.readyState === "loading") {
