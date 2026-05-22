@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#fb3a86">
-    <link rel="stylesheet" href="./css/style.css?v=2">
-    <script defer src="./js/app.js?v=3"></script>
+    <meta name="theme-color" content="#ff7a3d">
+    <link rel="stylesheet" href="./css/styles.css?v=13">
+    <script defer src="./js/script.js?v=13"></script>
     <script>(function (w, d, s, l, i) {
             w[l] = w[l] || []; w[l].push({
                 'gtm.start':
@@ -31,37 +31,105 @@
     src="https://www.facebook.com/tr?id=636359672211566&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel Code -->
+    
   </head>
   <body>
+    
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHRV45S5" height="0" width="0"
             style="display:none;visibility:hidden"></iframe></noscript>
-
+    
+    
     <main id="app">
-      <section class="landing" data-copy-aria="pageLabel">
-        <img class="background-image" src="./img/Rectangle 13.png" alt="" fetchpriority="high">
-
-        <a class="app-banner" href="{offer}" data-copy-aria="installAria">
+      <section class="landing">
+        <img class="background-image" src="./img/background.png" alt="">
+        <a class="app-banner" href="{offer}" data-i18n-aria="installAria">
           <span class="app-icon" aria-hidden="true">
             <img src="./img/header-icon-1.png" alt="">
           </span>
           <span class="app-copy">
-            <strong data-copy="installTitle"></strong>
-            <span data-copy="installSubtitle"></span>
+            <strong data-i18n="installTitle"></strong>
+            <span data-i18n="installSubtitle"></span>
           </span>
           <span class="download-badge" aria-hidden="true">
             <img src="./img/header-icon-2.png" alt="">
           </span>
         </a>
-
-        <section class="age-gate" data-age-gate data-copy-aria="ageAria" role="dialog" aria-modal="true" aria-hidden="true">
-          <img class="age-icon" src="./img/Vector.png" alt="" aria-hidden="true">
-          <h1 data-copy="ageTitle"></h1>
-          <p data-copy="ageText"></p>
-          <div class="age-actions">
-            <button class="age-button age-button-outline" type="button" data-copy="underButton"></button>
-            <a class="age-button age-button-primary" href="{offer}" data-copy="overButton"></a>
+        <div class="content">
+          <div class="profiles">
+            <a class="profile-card" href="{offer}">
+              <img class="profile-image" src="./img/photo-1.jpg" alt="">
+              <span class="live-badge"></span>
+              <span class="profile-name"></span>
+            </a>
+            <a class="profile-card" href="{offer}">
+              <img class="profile-image" src="./img/photo-2.jpg" alt="">
+              <span class="live-badge"></span>
+              <span class="profile-name"></span>
+            </a>
+            <a class="profile-card" href="{offer}">
+              <img class="profile-image" src="./img/photo-3.jpg" alt="">
+              <span class="live-badge"></span>
+              <span class="profile-name"></span>
+            </a>
+            <a class="profile-card" href="{offer}">
+              <img class="profile-image" src="./img/photo-4.jpg" alt="">
+              <span class="live-badge"></span>
+              <span class="profile-name"></span>
+            </a>
+            <a class="profile-card" href="{offer}">
+              <img class="profile-image" src="./img/photo-4.jpg" alt="">
+              <span class="live-badge"></span>
+              <span class="profile-name"></span>
+            </a>
+            <a class="profile-card" href="{offer}">
+              <img class="profile-image" src="./img/photo-4.jpg" alt="">
+              <span class="live-badge"></span>
+              <span class="profile-name"></span>
+            </a>
+            <a class="profile-card" href="{offer}">
+              <img class="profile-image" src="./img/photo-4.jpg" alt="">
+              <span class="live-badge"></span>
+              <span class="profile-name"></span>
+            </a>
+            <a class="profile-card" href="{offer}">
+              <img class="profile-image" src="./img/photo-4.jpg" alt="">
+              <span class="live-badge"></span>
+              <span class="profile-name"></span>
+            </a>
           </div>
-        </section>
+        </div>
+
+        <div class="call-overlay" data-call-overlay aria-hidden="true">
+          <section class="call-window" role="dialog" aria-modal="true" data-i18n-aria="incomingCallAria">
+            <video class="call-video" autoplay muted loop playsinline preload="auto" poster="./img/photo-4.jpg">
+              <source src="./video/reel-background.mp4" type="video/mp4">
+            </video>
+            <img class="call-video-fallback" src="./img/photo-4.jpg" alt="">
+            <div class="call-shade" aria-hidden="true"></div>
+            <div class="call-content">
+              <span class="caller-avatar">
+                <img src="./img/profile-avatar.jpg" alt="">
+              </span>
+              <div class="caller-copy">
+                <h1 data-i18n="callerTitle"></h1>
+                <p data-i18n="callerStatus"></p>
+              </div>
+              <div class="call-actions">
+                <div class="call-action-buttons">
+                  <a class="call-button call-button-decline" href="{offer}" data-i18n-aria="declineCallAria">
+                    <img src="./img/Radio_button (1).png" alt="">
+                  </a>
+                  <a class="call-button call-button-accept" href="{offer}" data-i18n-aria="acceptCallAria">
+                    <img src="./img/Radio_button.png" alt="">
+                    <span class="free-label" aria-hidden="true">
+                      <img src="./img/Free Label Container.png" alt="">
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
       </section>
     </main>
   </body>
