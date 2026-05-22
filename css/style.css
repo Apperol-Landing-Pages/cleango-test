@@ -52,19 +52,30 @@
 }
 
 html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   min-height: 100%;
   background: #050201;
+  overscroll-behavior: none;
 }
 
 body {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   min-height: 100%;
   margin: 0;
+  overflow: hidden;
   overflow-x: hidden;
   background: #050201;
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
   text-rendering: geometricPrecision;
+  touch-action: none;
   -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
 }
 
 button {
@@ -72,12 +83,15 @@ button {
 }
 
 #app {
+  height: 100svh;
   min-height: 100svh;
+  overflow: hidden;
 }
 
 .landing {
   position: relative;
   width: min(100%, var(--page-max));
+  height: 100svh;
   min-height: 100svh;
   margin: 0 auto;
   overflow: hidden;
@@ -546,6 +560,7 @@ button {
   position: absolute;
   inset: 0;
   width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
