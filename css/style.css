@@ -182,13 +182,15 @@ img {
 
 
 @media (max-width: 390px) {
-    .fake-modal {
+     .fake-modal {
         width: 100%;
-        padding: 16px 16px;
+        padding: 25px 16px;
         border-radius: 30px;
     }
-
-
+    
+    .fake-modal__alert{
+        margin-bottom: 12px;
+    }
     .fake-modal__title {
         font-size: 26px;
         margin-bottom: 16px;
