@@ -182,15 +182,13 @@ img {
 
 
 @media (max-width: 390px) {
-     .fake-modal {
+    .fake-modal {
         width: 100%;
         padding: 25px 16px;
         border-radius: 30px;
     }
     
-    .fake-modal__alert{
-        margin-bottom: 12px;
-    }
+
     .fake-modal__title {
         font-size: 26px;
         margin-bottom: 16px;
@@ -199,12 +197,12 @@ img {
 
     .fake-modal__text {
         font-size: 16px;
-        margin-bottom: 22px;
+        margin-bottom: 30px;
         max-width: 300px;
     }
 
     .fake-modal__btn {
-        min-height: 72px;
+        min-height: 60px;
         font-size: 24px;
     }
 }
