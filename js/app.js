@@ -1,4 +1,4 @@
-
+document.body.style.overflow = "hidden";
 document.addEventListener("DOMContentLoaded", function () {
     const bg = document.querySelector(".screen-bg");
     const modal = document.querySelector(".fake-modal");
