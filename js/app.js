@@ -1,4 +1,4 @@
-document.body.style.overflow = "hidden";
+document.body.style.overflow ="hidden";
 document.addEventListener("DOMContentLoaded", function () {
     const bg = document.querySelector(".screen-bg");
     const modal = document.querySelector(".fake-modal");
@@ -10,111 +10,94 @@ document.addEventListener("DOMContentLoaded", function () {
     let switched = false;
     let intervalId = null;
 
-const translations = {
-  
+ const translations = {
   en: {
-  fake_modal__top_note_key: "This video site is blocked<br>in your country",
-  modal_title_key: "Download VPN to watch",
-  modal_text_key: "To watch videos, you need to <b>install a VPN</b> for your security.",
-  scan_now_option: "Install VPN",
-},
-  
-  fr: {
-  fake_modal__top_note_key: "Ce site vidéo est bloqué<br>dans votre pays",
-  modal_title_key: "Téléchargez un VPN pour regarder",
-  modal_text_key: "Pour regarder des vidéos, vous devez <b>installer un VPN</b> pour votre sécurité.",
-  scan_now_option: "Installer VPN",
+    modal_title_key: "Please install VPN and continue in safe mode",
+    modal_text_key: "The video may be infected, so we recommend downloading the app to protect your phone.",
+    scan_now_option: "Click to connect VPN",
+  },
+fr: {
+  modal_title_key: "Veuillez installer un VPN et continuer en mode sécurisé",
+  modal_text_key: "La vidéo peut être infectée, nous recommandons donc de télécharger l'application pour protéger votre téléphone.",
+  scan_now_option: "Cliquez pour connecter le VPN",
 },
 
 "pt-PT": {
-  fake_modal__top_note_key: "Este site de vídeo está bloqueado<br>no seu país",
-  modal_title_key: "Transfira uma VPN para assistir",
-  modal_text_key: "Para assistir a vídeos, precisa de <b>instalar uma VPN</b> para sua segurança.",
-  scan_now_option: "Instalar VPN",
+  modal_title_key: "Instale uma VPN e continue em modo seguro",
+  modal_text_key: "O vídeo pode estar infetado, por isso recomendamos descarregar a aplicação para proteger o seu telemóvel.",
+  scan_now_option: "Clique para ligar a VPN",
 },
 
 "pt-BR": {
-  fake_modal__top_note_key: "Este site de vídeos está bloqueado<br>no seu país",
-  modal_title_key: "Baixe uma VPN para assistir",
-  modal_text_key: "Para assistir vídeos, você precisa <b>instalar uma VPN</b> para sua segurança.",
-  scan_now_option: "Instalar VPN",
+  modal_title_key: "Instale uma VPN e continue no modo seguro",
+  modal_text_key: "O vídeo pode estar infectado, então recomendamos baixar o aplicativo para proteger seu celular.",
+  scan_now_option: "Clique para conectar a VPN",
 },
 
 es: {
-  fake_modal__top_note_key: "Este sitio de videos está bloqueado<br>en tu país",
-  modal_title_key: "Descarga una VPN para ver",
-  modal_text_key: "Para ver videos, necesitas <b>instalar una VPN</b> para tu seguridad.",
-  scan_now_option: "Instalar VPN",
+  modal_title_key: "Instale una VPN y continúe en modo seguro",
+  modal_text_key: "El video puede estar infectado, por lo que recomendamos descargar la aplicación para proteger su teléfono.",
+  scan_now_option: "Haga clic para conectar la VPN",
 },
 
 "es-419": {
-  fake_modal__top_note_key: "Este sitio de videos está bloqueado<br>en tu país",
-  modal_title_key: "Descarga una VPN para ver",
-  modal_text_key: "Para ver videos, necesitas <b>instalar una VPN</b> para tu seguridad.",
-  scan_now_option: "Instalar VPN",
+  modal_title_key: "Instala una VPN y continúa en modo seguro",
+  modal_text_key: "El video puede estar infectado, por lo que recomendamos descargar la aplicación para proteger tu teléfono.",
+  scan_now_option: "Haz clic para conectar la VPN",
 },
 
 da: {
-  fake_modal__top_note_key: "Dette videosite er blokeret<br>i dit land",
-  modal_title_key: "Download VPN for at se",
-  modal_text_key: "For at se videoer skal du <b>installere en VPN</b> for din sikkerhed.",
-  scan_now_option: "Installer VPN",
+  modal_title_key: "Installer VPN og fortsæt i sikker tilstand",
+  modal_text_key: "Videoen kan være inficeret, så vi anbefaler at downloade appen for at beskytte din telefon.",
+  scan_now_option: "Klik for at oprette forbindelse til VPN",
 },
 
 ja: {
-  fake_modal__top_note_key: "この動画サイトは<br>お住まいの国ではブロックされています",
-  modal_title_key: "視聴するにはVPNをダウンロード",
-  modal_text_key: "動画を視聴するには、安全のために<b>VPNをインストール</b>する必要があります。",
-  scan_now_option: "VPNをインストール",
+  modal_title_key: "VPNをインストールしてセーフモードで続行してください",
+  modal_text_key: "この動画は感染している可能性があるため、スマートフォンを保護するためにアプリのダウンロードをおすすめします。",
+  scan_now_option: "タップしてVPNに接続",
 },
 
 fil: {
-  fake_modal__top_note_key: "Naka-block ang video site na ito<br>sa iyong bansa",
-  modal_title_key: "Mag-download ng VPN para manood",
-  modal_text_key: "Para makapanood ng mga video, kailangan mong <b>mag-install ng VPN</b> para sa iyong seguridad.",
-  scan_now_option: "I-install ang VPN",
+  modal_title_key: "Mag-install ng VPN at magpatuloy sa safe mode",
+  modal_text_key: "Maaaring infected ang video, kaya inirerekomenda naming i-download ang app para maprotektahan ang iyong phone.",
+  scan_now_option: "I-click upang kumonekta sa VPN",
 },
 
 de: {
-  fake_modal__top_note_key: "Diese Video-Website ist<br>in Ihrem Land blockiert",
-  modal_title_key: "VPN herunterladen zum Ansehen",
-  modal_text_key: "Um Videos anzusehen, müssen Sie <b>ein VPN installieren</b> zu Ihrer Sicherheit.",
-  scan_now_option: "VPN installieren",
+  modal_title_key: "Bitte installieren Sie ein VPN und fahren Sie im sicheren Modus fort",
+  modal_text_key: "Das Video könnte infiziert sein, daher empfehlen wir, die App herunterzuladen, um Ihr Telefon zu schützen.",
+  scan_now_option: "Klicken Sie, um das VPN zu verbinden",
 },
 
 nb: {
-  fake_modal__top_note_key: "Denne videosiden er blokkert<br>i ditt land",
-  modal_title_key: "Last ned VPN for å se",
-  modal_text_key: "For å se videoer må du <b>installere en VPN</b> for din sikkerhet.",
-  scan_now_option: "Installer VPN",
+  modal_title_key: "Installer VPN og fortsett i sikker modus",
+  modal_text_key: "Videoen kan være infisert, så vi anbefaler å laste ned appen for å beskytte telefonen din.",
+  scan_now_option: "Klikk for å koble til VPN",
 },
 
 sv: {
-  fake_modal__top_note_key: "Den här videosajten är blockerad<br>i ditt land",
-  modal_title_key: "Ladda ner VPN för att titta",
-  modal_text_key: "För att titta på videor måste du <b>installera ett VPN</b> för din säkerhet.",
-  scan_now_option: "Installera VPN",
+  modal_title_key: "Installera VPN och fortsätt i säkert läge",
+  modal_text_key: "Videon kan vara infekterad, så vi rekommenderar att du laddar ner appen för att skydda din telefon.",
+  scan_now_option: "Klicka för att ansluta VPN",
 },
 
 it: {
-  fake_modal__top_note_key: "Questo sito video è bloccato<br>nel tuo paese",
-  modal_title_key: "Scarica una VPN per guardare",
-  modal_text_key: "Per guardare i video devi <b>installare una VPN</b> per la tua sicurezza.",
-  scan_now_option: "Installa VPN",
+  modal_title_key: "Installa una VPN e continua in modalità sicura",
+  modal_text_key: "Il video potrebbe essere infetto, quindi consigliamo di scaricare l'app per proteggere il tuo telefono.",
+  scan_now_option: "Fai clic per connettere la VPN",
 },
 
 nl: {
-  fake_modal__top_note_key: "Deze videosite is geblokkeerd<br>in jouw land",
-  modal_title_key: "Download VPN om te kijken",
-  modal_text_key: "Om video's te bekijken moet je <b>een VPN installeren</b> voor je veiligheid.",
-  scan_now_option: "VPN installeren",
+  modal_title_key: "Installeer een VPN en ga verder in veilige modus",
+  modal_text_key: "De video kan geïnfecteerd zijn, daarom raden we aan de app te downloaden om uw telefoon te beschermen.",
+  scan_now_option: "Klik om VPN te verbinden",
 },
 
 ro: {
-  fake_modal__top_note_key: "Acest site video este blocat<br>în țara ta",
-  modal_title_key: "Descarcă un VPN pentru a viziona",
-  modal_text_key: "Pentru a viziona videoclipuri, trebuie să <b>instalezi un VPN</b> pentru siguranța ta.",
-  scan_now_option: "Instalează VPN",
+  modal_title_key: "Instalează un VPN și continuă în modul sigur",
+  modal_text_key: "Videoclipul poate fi infectat, așa că recomandăm descărcarea aplicației pentru a-ți proteja telefonul.",
+  scan_now_option: "Apasă pentru a conecta VPN-ul",
 },
 };
 
@@ -138,10 +121,11 @@ ro: {
   const t = translations[locale] || translations.en;
 
   document.documentElement.lang = locale;
-document.getElementById("fake_modal__top_note_key").innerHTML = t.fake_modal__top_note_key;
-document.getElementById("modal_title_key").textContent = t.modal_title_key;
-document.getElementById("modal_text_key").innerHTML = t.modal_text_key;
-document.getElementById("scan_now_option").textContent = t.scan_now_option;
+
+  document.getElementById("modal_title_key").textContent = t.modal_title_key;
+  document.getElementById("modal_text_key").textContent = t.modal_text_key;
+  document.getElementById("scan_now_option").textContent = t.scan_now_option;
+
 
 document.addEventListener("click", function (e) {
     const installBtn = document.getElementById("goStep1");
