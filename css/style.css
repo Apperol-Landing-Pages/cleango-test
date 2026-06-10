@@ -52,34 +52,68 @@ img {
 }
 
 .screen-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: #000;
 }
 
 .screen-bg::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.52);
-    opacity: 0;
-    transition: opacity 0.35s ease;
-    z-index: 2;
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.52);
+  opacity: 0;
+  transition: opacity 0.2s  ease 1.8s;
+  z-index: 2;
 }
 
 .screen-bg.active::before {
-    opacity: 1;
+  opacity: 1;
 }
 
-.bg-image-slot {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background-image: url("../img/x.png");
-    background-repeat: no-repeat;
-    background-position: center 40px;
-    background-size: cover;
+.ui {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* верх */
+.close {
+  top: max(51px, env(safe-area-inset-top));
+  left: 48px;
+}
+
+.thumbnail {
+  top: max(50px, env(safe-area-inset-top));
+  left: 88px;
+}
+
+.airplay {
+  top: max(50px, env(safe-area-inset-top));
+  left: 136px;
+}
+
+.volume {
+  top: max(50px, env(safe-area-inset-top));
+  right: 36px;
+}
+
+/* центр */
+.center {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* низ — над адресной строкой браузера */
+.bottom {
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom) + 30px);
+  transform: translateX(-50%);
+  width: min(100vw, 425px);
+  height: auto;
 }
 
 .fake-modal {
@@ -99,7 +133,8 @@ img {
 
     opacity: 0;
     transform: translateY(80px);
-    animation: modalSlideUpCenter 0.80s ease-out 0.90s forwards;
+animation: modalSlideUpCenter 0.80s ease-out 2s forwards;
+   
 }
 
 @keyframes modalSlideUpCenter {
@@ -115,8 +150,8 @@ img {
 
 .fake-modal__icon-wrap {
     position: relative;
-    width: 50px;
-    height: 50px;
+    width: 80px;
+    height: 80px;
     margin: 0 auto 14px;
 }
 
@@ -194,13 +229,13 @@ img {
 @media (max-width: 390px) {
     .fake-modal {
         width: 100%;
-        padding: 25px 16px 0;
+        padding: 50px 16px 0;
         border-radius: 30px;
     }
 
 .fake-modal__icon-wrap {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
 }
 
 .fake-modal__icon-slot {
@@ -233,13 +268,13 @@ img {
     }
 
     .fake-modal {
-        padding: 20px 14px 0;
+        padding: 30px 14px 0;
         border-radius: 28px;
     }
 
     .fake-modal__icon-wrap {
-        width: 40px;
-        height: 40px;
+        width: 60px;
+        height: 60px;
     }
 
     .fake-modal__icon-slot {
@@ -249,7 +284,7 @@ img {
 
     .fake-modal__title {
         font-size: 19px;
-        max-width: 290px;
+        max-width: 250px;
         margin-bottom: 14px;
     }
 
@@ -313,7 +348,7 @@ img {
 @media (min-width: 414px) {
     .fake-modal {
         width: min(100%, 414px);
-        padding-top: 30px;
+        padding-top: 60px;
     }
 
     .fake-modal__title {
@@ -321,4 +356,20 @@ img {
         margin-bottom: 16px;
         max-width: 320px;
     }
+    
+
+}
+
+.progress-overlay {
+    position: fixed;
+    left: 50%;
+    bottom: 50px;
+
+    transform: translateX(-50%);
+
+    width: 340px; /* подбери размер */
+    max-width: 90vw;
+
+    z-index: 2;
+    pointer-events: none;
 }
