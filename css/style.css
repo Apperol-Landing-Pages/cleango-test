@@ -375,5 +375,5 @@ animation: modalSlideUpCenter 0.80s ease-out 2s forwards;
 }
 
 body.ios-chrome .bottom {
-  bottom: 64px;
+  bottom: 84px;
 }
