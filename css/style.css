@@ -110,7 +110,7 @@ img {
 /* низ — над адресной строкой браузера */
 .bottom {
   left: 50%;
-  bottom: calc(env(safe-area-inset-bottom) + 30px);
+  bottom: env(safe-area-inset-bottom);
   transform: translateX(-50%);
   width: min(100vw, 425px);
   height: auto;
