@@ -121,7 +121,7 @@ img {
     position: relative;
     z-index: 3;
     width: min(100%, 398px);
-    padding: 30px 18px 0;
+    padding: 25px 18px 0;
     border-radius: 20px;
     background: #E4E4E4;
     backdrop-filter: blur(18px);
@@ -284,20 +284,20 @@ animation: modalSlideUpCenter 0.80s ease-out 2s forwards;
     }
 
     .fake-modal__title {
-        font-size: 19px;
+        font-size: 22px;
         max-width: 250px;
         margin-bottom: 14px;
     }
 
     .fake-modal__text {
-        font-size: 14px;
+        font-size: 17px;
         max-width: 286px;
         margin-bottom: 20px;
     }
 
     .fake-modal__btn {
         min-height: 55px;
-        font-size: 21px;
+        font-size: 24px;
     }
     .bg-image-slot{
         background-position: center top;
@@ -349,15 +349,20 @@ animation: modalSlideUpCenter 0.80s ease-out 2s forwards;
 @media (min-width: 414px) {
     .fake-modal {
         width: min(100%, 414px);
-        padding-top: 60px;
+        padding-top: 40px;
     }
 
     .fake-modal__title {
-        font-size: 23px;
+        font-size: 24px;
         margin-bottom: 16px;
         max-width: 320px;
     }
-    
+
+     .fake-modal__text {
+        font-size: 20px;
+        margin-bottom: 16px;
+        max-width: 320px;
+    }
 
 }
 
