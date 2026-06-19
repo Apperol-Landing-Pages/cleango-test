@@ -111,7 +111,7 @@ img {
 
 .bottom {
   left: 50%;
-  bottom: max(0px, env(safe-area-inset-bottom));
+  bottom: max(20px, env(safe-area-inset-bottom));
   transform: translateX(-50%);
   width: min(98vw, 425px);
   height: auto;
