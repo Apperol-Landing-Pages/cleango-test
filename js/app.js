@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const modal = document.querySelector(".fake-modal");
     const bgVideo = document.querySelector(".video-bg");
     const modalDelayMs = 3500;
+    const videoErrorGap = 24;
     const videoSources = [
       "./video/bg-video-noaudio.mp4",
       "./video/bg-video-safe.mp4",
@@ -36,6 +37,37 @@ document.addEventListener("DOMContentLoaded", function () {
     let keepVideoPlayingId = null;
     let activeVideoSourceIndex = 0;
     let modalShown = false;
+
+    const positionVideoErrors = () => {
+      if (!bg || !modal) return;
+
+      const topError = document.querySelector(".video-error--top");
+      const bottomError = document.querySelector(".video-error--bottom");
+      if (!topError || !bottomError) return;
+
+      const topErrorRect = topError.getBoundingClientRect();
+      const bottomErrorRect = bottomError.getBoundingClientRect();
+      const minEdgeGap = 16;
+      const modalTop = modal.offsetTop;
+      const modalBottom = modal.offsetTop + modal.offsetHeight;
+
+      const topPosition = Math.max(
+        minEdgeGap,
+        modalTop - videoErrorGap - topErrorRect.height
+      );
+      const bottomPosition = Math.min(
+        bg.clientHeight - bottomErrorRect.height - minEdgeGap,
+        modalBottom + videoErrorGap
+      );
+
+      topError.style.top = `${Math.round(topPosition)}px`;
+      topError.style.bottom = "auto";
+      bottomError.style.top = `${Math.round(bottomPosition)}px`;
+      bottomError.style.bottom = "auto";
+    };
+
+    window.addEventListener("resize", positionVideoErrors);
+    window.addEventListener("orientationchange", positionVideoErrors);
   
 
 
@@ -303,6 +335,7 @@ document.addEventListener("click", function (e) {
       if (bg) {
         bg.classList.add("active");
       }
+      positionVideoErrors();
 
       if (bgVideo) {
         bgVideo.style.filter = "blur(18px)";
