@@ -4,7 +4,7 @@ body {
     width: 100%;
     min-height: 100%;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-    background: #fff;
+    background: #000;
     color: #fff;
     overflow-x: hidden;
 }
@@ -41,7 +41,7 @@ img {
     min-height: 100svh;
     height: var(--app-viewport-height, 100svh);
     overflow: hidden;
-    
+    background: #000;
     padding:
         max(14px, env(safe-area-inset-top))
         14px
@@ -57,46 +57,93 @@ img {
   inset: 0;
   z-index: 0;
   overflow: hidden;
-  background-image: url('../img/back.png');
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat;
+  background: #000 url("../img/video-poster.png") center / cover no-repeat;
 }
 
-.screen-bg::before {
-  content: "";
+.video-bg {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.52);
-  opacity: 0;
-  transition: opacity 0.2s  ease 1.8s;
-  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.01);
+  -webkit-transform: scale(1.01);
+  transition: filter 0.35s ease, transform 0.35s ease;
+  z-index: 1;
+  background: #000;
+  pointer-events: none;
+  will-change: filter, transform;
 }
 
-.screen-bg.active::before {
+.screen-bg.active .video-bg {
+  filter: blur(18px);
+  transform: scale(1.08);
+  -webkit-transform: scale(1.08);
+}
+
+.video-error {
+  position: absolute;
+  left: 50%;
+  z-index: 4;
+  display: flex;
+  width: min(100% - 48px, 360px);
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  color: #fff;
+  text-align: center;
+  opacity: 0;
+  transform: translateX(-50%);
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.screen-bg.active .video-error {
   opacity: 1;
+}
+
+.video-error--top {
+  top: clamp(78px, 15vh, 128px);
+}
+
+.video-error--bottom {
+  bottom: clamp(86px, 16vh, 142px);
+}
+
+.video-error__icon {
+  width: 58px;
+  height: 58px;
+}
+
+.video-error__text {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.25;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.32);
 }
 
 .ui {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   pointer-events: none;
 }
 
-
+/* верх */
 .close {
-  top: max(33px, env(safe-area-inset-top));
-  left: 25px;
+  top: max(51px, env(safe-area-inset-top));
+  left: 48px;
 }
 
 .thumbnail {
   top: max(50px, env(safe-area-inset-top));
-  left: 340px;
+  left: 88px;
 }
 
 .airplay {
   top: max(50px, env(safe-area-inset-top));
-  left: 111px;
+  left: 136px;
 }
 
 .volume {
@@ -104,25 +151,25 @@ img {
   right: 36px;
 }
 
-
+/* центр */
 .center {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
 }
 
-
+/* низ — над адресной строкой браузера */
 .bottom {
   left: 50%;
-  bottom: max(20px, env(safe-area-inset-bottom));
+  bottom: max(0px, env(safe-area-inset-bottom));
   transform: translateX(-50%);
-  width: min(90vw, 425px);
+  width: min(100vw, 425px);
   height: auto;
 }
 
 .fake-modal {
     position: relative;
-    z-index: 3;
+    z-index: 5;
     width: min(100%, 398px);
     padding: 25px 18px 0;
     border-radius: 20px;
@@ -136,8 +183,8 @@ img {
     overflow: hidden;
 
     opacity: 0;
-  transform: translateY(80px);
-animation: modalSlideUpCenter 0.80s ease-out 2s forwards;
+    transform: translateY(80px);
+animation: modalSlideUpCenter 0.80s ease-out 3.5s forwards;
    
 }
 
@@ -305,6 +352,15 @@ animation: modalSlideUpCenter 0.80s ease-out 2s forwards;
     .bg-image-slot{
         background-position: center top;
     }
+
+    .video-error__icon {
+      width: 40px;
+      height: 40px;
+    }
+
+    .video-error__text {
+       font-size: 12px; 
+    }
 }
 
 @media (max-width: 320px) {
@@ -374,7 +430,6 @@ animation: modalSlideUpCenter 0.80s ease-out 2s forwards;
     left: 50%;
     bottom: 50px;
 
-    
     transform: translateX(-50%);
 
     width: 340px; 
