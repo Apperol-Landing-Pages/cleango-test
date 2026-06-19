@@ -81,6 +81,10 @@ img {
   -webkit-transform: scale(1.08);
 }
 
+.screen-bg.active .ui {
+  filter: blur(18px);
+}
+
 .video-error {
   position: absolute;
   left: 50%;
