@@ -4,7 +4,7 @@ body {
     width: 100%;
     min-height: 100%;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-    background: #000;
+    background: #E6E6E6;
     color: #fff;
     overflow-x: hidden;
 }
@@ -57,7 +57,7 @@ img {
   inset: 0;
   z-index: 0;
   overflow: hidden;
-  background: #000;
+  background: #E6E6E6;
 }
 
 .screen-bg::before {
@@ -80,20 +80,20 @@ img {
   pointer-events: none;
 }
 
-/* верх */
+
 .close {
   top: max(51px, env(safe-area-inset-top));
-  left: 48px;
+  left: 25px;
 }
 
 .thumbnail {
   top: max(50px, env(safe-area-inset-top));
-  left: 88px;
+  left: 63px;
 }
 
 .airplay {
   top: max(50px, env(safe-area-inset-top));
-  left: 136px;
+  left: 111px;
 }
 
 .volume {
@@ -101,19 +101,19 @@ img {
   right: 36px;
 }
 
-/* центр */
+
 .center {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
 }
 
-/* низ — над адресной строкой браузера */
+
 .bottom {
   left: 50%;
   bottom: max(0px, env(safe-area-inset-bottom));
   transform: translateX(-50%);
-  width: min(100vw, 425px);
+  width: min(98vw, 425px);
   height: auto;
 }
 
@@ -133,7 +133,7 @@ img {
     overflow: hidden;
 
     opacity: 0;
-    transform: translateY(80px);
+  transform: translateY(80px);
 animation: modalSlideUpCenter 0.80s ease-out 2s forwards;
    
 }
