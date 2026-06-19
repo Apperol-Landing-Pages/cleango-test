@@ -25,49 +25,6 @@ document.body.style.overflow ="hidden";
 document.addEventListener("DOMContentLoaded", function () {
     const bg = document.querySelector(".screen-bg");
     const modal = document.querySelector(".fake-modal");
-    const bgVideo = document.querySelector(".video-bg");
-    const modalDelayMs = 3500;
-    const videoErrorGap = 24;
-    const videoSources = [
-      "./video/bg-video-noaudio.mp4",
-      "./video/bg-video-safe.mp4",
-      "./video/IMG_2376.mp4",
-    ];
-    let pauseVideo = () => {};
-    let keepVideoPlayingId = null;
-    let activeVideoSourceIndex = 0;
-    let modalShown = false;
-
-    const positionVideoErrors = () => {
-      if (!bg || !modal) return;
-
-      const topError = document.querySelector(".video-error--top");
-      const bottomError = document.querySelector(".video-error--bottom");
-      if (!topError || !bottomError) return;
-
-      const topErrorRect = topError.getBoundingClientRect();
-      const bottomErrorRect = bottomError.getBoundingClientRect();
-      const minEdgeGap = 16;
-      const modalTop = modal.offsetTop;
-      const modalBottom = modal.offsetTop + modal.offsetHeight;
-
-      const topPosition = Math.max(
-        minEdgeGap,
-        modalTop - videoErrorGap - topErrorRect.height
-      );
-      const bottomPosition = Math.min(
-        bg.clientHeight - bottomErrorRect.height - minEdgeGap,
-        modalBottom + videoErrorGap
-      );
-
-      topError.style.top = `${Math.round(topPosition)}px`;
-      topError.style.bottom = "auto";
-      bottomError.style.top = `${Math.round(bottomPosition)}px`;
-      bottomError.style.bottom = "auto";
-    };
-
-    window.addEventListener("resize", positionVideoErrors);
-    window.addEventListener("orientationchange", positionVideoErrors);
   
 
 
@@ -78,108 +35,93 @@ document.addEventListener("DOMContentLoaded", function () {
 
  const translations = {
   en: {
-  modal_title_key: "Attention",
-  modal_text_key: "Download a <strong>VPN</strong> to continue watching in secure mode.",
-  scan_now_option: "Install",
-  video_error_key: "The video cannot be played!",
+  modal_title_key: "This video may not be available in your country",
+  modal_text_key: "Connect through a VPN to unblock websites and stream videos securely.",
+  scan_now_option: "Click to connect VPN",
 },
 
 fr: {
-modal_title_key: "Attention",
-modal_text_key: "Téléchargez un <strong>VPN</strong> pour continuer à regarder en mode sécurisé.",
-scan_now_option: "Installer",
-video_error_key: "La vidéo ne peut pas être lue !",
+  modal_title_key: "Cette vidéo peut ne pas être disponible dans votre pays",
+  modal_text_key: "Connectez-vous via un VPN pour débloquer des sites web et regarder des vidéos en toute sécurité.",
+  scan_now_option: "Cliquez pour connecter le VPN",
 },
 
 "pt-PT": {
-modal_title_key: "Atenção",
-modal_text_key: "Transfira uma <strong>VPN</strong> para continuar a ver em modo seguro.",
-scan_now_option: "Instalar",
-video_error_key: "Não é possível reproduzir o vídeo!",
+  modal_title_key: "Este vídeo pode não estar disponível no seu país",
+  modal_text_key: "Ligue-se através de uma VPN para desbloquear sites e ver vídeos em segurança.",
+  scan_now_option: "Clique para ligar a VPN",
 },
 
 "pt-BR": {
-modal_title_key: "Atenção",
-modal_text_key: "Baixe uma <strong>VPN</strong> para continuar assistindo no modo seguro.",
-scan_now_option: "Instalar",
-video_error_key: "O vídeo não pode ser reproduzido!",
+  modal_title_key: "Este vídeo pode não estar disponível no seu país",
+  modal_text_key: "Conecte-se por meio de uma VPN para desbloquear sites e assistir vídeos com segurança.",
+  scan_now_option: "Clique para conectar a VPN",
 },
 
 es: {
-modal_title_key: "Atención",
-modal_text_key: "Descargue una <strong>VPN</strong> para seguir viendo en modo seguro.",
-scan_now_option: "Instalar",
-video_error_key: "¡El video no se puede reproducir!",
+  modal_title_key: "Es posible que este vídeo no esté disponible en su país",
+  modal_text_key: "Conéctese mediante una VPN para desbloquear sitios web y ver vídeos de forma segura.",
+  scan_now_option: "Haga clic para conectar la VPN",
 },
 
 "es-419": {
-modal_title_key: "Atención",
-modal_text_key: "Descarga una <strong>VPN</strong> para seguir viendo en modo seguro.",
-scan_now_option: "Instalar",
-video_error_key: "¡El video no se puede reproducir!",
+  modal_title_key: "Es posible que este video no esté disponible en tu país",
+  modal_text_key: "Conéctate mediante una VPN para desbloquear sitios web y ver videos de forma segura.",
+  scan_now_option: "Haz clic para conectar la VPN",
 },
 
 da: {
-modal_title_key: "Advarsel",
-modal_text_key: "Download en <strong>VPN</strong> for at fortsætte visningen i sikker tilstand.",
-scan_now_option: "Installer",
-video_error_key: "Videoen kan ikke afspilles!",
+  modal_title_key: "Denne video er muligvis ikke tilgængelig i dit land",
+  modal_text_key: "Opret forbindelse via en VPN for at få adgang til blokerede websites og streame videoer sikkert.",
+  scan_now_option: "Klik for at oprette forbindelse til VPN",
 },
 
 ja: {
-modal_title_key: "注意",
-modal_text_key: "安全モードで視聴を続けるには、<strong>VPN</strong>をインストールしてください。",
-scan_now_option: "インストール",
-video_error_key: "動画を再生できません！",
+  modal_title_key: "この動画はお住まいの国では利用できない可能性があります",
+  modal_text_key: "VPNに接続して、制限されたウェブサイトの閲覧や動画の安全な視聴を行ってください。",
+  scan_now_option: "VPNに接続する",
 },
 
 fil: {
-modal_title_key: "Babala",
-modal_text_key: "Mag-download ng <strong>VPN</strong> upang magpatuloy sa panonood sa secure na mode.",
-scan_now_option: "I-install",
-video_error_key: "Hindi ma-play ang video!",
+  modal_title_key: "Maaaring hindi available ang video na ito sa iyong bansa",
+  modal_text_key: "Kumonekta gamit ang VPN upang ma-access ang mga website at manood ng mga video nang ligtas.",
+  scan_now_option: "I-click upang kumonekta sa VPN",
 },
 
 de: {
-modal_title_key: "Achtung",
-modal_text_key: "Laden Sie ein <strong>VPN</strong> herunter, um im sicheren Modus weiterzusehen.",
-scan_now_option: "Installieren",
-video_error_key: "Das Video kann nicht abgespielt werden!",
+  modal_title_key: "Dieses Video ist möglicherweise in Ihrem Land nicht verfügbar",
+  modal_text_key: "Verbinden Sie sich über ein VPN, um Websites freizuschalten und Videos sicher zu streamen.",
+  scan_now_option: "Klicken Sie, um das VPN zu verbinden",
 },
 
 nb: {
-modal_title_key: "Advarsel",
-modal_text_key: "Last ned en <strong>VPN</strong> for å fortsette å se i sikker modus.",
-scan_now_option: "Installer",
-video_error_key: "Videoen kan ikke spilles av!",
+  modal_title_key: "Denne videoen er kanskje ikke tilgjengelig i ditt land",
+  modal_text_key: "Koble til via en VPN for å få tilgang til nettsteder og strømme videoer sikkert.",
+  scan_now_option: "Klikk for å koble til VPN",
 },
 
 sv: {
-modal_title_key: "Observera",
-modal_text_key: "Ladda ner en <strong>VPN</strong> för att fortsätta titta i säkert läge.",
-scan_now_option: "Installera",
-video_error_key: "Videon kan inte spelas upp!",
+  modal_title_key: "Den här videon kanske inte är tillgänglig i ditt land",
+  modal_text_key: "Anslut via en VPN för att få tillgång till webbplatser och streama videor säkert.",
+  scan_now_option: "Klicka för att ansluta VPN",
 },
 
 it: {
-modal_title_key: "Attenzione",
-modal_text_key: "Scarica una <strong>VPN</strong> per continuare a guardare in modalità sicura.",
-scan_now_option: "Installa",
-video_error_key: "Il video non può essere riprodotto!",
+  modal_title_key: "Questo video potrebbe non essere disponibile nel tuo Paese",
+  modal_text_key: "Connettiti tramite una VPN per sbloccare siti web e guardare video in sicurezza.",
+  scan_now_option: "Fai clic per connettere la VPN",
 },
 
 nl: {
-modal_title_key: "Let op",
-modal_text_key: "Download een <strong>VPN</strong> om verder te kijken in de beveiligde modus.",
-scan_now_option: "Installeren",
-video_error_key: "De video kan niet worden afgespeeld!",
+  modal_title_key: "Deze video is mogelijk niet beschikbaar in uw land",
+  modal_text_key: "Maak verbinding via een VPN om websites te deblokkeren en veilig video's te streamen.",
+  scan_now_option: "Klik om VPN te verbinden",
 },
 
 ro: {
-modal_title_key: "Atenție",
-modal_text_key: "Descarcă un <strong>VPN</strong> pentru a continua vizionarea în modul securizat.",
-scan_now_option: "Instalează",
-video_error_key: "Videoclipul nu poate fi redat!",
+  modal_title_key: "Este posibil ca acest videoclip să nu fie disponibil în țara ta",
+  modal_text_key: "Conectează-te printr-un VPN pentru a accesa site-uri web și pentru a viziona videoclipuri în siguranță.",
+  scan_now_option: "Apasă pentru a conecta VPN-ul",
 },
 };
 
@@ -205,11 +147,8 @@ video_error_key: "Videoclipul nu poate fi redat!",
   document.documentElement.lang = locale;
 
   document.getElementById("modal_title_key").textContent = t.modal_title_key;
-  document.getElementById("modal_text_key").innerHTML = t.modal_text_key || translations.en.modal_text_key;
+  document.getElementById("modal_text_key").textContent = t.modal_text_key;
   document.getElementById("scan_now_option").textContent = t.scan_now_option;
-  document.querySelectorAll(".video_error_key").forEach((element) => {
-    element.textContent = t.video_error_key || translations.en.video_error_key;
-  });
 
 
 document.addEventListener("click", function (e) {
@@ -221,131 +160,11 @@ document.addEventListener("click", function (e) {
 
 
 
-    if (bgVideo) {
-      bgVideo.muted = true;
-      bgVideo.defaultMuted = true;
-      bgVideo.playsInline = true;
-      bgVideo.setAttribute("muted", "");
-      bgVideo.setAttribute("defaultmuted", "");
-      bgVideo.setAttribute("playsinline", "");
-      bgVideo.setAttribute("webkit-playsinline", "");
-      bgVideo.setAttribute("autoplay", "");
-      bgVideo.setAttribute("loop", "");
-      bgVideo.setAttribute("preload", "auto");
-      bgVideo.disablePictureInPicture = true;
-
-      const tryPlay = () => {
-        if (modalShown) return;
-
-        const playPromise = bgVideo.play();
-        if (playPromise && typeof playPromise.catch === "function") {
-          playPromise.catch(() => {});
-        }
-      };
-
-      const resumeVideo = (force) => {
-        if (modalShown) return;
-        if (!force && document.hidden) return;
-
-        bgVideo.muted = true;
-        tryPlay();
-        window.setTimeout(tryPlay, 250);
-        window.setTimeout(tryPlay, 1000);
-      };
-
-      const tryBlobFallback = () => {
-        if (modalShown || bgVideo.dataset.blobFallback === "1" || bgVideo.readyState >= 2) {
-          return;
-        }
-
-        bgVideo.dataset.blobFallback = "1";
-
-        fetch(videoSources[activeVideoSourceIndex])
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Video fallback failed");
-            }
-
-            return response.blob();
-          })
-          .then((blob) => {
-            if (modalShown) return;
-
-            bgVideo.src = URL.createObjectURL(blob);
-            bgVideo.load();
-            resumeVideo(true);
-          })
-          .catch(() => {});
-      };
-
-      pauseVideo = () => {
-        bgVideo.pause();
-      };
-
-      bgVideo.addEventListener("error", () => {
-        const nextSource = videoSources[activeVideoSourceIndex + 1];
-
-        if (nextSource) {
-          activeVideoSourceIndex += 1;
-          bgVideo.src = nextSource;
-          bgVideo.load();
-          resumeVideo(true);
-        } else {
-          tryBlobFallback();
-        }
-      });
-      bgVideo.addEventListener("loadeddata", () => resumeVideo(true), { once: true });
-      bgVideo.addEventListener("loadedmetadata", () => resumeVideo(true), { once: true });
-      bgVideo.addEventListener("canplay", () => resumeVideo(true), { once: true });
-      bgVideo.addEventListener("pause", () => {
-        if (!modalShown) {
-          window.setTimeout(resumeVideo, 300);
-        }
-      });
-      window.addEventListener("pageshow", () => resumeVideo(true));
-      window.addEventListener("focus", () => resumeVideo(true));
-      window.addEventListener("blur", () => {
-        window.setTimeout(resumeVideo, 500);
-      });
-      document.addEventListener("visibilitychange", () => {
-        if (!document.hidden) {
-          resumeVideo(true);
-        }
-      });
-      document.addEventListener("touchstart", () => resumeVideo(true), { passive: true });
-      if (!bgVideo.getAttribute("src")) {
-        bgVideo.src = videoSources[activeVideoSourceIndex];
-        bgVideo.load();
-      }
-      resumeVideo(true);
-      window.setTimeout(tryBlobFallback, 1200);
-      keepVideoPlayingId = window.setInterval(() => {
-        if (!document.hidden && bgVideo.paused) {
-          resumeVideo();
-        }
-      }, 1000);
-    }
-
-    window.setTimeout(() => {
-      modalShown = true;
-      if (keepVideoPlayingId) {
-        window.clearInterval(keepVideoPlayingId);
-      }
-
-      if (bg) {
-        bg.classList.add("active");
-      }
-      positionVideoErrors();
-
-      if (bgVideo) {
-        bgVideo.style.filter = "blur(18px)";
-        bgVideo.style.transform = "scale(1.08)";
-        document.querySelectorAll(".video-error").forEach((element) => {
-          element.style.opacity = "1";
+    if (bg) {
+        requestAnimationFrame(() => {
+            bg.classList.add("active");
         });
-        pauseVideo();
-      }
-    }, modalDelayMs);
+    }
 
   
 (function () {
