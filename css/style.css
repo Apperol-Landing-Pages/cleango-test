@@ -85,7 +85,7 @@ img {
 
 
 .close {
-  top: max(51px, env(safe-area-inset-top));
+  top: max(33px, env(safe-area-inset-top));
   left: 25px;
 }
 
