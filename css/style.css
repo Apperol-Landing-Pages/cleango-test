@@ -113,7 +113,7 @@ img {
   left: 50%;
   bottom: max(20px, env(safe-area-inset-bottom));
   transform: translateX(-50%);
-  width: min(98vw, 425px);
+  width: min(90vw, 425px);
   height: auto;
 }
 
