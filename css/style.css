@@ -42,137 +42,155 @@ img {
     height: var(--app-viewport-height, 100svh);
     overflow: hidden;
     background: #000;
-    padding: 0;
+    padding:
+        max(14px, env(safe-area-inset-top))
+        14px
+        max(40px, env(safe-area-inset-bottom))
+        14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .screen-bg {
-   position: absolute;
+  position: absolute;
   inset: 0;
   z-index: 0;
   overflow: hidden;
-  background-image: url('../img/background_image.png');
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat;
+  background: #000;
 }
 
-.screen-bg::before {
-   content: "";
+.video-bg {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.52);
-  opacity: 0;
-  transition: opacity 0.2s  ease 1.8s;
-  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.01);
+  -webkit-transform: scale(1.01);
+  transition: filter 0.35s ease, transform 0.35s ease;
+  z-index: 1;
+  background: #000;
+  pointer-events: none;
+  will-change: filter, transform;
 }
 
-.screen-bg.active::before {
-  opacity: 1;
+.screen-bg.active .video-bg {
+  filter: blur(18px);
+  transform: scale(1.08);
+  -webkit-transform: scale(1.08);
+}
+
+.screen-bg.active .ui:not(.bottom) {
+  filter: blur(18px);
 }
 
 .ui {
   position: absolute;
-  z-index: 3;
+  z-index: 2;
   pointer-events: none;
 }
 
-
-.install-pill {
-  top: max(44px, env(safe-area-inset-top));
-  right: 70px;
-  min-width: 126px;
-  height: 34px;
-  padding: 0 24px;
-  border-radius: 999px;
-  background: #EAEAEA;
-  color: #222222;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 34px;
-  text-align: center;
+/* верх */
+.close {
+  top: max(51px, env(safe-area-inset-top));
+  left: 33px;
 }
 
 .thumbnail {
   top: max(50px, env(safe-area-inset-top));
-  left: 88px;
+  left: 70px;
 }
 
 .airplay {
   top: max(50px, env(safe-area-inset-top));
-  left: 136px;
+  left: 120px;
 }
 
 .volume {
-  top: max(49px, env(safe-area-inset-top));
-  right: 31px;
-  width: 24px;
-  height: 24px;
+  top: max(50px, env(safe-area-inset-top));
+  right: 36px;
 }
 
-
+/* центр */
 .center {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
 }
 
-
+/* низ — над адресной строкой браузера */
 .bottom {
   left: 50%;
-  bottom: max(20px, env(safe-area-inset-bottom));
+  bottom: max(10px, env(safe-area-inset-bottom));
   transform: translateX(-50%);
-  width: calc(100% - 36px);
-  max-width: 425px;
+  width: min(96vw, 425px);
   height: auto;
 }
 
-.warning-message {
-    position: absolute;
-    z-index: 3;
-    top: 36.5%;
-    left: 50%;
-    width: min(90%, 360px);
-    transform: translate(-50%, -50%);
-    display: grid;
-    justify-items: center;
-    gap: 12px;
-    text-align: center;
-    pointer-events: none;
+.install-banner {
+  position: absolute;
+  z-index: 6;
+  top: max(47px, env(safe-area-inset-top));
+  right: 13px;
+  display: none;
+  align-items: center;
+  gap: 12px;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: none;
 }
 
-.warning-message img {
-    width: 46px;
-    height: 46px;
+.iphone-frame.offer-active .install-banner {
+  display: flex;
 }
 
-.warning-message p {
-    margin: 0;
-    color: #ffffff;
-    font-size: 17px;
-    line-height: 1.2;
-    font-weight: 400;
-    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.26);
+.install-banner__text {
+  min-width: 156px;
+  height: 24px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: #EAEAEA;
+  color: #1c1c1e;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: center;
+  white-space: nowrap;
+        
 }
 
-.fake-sheet {
-    position: absolute;
-    z-index: 4;
-    left: 18px;
-    right: 18px;
-    bottom: max(105px, calc(env(safe-area-inset-bottom) + 86px));
-    opacity: 0;
-    transform: translateY(120px);
-    animation: modalSlideUpCenter 0.80s ease-out 2s forwards;
+.install-banner__icon {
+  width: 25px;
+  height: 25px;
+  flex: 0 0 auto;
 }
 
 .fake-modal {
-    width: 100%;
-    padding: 24px 24px 26px;
-    border-radius: 24px;
-    background: #ffffff;
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: max(84px, calc(env(safe-area-inset-bottom) + 84px));
+    z-index: 5;
+    width: auto;
+    max-width: 398px;
+    margin: 0 auto;
+    padding: 18px 14px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 14px;
+    background: #333333;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow:
+        0 20px 34px rgba(0, 0, 0, 0.36),
+        0 1px 0 rgba(255, 255, 255, 0.1) inset;
     text-align: left;
     overflow: hidden;
+
+    opacity: 0;
+    transform: translateY(80px);
+    animation: modalSlideUpCenter 0.80s ease-out 3.5s forwards;
+   
 }
 
 @keyframes modalSlideUpCenter {
@@ -186,63 +204,48 @@ img {
     }
 }
 
-.fake-modal__icon-wrap {
-    position: relative;
-    width: 64px;
-    height: 64px;
-    margin: 0 0 14px;
-}
-
-.fake-modal__icon-slot {
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    overflow: hidden;
-}
-
-.fake-modal__icon-slot img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+.fake-modal__warning {
+    width: 42px;
+    height: 42px;
+    margin: 0 0 12px;
 }
 
 .fake-modal__title {
-    margin: 0 0 12px;
+    margin: 0 0 8px;
     max-width: none;
     font-size: 21px;
     line-height: 1.12;
     font-weight: 700;
     letter-spacing: 0;
-    color: #111111;
+    color: #ffffff;
 }
 
 .fake-modal__text {
-    margin: 0;
+    margin: 0 0 20px;
     max-width: none;
-    font-size: 17px;
-    line-height: 1.2;
+    font-size: 15px;
+    line-height: 1.18;
     letter-spacing: 0;
-    color: #252525;
+    color: #ffffff;
 }
 
 .fake-modal__text .install-word {
-    color: #1677ff;
+    color: #2f7dff;
+}
+
+.fake-modal__actions {
+    margin: 0;
 }
 
 .fake-modal__btn {
     width: 100%;
-    min-height: 64px;
-    margin-top: 10px;
+    min-height: 54px;
     border-radius: 999px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    font-size: 24px;
+    font-size: 21px;
     font-weight: 500;
     letter-spacing: 0;
     transition: transform 0.18s ease, opacity 0.18s ease;
@@ -259,290 +262,190 @@ img {
 }
 
 .fake-modal__btn--install {
-    background: #2f6fff;
+    background: #3478f6;
     color: #ffffff;
-    font-weight: 500;
+    font-weight: 600;
+    letter-spacing: 0;
 }
 
 @media (max-width: 390px) {
-    .install-pill {
-        right: 56px;
-        min-width: 108px;
-        height: 29px;
+    .install-banner {
+        right: 13px;
+        gap: 12px;
+    }
+
+    .install-banner__text {
+        min-width: 156px;
+        height: 24px;
         padding: 0 16px;
-        font-size: 15px;
-        line-height: 29px;
+        font-size: 13px;
+        line-height: 24px;
     }
 
-    .volume {
-        right: 22px;
-        width: 22px;
-        height: 22px;
-    }
-
-    .warning-message {
-        top: 38%;
-        gap: 8px;
-    }
-
-    .warning-message img {
-        width: 38px;
-        height: 38px;
-    }
-
-    .warning-message p {
-        font-size: 12px;
-    }
-
-    .fake-sheet {
-        left: 14px;
-        right: 14px;
-        bottom: max(82px, calc(env(safe-area-inset-bottom) + 70px));
+    .install-banner__icon {
+        width: 25px;
+        height: 25px;
     }
 
     .fake-modal {
-        padding: 26px 26px 22px;
-        border-radius: 20px;
+        left: 24px;
+        right: 24px;
+        padding: 17px 20px 20px;
+        border-radius: 14px;
     }
 
-.fake-modal__icon-wrap {
-    width: 52px;
-    height: 52px;
-    margin-bottom: 8px;
-}
-
-.fake-modal__icon-slot {
-    width: 100%;
-    height: 100%;
-}
-
     .fake-modal__title {
-        font-size: 18px;
-        margin-bottom: 10px;
+        font-size: 21px;
+        margin-bottom: 8px;
         max-width: none;
     }
 
     .fake-modal__text {
         font-size: 15px;
-        margin-bottom: 0;
-        max-width: none;
-    }
-
-    .fake-modal__btn {
-        min-height: 58px;
-        margin-top: 6px;
-        font-size: 22px;
-    }
-}
-@media (max-width: 375px) {
-   .install-pill {
-        right: 56px;
-        min-width: 108px;
-        height: 29px;
-        padding: 0 16px;
-        font-size: 13px;
-        line-height: 29px;
-    }
-
-    .volume {
-        right: 22px;
-        width: 22px;
-        height: 22px;
-    }
-
-    .warning-message {
-        top: 34%;
-        gap: 8px;
-    }
-
-    .warning-message img {
-        width: 38px;
-        height: 38px;
-    }
-
-    .warning-message p {
-        font-size: 12px;
-    }
-
-    .fake-sheet {
-        left: 14px;
-        right: 14px;
-        bottom: max(82px, calc(env(safe-area-inset-bottom) + 70px));
-    }
-
-    .fake-modal {
-        padding: 26px 26px 18px;
-        border-radius: 20px;
-    }
-
-.fake-modal__icon-wrap {
-    width: 52px;
-    height: 52px;
-    margin-bottom: 8px;
-}
-
-.fake-modal__icon-slot {
-    width: 100%;
-    height: 100%;
-}
-
-    .fake-modal__title {
-        font-size: 16px;
-        margin-bottom: 6px;
-        max-width: none;
-    }
-
-    .fake-modal__text {
-        font-size: 13px;
-        margin-bottom: 0;
+        margin-bottom: 20px;
         max-width: none;
     }
 
     .fake-modal__btn {
         min-height: 54px;
-        margin-top: 6px;
-        font-size: 19px;
+        font-size: 21px;
+    }
+    
+    .fake-modal__warning {
+    width: 42px;
+    height: 42px;
+    margin: 0 0 12px;
+}
+}
+
+@media (max-width: 375px) {
+    .iphone-frame {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .fake-modal {
+        left: 20px;
+        right: 20px;
+        bottom: max(84px, calc(env(safe-area-inset-bottom) + 80px));
+        padding: 17px 14px 14px;
+        border-radius: 24px;
+    }
+
+    .fake-modal__title {
+        font-size: 15px;
+        max-width: none;
+        margin-bottom: 8px;
+    }
+
+    .fake-modal__text {
+        font-size: 12px;
+        max-width: none;
+        margin-bottom: 14px;
+    }
+
+    .fake-modal__btn {
+        min-height: 43px;
+        font-size: 16px;
+    }
+    .bg-image-slot{
+        background-position: center top;
     }
 }
 
 @media (max-width: 320px) {
-       .install-pill {
-        right: 56px;
-        min-width: 108px;
-        height: 29px;
-        padding: 0 16px;
-        font-size: 13px;
-        line-height: 29px;
-    }
-
-    .volume {
-        right: 22px;
-        width: 22px;
-        height: 22px;
-    }
-
-    .warning-message {
-        top: 34%;
-        gap: 8px;
-    }
-
-    .warning-message img {
-        width: 38px;
-        height: 38px;
-    }
-
-    .warning-message p {
-        font-size: 12px;
-    }
-
-    .fake-sheet {
-        left: 14px;
-        right: 14px;
-        bottom: max(82px, calc(env(safe-area-inset-bottom) + 70px));
+    .iphone-frame {
+        padding-left: 8px;
+        padding-right: 8px;
     }
 
     .fake-modal {
-        padding: 26px 26px 18px;
-        border-radius: 20px;
+        left: 12px;
+        right: 12px;
+        padding: 14px 12px 12px;
+        border-radius: 14px;
     }
 
-.fake-modal__icon-wrap {
-    width: 52px;
-    height: 52px;
-    margin-bottom: 8px;
-}
-
-.fake-modal__icon-slot {
-    width: 100%;
-    height: 100%;
-}
-
     .fake-modal__title {
-        font-size: 16px;
-        margin-bottom: 6px;
+        font-size: 14px;
+        margin-bottom: 7px;
         max-width: none;
     }
 
     .fake-modal__text {
+        max-width: 100%;
+        font-size: 11px;
+        line-height: 1.2;
+        margin-bottom: 12px;
+    }
+
+    .fake-modal__btn {
+        min-height: 40px;
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 414px) {
+  .install-banner {
+        right: 13px;
+        gap: 12px;
+    }
+
+    .install-banner__text {
+        min-width: 156px;
+        height: 24px;
+        padding: 0 16px;
         font-size: 13px;
-        margin-bottom: 0;
+        line-height: 24px;
+    }
+
+    .install-banner__icon {
+        width: 25px;
+        height: 25px;
+    }
+
+    .fake-modal {
+        left: 24px;
+        right: 24px;
+        padding: 17px 20px 20px;
+        border-radius: 14px;
+    }
+
+    .fake-modal__title {
+        font-size: 21px;
+        margin-bottom: 8px;
+        max-width: none;
+    }
+
+    .fake-modal__text {
+        font-size: 15px;
+        margin-bottom: 20px;
         max-width: none;
     }
 
     .fake-modal__btn {
         min-height: 54px;
-        margin-top: 6px;
-        font-size: 19px;
+        font-size: 21px;
     }
+    
+    .fake-modal__warning {
+    width: 42px;
+    height: 42px;
+    margin: 0 0 12px;
 }
 
-@media (min-width: 414px) {
-      .install-pill {
-        right: 56px;
-        min-width: 108px;
-        height: 29px;
-        padding: 0 16px;
-        font-size: 17px;
-        line-height: 29px;
-    }
-
-    .volume {
-        right: 22px;
-        width: 22px;
-        height: 22px;
-    }
-
-    .warning-message {
-        top: 43%;
-        gap: 8px;
-    }
-
-    .warning-message img {
-        width: 38px;
-        height: 38px;
-    }
-
-    .warning-message p {
-        font-size: 15px;
-    }
-
-    .fake-sheet {
-        left: 14px;
-        right: 14px;
-        bottom: max(82px, calc(env(safe-area-inset-bottom) + 70px));
-    }
-
-    .fake-modal {
-        padding: 26px 32px 22px;
-        border-radius: 20px;
-    }
-
-.fake-modal__icon-wrap {
-    width: 55px;
-    height: 55px;
-    margin-bottom: 8px;
 }
 
-.fake-modal__icon-slot {
-    width: 100%;
-    height: 100%;
-}
+.progress-overlay {
+    position: fixed;
+    left: 50%;
+    bottom: 50px;
 
-    .fake-modal__title {
-        font-size: 20px;
-        margin-bottom: 12px;
-        max-width: none;
-    }
+    transform: translateX(-50%);
 
-    .fake-modal__text {
-        font-size: 15px;
-        margin-bottom: 0;
-        max-width: none;
-    }
+    width: 340px; 
+    max-width: 90vw;
 
-    .fake-modal__btn {
-        min-height: 65px;
-        margin-top: 6px;
-        font-size: 23px;
-    }
+    z-index: 2;
+    pointer-events: none;
 }
