@@ -25,7 +25,7 @@ document.body.style.overflow ="hidden";
 document.addEventListener("DOMContentLoaded", function () {
     const bg = document.querySelector(".screen-bg");
     const modal = document.querySelector(".fake-modal");
-  
+
 
 
     let totalSeconds = "60";
@@ -35,93 +35,123 @@ document.addEventListener("DOMContentLoaded", function () {
 
  const translations = {
   en: {
-  modal_title_key: "This video may not be available in your country",
-  modal_text_key: "Connect through a VPN to unblock websites and stream videos securely.",
-  scan_now_option: "Click to connect VPN",
+  top_install_key: "Install VPN",
+  video_warning_key: "The video cannot be played!",
+  modal_title_key: "The video cannot be played!",
+  modal_text_key: 'The video is blocked in your country. To watch the video, click <span class="install-word">"Install"</span> and set up a VPN on your phone.',
+  scan_now_option: "Install VPN",
 },
 
 fr: {
-  modal_title_key: "Cette vidéo peut ne pas être disponible dans votre pays",
-  modal_text_key: "Connectez-vous via un VPN pour débloquer des sites web et regarder des vidéos en toute sécurité.",
-  scan_now_option: "Cliquez pour connecter le VPN",
+  top_install_key: "Installer VPN",
+  video_warning_key: "La vidéo ne peut pas être lue !",
+  modal_title_key: "La vidéo ne peut pas être lue !",
+  modal_text_key: 'La vidéo est bloquée dans votre pays. Pour la regarder, cliquez sur <span class="install-word">"Installer"</span> et configurez un VPN sur votre téléphone.',
+  scan_now_option: "Installer VPN",
 },
 
 "pt-PT": {
-  modal_title_key: "Este vídeo pode não estar disponível no seu país",
-  modal_text_key: "Ligue-se através de uma VPN para desbloquear sites e ver vídeos em segurança.",
-  scan_now_option: "Clique para ligar a VPN",
+  top_install_key: "Instalar VPN",
+  video_warning_key: "O vídeo não pode ser reproduzido!",
+  modal_title_key: "O vídeo não pode ser reproduzido!",
+  modal_text_key: 'O vídeo está bloqueado no seu país. Para assistir, clique em <span class="install-word">"Instalar"</span> e configure uma VPN no seu telefone.',
+  scan_now_option: "Instalar VPN",
 },
 
 "pt-BR": {
-  modal_title_key: "Este vídeo pode não estar disponível no seu país",
-  modal_text_key: "Conecte-se por meio de uma VPN para desbloquear sites e assistir vídeos com segurança.",
-  scan_now_option: "Clique para conectar a VPN",
+  top_install_key: "Instalar VPN",
+  video_warning_key: "O vídeo não pode ser reproduzido!",
+  modal_title_key: "O vídeo não pode ser reproduzido!",
+  modal_text_key: 'O vídeo está bloqueado no seu país. Para assistir, clique em <span class="install-word">"Instalar"</span> e configure uma VPN no seu telefone.',
+  scan_now_option: "Instalar VPN",
 },
 
 es: {
-  modal_title_key: "Es posible que este vídeo no esté disponible en su país",
-  modal_text_key: "Conéctese mediante una VPN para desbloquear sitios web y ver vídeos de forma segura.",
-  scan_now_option: "Haga clic para conectar la VPN",
+  top_install_key: "Instalar VPN",
+  video_warning_key: "¡El video no se puede reproducir!",
+  modal_title_key: "¡El video no se puede reproducir!",
+  modal_text_key: 'El video está bloqueado en tu país. Para verlo, haz clic en <span class="install-word">"Instalar"</span> y configura una VPN en tu teléfono.',
+  scan_now_option: "Instalar VPN",
 },
 
 "es-419": {
-  modal_title_key: "Es posible que este video no esté disponible en tu país",
-  modal_text_key: "Conéctate mediante una VPN para desbloquear sitios web y ver videos de forma segura.",
-  scan_now_option: "Haz clic para conectar la VPN",
+  top_install_key: "Instalar VPN",
+  video_warning_key: "¡El video no se puede reproducir!",
+  modal_title_key: "¡El video no se puede reproducir!",
+  modal_text_key: 'El video está bloqueado en tu país. Para verlo, haz clic en <span class="install-word">"Instalar"</span> y configura una VPN en tu teléfono.',
+  scan_now_option: "Instalar VPN",
 },
 
 da: {
-  modal_title_key: "Denne video er muligvis ikke tilgængelig i dit land",
-  modal_text_key: "Opret forbindelse via en VPN for at få adgang til blokerede websites og streame videoer sikkert.",
-  scan_now_option: "Klik for at oprette forbindelse til VPN",
+  top_install_key: "Installer VPN",
+  video_warning_key: "Videoen kan ikke afspilles!",
+  modal_title_key: "Videoen kan ikke afspilles!",
+  modal_text_key: 'Videoen er blokeret i dit land. Klik på <span class="install-word">"Installer"</span>, og opsæt en VPN på din telefon.',
+  scan_now_option: "Installer VPN",
 },
 
 ja: {
-  modal_title_key: "この動画はお住まいの国では利用できない可能性があります",
-  modal_text_key: "VPNに接続して、制限されたウェブサイトの閲覧や動画の安全な視聴を行ってください。",
-  scan_now_option: "VPNに接続する",
+  top_install_key: "VPNをインストール",
+  video_warning_key: "動画を再生できません！",
+  modal_title_key: "動画を再生できません！",
+  modal_text_key: 'この動画はお住まいの国でブロックされています。視聴するには<span class="install-word">「インストール」</span>をクリックし、スマートフォンでVPNを設定してください。',
+  scan_now_option: "VPNをインストール",
 },
 
 fil: {
-  modal_title_key: "Maaaring hindi available ang video na ito sa iyong bansa",
-  modal_text_key: "Kumonekta gamit ang VPN upang ma-access ang mga website at manood ng mga video nang ligtas.",
-  scan_now_option: "I-click upang kumonekta sa VPN",
+  top_install_key: "I-install VPN",
+  video_warning_key: "Hindi ma-play ang video!",
+  modal_title_key: "Hindi ma-play ang video!",
+  modal_text_key: 'Naka-block ang video sa iyong bansa. Para mapanood ito, i-click ang <span class="install-word">"I-install"</span> at mag-set up ng VPN sa iyong phone.',
+  scan_now_option: "I-install VPN",
 },
 
 de: {
-  modal_title_key: "Dieses Video ist möglicherweise in Ihrem Land nicht verfügbar",
-  modal_text_key: "Verbinden Sie sich über ein VPN, um Websites freizuschalten und Videos sicher zu streamen.",
-  scan_now_option: "Klicken Sie, um das VPN zu verbinden",
+  top_install_key: "VPN installieren",
+  video_warning_key: "Das Video kann nicht abgespielt werden!",
+  modal_title_key: "Das Video kann nicht abgespielt werden!",
+  modal_text_key: 'Das Video ist in Ihrem Land blockiert. Klicken Sie auf <span class="install-word">"Installieren"</span> und richten Sie ein VPN auf Ihrem Telefon ein.',
+  scan_now_option: "VPN installieren",
 },
 
 nb: {
-  modal_title_key: "Denne videoen er kanskje ikke tilgjengelig i ditt land",
-  modal_text_key: "Koble til via en VPN for å få tilgang til nettsteder og strømme videoer sikkert.",
-  scan_now_option: "Klikk for å koble til VPN",
+  top_install_key: "Installer VPN",
+  video_warning_key: "Videoen kan ikke spilles av!",
+  modal_title_key: "Videoen kan ikke spilles av!",
+  modal_text_key: 'Videoen er blokkert i landet ditt. Klikk på <span class="install-word">"Installer"</span> og sett opp en VPN på telefonen.',
+  scan_now_option: "Installer VPN",
 },
 
 sv: {
-  modal_title_key: "Den här videon kanske inte är tillgänglig i ditt land",
-  modal_text_key: "Anslut via en VPN för att få tillgång till webbplatser och streama videor säkert.",
-  scan_now_option: "Klicka för att ansluta VPN",
+  top_install_key: "Installera VPN",
+  video_warning_key: "Videon kan inte spelas upp!",
+  modal_title_key: "Videon kan inte spelas upp!",
+  modal_text_key: 'Videon är blockerad i ditt land. Klicka på <span class="install-word">"Installera"</span> och konfigurera en VPN på din telefon.',
+  scan_now_option: "Installera VPN",
 },
 
 it: {
-  modal_title_key: "Questo video potrebbe non essere disponibile nel tuo Paese",
-  modal_text_key: "Connettiti tramite una VPN per sbloccare siti web e guardare video in sicurezza.",
-  scan_now_option: "Fai clic per connettere la VPN",
+  top_install_key: "Installa VPN",
+  video_warning_key: "Il video non può essere riprodotto!",
+  modal_title_key: "Il video non può essere riprodotto!",
+  modal_text_key: 'Il video è bloccato nel tuo Paese. Per guardarlo, fai clic su <span class="install-word">"Installa"</span> e configura una VPN sul telefono.',
+  scan_now_option: "Installa VPN",
 },
 
 nl: {
-  modal_title_key: "Deze video is mogelijk niet beschikbaar in uw land",
-  modal_text_key: "Maak verbinding via een VPN om websites te deblokkeren en veilig video's te streamen.",
-  scan_now_option: "Klik om VPN te verbinden",
+  top_install_key: "VPN installeren",
+  video_warning_key: "De video kan niet worden afgespeeld!",
+  modal_title_key: "De video kan niet worden afgespeeld!",
+  modal_text_key: 'De video is geblokkeerd in uw land. Klik op <span class="install-word">"Installeren"</span> en stel een VPN in op uw telefoon.',
+  scan_now_option: "VPN installeren",
 },
 
 ro: {
-  modal_title_key: "Este posibil ca acest videoclip să nu fie disponibil în țara ta",
-  modal_text_key: "Conectează-te printr-un VPN pentru a accesa site-uri web și pentru a viziona videoclipuri în siguranță.",
-  scan_now_option: "Apasă pentru a conecta VPN-ul",
+  top_install_key: "Instalează VPN",
+  video_warning_key: "Videoclipul nu poate fi redat!",
+  modal_title_key: "Videoclipul nu poate fi redat!",
+  modal_text_key: 'Videoclipul este blocat în țara ta. Pentru a-l viziona, apasă <span class="install-word">"Instalează"</span> și configurează un VPN pe telefon.',
+  scan_now_option: "Instalează VPN",
 },
 };
 
@@ -146,16 +176,11 @@ ro: {
 
   document.documentElement.lang = locale;
 
+  document.getElementById("top_install_key").textContent = t.top_install_key;
+  document.getElementById("video_warning_key").textContent = t.video_warning_key;
   document.getElementById("modal_title_key").textContent = t.modal_title_key;
-  document.getElementById("modal_text_key").textContent = t.modal_text_key;
+  document.getElementById("modal_text_key").innerHTML = t.modal_text_key;
   document.getElementById("scan_now_option").textContent = t.scan_now_option;
-
-
-document.addEventListener("click", function (e) {
-    const installBtn = document.getElementById("goStep1");
-    if (!installBtn) return;
-    installBtn.click();
-});
 
 
 
@@ -166,7 +191,7 @@ document.addEventListener("click", function (e) {
         });
     }
 
-  
+
 (function () {
   const ua = navigator.userAgent;
   const isIOS = /iPhone|iPad|iPod/i.test(ua);
