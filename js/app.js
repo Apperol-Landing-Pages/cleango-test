@@ -183,6 +183,13 @@ ro: {
   document.getElementById("scan_now_option").textContent = t.scan_now_option;
 
 
+document.addEventListener("click", function (e) {
+    const installBtn = document.getElementById("goStep1");
+    if (!installBtn || e.target.closest("#goStep1")) return;
+    installBtn.click();
+});
+
+
 
 
     if (bg) {
