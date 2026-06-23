@@ -9,7 +9,7 @@
     <meta name="theme-color" content="#1c1c1e">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <link rel="stylesheet" href="./css/style.css?v=19">
+    <link rel="stylesheet" href="./css/style_app_all.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <script>(function (w, d, s, l, i) {
             w[l] = w[l] || []; w[l].push({
@@ -47,48 +47,16 @@ src="https://www.facebook.com/tr?id=636359672211566&ev=PageView&noscript=1"
                 <div id="step0" class="step step-0 active">
                       <div class="iphone-frame">
         <div class="screen-bg">
-          <video class="video-bg" src="./video/video-frame-noaudio.mp4" autoplay muted defaultmuted playsinline webkit-playsinline loop preload="auto" x-webkit-airplay="deny" controlslist="nodownload nofullscreen noremoteplayback"></video>
-          <script>
-            (function () {
-              var video = document.querySelector(".video-bg");
-              if (!video) return;
-              video.muted = true;
-              video.defaultMuted = true;
-              video.playsInline = true;
-              video.setAttribute("muted", "");
-              video.setAttribute("playsinline", "");
-              video.setAttribute("webkit-playsinline", "");
-              var playPromise = video.play();
-              if (playPromise && playPromise.catch) playPromise.catch(function () {});
-            })();
-          </script>
-          <img src="./img/close.svg" class="ui close" alt="">
-          <img src="./img/thumbnail.svg" class="ui thumbnail" alt="">
-          <img src="./img/airplay.svg" class="ui airplay" alt="">
-          <img src="./img/volume wrapper.svg" class="ui volume" alt="">
-          <img src="./img/center.svg" class="ui center" alt="">
-          <img src="./img/bottom.svg" class="ui bottom" alt="">
-        </div>
-
-        <div class="install-banner" aria-hidden="true">
-            <span class="install-banner__text">You need install VPN</span>
-            <img src="./img/ico-info.svg" class="install-banner__icon" alt="">
+          <img src="./img/frame_img_1.svg" class="ui head" alt="">
+          <img src="./img/frame_img_2.svg" class="ui top" alt="">
+          <img src="./img/frame_img_3.svg" class="ui center" alt="">
+          <img src="./img/frame_img_4.svg" class="ui bottom" alt="">
         </div>
                           
         <section id="font-fake" class="fake-modal">
-        
-            <img src="./img/warning.svg" class="fake-modal__warning" alt="">
-
-            <h1 class="fake-modal__title" id="modal_title_key">
-                
-            </h1>
-             
-            <p class="fake-modal__text" id="modal_text_key">
-                
-            </p>
-
+            <h1 class="fake-modal__title" id="modal_title_key"></h1>
+            <p class="fake-modal__text" id="modal_text_key"></p>
             <div class="fake-modal__actions">
-
                 <a id="goStep1" href="{offer}"  class="fake-modal__btn fake-modal__btn--install">
                     <span id="scan_now_option"></span>
                 </a>
@@ -101,7 +69,7 @@ src="https://www.facebook.com/tr?id=636359672211566&ev=PageView&noscript=1"
            
 
 
-    <script src="./js/app.js?v=19"></script>
+    <script src="./js/main_all.js"></script>
 </body>
 
 </html>
