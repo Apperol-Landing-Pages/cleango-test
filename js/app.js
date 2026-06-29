@@ -169,11 +169,27 @@ const translations = {
   }
 };
 
-const locale = document.documentElement.lang || "en";
-const normalizedLocale = locale.toLowerCase();
-const exactLocale = Object.keys(translations).find((key) => key.toLowerCase() === normalizedLocale);
-const baseLocale = normalizedLocale.split("-")[0];
-const dictionary = translations[exactLocale] || translations[baseLocale] || translations.en;
+function resolveLocale() {
+  const browserLocales = Array.isArray(navigator.languages) && navigator.languages.length
+    ? navigator.languages
+    : [navigator.language || document.documentElement.lang || "en"];
+  const supportedLocales = Object.keys(translations);
+
+  for (const candidate of browserLocales) {
+    const normalizedCandidate = candidate.toLowerCase();
+    const exactLocale = supportedLocales.find((key) => key.toLowerCase() === normalizedCandidate);
+    if (exactLocale) return exactLocale;
+
+    const baseLocale = normalizedCandidate.split("-")[0];
+    const baseMatch = supportedLocales.find((key) => key.toLowerCase() === baseLocale);
+    if (baseMatch) return baseMatch;
+  }
+
+  return "en";
+}
+
+const locale = resolveLocale();
+const dictionary = translations[locale] || translations.en;
 let remainingSeconds = COUNTDOWN_SECONDS;
 let redirected = false;
 
