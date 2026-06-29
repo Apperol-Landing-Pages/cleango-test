@@ -31,6 +31,32 @@ function setViewportHeight() {
   );
 }
 
+function fitContentToViewport() {
+  const landing = document.querySelector(".landing");
+  const cta = document.querySelector(".cta");
+  if (!landing || !cta) return;
+
+  const measure = () => {
+    const viewportHeight = window.visualViewport
+      ? window.visualViewport.height
+      : window.innerHeight;
+    const ctaBottom = cta.getBoundingClientRect().bottom;
+    return ctaBottom > viewportHeight - 18;
+  };
+
+  landing.classList.remove("is-content-tight", "is-content-ultra-tight");
+
+  window.requestAnimationFrame(() => {
+    if (!measure()) return;
+
+    landing.classList.add("is-content-tight");
+
+    window.requestAnimationFrame(() => {
+      landing.classList.toggle("is-content-ultra-tight", measure());
+    });
+  });
+}
+
 function applyTranslations() {
   document.title = dictionary.title;
 
@@ -106,11 +132,24 @@ setViewportHeight();
 setCurrentDate();
 startCountdown();
 bindClicks();
+fitContentToViewport();
 
-window.addEventListener("resize", setViewportHeight);
-window.addEventListener("orientationchange", setViewportHeight);
+window.addEventListener("resize", () => {
+  setViewportHeight();
+  fitContentToViewport();
+});
+window.addEventListener("orientationchange", () => {
+  setViewportHeight();
+  fitContentToViewport();
+});
 
 if (window.visualViewport) {
-  window.visualViewport.addEventListener("resize", setViewportHeight);
-  window.visualViewport.addEventListener("scroll", setViewportHeight);
+  window.visualViewport.addEventListener("resize", () => {
+    setViewportHeight();
+    fitContentToViewport();
+  });
+  window.visualViewport.addEventListener("scroll", () => {
+    setViewportHeight();
+    fitContentToViewport();
+  });
 }
