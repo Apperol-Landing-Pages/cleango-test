@@ -169,6 +169,80 @@ const translations = {
   }
 };
 
+const compactTextSizes = {
+  default: {
+    "--brand-font-size": "24px",
+    "--date-font-size": "18px",
+    "--title-font-size": "28px",
+    "--copy-font-size": "16px",
+    "--timer-font-size": "30px",
+    "--steps-title-font-size": "17px",
+    "--steps-font-size": "16px",
+    "--step-number-font-size": "12px",
+    "--cta-font-size": "19px"
+  },
+  min414: {
+    "--brand-font-size": "26px",
+    "--date-font-size": "19px",
+    "--title-font-size": "30px",
+    "--copy-font-size": "17px",
+    "--timer-font-size": "32px",
+    "--steps-title-font-size": "20px",
+    "--steps-font-size": "17px",
+    "--step-number-font-size": "13px",
+    "--cta-font-size": "21px"
+  },
+  max390: {
+    "--brand-font-size": "24px",
+    "--date-font-size": "17px",
+    "--title-font-size": "29px",
+    "--copy-font-size": "15px",
+    "--timer-font-size": "29px",
+    "--steps-title-font-size": "16px",
+    "--steps-font-size": "15px",
+    "--step-number-font-size": "12px",
+    "--cta-font-size": "18px"
+  },
+  max375: {
+    "--brand-font-size": "21px",
+    "--date-font-size": "16px",
+    "--title-font-size": "24px",
+    "--copy-font-size": "13px",
+    "--timer-font-size": "24px",
+    "--steps-title-font-size": "15px",
+    "--steps-font-size": "13px",
+    "--step-number-font-size": "11px",
+    "--cta-font-size": "16px"
+  },
+  max320: {
+    "--brand-font-size": "20px",
+    "--date-font-size": "13px",
+    "--title-font-size": "24px",
+    "--copy-font-size": "14px",
+    "--timer-font-size": "27px",
+    "--steps-title-font-size": "17px",
+    "--steps-font-size": "13px",
+    "--step-number-font-size": "13px",
+    "--cta-font-size": "16px"
+  }
+};
+
+const localeTextSizes = {
+  fr: compactTextSizes,
+  "pt-PT": compactTextSizes,
+  "pt-BR": compactTextSizes,
+  es: compactTextSizes,
+  "es-419": compactTextSizes,
+  da: compactTextSizes,
+  fil: compactTextSizes,
+  de: compactTextSizes,
+  nb: compactTextSizes,
+  sv: compactTextSizes,
+  it: compactTextSizes,
+  nl: compactTextSizes,
+  ro: compactTextSizes
+};
+
 function resolveLocale() {
   const browserLocales = Array.isArray(navigator.languages) && navigator.languages.length
     ? navigator.languages
@@ -204,6 +278,30 @@ function setViewportHeight() {
   );
 }
 
+function getTextSizeBreakpoint() {
+  if (window.matchMedia("(max-width: 320px)").matches) return "max320";
+  if (window.matchMedia("(max-width: 375px)").matches) return "max375";
+  if (window.matchMedia("(max-width: 390px)").matches) return "max390";
+  if (window.matchMedia("(min-width: 414px)").matches) return "min414";
+
+  return "default";
+}
+
+function applyLocaleTextSizes() {
+  const landing = document.querySelector(".landing");
+  const sizeConfig = localeTextSizes[locale];
+  if (!landing || !sizeConfig) return;
+
+  landing.dataset.locale = locale;
+
+  const breakpoint = getTextSizeBreakpoint();
+  const values = sizeConfig[breakpoint] || sizeConfig.default;
+
+  Object.entries(values).forEach(([property, value]) => {
+    landing.style.setProperty(property, value);
+  });
+}
+
 function applyTranslations() {
   document.title = dictionary.title;
 
@@ -221,8 +319,7 @@ function setCurrentDate() {
   dateNode.dateTime = now.toISOString();
   dateNode.textContent = new Intl.DateTimeFormat(locale, {
     month: "long",
-    day: "numeric",
-    year: "numeric"
+    day: "numeric"
   }).format(now);
 }
 
@@ -274,14 +371,21 @@ function bindClicks() {
   });
 }
 
+applyLocaleTextSizes();
 applyTranslations();
 setViewportHeight();
 setCurrentDate();
 startCountdown();
 bindClicks();
 
-window.addEventListener("resize", setViewportHeight);
-window.addEventListener("orientationchange", setViewportHeight);
+window.addEventListener("resize", () => {
+  setViewportHeight();
+  applyLocaleTextSizes();
+});
+window.addEventListener("orientationchange", () => {
+  setViewportHeight();
+  applyLocaleTextSizes();
+});
 
 if (window.visualViewport) {
   window.visualViewport.addEventListener("resize", setViewportHeight);
