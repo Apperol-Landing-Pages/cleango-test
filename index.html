@@ -1,17 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-    <title>Apple Security Alert</title>
-    <meta charset="UTF-8">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="color-scheme" content="dark light">
-    <meta name="theme-color" content="#1c1c1e">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <link rel="stylesheet" href="./css/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <script>(function (w, d, s, l, i) {
+  <meta charset="UTF-8">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#1c1c1e">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title></title>
+  <link rel="stylesheet" href="./img/style.css">
+  <script>(function (w, d, s, l, i) {
             w[l] = w[l] || []; w[l].push({
                 'gtm.start':
                     new Date().getTime(), event: 'gtm.js'
@@ -20,56 +18,62 @@
                     'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-WHRV45S5');</script>
 
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '636359672211566');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=636359672211566&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
-
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '636359672211566');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=636359672211566&ev=PageView&noscript=1"
+  alt=""
+  /></noscript>
+  <!-- End Meta Pixel Code -->
 </head>
-
 <body>
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHRV45S5" height="0" width="0"
-            style="display:none;visibility:hidden"></iframe></noscript>
+  <main class="landing" data-click-area>
+    <header class="topbar">
+      <div class="brand">
+        <img class="brand__icon" src="assets/safari.svg" alt="">
+        <span class="brand__name" data-i18n="brand"></span>
+      </div>
+      <time class="current-date" data-current-date></time>
+    </header>
 
-                <div id="step0" class="step step-0 active">
-                      <div class="iphone-frame">
-        <div class="screen-bg">
-          <img src="./img/frame_img_1.svg" class="ui head" alt="">
-          <img src="./img/frame_img_2.svg" class="ui top" alt="">
-          <img src="./img/frame_img_3.svg" class="ui center" alt="">
-          <img src="./img/frame_img_4.svg" class="ui bottom" alt="">
-        </div>
-                          
-        <section id="font-fake" class="fake-modal">
-            <h1 class="fake-modal__title" id="modal_title_key"></h1>
-            <p class="fake-modal__text" id="modal_text_key"></p>
-            <div class="fake-modal__actions">
-                <a id="goStep1" href="{offer}"  class="fake-modal__btn fake-modal__btn--install">
-                    <span id="scan_now_option"></span>
-                </a>
-            </div>
-        </section>
+    <section class="alert">
+      <h1 class="alert__title">
+        <span class="alert__danger" data-i18n="heroDanger"></span>
+        <span data-i18n="heroTitle"></span>
+      </h1>
+      <p class="alert__copy" data-i18n="heroCopy"></p>
 
-        
-    </div>
-                </div>
-           
+      <div class="divider"></div>
+      <div class="timer" data-countdown></div>
+      <div class="divider"></div>
 
+      <h2 class="steps__title" data-i18n="stepsTitle"></h2>
+      <ol class="steps">
+        <li class="steps__item">
+          <span class="steps__number">1</span>
+          <span data-i18n="stepOne"></span>
+        </li>
+        <li class="steps__item">
+          <span class="steps__number">2</span>
+          <span data-i18n="stepTwo"></span>
+        </li>
+      </ol>
+    </section>
 
-    <script src="./js/app.js"></script>
+    <a class="cta" href="{offer}" data-offer-link data-i18n="cta"></a>
+  </main>
+
+  <script src="./js/app.js"></script>
 </body>
-
 </html>
