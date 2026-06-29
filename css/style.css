@@ -186,7 +186,7 @@ img {
   justify-content: center;
   width: calc(100% - 58px);
   min-height: 65px;
-  margin: 0 29px 12px;
+  margin: 0 29px 25px;
   border-radius: 38px;
   background: var(--accent);
   color: #fff;
