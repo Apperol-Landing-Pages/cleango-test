@@ -58,7 +58,7 @@ img {
 }
 
 .topbar {
-  min-height: 82px;
+  min-height: 70px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -75,8 +75,8 @@ img {
 }
 
 .brand__icon {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   flex: 0 0 auto;
 }
 
@@ -98,7 +98,7 @@ img {
 
 .alert {
   flex: 1;
-  padding: 34px 29px 24px;
+  padding: 20px 29px 20px;
 }
 
 .alert__title {
@@ -129,7 +129,7 @@ img {
 }
 
 .timer {
-  padding: 18px 0 19px;
+  padding: 15px 0 15px;
   color: var(--danger);
   font-size: 31px;
   line-height: 1.1;
@@ -284,7 +284,7 @@ img {
   }
 
   .topbar {
-    min-height: 78px;
+    min-height: 70px;
   }
 
   .brand__icon {
@@ -301,7 +301,7 @@ img {
   }
 
   .alert {
-    padding-top: 34px;
+    padding-top: 30px;
     padding-bottom: 22px;
   }
 
@@ -316,7 +316,7 @@ img {
 
   .cta {
     width: calc(100% - 48px);
-    min-height: 72px;
+    min-height: 68px;
     margin-right: 24px;
     margin-left: 24px;
     font-size: 20px;
