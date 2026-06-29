@@ -500,7 +500,7 @@ img {
 .landing.is-content-tight .steps__title { margin-top: 20px; margin-bottom: 13px; font-size: 18px; }
 .landing.is-content-tight .steps { gap: 17px; }
 .landing.is-content-tight .steps__item { font-size: 16px; line-height: 1.12; }
-.landing.is-content-tight .cta { min-height: 58px; margin-bottom: max(18px, env(safe-area-inset-bottom)); font-size: 19px; }
+.landing.is-content-tight .cta { min-height: 58px; margin-bottom: max(20px, env(safe-area-inset-bottom)); font-size: 19px; }
 .landing.is-content-ultra-tight .topbar { min-height: 54px; }
 .landing.is-content-ultra-tight .alert { padding-top: 14px; padding-bottom: 8px; }
 .landing.is-content-ultra-tight .alert__title { font-size: 25px; }
