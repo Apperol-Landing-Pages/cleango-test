@@ -1,0 +1,18 @@
+<svg width="360" height="360" viewBox="0 0 360 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <linearGradient id="expA" x1="88" y1="54" x2="280" y2="300" gradientUnits="userSpaceOnUse"><stop stop-color="#76F7FF"/><stop offset="1" stop-color="#075CFF"/></linearGradient>
+  <radialGradient id="expG" cx="50%" cy="45%" r="58%"><stop stop-color="#2AD7F7" stop-opacity=".32"/><stop offset="1" stop-color="#2AD7F7" stop-opacity="0"/></radialGradient>
+  <filter id="expS" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="24" stdDeviation="22" flood-color="#00091C" flood-opacity=".42"/></filter>
+</defs>
+<rect width="360" height="360" rx="42" fill="url(#expG)"/>
+<g filter="url(#expS)">
+  <circle cx="180" cy="172" r="103" fill="#07162D" stroke="#2AD7F7" stroke-opacity=".22"/>
+  <circle cx="180" cy="172" r="67" fill="#0B2447" stroke="#59E8FF" stroke-opacity=".38"/>
+  <path d="M180 70v204M78 172h204" stroke="#59E8FF" stroke-width="3" opacity=".32"/>
+  <path d="M104 116c45 23 107 23 152 0M104 228c45-23 107-23 152 0" stroke="#59E8FF" stroke-width="3" opacity=".28"/>
+  <path d="M180 113 228 132c-4 48-20 84-48 106-28-22-44-58-48-106l48-19Z" fill="url(#expA)"/>
+  <path d="M154 188v-48h14l38 48h-14l-24-30v30h-14Z" fill="#EAF7FF"/>
+  <circle cx="85" cy="89" r="13" fill="#59E8FF"/><circle cx="278" cy="105" r="11" fill="#0A65FF"/><circle cx="280" cy="258" r="13" fill="#59E8FF"/><circle cx="82" cy="250" r="11" fill="#0A65FF"/>
+  <path d="M97 97 132 131M269 112l-40 30M269 252l-42-42M93 244l38-36" stroke="#59E8FF" stroke-width="5" stroke-linecap="round" opacity=".55"/>
+</g>
+</svg>

@@ -1,0 +1,10 @@
+<svg width="240" height="295" viewBox="0 0 240 295" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="webA" x1="43" y1="42" x2="202" y2="240" gradientUnits="userSpaceOnUse"><stop stop-color="#76F7FF"/><stop offset="1" stop-color="#075CFF"/></linearGradient></defs>
+<rect x="20" y="42" width="200" height="174" rx="24" fill="#07162D" stroke="#2AD7F7" stroke-opacity=".18"/>
+<rect x="36" y="62" width="168" height="24" rx="12" fill="#0B2447"/>
+<circle cx="51" cy="74" r="4" fill="#FF6B7A"/><circle cx="65" cy="74" r="4" fill="#FFD166"/><circle cx="79" cy="74" r="4" fill="#59E8FF"/>
+<path d="M120 103 163 119c-3 43-17 73-43 91-26-18-40-48-43-91l43-16Z" fill="url(#webA)"/>
+<path d="m101 151 13 13 29-35" stroke="#EAF7FF" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="46" y="232" width="148" height="28" rx="14" fill="#0B2447" stroke="#59E8FF" stroke-opacity=".24"/>
+<text x="120" y="251" text-anchor="middle" fill="#EAF7FF" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="800">Risky pages filtered</text>
+</svg>

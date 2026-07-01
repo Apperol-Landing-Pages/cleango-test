@@ -1,7 +1,8 @@
 {
-  "name": "cleango-test",
-  "compatibility_date": "2026-03-27",
+  "name": "nexoravpn",
+  "compatibility_date": "2026-06-30",
   "assets": {
-    "directory": "."
+    "directory": ".",
+    "not_found_handling": "single-page-application"
   }
 }

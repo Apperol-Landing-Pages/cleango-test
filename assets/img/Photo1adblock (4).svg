@@ -1,0 +1,10 @@
+<svg width="241" height="295" viewBox="0 0 241 295" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="hubA" x1="48" y1="38" x2="197" y2="238" gradientUnits="userSpaceOnUse"><stop stop-color="#76F7FF"/><stop offset="1" stop-color="#075CFF"/></linearGradient></defs>
+<rect x="34" y="43" width="173" height="190" rx="28" fill="#07162D" stroke="#2AD7F7" stroke-opacity=".18"/>
+<circle cx="120.5" cy="138" r="61" fill="#0B2447"/>
+<path d="M120.5 83v110M65.5 138h110M82 99l77 78M159 99l-77 78" stroke="#59E8FF" stroke-width="2" opacity=".32"/>
+<circle cx="120.5" cy="138" r="35" fill="url(#hubA)"/>
+<path d="m104 140 12 12 25-31" stroke="#EAF7FF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="73" cy="92" r="8" fill="#59E8FF"/><circle cx="174" cy="92" r="8" fill="#0A65FF"/><circle cx="74" cy="190" r="8" fill="#0A65FF"/><circle cx="174" cy="190" r="8" fill="#59E8FF"/>
+<text x="120.5" y="260" text-anchor="middle" fill="#EAF7FF" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800">Security Overview</text>
+</svg>
