@@ -1,9 +1,0 @@
-<svg width="241" height="295" viewBox="0 0 241 295" fill="none" xmlns="http://www.w3.org/2000/svg">
-<defs><linearGradient id="lockA" x1="55" y1="36" x2="189" y2="239" gradientUnits="userSpaceOnUse"><stop stop-color="#76F7FF"/><stop offset="1" stop-color="#075CFF"/></linearGradient></defs>
-<path d="M65 123c0-33 22-58 55.5-58S176 90 176 123" stroke="#59E8FF" stroke-width="15" stroke-linecap="round"/>
-<rect x="49" y="112" width="143" height="110" rx="30" fill="#07162D" stroke="#2AD7F7" stroke-opacity=".22"/>
-<circle cx="120.5" cy="158" r="39" fill="url(#lockA)"/>
-<path d="M120.5 145a12 12 0 0 1 7 21.8l2 14.2h-18l2-14.2a12 12 0 0 1 7-21.8Z" fill="#061226"/>
-<path d="M72 238h97" stroke="#59E8FF" stroke-width="7" stroke-linecap="round" opacity=".55"/>
-<text x="120.5" y="263" text-anchor="middle" fill="#EAF7FF" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800">Connection Protected</text>
-</svg>
