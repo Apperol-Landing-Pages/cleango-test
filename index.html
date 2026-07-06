@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="format-detection" content="telephone=no">
-  <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="#1c1c1e">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f4f4f4">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title></title>
   <link rel="stylesheet" href="./css/styles.css">
@@ -41,36 +41,29 @@
   <main class="landing" data-click-area>
     <header class="topbar">
       <div class="brand">
-        <img class="brand__icon" src="assets/safari.svg" alt="">
+        <img class="brand__icon" src="assets/apple.svg" alt="">
         <span class="brand__name" data-i18n="brand"></span>
       </div>
-      <time class="current-date" data-current-date></time>
+      <time class="current-date" data-i18n="dateLabel"></time>
     </header>
 
-    <section class="alert">
-      <img class="alert__icon" src="assets/warning.svg" alt="">
-      <h1 class="alert__title">
-        <span data-i18n="heroTitle"></span>
-        <span class="alert__danger" data-i18n="heroDanger"></span>
+    <section class="content">
+      <h1 class="hero-title">
+        <span class="hero-title__line" data-i18n="heroLead"></span>
+        <span class="hero-title__line">
+          <span class="hero-title__danger" data-i18n="heroDanger"></span>
+          <span data-i18n="heroTail"></span>
+        </span>
       </h1>
-      <p class="alert__copy" data-i18n="heroCopy"></p>
 
-      <div class="timer-card">
-        <div class="timer" data-countdown></div>
-        <p class="timer-card__copy" data-i18n="timerCopy"></p>
+      <div class="code-card" aria-hidden="true">
+        <pre class="code-lines" data-code-lines></pre>
       </div>
 
-      <h2 class="steps__title" data-i18n="stepsTitle"></h2>
-      <ol class="steps">
-        <li class="steps__item">
-          <span class="steps__number" data-i18n="stepOneLabel"></span>
-          <span data-i18n="stepOne"></span>
-        </li>
-        <li class="steps__item">
-          <span class="steps__number" data-i18n="stepTwoLabel"></span>
-          <span data-i18n="stepTwo"></span>
-        </li>
-      </ol>
+      <div class="timer-block">
+        <div class="timer" data-countdown></div>
+        <p class="timer-block__copy" data-i18n="timerCopy"></p>
+      </div>
     </section>
 
     <a class="cta" href="{offer}" data-offer-link data-i18n="cta"></a>
