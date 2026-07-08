@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;800&display=swap");
+
 
 * {
   padding: 0;
@@ -7,10 +7,10 @@
   text-decoration: none;
   list-style-type: none;
   outline: none;
-  font-family: "SF Pro", "Roboto", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-user-select: none;
   user-select: none;
-  -webkit-touch-callout: none; /* disables iOS callout menu on long press */
+  -webkit-touch-callout: none;
 }
 
 input, textarea {
@@ -49,7 +49,7 @@ body {
 
 .title {
   font-family: inherit;
-  font-weight: 600;
+  font-weight: 590;
   font-size: 22px;
   line-height: 34px;
   letter-spacing: -0.26px;
@@ -59,7 +59,7 @@ body {
 
 .subtitle {
   font-family: inherit;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 17px;
   line-height: 22px;
   letter-spacing: -0.43px;
@@ -78,7 +78,7 @@ body {
 
 .text {
   font-family: inherit;
-  font-weight: 400;
+  font-weight: 300;
   font-size: 14px;
   line-height: 18px;
   text-align: center;
@@ -226,14 +226,14 @@ body {
   font-size: clamp(22px, 2.9dvh, 32px);
   line-height: 1.2;
   letter-spacing: -0.6px;
-  color: #2d3038;
+  color: #23262F;
 }
 
 .step-one__device {
   margin-bottom: clamp(10px, 1.63dvh, 18px);
   font-family: inherit;
   font-size: clamp(14px, 1.72dvh, 19px);
-  font-weight: 600;
+  font-weight: 510;
   line-height: clamp(18px, 2.17dvh, 24px);
   text-align: center;
   color: #6b6b6f;
@@ -241,7 +241,7 @@ body {
 
 .step-one__device strong {
   color: #0b0b0d;
-  font-weight: 800;
+  font-weight: 590;
 }
 
 .step-one__risk {
@@ -257,7 +257,7 @@ body {
   box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.2);
   font-family: inherit;
   font-size: clamp(16px, 1.99dvh, 22px);
-  font-weight: 800;
+  font-weight: 590;
   line-height: clamp(19px, 2.17dvh, 24px);
   text-align: center;
   color: #fff;
@@ -312,12 +312,11 @@ body {
 }
 
 .step-one__description {
-  font-family: inherit;
-  font-weight: 700;
+  font-weight: 510;
   font-size: clamp(13px, 1.72dvh, 19px);
   line-height: 1.48;
   text-align: center;
-  color: #666;
+  color: #00000099;
 }
 
 .step-one__warning {
@@ -372,7 +371,7 @@ body {
   overflow-wrap: anywhere;
   font-family: inherit;
   font-size: clamp(17px, 2.26dvh, 25px);
-  font-weight: 800;
+  font-weight: 590;
   line-height: 1.1;
   color: #050505;
 }
@@ -380,7 +379,7 @@ body {
 .step-one__alert-copy p {
   font-family: inherit;
   font-size: clamp(14px, 1.81dvh, 20px);
-  font-weight: 700;
+  font-weight: 590;
   line-height: 1.15;
   color: #ff2d2d;
   animation: pulseButton 1s infinite alternate;
@@ -397,7 +396,7 @@ body {
   background-color: #ff3b35;
   font-family: inherit;
   font-size: clamp(15px, 1.81dvh, 20px);
-  font-weight: 500;
+  font-weight: 510;
   line-height: 1;
   color: #fff;
 }
@@ -413,7 +412,7 @@ body {
   border: none;
   border-radius: 10px;
   font-family: inherit;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 16px;
   line-height: 22px;
   color: #fff;
@@ -427,7 +426,7 @@ body {
   background: #1094ed;
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.28);
   font-size: clamp(18px, 2.36dvh, 26px);
-  font-weight: 500;
+  font-weight: 510;
   line-height: 1;
   animation: pulseButton 1s infinite alternate;
 }
