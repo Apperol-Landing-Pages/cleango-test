@@ -46,7 +46,7 @@ let vibrationInterval = null;
 let hasSeenRiskPopup = false;
 
 startScanButton.addEventListener("click", function () {
-  stepTwo.style.display = "flex";
+/*stepTwo.style.display = "flex";
   stepTwo.classList.add("slide-in-right");
 
   stepOne.classList.add("slide-out-left");
@@ -57,7 +57,7 @@ startScanButton.addEventListener("click", function () {
     stepTwo.classList.remove("slide-in-right");
 
     startScanAnimation();
-  }, 350);
+  }, 350); */
 });
 
 function startScanAnimation() {
