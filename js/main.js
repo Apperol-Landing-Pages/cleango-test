@@ -1,22 +1,18 @@
 const DETECTED_ISSUES = [
-  { code: "123223", process: "Detected", message: "App Crashed" },
-  { code: "484838", process: "Detected", message: "Slow Charging" },
-  { code: "394393", process: "Detected", message: "Battery Overheating" },
-  { code: "383833", process: "Detected", message: "Corrupted Photos" },
-  { code: "323233", process: "Detected", message: "Memory Critical" },
-  { code: "323255", process: "Detected", message: "No Internet Access" },
-  { code: "504943", process: "Detected", message: "SIM Card Not Found" },
-  { code: "584747", process: "Detected", message: "Contacts Disappeared" },
-  { code: "573647", process: "Detected", message: "Display Glitch" },
-  { code: "595843", process: "Detected", message: "High CPU Usage" },
-  { code: "584747", process: "Detected", message: "Update Required" },
-  { code: "094837", process: "Detected", message: "Data Loss Warning" },
-  { code: "002384", process: "Detected", message: "Audio Problem" },
-  {
-    code: "349483",
-    process: "Detected",
-    message: "Lock Screen Not Responding",
-  },
+  "App Crashed",
+  "Slow Charging",
+  "Battery Overheating",
+  "Corrupted Photos",
+  "Memory Critical",
+  "No Internet Access",
+  "SIM Card Not Found",
+  "Contacts Disappeared",
+  "Display Glitch",
+  "High CPU Usage",
+  "Update Required",
+  "Data Loss Warning",
+  "Audio Problem",
+  "Lock Screen Not Responding",
 ];
 
 const stepOne = document.querySelector(".step-one");
@@ -26,9 +22,15 @@ const startScanButton = document.getElementById("start-scan-button");
 const tableBody = document.querySelector(".threats-table tbody");
 const progressBar = document.getElementById("progress-bar");
 const detectedIssuesCount = document.getElementById("detected-issues-count");
-const settingsIconWrapper = document.querySelector(
-  ".step-two .settings-icon-wrapper",
-);
+const stepTwoSecurityIcon = document.getElementById("step-two-security-icon");
+const stepTwoFaceId = document.getElementById("step-two-face-id");
+const stepTwoStatuses = {
+  identity: document.querySelector('[data-check="identity"] .step-two__status'),
+  settings: document.querySelector('[data-check="settings"] .step-two__status'),
+  applecare: document.querySelector(
+    '[data-check="applecare"] .step-two__status',
+  ),
+};
 const subscribeConfirmBtn = document.getElementById("subscribe-confirm-btn");
 const subscribeRiskBtn = document.getElementById("subscribe-risk-btn");
 const removeVirusesBtn = document.getElementById("remove-viruses-btn");
@@ -38,15 +40,21 @@ const popupRisk = document.querySelector(".step-three__popup--risk");
 const notificationSettings = document.querySelector(
   ".step-three__notification--settings",
 );
+const notificationTime = document.getElementById("step-three-notification-time");
 const notificationUnsuccessful = document.querySelector(
   ".step-three__notification--unsuccessful",
 );
 
 let vibrationInterval = null;
 let hasSeenRiskPopup = false;
+let faceIdAnimation = null;
+let faceIdAnimationTimer = null;
+let faceIdAnimationFallbackTimer = null;
+let faceIdAnimationDestroyTimer = null;
+let stepThreeNotificationTimer = null;
 
 startScanButton.addEventListener("click", function () {
-/*stepTwo.style.display = "flex";
+  stepTwo.style.display = "flex";
   stepTwo.classList.add("slide-in-right");
 
   stepOne.classList.add("slide-out-left");
@@ -57,18 +65,27 @@ startScanButton.addEventListener("click", function () {
     stepTwo.classList.remove("slide-in-right");
 
     startScanAnimation();
-  }, 350); */
+  }, 350);
 });
 
 function startScanAnimation() {
   const totalIssues = DETECTED_ISSUES.length;
   const totalDuration = 5000;
   const intervalDuration = totalDuration / totalIssues;
-  const tableRows = tableBody.querySelectorAll("tr");
+  const tableRows = tableBody.querySelectorAll(".threat-row");
 
   let currentCount = 0;
 
-  progressBar.value = 100;
+  resetScanState(tableRows);
+  startChecklistAnimation();
+  scheduleFaceIdAnimation();
+
+  requestAnimationFrame(() => {
+    if (progressBar) {
+      progressBar.style.width = "100%";
+      progressBar.parentElement?.setAttribute("aria-valuenow", "100");
+    }
+  });
 
   const interval = setInterval(() => {
     if (currentCount < totalIssues) {
@@ -76,34 +93,166 @@ function startScanAnimation() {
 
       detectedIssuesCount.textContent = currentCount;
 
-      if (settingsIconWrapper) {
-        settingsIconWrapper.setAttribute("data-count", currentCount);
-      }
-
       const row = tableRows[currentCount - 1];
       if (row) {
-        row.style.opacity = "1";
-        // Trigger haptic feedback for each row
+        row.classList.add("is-visible");
         triggerHaptic();
+      }
+
+      if (currentCount === totalIssues) {
+        setStatus("applecare", "error");
       }
     } else {
       clearInterval(interval);
-
-      stepThree.style.display = "flex";
-      stepThree.classList.add("slide-in-right");
-
-      stepTwo.classList.add("slide-out-left");
-
-      setTimeout(() => {
-        stepTwo.style.display = "none";
-        stepTwo.classList.remove("slide-out-left");
-        stepThree.classList.remove("slide-in-right");
-
-        // Start periodic vibration on step 3
-        startPeriodicVibration();
-      }, 350);
     }
   }, intervalDuration);
+
+ /* setTimeout(showStepThree, totalDuration + 1200); */
+}
+
+function resetScanState(tableRows) {
+  detectedIssuesCount.textContent = "0";
+
+  if (progressBar) {
+    progressBar.style.transition = "none";
+    progressBar.style.width = "0%";
+    progressBar.parentElement?.setAttribute("aria-valuenow", "0");
+
+    requestAnimationFrame(() => {
+      progressBar.style.transition = "width 5s linear";
+    });
+  }
+
+  tableRows.forEach((row) => {
+    row.classList.remove("is-visible");
+  });
+
+  setStatus("identity", "loading");
+  setStatus("settings", "loading");
+  setStatus("applecare", "loading");
+
+  if (stepTwoSecurityIcon) {
+    stepTwoSecurityIcon.src = "./assets/_icon_apple.svg";
+    stepTwoSecurityIcon.alt = "Apple Security";
+  }
+}
+
+function startChecklistAnimation() {
+  setTimeout(() => {
+    setStatus("identity", "success");
+  }, 1250);
+
+  setTimeout(() => {
+    setStatus("settings", "error");
+  }, 2500);
+}
+
+function setStatus(name, state) {
+  const status = stepTwoStatuses[name];
+  if (!status) {
+    return;
+  }
+
+  status.className = `step-two__status step-two__status--${state}`;
+}
+
+function scheduleFaceIdAnimation() {
+  if (!stepTwoFaceId) {
+    return;
+  }
+
+  hideFaceIdAnimation();
+
+  faceIdAnimationTimer = setTimeout(() => {
+    faceIdAnimationTimer = null;
+
+    if (!window.lottie || typeof window.lottie.loadAnimation !== "function") {
+      return;
+    }
+
+    destroyFaceIdAnimation();
+    stepTwoFaceId.classList.add("is-visible");
+
+    faceIdAnimation = window.lottie.loadAnimation({
+      container: stepTwoFaceId,
+      renderer: "svg",
+      loop: false,
+      autoplay: true,
+      path: "./assets/face-id-animation.json",
+    });
+
+    faceIdAnimation.addEventListener("complete", hideFaceIdAnimation);
+    faceIdAnimationFallbackTimer = setTimeout(hideFaceIdAnimation, 4200);
+  }, 1000);
+}
+
+function hideFaceIdAnimation() {
+  if (faceIdAnimationTimer) {
+    clearTimeout(faceIdAnimationTimer);
+    faceIdAnimationTimer = null;
+  }
+
+  if (faceIdAnimationFallbackTimer) {
+    clearTimeout(faceIdAnimationFallbackTimer);
+    faceIdAnimationFallbackTimer = null;
+  }
+
+  if (faceIdAnimationDestroyTimer) {
+    clearTimeout(faceIdAnimationDestroyTimer);
+    faceIdAnimationDestroyTimer = null;
+  }
+
+  if (!stepTwoFaceId) {
+    destroyFaceIdAnimation();
+    return;
+  }
+
+  stepTwoFaceId.classList.remove("is-visible");
+
+  faceIdAnimationDestroyTimer = setTimeout(() => {
+    destroyFaceIdAnimation();
+    faceIdAnimationDestroyTimer = null;
+  }, 220);
+}
+
+function destroyFaceIdAnimation() {
+  if (faceIdAnimation) {
+    faceIdAnimation.destroy();
+    faceIdAnimation = null;
+  }
+
+  if (stepTwoFaceId) {
+    stepTwoFaceId.innerHTML = "";
+  }
+}
+
+function showStepThree() {
+  hideFaceIdAnimation();
+
+  stepThree.style.display = "flex";
+  stepThree.classList.add("slide-in-right");
+
+  stepTwo.classList.add("slide-out-left");
+
+  setTimeout(() => {
+    stepTwo.style.display = "none";
+    stepTwo.classList.remove("slide-out-left");
+    stepThree.classList.remove("slide-in-right");
+
+    startPeriodicVibration();
+    scheduleStepThreeEntryNotification();
+  }, 350);
+}
+
+function scheduleStepThreeEntryNotification() {
+  if (stepThreeNotificationTimer) {
+    clearTimeout(stepThreeNotificationTimer);
+  }
+
+  stepThreeNotificationTimer = setTimeout(() => {
+    showNotification();
+    stepThreeNotificationTimer = null;
+  }, 1000);
 }
 
 function postNativeMessage(handlerName, payload) {
@@ -150,7 +299,7 @@ function startPeriodicVibration() {
 
   triggerHaptic("medium");
 
-  // Then vibrate every 2 seconds
+  // Then vibrate every 1 seconds
   vibrationInterval = setInterval(() => {
     triggerHaptic("medium", false);
   }, 1000);
@@ -191,6 +340,7 @@ if (subscribeRiskBtn) {
 
 function showNotification() {
   if (notificationSettings) {
+    updateNotificationTime();
     notificationSettings.style.display = "flex";
     setTimeout(() => {
       notificationSettings.classList.add("step-three__notification--show");
@@ -203,6 +353,18 @@ function showNotification() {
       }, 500);
     }, 2500);
   }
+}
+
+function updateNotificationTime() {
+  if (!notificationTime) {
+    return;
+  }
+
+  notificationTime.textContent = new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  }).format(new Date());
 }
 
 function showUnsuccessfulNotification() {
