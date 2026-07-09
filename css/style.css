@@ -576,7 +576,7 @@ body {
 
 .step-two__face-id {
   position: absolute;
-  top: clamp(0px, 1dvh, 10px);
+  top: clamp(-10px, 0.5dvh, 4px);
   left: 50%;
   z-index: 30;
   width: clamp(120px, 32vw, 180px);
