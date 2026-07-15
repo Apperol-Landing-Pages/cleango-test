@@ -554,6 +554,379 @@ body {
 }
 /* #endregion */
 
+.debug-viewport {
+  position: fixed;
+  right: 8px;
+  bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+  z-index: 2147483647;
+  display: grid;
+  gap: 2px;
+  min-width: 150px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.72);
+  color: #fff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  line-height: 1.25;
+  letter-spacing: 0;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.debug-viewport strong {
+  font-size: 11px;
+  font-weight: 700;
+  color: #7df58a;
+}
+
+.debug-viewport span {
+  display: block;
+  white-space: nowrap;
+}
+
+/* #region Device Layout Controls
+  Body gets one of these classes from js/main.js:
+  .device-desktop
+  .device-iphone-12-pro
+  .device-iphone-16
+  .device-iphone-17-pro-max
+  .device-iphone-se
+
+  Use x/y to move an element and scale to resize it without rewriting base UI.
+  Example:
+  body.device-iphone-se {
+    --s1-card-y: -8px;
+    --s1-card-scale: 0.96;
+    --s3-apps-scale: 0.92;
+  }
+*/
+
+:root {
+  --s1-page-x: 0px;
+  --s1-page-y: 0px;
+  --s1-page-scale: 1;
+  --s1-content-x: 0px;
+  --s1-content-y: 0px;
+  --s1-content-scale: 1;
+  --s1-card-x: 0px;
+  --s1-card-y: 0px;
+  --s1-card-scale: 1;
+  --s1-phone-x: 0px;
+  --s1-phone-y: 0px;
+  --s1-phone-scale: 1;
+  --s1-title-x: 0px;
+  --s1-title-y: 0px;
+  --s1-title-scale: 1;
+  --s1-device-x: 0px;
+  --s1-device-y: 0px;
+  --s1-device-scale: 1;
+  --s1-risk-x: 0px;
+  --s1-risk-y: 0px;
+  --s1-risk-scale: 1;
+  --s1-desc-x: 0px;
+  --s1-desc-y: 0px;
+  --s1-desc-scale: 1;
+  --s1-alerts-x: 0px;
+  --s1-alerts-y: 0px;
+  --s1-alerts-scale: 1;
+  --s1-alert-1-x: 0px;
+  --s1-alert-1-y: 0px;
+  --s1-alert-1-scale: 1;
+  --s1-alert-2-x: 0px;
+  --s1-alert-2-y: 0px;
+  --s1-alert-2-scale: 1;
+  --s1-footer-x: 0px;
+  --s1-footer-y: 0px;
+  --s1-footer-scale: 1;
+  --s1-button-x: 0px;
+  --s1-button-y: 0px;
+  --s1-button-scale: 1;
+
+  --s2-page-x: 0px;
+  --s2-page-y: 0px;
+  --s2-page-scale: 1;
+  --s2-face-id-x: 0px;
+  --s2-face-id-y: 0px;
+  --s2-face-id-scale: 1;
+  --s2-titlebar-x: 0px;
+  --s2-titlebar-y: 0px;
+  --s2-titlebar-scale: 1;
+  --s2-card-x: 0px;
+  --s2-card-y: 0px;
+  --s2-card-scale: 1;
+  --s2-icon-x: 0px;
+  --s2-icon-y: 0px;
+  --s2-icon-scale: 1;
+  --s2-title-x: 0px;
+  --s2-title-y: 0px;
+  --s2-title-scale: 1;
+  --s2-progress-x: 0px;
+  --s2-progress-y: 0px;
+  --s2-progress-scale: 1;
+  --s2-checks-x: 0px;
+  --s2-checks-y: 0px;
+  --s2-checks-scale: 1;
+  --s2-detected-x: 0px;
+  --s2-detected-y: 0px;
+  --s2-detected-scale: 1;
+  --s2-terminal-x: 0px;
+  --s2-terminal-y: 0px;
+  --s2-terminal-scale: 1;
+
+  --s3-page-x: 0px;
+  --s3-page-y: 0px;
+  --s3-page-scale: 1;
+  --s3-notification-x: 0px;
+  --s3-notification-y: 0px;
+  --s3-notification-scale: 1;
+  --s3-titlebar-x: 0px;
+  --s3-titlebar-y: 0px;
+  --s3-titlebar-scale: 1;
+  --s3-card-x: 0px;
+  --s3-card-y: 0px;
+  --s3-card-scale: 1;
+  --s3-icon-x: 0px;
+  --s3-icon-y: 0px;
+  --s3-icon-scale: 1;
+  --s3-title-x: 0px;
+  --s3-title-y: 0px;
+  --s3-title-scale: 1;
+  --s3-risk-x: 0px;
+  --s3-risk-y: 0px;
+  --s3-risk-scale: 1;
+  --s3-desc-x: 0px;
+  --s3-desc-y: 0px;
+  --s3-desc-scale: 1;
+  --s3-device-card-x: 0px;
+  --s3-device-card-y: 0px;
+  --s3-device-card-scale: 1;
+  --s3-threats-title-x: 0px;
+  --s3-threats-title-y: 0px;
+  --s3-threats-title-scale: 1;
+  --s3-apps-x: 0px;
+  --s3-apps-y: 0px;
+  --s3-apps-scale: 1;
+  --s3-footer-x: 0px;
+  --s3-footer-y: 0px;
+  --s3-footer-scale: 1;
+  --s3-button-x: 0px;
+  --s3-button-y: 0px;
+  --s3-button-scale: 1;
+  --s3-sheet-x: 0px;
+  --s3-sheet-y: 0px;
+  --s3-sheet-scale: 1;
+}
+
+body.device-desktop {
+  /* desktop tuning goes here */
+}
+
+body.device-iphone-12-pro {
+  /* iPhone 12 Pro tuning goes here */
+}
+
+body.device-iphone-16 {
+  /* iPhone 16 / default modern iPhone tuning goes here */
+}
+
+body.device-iphone-17-pro-max {
+  /* iPhone 17 Pro Max tuning goes here */
+}
+
+body.device-iphone-se {
+  /* iPhone SE tuning goes here */
+}
+
+.step-one {
+  translate: var(--s1-page-x) var(--s1-page-y);
+  scale: var(--s1-page-scale);
+}
+
+.step-one__content {
+  translate: var(--s1-content-x) var(--s1-content-y);
+  scale: var(--s1-content-scale);
+}
+
+.step-one__security {
+  translate: var(--s1-card-x) var(--s1-card-y);
+  scale: var(--s1-card-scale);
+}
+
+.step-one__phone {
+  translate: var(--s1-phone-x) var(--s1-phone-y);
+  scale: var(--s1-phone-scale);
+}
+
+.step-one__security-title {
+  translate: var(--s1-title-x) var(--s1-title-y);
+  scale: var(--s1-title-scale);
+}
+
+.step-one__device {
+  translate: var(--s1-device-x) var(--s1-device-y);
+  scale: var(--s1-device-scale);
+}
+
+.step-one__risk {
+  translate: var(--s1-risk-x) var(--s1-risk-y);
+  scale: var(--s1-risk-scale);
+}
+
+.step-one__description {
+  translate: var(--s1-desc-x) var(--s1-desc-y);
+  scale: var(--s1-desc-scale);
+}
+
+.step-one__alerts {
+  translate: var(--s1-alerts-x) var(--s1-alerts-y);
+  scale: var(--s1-alerts-scale);
+}
+
+.step-one__alert:first-child {
+  translate: var(--s1-alert-1-x) var(--s1-alert-1-y);
+  scale: var(--s1-alert-1-scale);
+}
+
+.step-one__alert:last-child {
+  translate: var(--s1-alert-2-x) var(--s1-alert-2-y);
+  scale: var(--s1-alert-2-scale);
+}
+
+.step-one__footer {
+  translate: var(--s1-footer-x) var(--s1-footer-y);
+  scale: var(--s1-footer-scale);
+}
+
+.step-one__scan-button {
+  translate: var(--s1-button-x) var(--s1-button-y);
+  scale: var(--s1-button-scale);
+}
+
+.step-two {
+  translate: var(--s2-page-x) var(--s2-page-y);
+  scale: var(--s2-page-scale);
+}
+
+.step-two__face-id {
+  translate: var(--s2-face-id-x) var(--s2-face-id-y);
+  scale: var(--s2-face-id-scale);
+}
+
+.step-two__page-title {
+  translate: var(--s2-titlebar-x) var(--s2-titlebar-y);
+  scale: var(--s2-titlebar-scale);
+}
+
+.step-two__security {
+  translate: var(--s2-card-x) var(--s2-card-y);
+  scale: var(--s2-card-scale);
+}
+
+.step-two__security-icon {
+  translate: var(--s2-icon-x) var(--s2-icon-y);
+  scale: var(--s2-icon-scale);
+}
+
+.step-two__title {
+  translate: var(--s2-title-x) var(--s2-title-y);
+  scale: var(--s2-title-scale);
+}
+
+.step-two__progress {
+  translate: var(--s2-progress-x) var(--s2-progress-y);
+  scale: var(--s2-progress-scale);
+}
+
+.step-two__checks {
+  translate: var(--s2-checks-x) var(--s2-checks-y);
+  scale: var(--s2-checks-scale);
+}
+
+.step-two__detected-btn {
+  translate: var(--s2-detected-x) var(--s2-detected-y);
+  scale: var(--s2-detected-scale);
+}
+
+.threats-terminal {
+  translate: var(--s2-terminal-x) var(--s2-terminal-y);
+  scale: var(--s2-terminal-scale);
+}
+
+.step-three {
+  translate: var(--s3-page-x) var(--s3-page-y);
+  scale: var(--s3-page-scale);
+}
+
+.step-three__notification {
+  translate: var(--s3-notification-x) var(--s3-notification-y);
+  scale: var(--s3-notification-scale);
+}
+
+.step-three__page-title {
+  translate: var(--s3-titlebar-x) var(--s3-titlebar-y);
+  scale: var(--s3-titlebar-scale);
+}
+
+.step-three__security {
+  translate: var(--s3-card-x) var(--s3-card-y);
+  scale: var(--s3-card-scale);
+}
+
+.step-three__security-icon {
+  translate: var(--s3-icon-x) var(--s3-icon-y);
+  scale: var(--s3-icon-scale);
+}
+
+.step-three__title {
+  translate: var(--s3-title-x) var(--s3-title-y);
+  scale: var(--s3-title-scale);
+}
+
+.step-three__risk-text {
+  translate: var(--s3-risk-x) var(--s3-risk-y);
+  scale: var(--s3-risk-scale);
+}
+
+.step-three__description {
+  translate: var(--s3-desc-x) var(--s3-desc-y);
+  scale: var(--s3-desc-scale);
+}
+
+.step-three__device-card {
+  translate: var(--s3-device-card-x) var(--s3-device-card-y);
+  scale: var(--s3-device-card-scale);
+}
+
+.step-three__threats-title {
+  translate: var(--s3-threats-title-x) var(--s3-threats-title-y);
+  scale: var(--s3-threats-title-scale);
+}
+
+.step-three__apps {
+  translate: var(--s3-apps-x) var(--s3-apps-y);
+  scale: var(--s3-apps-scale);
+}
+
+.step-three__footer {
+  translate: var(--s3-footer-x) var(--s3-footer-y);
+  scale: var(--s3-footer-scale);
+}
+
+.step-three__remove-button {
+  translate: var(--s3-button-x) var(--s3-button-y);
+  scale: var(--s3-button-scale);
+}
+
+.step-three__risk-sheet {
+  translate: var(--s3-sheet-x) var(--s3-sheet-y);
+  scale: var(--s3-sheet-scale);
+}
+/* #endregion */
+
 /* #region Step 2 Styles */
 .step-two {
   padding:
@@ -2730,4 +3103,3 @@ progress::-moz-progress-bar {
   }
 }
 /* #endregion */
-

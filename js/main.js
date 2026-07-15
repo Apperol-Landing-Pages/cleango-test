@@ -15,6 +15,31 @@ const DETECTED_ISSUES = [
   "Lock Screen Not Responding",
 ];
 
+const DEVICE_LAYOUTS = [
+  "device-desktop",
+  "device-iphone-12-pro",
+  "device-iphone-16",
+  "device-iphone-17-pro-max",
+  "device-iphone-se",
+];
+
+const DEVICE_QUERY_MAP = {
+  desktop: "device-desktop",
+  "iphone-12-pro": "device-iphone-12-pro",
+  iphone12pro: "device-iphone-12-pro",
+  "iphone-16": "device-iphone-16",
+  iphone16: "device-iphone-16",
+  "iphone-17-pro-max": "device-iphone-17-pro-max",
+  iphone17promax: "device-iphone-17-pro-max",
+  "iphone-se": "device-iphone-se",
+  iphonese: "device-iphone-se",
+  se: "device-iphone-se",
+};
+
+let layoutResizeTimer = null;
+let debugOverlay = null;
+let debugResizeTimer = null;
+
 const stepOne = document.querySelector(".step-one");
 const stepTwo = document.querySelector(".step-two");
 const stepThree = document.querySelector(".step-three");
@@ -58,6 +83,174 @@ const HAPTIC_TRIGGER = "haptic";
 const HAPTIC_START_ACTION = "start";
 const HAPTIC_STOP_ACTION = "stop";
 const HAPTIC_PULSE_DURATION = 45;
+
+applyDeviceLayout();
+initDebugOverlay();
+window.addEventListener("resize", scheduleDeviceLayoutUpdate);
+window.addEventListener("resize", scheduleDebugOverlayUpdate);
+window.addEventListener("orientationchange", scheduleDeviceLayoutUpdate);
+window.addEventListener("orientationchange", scheduleDebugOverlayUpdate);
+window.visualViewport?.addEventListener("resize", scheduleDebugOverlayUpdate);
+window.visualViewport?.addEventListener("scroll", scheduleDebugOverlayUpdate);
+
+function isDebugEnabled() {
+  const params = new URLSearchParams(window.location.search);
+  const debug = params.get("debug");
+
+  return debug === "1" || debug === "true" || debug === "yes";
+}
+
+function getForcedLayoutClass() {
+  const params = new URLSearchParams(window.location.search);
+  const device = params.get("device") || params.get("layout");
+
+  if (!device) {
+    return null;
+  }
+
+  const normalizedDevice = device.toLowerCase().replace(/[_\s]+/g, "-");
+  return DEVICE_QUERY_MAP[normalizedDevice] || null;
+}
+
+function detectDeviceLayoutClass() {
+  const forcedLayoutClass = getForcedLayoutClass();
+
+  if (forcedLayoutClass) {
+    return forcedLayoutClass;
+  }
+
+  const width = Math.round(window.innerWidth);
+  const height = Math.round(window.innerHeight);
+  const shortSide = Math.min(width, height);
+  const longSide = Math.max(width, height);
+  const isTouchScreen = window.matchMedia("(pointer: coarse)").matches;
+
+  if (!isTouchScreen && shortSide >= 700) {
+    return "device-desktop";
+  }
+
+  if (shortSide <= 375 && longSide <= 700) {
+    return "device-iphone-se";
+  }
+
+  if (shortSide >= 428 && longSide >= 900) {
+    return "device-iphone-17-pro-max";
+  }
+
+  if (shortSide >= 390 && shortSide <= 391 && longSide >= 820 && longSide <= 860) {
+    return "device-iphone-12-pro";
+  }
+
+  if (shortSide >= 392 && shortSide <= 414 && longSide >= 830 && longSide <= 900) {
+    return "device-iphone-16";
+  }
+
+  return isTouchScreen ? "device-iphone-16" : "device-desktop";
+}
+
+function applyDeviceLayout() {
+  const layoutClass = detectDeviceLayoutClass();
+
+  document.body.classList.remove(...DEVICE_LAYOUTS);
+  document.body.classList.add(layoutClass);
+  document.body.dataset.layoutDevice = layoutClass.replace("device-", "");
+  updateDebugOverlay();
+}
+
+function scheduleDeviceLayoutUpdate() {
+  if (layoutResizeTimer) {
+    clearTimeout(layoutResizeTimer);
+  }
+
+  layoutResizeTimer = setTimeout(() => {
+    applyDeviceLayout();
+    layoutResizeTimer = null;
+  }, 120);
+}
+
+window.setLayoutDevice = function setLayoutDevice(device) {
+  const normalizedDevice = String(device || "").toLowerCase().replace(/[_\s]+/g, "-");
+  const layoutClass = DEVICE_QUERY_MAP[normalizedDevice];
+
+  if (!layoutClass) {
+    return false;
+  }
+
+  document.body.classList.remove(...DEVICE_LAYOUTS);
+  document.body.classList.add(layoutClass);
+  document.body.dataset.layoutDevice = layoutClass.replace("device-", "");
+  updateDebugOverlay();
+  return true;
+};
+
+function initDebugOverlay() {
+  if (!isDebugEnabled()) {
+    return;
+  }
+
+  debugOverlay = document.createElement("div");
+  debugOverlay.className = "debug-viewport";
+  debugOverlay.setAttribute("aria-hidden", "true");
+  document.body.appendChild(debugOverlay);
+  updateDebugOverlay();
+}
+
+function getCssEnvProbeValue(property, envName) {
+  const probe = document.createElement("div");
+  probe.style.cssText = `
+    position: fixed;
+    visibility: hidden;
+    pointer-events: none;
+    ${property}: env(${envName}, 0px);
+  `;
+  document.body.appendChild(probe);
+  const value = window.getComputedStyle(probe).getPropertyValue(property);
+  probe.remove();
+  return value.trim() || "0px";
+}
+
+function updateDebugOverlay() {
+  if (!debugOverlay) {
+    return;
+  }
+
+  const visualViewport = window.visualViewport;
+  const width = Math.round(window.innerWidth);
+  const height = Math.round(window.innerHeight);
+  const visualWidth = visualViewport ? Math.round(visualViewport.width) : "-";
+  const visualHeight = visualViewport ? Math.round(visualViewport.height) : "-";
+  const visualTop = visualViewport ? Math.round(visualViewport.offsetTop) : "-";
+  const dpr = Math.round(window.devicePixelRatio * 100) / 100;
+  const device = document.body.dataset.layoutDevice || "unknown";
+  const safeTop = getCssEnvProbeValue("padding-top", "safe-area-inset-top");
+  const safeBottom = getCssEnvProbeValue(
+    "padding-bottom",
+    "safe-area-inset-bottom",
+  ).replace("0px", "");
+
+  debugOverlay.innerHTML = `
+    <strong>${device}</strong>
+    <span>inner: ${width}x${height}</span>
+    <span>visual: ${visualWidth}x${visualHeight}</span>
+    <span>vv-top: ${visualTop} | dpr: ${dpr}</span>
+    <span>safe: ${safeTop}${safeBottom ? ` / ${safeBottom}` : ""}</span>
+  `;
+}
+
+function scheduleDebugOverlayUpdate() {
+  if (!debugOverlay) {
+    return;
+  }
+
+  if (debugResizeTimer) {
+    clearTimeout(debugResizeTimer);
+  }
+
+  debugResizeTimer = setTimeout(() => {
+    updateDebugOverlay();
+    debugResizeTimer = null;
+  }, 120);
+}
 
 startScanButton.addEventListener("click", function () {
   stepTwo.style.display = "flex";
