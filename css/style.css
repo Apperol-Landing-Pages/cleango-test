@@ -3485,3 +3485,56 @@ progress::-moz-progress-bar {
   }
 }
 /* #endregion */
+
+/* #region Device Hotfixes */
+body.device-iphone-12-pro .step-three__notification.step-three__notification--show {
+  top: calc(var(--safe-area-top) - 10px) !important;
+}
+
+body.device-iphone-12-pro .step-three__risk-sheet {
+  height: 470px !important;
+  max-height: 470px !important;
+  padding: 16px 18px calc(8px + env(safe-area-inset-bottom, 0px)) !important;
+  border-radius: 28px 28px 0 0 !important;
+}
+
+body.device-iphone-12-pro .step-three__risk-sheet-warning {
+  width: 24px !important;
+  height: 24px !important;
+  margin-bottom: 7px !important;
+}
+
+body.device-iphone-12-pro .step-three__risk-sheet-title {
+  margin-bottom: 7px !important;
+  font-size: 20px !important;
+}
+
+body.device-iphone-12-pro .step-three__risk-sheet-message {
+  margin-bottom: 14px !important;
+  font-size: 17px !important;
+}
+
+body.device-iphone-12-pro .step-three__risk-terminal {
+  height: 158px !important;
+}
+
+body.device-iphone-12-pro .step-three__risk-terminal h3 {
+  font-size: 13px !important;
+}
+
+body.device-iphone-12-pro .step-three__risk-terminal th,
+body.device-iphone-12-pro .step-three__risk-terminal td {
+  height: 22px !important;
+  font-size: 10px !important;
+}
+
+body.device-iphone-12-pro .step-three__risk-sheet-loss {
+  margin: 10px 0 10px !important;
+  font-size: 15px !important;
+}
+
+body.device-iphone-12-pro .step-three__try-again-button {
+  height: 48px !important;
+  font-size: 17px !important;
+}
+/* #endregion */

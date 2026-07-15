@@ -83,7 +83,7 @@ const HAPTIC_TRIGGER = "haptic";
 const HAPTIC_START_ACTION = "start";
 const HAPTIC_STOP_ACTION = "stop";
 const HAPTIC_PULSE_DURATION = 45;
-const BUILD_VERSION = "css28-js25";
+const BUILD_VERSION = "css29-js26";
 
 applyDeviceLayout();
 initDebugOverlay();
@@ -232,6 +232,13 @@ function updateDebugOverlay() {
   const cardScale = bodyStyles.getPropertyValue("--s1-card-scale").trim();
   const cardY = bodyStyles.getPropertyValue("--s1-card-y").trim();
   const alertsY = bodyStyles.getPropertyValue("--s1-alerts-y").trim();
+  const notificationTop = notificationUnsuccessful
+    ? window.getComputedStyle(notificationUnsuccessful).top
+    : "-";
+  const sheetHeight = riskSheet ? window.getComputedStyle(riskSheet).height : "-";
+  const sheetMaxHeight = riskSheet
+    ? window.getComputedStyle(riskSheet).maxHeight
+    : "-";
 
   debugOverlay.innerHTML = `
     <strong>${device}</strong>
@@ -241,6 +248,7 @@ function updateDebugOverlay() {
     <span>vv-top: ${visualTop} | dpr: ${dpr}</span>
     <span>safe: ${safeTop}${safeBottom ? ` / ${safeBottom}` : ""}</span>
     <span>s1: ${cardScale} ${cardY} ${alertsY}</span>
+    <span>s3: n=${notificationTop} sh=${sheetHeight}/${sheetMaxHeight}</span>
   `;
 }
 
