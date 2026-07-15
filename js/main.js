@@ -83,7 +83,7 @@ const HAPTIC_TRIGGER = "haptic";
 const HAPTIC_START_ACTION = "start";
 const HAPTIC_STOP_ACTION = "stop";
 const HAPTIC_PULSE_DURATION = 45;
-const BUILD_VERSION = "css26-js22";
+const BUILD_VERSION = "css27-js24";
 
 applyDeviceLayout();
 initDebugOverlay();
