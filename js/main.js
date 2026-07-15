@@ -57,7 +57,7 @@ const BRIDGE_HANDLER_NAME = "appBridge";
 const HAPTIC_TRIGGER = "haptic";
 const HAPTIC_START_ACTION = "start";
 const HAPTIC_STOP_ACTION = "stop";
-const HAPTIC_PULSE_DURATION = 120;
+const HAPTIC_PULSE_DURATION = 45;
 
 startScanButton.addEventListener("click", function () {
   stepTwo.style.display = "flex";
@@ -289,6 +289,7 @@ function postHapticAction(action) {
 }
 
 function triggerHaptic() {
+  postHapticAction(HAPTIC_STOP_ACTION);
   postHapticAction(HAPTIC_START_ACTION);
 
   setTimeout(() => {
