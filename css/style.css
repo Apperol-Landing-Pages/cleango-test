@@ -1021,6 +1021,7 @@ progress::-moz-progress-bar {
 
 /* #region Step 3 Styles */
 .step-three {
+  justify-content: flex-start;
   overflow: hidden;
   padding:
     clamp(20px, 3.17dvh, 35px)
@@ -1033,9 +1034,10 @@ progress::-moz-progress-bar {
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1 1 auto;
   width: 100%;
   min-height: 0;
-  gap: clamp(12px, 1.45dvh, 16px);
+  gap: clamp(14px, 1.9dvh, 21px);
 }
 
 .step-three__page-title {
@@ -1049,7 +1051,7 @@ progress::-moz-progress-bar {
 
 .step-three__security {
   width: 100%;
-  min-height: clamp(342px, 36.8dvh, 407px);
+  min-height: clamp(350px, 38.6dvh, 426px);
   padding:
     clamp(28px, 3.26dvh, 36px)
     clamp(16px, 3.02vw, 17px)
@@ -1072,7 +1074,7 @@ progress::-moz-progress-bar {
   margin-bottom: clamp(12px, 1.36dvh, 15px);
   font-family: inherit;
   font-size: clamp(34px, 3.44dvh, 38px);
-  font-weight: 800;
+  font-weight: 590;
   line-height: 1;
   text-align: center;
   color: #2d3038;
@@ -1123,7 +1125,7 @@ progress::-moz-progress-bar {
   min-width: 0;
   font-family: inherit;
   font-size: clamp(28px, 2.72dvh, 30px);
-  font-weight: 800;
+  font-weight: 556;
   line-height: 1;
   color: #2b2d35;
 }
@@ -1164,8 +1166,8 @@ progress::-moz-progress-bar {
 .step-three__threats-title {
   margin-bottom: clamp(12px, 1.72dvh, 19px);
   font-family: inherit;
-  font-size: clamp(24px, 2.36dvh, 26px);
-  font-weight: 800;
+  font-size: clamp(14px, 1.38dvh, 18px);
+  font-weight: 590;
   line-height: 1.1;
   color: #24262d;
 }
@@ -1183,7 +1185,7 @@ progress::-moz-progress-bar {
   grid-template-columns: clamp(48px, 5.07dvh, 56px) 1fr clamp(34px, 3.62dvh, 40px);
   align-items: center;
   gap: clamp(14px, 2.49vw, 17px);
-  min-height: clamp(76px, 8.15dvh, 90px);
+  min-height: clamp(78px, 8.5dvh, 94px);
   padding:
     clamp(10px, 1.27dvh, 14px)
     clamp(14px, 3.2vw, 18px)
@@ -1258,8 +1260,10 @@ progress::-moz-progress-bar {
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 0 0 auto;
   gap: clamp(16px, 2.08dvh, 23px);
   width: 100%;
+  margin-top: clamp(18px, 3dvh, 33px);
 }
 
 .step-three__footer-warning {
@@ -1470,7 +1474,7 @@ progress::-moz-progress-bar {
   }
 
   .step-three__content {
-    gap: clamp(10px, 1.28dvh, 12px);
+    gap: clamp(14px, 1.9dvh, 20px);
   }
 
   .step-three__page-title {
@@ -1478,7 +1482,7 @@ progress::-moz-progress-bar {
   }
 
   .step-three__security {
-    min-height: clamp(286px, 35.5dvh, 330px);
+    min-height: clamp(320px, 40dvh, 390px);
     padding:
       clamp(22px, 2.8dvh, 26px)
       clamp(14px, 3.72vw, 16px)
@@ -1550,7 +1554,7 @@ progress::-moz-progress-bar {
   .step-three__apps-item {
     grid-template-columns: clamp(38px, 10.7vw, 46px) 1fr clamp(28px, 7.44vw, 32px);
     gap: clamp(12px, 3.26vw, 14px);
-    min-height: clamp(60px, 15.35vw, 66px);
+    min-height: clamp(68px, 18vw, 78px);
     padding:
       clamp(7px, 1.05dvh, 9px)
       clamp(12px, 3.26vw, 14px)
@@ -1583,6 +1587,7 @@ progress::-moz-progress-bar {
 
   .step-three__footer {
     gap: clamp(10px, 1.63dvh, 14px);
+    margin-top: clamp(18px, 2.8dvh, 28px);
   }
 
   .step-three__footer-warning {
@@ -1943,12 +1948,14 @@ progress::-moz-progress-bar {
   width: calc(100% - clamp(32px, 7.82vw, 44px));
   min-height: clamp(74px, 7.97dvh, 88px);
   border-radius: clamp(18px, 2.17dvh, 24px);
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(34px) saturate(1.35);
-  -webkit-backdrop-filter: blur(34px) saturate(1.35);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.46);
+  backdrop-filter: blur(42px) saturate(1.7);
+  -webkit-backdrop-filter: blur(42px) saturate(1.7);
   box-shadow:
-    0 18px 52px rgba(0, 0, 0, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+    0 18px 52px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.25);
   padding:
     clamp(12px, 1.45dvh, 16px)
     clamp(14px, 3.2vw, 18px)
@@ -2020,7 +2027,8 @@ progress::-moz-progress-bar {
   color: #303036;
 }
 
-.step-three__notification-note {
+.step-three__notification-note,
+.unsuccessful-note {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -2030,15 +2038,6 @@ progress::-moz-progress-bar {
   line-height: 1.12;
   letter-spacing: -0.4px;
   color: #2f2f34;
-}
-
-.unsuccessful-note {
-  font-family: inherit;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 100%;
-  letter-spacing: -0.05px;
-  color: rgba(0, 0, 0, 1);
 }
 
 .step-three__overlay {
@@ -2059,6 +2058,235 @@ progress::-moz-progress-bar {
 
 .step-three__notification--settings {
   display: none;
+}
+
+.step-three__overlay--visible {
+  opacity: 1;
+}
+
+.step-three__risk-sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: clamp(470px, 64dvh, 650px);
+  max-height: calc(100dvh - var(--safe-area-top) - clamp(150px, 20dvh, 230px));
+  padding:
+    clamp(34px, 4.35dvh, 48px)
+    clamp(20px, 5.33vw, 32px)
+    calc(clamp(14px, 2dvh, 22px) + env(safe-area-inset-bottom, 0px));
+  border-radius: clamp(34px, 8.53vw, 48px) clamp(34px, 8.53vw, 48px) 0 0;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  background: rgba(248, 248, 248, 0.94);
+  box-shadow:
+    0 -18px 60px rgba(255, 255, 255, 0.32),
+    0 -10px 38px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transform: translateY(105%);
+  transition: transform 0.48s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 3;
+}
+
+.step-three__risk-sheet--show {
+  transform: translateY(0);
+}
+
+.step-three__risk-sheet-warning {
+  width: clamp(32px, 6.4vw, 40px);
+  height: clamp(32px, 6.4vw, 40px);
+  margin-bottom: clamp(14px, 1.9dvh, 20px);
+}
+
+.step-three__risk-sheet-title {
+  margin: 0 0 clamp(12px, 1.5dvh, 16px);
+  font-family: inherit;
+  font-size: clamp(24px, 5.2vw, 31px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.7px;
+  text-align: center;
+  color: #000;
+}
+
+.step-three__risk-sheet-message {
+  width: min(100%, 470px);
+  margin: 0 0 clamp(34px, 4.6dvh, 48px);
+  font-family: inherit;
+  font-size: clamp(20px, 4.27vw, 26px);
+  font-weight: 500;
+  line-height: 1.14;
+  letter-spacing: -0.35px;
+  text-align: center;
+  color: #ff2f2f;
+}
+
+.step-three__risk-terminal {
+  position: relative;
+  width: min(100%, 466px);
+  height: clamp(260px, 29dvh, 315px);
+  margin-bottom: auto;
+  overflow: hidden;
+  border-radius: clamp(24px, 5.86vw, 32px) clamp(24px, 5.86vw, 32px) 0 0;
+  border: 1px solid rgba(255, 255, 255, 0.96);
+  border-bottom: 0;
+  background: rgba(241, 241, 241, 0.92);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.84),
+    0 9px 24px rgba(0, 0, 0, 0.04);
+}
+
+.step-three__risk-terminal::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 44%;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(241, 241, 241, 0),
+    rgba(248, 248, 248, 0.78) 70%,
+    rgba(248, 248, 248, 0.94) 100%
+  );
+}
+
+.step-three__risk-terminal h3 {
+  margin: 0;
+  padding: clamp(10px, 1.55dvh, 14px) clamp(18px, 4.27vw, 24px);
+  font-family: inherit;
+  font-size: clamp(16px, 3.48vw, 19px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.24px;
+  color: #202329;
+}
+
+.step-three__risk-terminal table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-family: inherit;
+  font-size: clamp(11px, 2.67vw, 14px);
+  line-height: 1.2;
+}
+
+.step-three__risk-terminal th,
+.step-three__risk-terminal td {
+  height: clamp(23px, 2.55dvh, 28px);
+  padding: 0 clamp(7px, 2.2vw, 12px);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.step-three__risk-terminal th {
+  font-size: clamp(13px, 3.1vw, 16px);
+  font-weight: 600;
+  color: #1f2430;
+  background: rgba(218, 218, 218, 0.84);
+}
+
+.step-three__risk-terminal th:not(:last-child) {
+  border-right: 1px solid rgba(198, 198, 198, 0.9);
+}
+
+.step-three__risk-terminal tr:nth-child(odd) td {
+  background: rgba(231, 231, 231, 0.62);
+}
+
+.step-three__risk-terminal th:nth-child(1),
+.step-three__risk-terminal td:nth-child(1) {
+  width: 25%;
+}
+
+.step-three__risk-terminal th:nth-child(2),
+.step-three__risk-terminal td:nth-child(2) {
+  width: 25%;
+}
+
+.step-three__risk-terminal th:nth-child(3),
+.step-three__risk-terminal td:nth-child(3) {
+  width: 50%;
+}
+
+.step-three__risk-terminal .detected {
+  font-weight: 600;
+  color: #ff2f2f;
+}
+
+.step-three__risk-sheet-loss {
+  margin: clamp(18px, 2.7dvh, 30px) 0 clamp(18px, 2.4dvh, 28px);
+  font-family: inherit;
+  font-size: clamp(20px, 4.27vw, 24px);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.35px;
+  text-align: center;
+  color: #d60000;
+}
+
+.step-three__try-again-button {
+  flex: 0 0 auto;
+  max-width: none;
+  height: clamp(64px, 8.7dvh, 96px);
+  border-radius: 999px;
+  background: #1094ed;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.28);
+  font-size: clamp(24px, 2.63dvh, 29px);
+  font-weight: 510;
+  line-height: 1;
+  animation: pulseButton 1s infinite alternate;
+}
+
+.step-three__notification-badge {
+  position: absolute;
+  top: clamp(10px, 1.35dvh, 15px);
+  left: clamp(58px, 13.65vw, 68px);
+  width: clamp(8px, 2.13vw, 11px);
+  height: clamp(8px, 2.13vw, 11px);
+  border-radius: 50%;
+  background: #ff3b30;
+}
+
+@media screen and (max-height: 690px) {
+  .step-three__risk-sheet {
+    height: calc(100dvh - var(--safe-area-top) - 96px);
+    max-height: 560px;
+    padding-top: 24px;
+  }
+
+  .step-three__risk-sheet-warning {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 9px;
+  }
+
+  .step-three__risk-sheet-title {
+    margin-bottom: 10px;
+    font-size: 23px;
+  }
+
+  .step-three__risk-sheet-message {
+    margin-bottom: 20px;
+    font-size: 21px;
+  }
+
+  .step-three__risk-terminal {
+    height: 210px;
+  }
+
+  .step-three__risk-sheet-loss {
+    margin: 14px 0 16px;
+    font-size: 19px;
+  }
+
+  .step-three__try-again-button {
+    height: 58px;
+    font-size: 22px;
+  }
 }
 
 @media screen and (max-height: 736px) {
@@ -2088,3 +2316,381 @@ progress::-moz-progress-bar {
     margin: 0;
   }
 }
+
+/* #region Step 3 final responsive tuning */
+.step-three {
+  justify-content: flex-start;
+  padding:
+    clamp(14px, 2.4dvh, 26px)
+    clamp(18px, 4.8vw, 24px)
+    clamp(12px, 2dvh, 22px);
+}
+
+.step-three__content {
+  flex: 1 1 auto;
+  gap: clamp(12px, 1.75dvh, 18px);
+}
+
+.step-three__page-title {
+  font-weight: 590;
+  font-size: clamp(16px, 1.81dvh, 18px);
+  line-height: 1.2;
+}
+
+.step-three__security {
+  min-height: clamp(300px, 39dvh, 408px);
+  padding:
+    clamp(22px, 2.8dvh, 32px)
+    clamp(14px, 3vw, 18px)
+    clamp(16px, 2dvh, 23px);
+  border-radius: clamp(28px, 4.4dvh, 50px);
+}
+
+.step-three__security-icon {
+  width: clamp(58px, 7.2dvh, 86px);
+  height: clamp(58px, 7.2dvh, 86px);
+  margin-bottom: clamp(12px, 1.75dvh, 22px);
+}
+
+.step-three__title {
+  margin-bottom: clamp(8px, 1dvh, 13px);
+  font-size: clamp(28px, 3.15dvh, 36px);
+}
+
+.step-three__risk-text {
+  margin-bottom: clamp(4px, 0.6dvh, 7px);
+  font-size: clamp(15px, 1.55dvh, 18px);
+}
+
+.step-three__description {
+  margin-bottom: clamp(12px, 1.55dvh, 18px);
+  font-size: clamp(14px, 1.55dvh, 17px);
+}
+
+.step-three__device-card {
+  padding:
+    clamp(15px, 1.9dvh, 23px)
+    clamp(18px, 4vw, 24px)
+    clamp(16px, 2.1dvh, 25px);
+  border-radius: clamp(22px, 3dvh, 34px);
+}
+
+.step-three__device-row {
+  gap: clamp(8px, 2vw, 12px);
+  margin-bottom: clamp(12px, 1.8dvh, 21px);
+}
+
+.step-three__device-name {
+  gap: clamp(8px, 2vw, 12px);
+  font-size: clamp(20px, 2.55dvh, 29px);
+}
+
+.step-three__device-warning {
+  width: clamp(18px, 2.2dvh, 25px);
+  height: clamp(18px, 2.2dvh, 25px);
+}
+
+.step-three__device-count {
+  font-size: clamp(14px, 1.95dvh, 22px);
+}
+
+.step-three__risk-bar {
+  height: clamp(22px, 2.7dvh, 31px);
+}
+
+.step-three__threats-title {
+  margin-bottom: clamp(10px, 1.4dvh, 17px);
+  font-size: 14px;
+  font-weight: 590;
+  line-height: 18px;
+  letter-spacing: 0;
+}
+
+.step-three__apps {
+  border-radius: clamp(22px, 3.35dvh, 38px);
+}
+
+.step-three__apps-item {
+  grid-template-columns: clamp(34px, 4.25dvh, 48px) 1fr clamp(24px, 2.8dvh, 32px);
+  gap: clamp(10px, 2.15vw, 14px);
+  min-height: clamp(52px, 6.55dvh, 76px);
+  padding:
+    clamp(6px, 0.85dvh, 10px)
+    clamp(12px, 3vw, 17px)
+    clamp(6px, 0.85dvh, 10px)
+    clamp(22px, 5.2vw, 31px);
+}
+
+.step-three__app-icon {
+  width: clamp(34px, 4.25dvh, 48px);
+  height: clamp(34px, 4.25dvh, 48px);
+}
+
+.step-three__app-copy {
+  gap: clamp(4px, 0.55dvh, 7px);
+}
+
+.step-three__app-name {
+  font-size: clamp(18px, 2.2dvh, 25px);
+}
+
+.step-three__app-note {
+  font-size: clamp(12px, 1.5dvh, 17px);
+}
+
+.step-three__app-alert {
+  width: clamp(24px, 2.8dvh, 32px);
+  height: clamp(24px, 2.8dvh, 32px);
+  font-size: clamp(13px, 1.55dvh, 17px);
+}
+
+.step-three__footer {
+  gap: clamp(10px, 1.8dvh, 22px);
+  margin-top: clamp(14px, 2.4dvh, 30px);
+}
+
+.step-three__footer-warning {
+  gap: clamp(9px, 2.3vw, 13px);
+  font-size: clamp(13px, 1.7dvh, 19px);
+}
+
+.step-three__footer-warning-icon {
+  width: clamp(24px, 3dvh, 34px);
+  height: clamp(24px, 3dvh, 34px);
+}
+
+.step-three__remove-button {
+  height: clamp(52px, 7.6dvh, 90px);
+  font-size: clamp(19px, 2.45dvh, 28px);
+}
+
+@media (max-width: 480px) {
+  .step-three {
+    padding:
+      clamp(10px, 1.8dvh, 16px)
+      clamp(18px, 5vw, 22px)
+      clamp(10px, 1.8dvh, 16px);
+  }
+
+  .step-three__content {
+    gap: clamp(10px, 1.55dvh, 14px);
+  }
+
+  .step-three__page-title {
+    font-size: clamp(16px, 4.3vw, 18px);
+  }
+
+  .step-three__security {
+    min-height: clamp(284px, 37.5dvh, 340px);
+    padding:
+      clamp(18px, 2.4dvh, 23px)
+      clamp(14px, 3.7vw, 16px)
+      clamp(12px, 1.7dvh, 16px);
+    border-radius: clamp(28px, 8vw, 34px);
+  }
+
+  .step-three__security-icon {
+    width: clamp(48px, 13.5vw, 60px);
+    height: clamp(48px, 13.5vw, 60px);
+    margin-bottom: clamp(8px, 1.25dvh, 12px);
+  }
+
+  .step-three__title {
+    margin-bottom: 7px;
+    font-size: clamp(25px, 7vw, 30px);
+  }
+
+  .step-three__risk-text {
+    font-size: clamp(13px, 3.75vw, 16px);
+  }
+
+  .step-three__description {
+    margin-bottom: clamp(8px, 1.25dvh, 11px);
+    font-size: clamp(12px, 3.45vw, 15px);
+  }
+
+  .step-three__device-card {
+    padding:
+      clamp(11px, 1.55dvh, 14px)
+      clamp(16px, 4.6vw, 20px)
+      clamp(12px, 1.7dvh, 15px);
+  }
+
+  .step-three__device-row {
+    margin-bottom: clamp(9px, 1.35dvh, 12px);
+  }
+
+  .step-three__device-name {
+    font-size: clamp(18px, 5.1vw, 22px);
+  }
+
+  .step-three__device-count {
+    font-size: clamp(13px, 3.9vw, 17px);
+  }
+
+  .step-three__risk-bar {
+    height: clamp(19px, 5.4vw, 23px);
+  }
+
+  .step-three__threats-title {
+    margin-bottom: clamp(8px, 1.2dvh, 11px);
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .step-three__apps-item {
+    grid-template-columns: clamp(30px, 8.7vw, 36px) 1fr clamp(23px, 6.2vw, 27px);
+    gap: clamp(9px, 2.5vw, 11px);
+    min-height: clamp(46px, 13vw, 56px);
+    padding:
+      clamp(5px, 0.75dvh, 7px)
+      clamp(10px, 3vw, 13px)
+      clamp(5px, 0.75dvh, 7px)
+      clamp(17px, 5vw, 21px);
+  }
+
+  .step-three__app-icon {
+    width: clamp(30px, 8.7vw, 36px);
+    height: clamp(30px, 8.7vw, 36px);
+  }
+
+  .step-three__app-name {
+    font-size: clamp(16px, 4.6vw, 20px);
+  }
+
+  .step-three__app-note {
+    font-size: clamp(11px, 3.15vw, 13px);
+  }
+
+  .step-three__app-alert {
+    width: clamp(23px, 6.2vw, 27px);
+    height: clamp(23px, 6.2vw, 27px);
+    font-size: clamp(12px, 3.4vw, 15px);
+  }
+
+  .step-three__footer {
+    gap: clamp(8px, 1.4dvh, 12px);
+    margin-top: clamp(10px, 2dvh, 18px);
+  }
+
+  .step-three__footer-warning {
+    font-size: clamp(12px, 3.5vw, 15px);
+  }
+
+  .step-three__footer-warning-icon {
+    width: clamp(22px, 6.4vw, 28px);
+    height: clamp(22px, 6.4vw, 28px);
+  }
+
+  .step-three__remove-button {
+    height: clamp(50px, 7.3dvh, 62px);
+    font-size: clamp(18px, 5.2vw, 23px);
+  }
+}
+
+@media (max-height: 700px) {
+  .step-three {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .step-three__content {
+    gap: 8px;
+  }
+
+  .step-three__page-title {
+    font-size: 16px;
+    line-height: 18px;
+  }
+
+  .step-three__security {
+    min-height: 218px;
+    padding: 14px 14px 12px;
+    border-radius: 26px;
+  }
+
+  .step-three__security-icon {
+    width: 46px;
+    height: 46px;
+    margin-bottom: 7px;
+  }
+
+  .step-three__title {
+    margin-bottom: 5px;
+    font-size: 24px;
+  }
+
+  .step-three__risk-text {
+    margin-bottom: 4px;
+    font-size: 13px;
+  }
+
+  .step-three__description {
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+
+  .step-three__device-card {
+    padding: 10px 16px 11px;
+  }
+
+  .step-three__device-row {
+    margin-bottom: 8px;
+  }
+
+  .step-three__device-name {
+    font-size: 17px;
+  }
+
+  .step-three__device-count {
+    font-size: 13px;
+  }
+
+  .step-three__risk-bar {
+    height: 18px;
+  }
+
+  .step-three__threats-title {
+    margin-bottom: 7px;
+  }
+
+  .step-three__apps-item {
+    min-height: 42px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .step-three__app-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .step-three__app-name {
+    font-size: 16px;
+  }
+
+  .step-three__app-note {
+    font-size: 11px;
+  }
+
+  .step-three__app-alert {
+    width: 23px;
+    height: 23px;
+    font-size: 12px;
+  }
+
+  .step-three__footer {
+    gap: 0;
+    margin-top: 8px;
+  }
+
+  .step-three__footer-warning {
+    display: none;
+  }
+
+  .step-three__remove-button {
+    height: 48px;
+    font-size: 18px;
+  }
+}
+/* #endregion */
