@@ -2739,43 +2739,43 @@ progress::-moz-progress-bar {
 .step-one__content,
 .step-two__content,
 .step-three__content {
-  gap: 14px;
+  gap: 16px;
 }
 
 .step-one__security {
   min-height: 0;
-  height: min(43dvh, 420px);
-  padding: 22px 20px 16px;
+  height: min(34dvh, 318px);
+  padding: 18px 20px 14px;
   border-radius: 36px;
 }
 
 .step-one__phone {
-  width: clamp(82px, 12.8dvh, 116px);
-  margin-bottom: 18px;
+  width: clamp(72px, 10.4dvh, 94px);
+  margin-bottom: 12px;
 }
 
 .step-one__security-title {
-  font-size: 28px;
-  line-height: 34px;
-  margin-bottom: 6px;
+  font-size: 24px;
+  line-height: 29px;
+  margin-bottom: 4px;
 }
 
 .step-one__device {
-  margin-bottom: 14px;
-  font-size: 17px;
-  line-height: 22px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 18px;
 }
 
 .step-one__risk {
-  min-height: 48px;
-  margin-bottom: 14px;
-  font-size: 20px;
-  line-height: 24px;
+  min-height: 38px;
+  margin-bottom: 10px;
+  font-size: 17px;
+  line-height: 21px;
 }
 
 .step-one__description {
-  font-size: 16px;
-  line-height: 22px;
+  font-size: 13px;
+  line-height: 18px;
 }
 
 .step-one__alerts {
@@ -2841,9 +2841,9 @@ progress::-moz-progress-bar {
 }
 
 .step-two__face-id {
-  top: 22px;
-  width: 118px;
-  height: 118px;
+  top: 72px;
+  width: 104px;
+  height: 104px;
 }
 
 .step-two__security {
@@ -3024,30 +3024,36 @@ progress::-moz-progress-bar {
     padding: 12px 16px;
   }
 
+  .step-one__content {
+    gap: 12px;
+  }
+
   .step-one__security {
-    height: 300px;
-    padding: 18px 18px 12px;
+    height: 268px;
+    padding: 14px 18px 10px;
   }
 
   .step-one__phone {
-    width: 78px;
-    margin-bottom: 12px;
+    width: 66px;
+    margin-bottom: 8px;
   }
 
   .step-one__security-title {
-    font-size: 24px;
-    line-height: 29px;
+    font-size: 22px;
+    line-height: 26px;
+    margin-bottom: 3px;
   }
 
   .step-one__device,
   .step-one__description {
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 12px;
+    line-height: 16px;
   }
 
   .step-one__risk {
-    min-height: 40px;
-    font-size: 16px;
+    min-height: 34px;
+    margin-bottom: 8px;
+    font-size: 15px;
   }
 
   .step-one__alert {
@@ -3079,8 +3085,9 @@ progress::-moz-progress-bar {
   }
 
   .step-two__face-id {
-    width: 96px;
-    height: 96px;
+    top: 64px;
+    width: 88px;
+    height: 88px;
   }
 
   .step-two__security {
