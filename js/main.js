@@ -83,6 +83,7 @@ const HAPTIC_TRIGGER = "haptic";
 const HAPTIC_START_ACTION = "start";
 const HAPTIC_STOP_ACTION = "stop";
 const HAPTIC_PULSE_DURATION = 45;
+const BUILD_VERSION = "css26-js22";
 
 applyDeviceLayout();
 initDebugOverlay();
@@ -227,13 +228,19 @@ function updateDebugOverlay() {
     "padding-bottom",
     "safe-area-inset-bottom",
   ).replace("0px", "");
+  const bodyStyles = window.getComputedStyle(document.body);
+  const cardScale = bodyStyles.getPropertyValue("--s1-card-scale").trim();
+  const cardY = bodyStyles.getPropertyValue("--s1-card-y").trim();
+  const alertsY = bodyStyles.getPropertyValue("--s1-alerts-y").trim();
 
   debugOverlay.innerHTML = `
     <strong>${device}</strong>
+    <span>build: ${BUILD_VERSION}</span>
     <span>inner: ${width}x${height}</span>
     <span>visual: ${visualWidth}x${visualHeight}</span>
     <span>vv-top: ${visualTop} | dpr: ${dpr}</span>
     <span>safe: ${safeTop}${safeBottom ? ` / ${safeBottom}` : ""}</span>
+    <span>s1: ${cardScale} ${cardY} ${alertsY}</span>
   `;
 }
 

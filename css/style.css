@@ -726,12 +726,100 @@ body.device-desktop {
 }
 
 body.device-iphone-12-pro {
-  --s1-card-y: -20px;
-  --s1-card-scale: 0.88;
-  --s1-alerts-y: -42px;
-  --s1-alerts-scale: 0.9;
-  --s1-footer-y: -34px;
-  --s1-button-scale: 0.92;
+  --s1-card-y: -8px;
+  --s1-card-scale: 1;
+  --s1-alerts-y: -12px;
+  --s1-alerts-scale: 1;
+  --s1-footer-y: -8px;
+  --s1-button-scale: 1;
+}
+
+body.device-iphone-12-pro .step-one {
+  padding: 12px 20px 14px;
+}
+
+body.device-iphone-12-pro .step-one__content {
+  gap: 12px;
+}
+
+body.device-iphone-12-pro .step-one__security {
+  min-height: 352px;
+  padding: 18px 16px 14px;
+  border-radius: 34px;
+}
+
+body.device-iphone-12-pro .step-one__phone {
+  width: 82px;
+  margin-bottom: 14px;
+}
+
+body.device-iphone-12-pro .step-one__security-title {
+  margin-bottom: 4px;
+  font-size: 23px;
+}
+
+body.device-iphone-12-pro .step-one__device {
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+body.device-iphone-12-pro .step-one__risk {
+  min-width: 198px;
+  min-height: 38px;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+body.device-iphone-12-pro .step-one__description {
+  font-size: 13px;
+  line-height: 17px;
+}
+
+body.device-iphone-12-pro .step-one__alerts {
+  gap: 10px;
+}
+
+body.device-iphone-12-pro .step-one__alert {
+  grid-template-columns: 48px 1fr 30px;
+  min-height: 74px;
+  padding: 10px 16px;
+  border-radius: 23px;
+}
+
+body.device-iphone-12-pro .step-one__alert-icon {
+  width: 48px;
+  height: 48px;
+}
+
+body.device-iphone-12-pro .step-one__alert-copy h2 {
+  font-size: 18px;
+  line-height: 21px;
+}
+
+body.device-iphone-12-pro .step-one__alert-copy p {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+body.device-iphone-12-pro .step-one__alert-count {
+  width: 30px;
+  height: 30px;
+  font-size: 15px;
+}
+
+body.device-iphone-12-pro .step-one .text-uppercase {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+body.device-iphone-12-pro .step-one__footer {
+  gap: 12px;
+}
+
+body.device-iphone-12-pro .step-one__scan-button {
+  height: 58px;
+  font-size: 19px;
 }
 
 body.device-iphone-16 {
