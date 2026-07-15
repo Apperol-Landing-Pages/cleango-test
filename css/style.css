@@ -726,7 +726,12 @@ body.device-desktop {
 }
 
 body.device-iphone-12-pro {
-  /* iPhone 12 Pro tuning goes here */
+  --s1-card-y: -20px;
+  --s1-card-scale: 0.88;
+  --s1-alerts-y: -42px;
+  --s1-alerts-scale: 0.9;
+  --s1-footer-y: -34px;
+  --s1-button-scale: 0.92;
 }
 
 body.device-iphone-16 {
