@@ -83,7 +83,7 @@ const HAPTIC_TRIGGER = "haptic";
 const HAPTIC_START_ACTION = "start";
 const HAPTIC_STOP_ACTION = "stop";
 const HAPTIC_PULSE_DURATION = 45;
-const BUILD_VERSION = "css34-js31";
+const BUILD_VERSION = "css36-js33";
 
 applyDeviceLayout();
 initDebugOverlay();
@@ -239,6 +239,13 @@ function updateDebugOverlay() {
   const sheetMaxHeight = riskSheet
     ? window.getComputedStyle(riskSheet).maxHeight
     : "-";
+  const tryAgainButton = document.getElementById("try-again-btn");
+  const tryAgainStyles = tryAgainButton
+    ? window.getComputedStyle(tryAgainButton)
+    : null;
+  const tryAgainMetrics = tryAgainStyles
+    ? `${tryAgainStyles.bottom}/${tryAgainStyles.height}`
+    : "-";
 
   debugOverlay.innerHTML = `
     <strong>${device}</strong>
@@ -249,6 +256,7 @@ function updateDebugOverlay() {
     <span>safe: ${safeTop}${safeBottom ? ` / ${safeBottom}` : ""}</span>
     <span>s1: ${cardScale} ${cardY} ${alertsY}</span>
     <span>s3: n=${notificationTop} sh=${sheetHeight}/${sheetMaxHeight}</span>
+    <span>btn: ${tryAgainMetrics}</span>
   `;
 }
 
