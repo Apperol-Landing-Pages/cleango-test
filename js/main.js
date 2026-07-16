@@ -97,7 +97,7 @@ const PAYMENT_CONFIG = {
   currency: "usd",
   country: "US",
 };
-const BUILD_VERSION = "css37-js36";
+const BUILD_VERSION = "css38-js37";
 
 applyDeviceLayout();
 initDebugOverlay();

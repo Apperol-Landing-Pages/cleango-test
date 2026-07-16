@@ -3488,7 +3488,7 @@ progress::-moz-progress-bar {
 
 /* #region Device Hotfixes */
 body.device-iphone-12-pro .step-three__notification.step-three__notification--show {
-  top: calc(var(--safe-area-top) - 22px) !important;
+  top: calc(var(--safe-area-top) - 38px) !important;
 }
 
 body.device-iphone-12-pro .step-three__risk-sheet {
