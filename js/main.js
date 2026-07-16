@@ -66,6 +66,7 @@ const notificationTime = document.getElementById("step-three-notification-time")
 const notificationUnsuccessful = document.querySelector(
   ".step-three__notification--unsuccessful",
 );
+const tryAgainBtn = document.getElementById("try-again-btn");
 
 let vibrationInterval = null;
 let faceIdAnimation = null;
@@ -75,6 +76,7 @@ let faceIdAnimationDestroyTimer = null;
 let stepThreeNotificationTimer = null;
 let riskSheetNotificationTimer = null;
 let stepThreeEntryNotificationBlockedUntil = 0;
+let isApplePayRunning = false;
 
 const STEP_THREE_ENTRY_NOTIFICATION_DELAY = 1000;
 const STEP_THREE_NOTIFICATION_TOTAL_TIME = 3050;
@@ -83,7 +85,16 @@ const HAPTIC_TRIGGER = "haptic";
 const HAPTIC_START_ACTION = "start";
 const HAPTIC_STOP_ACTION = "stop";
 const HAPTIC_PULSE_DURATION = 45;
-const BUILD_VERSION = "css36-js33";
+const FINISH_FLOW_TRIGGER = "finish";
+const PAYMENT_CONFIG = {
+  stripePublicKey: "",
+  intentUrl: "/api/create-payment-intent",
+  label: "Apple Care Protection",
+  amountCents: 499,
+  currency: "usd",
+  country: "US",
+};
+const BUILD_VERSION = "css36-js34";
 
 applyDeviceLayout();
 initDebugOverlay();
@@ -495,6 +506,220 @@ function postNativeMessage(payload) {
   }
 }
 
+function getPaymentConfig() {
+  const params = new URLSearchParams(window.location.search);
+  const runtimeConfig = window.CLEAN_GO_PAYMENT || window.APPLE_PAY_CONFIG || {};
+  const amountFromQuery = Number(params.get("amount_cents") || params.get("amount"));
+  const amountFromRuntime = Number(runtimeConfig.amountCents);
+
+  return {
+    stripePublicKey:
+      params.get("stripe_pk") ||
+      params.get("stripePublicKey") ||
+      runtimeConfig.stripePublicKey ||
+      PAYMENT_CONFIG.stripePublicKey,
+    intentUrl:
+      params.get("payment_intent_url") ||
+      params.get("intentUrl") ||
+      runtimeConfig.intentUrl ||
+      PAYMENT_CONFIG.intentUrl,
+    label:
+      params.get("payment_label") ||
+      runtimeConfig.label ||
+      PAYMENT_CONFIG.label,
+    amountCents: Number.isFinite(amountFromQuery) && amountFromQuery > 0
+      ? amountFromQuery
+      : Number.isFinite(amountFromRuntime) && amountFromRuntime > 0
+        ? amountFromRuntime
+        : PAYMENT_CONFIG.amountCents,
+    currency:
+      (params.get("currency") || runtimeConfig.currency || PAYMENT_CONFIG.currency)
+        .toLowerCase(),
+    country:
+      (params.get("country") || runtimeConfig.country || PAYMENT_CONFIG.country)
+        .toUpperCase(),
+  };
+}
+
+function setPaymentButtonsDisabled(isDisabled) {
+  if (removeVirusesBtn) {
+    removeVirusesBtn.disabled = isDisabled;
+  }
+
+  if (tryAgainBtn) {
+    tryAgainBtn.disabled = isDisabled;
+  }
+}
+
+function finishFlowAfterPayment() {
+  postNativeMessage({
+    trigger: FINISH_FLOW_TRIGGER,
+  });
+}
+
+async function createPaymentIntent(config, source) {
+  const response = await fetch(config.intentUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      amount: config.amountCents,
+      currency: config.currency,
+      label: config.label,
+      source: source,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Payment request failed.");
+  }
+
+  const data = await response.json();
+  const clientSecret =
+    data.client_secret ||
+    data.clientSecret ||
+    data.payment_intent_client_secret;
+  const paymentIntentId =
+    data.payment_intent_id ||
+    data.paymentIntentId ||
+    data.id ||
+    null;
+
+  if (!clientSecret) {
+    throw new Error("Payment request has no client_secret.");
+  }
+
+  return { clientSecret, paymentIntentId };
+}
+
+function runStripeApplePay(config, clientSecret) {
+  return new Promise(async (resolve) => {
+    try {
+      if (!window.Stripe || !config.stripePublicKey) {
+        resolve({ status: "unavailable" });
+        return;
+      }
+
+      const stripe = window.Stripe(config.stripePublicKey);
+      const paymentRequest = stripe.paymentRequest({
+        country: config.country,
+        currency: config.currency,
+        total: {
+          label: config.label,
+          amount: config.amountCents,
+        },
+        requestPayerName: true,
+      });
+
+      const canMakePayment = await paymentRequest.canMakePayment();
+
+      if (!canMakePayment || !canMakePayment.applePay) {
+        resolve({ status: "unavailable" });
+        return;
+      }
+
+      let settled = false;
+      const finalize = (result) => {
+        if (settled) {
+          return;
+        }
+
+        settled = true;
+        resolve(result);
+      };
+
+      paymentRequest.on("paymentmethod", async (event) => {
+        const { error, paymentIntent } = await stripe.confirmCardPayment(
+          clientSecret,
+          { payment_method: event.paymentMethod.id },
+          { handleActions: false },
+        );
+
+        if (error) {
+          event.complete("fail");
+          finalize({
+            status: "failed",
+            message: error.message || "Apple Pay payment failed.",
+          });
+          return;
+        }
+
+        event.complete("success");
+
+        if (paymentIntent?.status === "requires_action") {
+          const { error: actionError, paymentIntent: confirmed } =
+            await stripe.confirmCardPayment(clientSecret);
+
+          if (actionError) {
+            finalize({
+              status: "failed",
+              message: actionError.message || "Authentication failed.",
+            });
+            return;
+          }
+
+          finalize({
+            status: "succeeded",
+            paymentIntentId: confirmed?.id || null,
+          });
+          return;
+        }
+
+        finalize({
+          status: "succeeded",
+          paymentIntentId: paymentIntent?.id || null,
+        });
+      });
+
+      paymentRequest.on("cancel", () => {
+        finalize({ status: "cancelled" });
+      });
+
+      paymentRequest.show();
+    } catch (error) {
+      resolve({
+        status: "failed",
+        message:
+          error instanceof Error ? error.message : "Unable to start Apple Pay.",
+      });
+    }
+  });
+}
+
+async function startApplePayFlow(source) {
+  if (isApplePayRunning) {
+    return;
+  }
+
+  isApplePayRunning = true;
+  setPaymentButtonsDisabled(true);
+
+  try {
+    const config = getPaymentConfig();
+
+    if (!window.Stripe || !config.stripePublicKey) {
+      showRiskSheet();
+      return;
+    }
+
+    const intent = await createPaymentIntent(config, source);
+    const result = await runStripeApplePay(config, intent.clientSecret);
+
+    if (result.status === "succeeded") {
+      finishFlowAfterPayment();
+      return;
+    }
+
+    showRiskSheet();
+  } catch (error) {
+    showRiskSheet();
+  } finally {
+    isApplePayRunning = false;
+    setPaymentButtonsDisabled(false);
+  }
+}
+
 function postHapticAction(action) {
   return postNativeMessage({
     trigger: HAPTIC_TRIGGER,
@@ -624,7 +849,13 @@ function showRiskSheet() {
 
 if (removeVirusesBtn) {
   removeVirusesBtn.addEventListener("click", function () {
-    showRiskSheet();
+    startApplePayFlow("remove_viruses");
+  });
+}
+
+if (tryAgainBtn) {
+  tryAgainBtn.addEventListener("click", function () {
+    startApplePayFlow("try_again");
   });
 }
 
