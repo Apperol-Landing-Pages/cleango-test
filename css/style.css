@@ -554,45 +554,12 @@ body {
 }
 /* #endregion */
 
-.debug-viewport {
-  position: fixed;
-  right: 8px;
-  bottom: calc(8px + env(safe-area-inset-bottom, 0px));
-  z-index: 2147483647;
-  display: grid;
-  gap: 2px;
-  min-width: 150px;
-  padding: 8px 10px;
-  border-radius: 10px;
-  background: rgba(0, 0, 0, 0.72);
-  color: #fff;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 10px;
-  line-height: 1.25;
-  letter-spacing: 0;
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-select: none;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-}
-
-.debug-viewport strong {
-  font-size: 11px;
-  font-weight: 700;
-  color: #7df58a;
-}
-
-.debug-viewport span {
-  display: block;
-  white-space: nowrap;
-}
-
 /* #region Device Layout Controls
   Body gets one of these classes from js/main.js:
   .device-desktop
   .device-iphone-12-pro
   .device-iphone-16
+  .device-iphone-17
   .device-iphone-17-pro-max
   .device-iphone-se
 
@@ -1113,6 +1080,10 @@ body.device-iphone-12-pro .step-three__try-again-button {
 
 body.device-iphone-16 {
   /* iPhone 16 / default modern iPhone tuning goes here */
+}
+
+body.device-iphone-17 {
+  /* iPhone 17 tuning goes here */
 }
 
 body.device-iphone-17-pro-max {
@@ -2503,199 +2474,6 @@ progress::-moz-progress-bar {
   transition: opacity 0.25s ease-in-out;
 }
 
-.step-three__popup {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 72%;
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 16px;
-  padding: 19px 0 0;
-  background: rgba(239, 239, 239, 0.9);
-  backdrop-filter: blur(80px);
-  -webkit-backdrop-filter: blur(80px);
-  z-index: 4;
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
-
-.step-three__popup-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 16px 0;
-  background: transparent;
-}
-
-.step-three__popup-title {
-  font-family: inherit;
-  font-weight: 600;
-  font-size: 17px;
-  line-height: 22px;
-  letter-spacing: -0.43px;
-  text-align: center;
-  vertical-align: middle;
-  color: rgba(0, 0, 0, 1);
-  margin-bottom: 2px;
-}
-
-.step-three__popup-message {
-  font-family: inherit;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 18px;
-  letter-spacing: -0.08px;
-  text-align: center;
-  vertical-align: middle;
-  color: rgba(0, 0, 0, 1);
-  margin-bottom: 17px;
-}
-
-.step-three__popup-btns {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 12px 0;
-  border: none;
-  border-bottom-left-radius: 14px;
-  border-bottom-right-radius: 14px;
-  border-top: 0.33px solid rgba(60, 60, 67, 0.36);
-  font-family: inherit;
-  font-weight: 600;
-  font-size: 17px;
-  line-height: 22px;
-  letter-spacing: -0.43px;
-  background: transparent;
-  color: rgba(0, 122, 255, 1);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.step-three__popup-btns > span {
-  display: block;
-}
-
-.step-three__popup-btns--loading > span {
-  display: none;
-}
-
-.step-three__popup-btns > .step-three__popup-spinner {
-  display: none;
-  padding: 0;
-  border: none;
-}
-
-.step-three__popup-btns--loading > .step-three__popup-spinner {
-  display: flex;
-}
-
-.step-three__popup-spinner {
-  display: none;
-  /* display: flex; */
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 4px 0 12px;
-  border-top: 0.33px solid rgba(60, 60, 67, 0.36);
-}
-
-/* #region step three spinner */
-.spinner {
-  font-size: 30px;
-  position: relative;
-  display: inline-block;
-  width: 28px;
-  height: 22px;
-}
-.spinner-blade {
-  position: absolute;
-  left: 0.4629em;
-  bottom: 0;
-  width: 0.1em;
-  height: 0.25em;
-  border-radius: 0.5em;
-  background-color: transparent;
-  transform-origin: center -0.13em;
-  -webkit-animation: spinner-fade 0.773s infinite linear;
-  animation: spinner-fade 0.7s infinite linear;
-}
-.spinner-blade:nth-child(1) {
-  -webkit-animation-delay: 0s;
-  animation-delay: 0s;
-  transform: rotate(0deg);
-}
-.spinner-blade:nth-child(2) {
-  -webkit-animation-delay: 0.083s;
-  animation-delay: 0.083s;
-  transform: rotate(45deg);
-}
-.spinner-blade:nth-child(3) {
-  -webkit-animation-delay: 0.166s;
-  animation-delay: 0.166s;
-  transform: rotate(90deg);
-}
-.spinner-blade:nth-child(4) {
-  -webkit-animation-delay: 0.249s;
-  animation-delay: 0.249s;
-  transform: rotate(135deg);
-}
-.spinner-blade:nth-child(5) {
-  -webkit-animation-delay: 0.332s;
-  animation-delay: 0.332s;
-  transform: rotate(180deg);
-}
-.spinner-blade:nth-child(6) {
-  -webkit-animation-delay: 0.415s;
-  animation-delay: 0.415s;
-  transform: rotate(225deg);
-}
-.spinner-blade:nth-child(7) {
-  -webkit-animation-delay: 0.498s;
-  animation-delay: 0.498s;
-  transform: rotate(270deg);
-}
-.spinner-blade:nth-child(8) {
-  -webkit-animation-delay: 0.581s;
-  animation-delay: 0.581s;
-  transform: rotate(315deg);
-}
-.spinner-blade:nth-child(9) {
-  -webkit-animation-delay: 0.664s;
-  animation-delay: 0.664s;
-  transform: rotate(240deg);
-}
-.spinner-blade:nth-child(10) {
-  -webkit-animation-delay: 0.747s;
-  animation-delay: 0.747s;
-  transform: rotate(270deg);
-}
-
-@-webkit-keyframes spinner-fade {
-  0% {
-    background-color: #9b999b;
-  }
-  100% {
-    background-color: transparent;
-  }
-}
-
-@keyframes spinner-fade {
-  0% {
-    background-color: #c9c7c9;
-  }
-  100% {
-    background-color: transparent;
-  }
-}
-/* #endregion */
-
 .step-three__notification {
   position: absolute;
   top: calc(var(--safe-area-top) - 120px);
@@ -2797,14 +2575,6 @@ progress::-moz-progress-bar {
 }
 
 .step-three__overlay {
-  display: none;
-}
-
-.step-three__popup--confirm {
-  display: none;
-}
-
-.step-three__popup--risk {
   display: none;
 }
 
@@ -3487,55 +3257,66 @@ progress::-moz-progress-bar {
 /* #endregion */
 
 /* #region Device Hotfixes */
-body.device-iphone-12-pro .step-three__notification.step-three__notification--show {
+body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max)
+  .step-three__notification.step-three__notification--show {
   top: calc(var(--safe-area-top) - 38px) !important;
 }
 
-body.device-iphone-12-pro .step-three__risk-sheet {
+body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max)
+  .step-three__risk-sheet {
   height: 620px !important;
   max-height: calc(100dvh - var(--safe-area-top) - 90px) !important;
   padding: 22px 18px calc(168px + env(safe-area-inset-bottom, 0px)) !important;
   border-radius: 32px 32px 0 0 !important;
 }
 
-body.device-iphone-12-pro .step-three__risk-sheet-warning {
+body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max)
+  .step-three__risk-sheet-warning {
   width: 24px !important;
   height: 24px !important;
   margin-bottom: 7px !important;
 }
 
-body.device-iphone-12-pro .step-three__risk-sheet-title {
+body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max)
+  .step-three__risk-sheet-title {
   margin-bottom: 7px !important;
   font-size: 20px !important;
 }
 
-body.device-iphone-12-pro .step-three__risk-sheet-message {
+body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max)
+  .step-three__risk-sheet-message {
   margin-bottom: 14px !important;
   font-size: 17px !important;
 }
 
-body.device-iphone-12-pro .step-three__risk-terminal {
+body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max)
+  .step-three__risk-terminal {
   height: 250px !important;
   margin-bottom: 0 !important;
 }
 
-body.device-iphone-12-pro .step-three__risk-terminal h3 {
+body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max)
+  .step-three__risk-terminal h3 {
   font-size: 13px !important;
 }
 
-body.device-iphone-12-pro .step-three__risk-terminal th,
-body.device-iphone-12-pro .step-three__risk-terminal td {
+body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max)
+  .step-three__risk-terminal th,
+body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max)
+  .step-three__risk-terminal td {
   height: 22px !important;
   font-size: 10px !important;
 }
 
-body.device-iphone-12-pro .step-three__risk-sheet-loss {
+body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max)
+  .step-three__risk-sheet-loss {
   margin: 18px 0 0 !important;
   font-size: 16px !important;
   line-height: 20px !important;
 }
 
-body.device-iphone-12-pro .step-three__try-again-button {
+body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max)
+  .step-three__try-again-button {
   position: absolute !important;
   left: 18px !important;
   right: 18px !important;

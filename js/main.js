@@ -19,6 +19,7 @@ const DEVICE_LAYOUTS = [
   "device-desktop",
   "device-iphone-12-pro",
   "device-iphone-16",
+  "device-iphone-17",
   "device-iphone-17-pro-max",
   "device-iphone-se",
 ];
@@ -29,6 +30,8 @@ const DEVICE_QUERY_MAP = {
   iphone12pro: "device-iphone-12-pro",
   "iphone-16": "device-iphone-16",
   iphone16: "device-iphone-16",
+  "iphone-17": "device-iphone-17",
+  iphone17: "device-iphone-17",
   "iphone-17-pro-max": "device-iphone-17-pro-max",
   iphone17promax: "device-iphone-17-pro-max",
   "iphone-se": "device-iphone-se",
@@ -37,8 +40,6 @@ const DEVICE_QUERY_MAP = {
 };
 
 let layoutResizeTimer = null;
-let debugOverlay = null;
-let debugResizeTimer = null;
 
 const stepOne = document.querySelector(".step-one");
 const stepTwo = document.querySelector(".step-two");
@@ -97,23 +98,10 @@ const PAYMENT_CONFIG = {
   currency: "usd",
   country: "US",
 };
-const BUILD_VERSION = "css38-js37";
 
 applyDeviceLayout();
-initDebugOverlay();
 window.addEventListener("resize", scheduleDeviceLayoutUpdate);
-window.addEventListener("resize", scheduleDebugOverlayUpdate);
 window.addEventListener("orientationchange", scheduleDeviceLayoutUpdate);
-window.addEventListener("orientationchange", scheduleDebugOverlayUpdate);
-window.visualViewport?.addEventListener("resize", scheduleDebugOverlayUpdate);
-window.visualViewport?.addEventListener("scroll", scheduleDebugOverlayUpdate);
-
-function isDebugEnabled() {
-  const params = new URLSearchParams(window.location.search);
-  const debug = params.get("debug");
-
-  return debug === "1" || debug === "true" || debug === "yes";
-}
 
 function getForcedLayoutClass() {
   const params = new URLSearchParams(window.location.search);
@@ -157,7 +145,7 @@ function detectDeviceLayoutClass() {
   }
 
   if (shortSide >= 392 && shortSide <= 414 && longSide >= 830 && longSide <= 900) {
-    return "device-iphone-16";
+    return "device-iphone-17";
   }
 
   return isTouchScreen ? "device-iphone-16" : "device-desktop";
@@ -169,7 +157,6 @@ function applyDeviceLayout() {
   document.body.classList.remove(...DEVICE_LAYOUTS);
   document.body.classList.add(layoutClass);
   document.body.dataset.layoutDevice = layoutClass.replace("device-", "");
-  updateDebugOverlay();
 }
 
 function scheduleDeviceLayoutUpdate() {
@@ -194,100 +181,8 @@ window.setLayoutDevice = function setLayoutDevice(device) {
   document.body.classList.remove(...DEVICE_LAYOUTS);
   document.body.classList.add(layoutClass);
   document.body.dataset.layoutDevice = layoutClass.replace("device-", "");
-  updateDebugOverlay();
   return true;
 };
-
-function initDebugOverlay() {
-  if (!isDebugEnabled()) {
-    return;
-  }
-
-  debugOverlay = document.createElement("div");
-  debugOverlay.className = "debug-viewport";
-  debugOverlay.setAttribute("aria-hidden", "true");
-  document.body.appendChild(debugOverlay);
-  updateDebugOverlay();
-}
-
-function getCssEnvProbeValue(property, envName) {
-  const probe = document.createElement("div");
-  probe.style.cssText = `
-    position: fixed;
-    visibility: hidden;
-    pointer-events: none;
-    ${property}: env(${envName}, 0px);
-  `;
-  document.body.appendChild(probe);
-  const value = window.getComputedStyle(probe).getPropertyValue(property);
-  probe.remove();
-  return value.trim() || "0px";
-}
-
-function updateDebugOverlay() {
-  if (!debugOverlay) {
-    return;
-  }
-
-  const visualViewport = window.visualViewport;
-  const width = Math.round(window.innerWidth);
-  const height = Math.round(window.innerHeight);
-  const visualWidth = visualViewport ? Math.round(visualViewport.width) : "-";
-  const visualHeight = visualViewport ? Math.round(visualViewport.height) : "-";
-  const visualTop = visualViewport ? Math.round(visualViewport.offsetTop) : "-";
-  const dpr = Math.round(window.devicePixelRatio * 100) / 100;
-  const device = document.body.dataset.layoutDevice || "unknown";
-  const safeTop = getCssEnvProbeValue("padding-top", "safe-area-inset-top");
-  const safeBottom = getCssEnvProbeValue(
-    "padding-bottom",
-    "safe-area-inset-bottom",
-  ).replace("0px", "");
-  const bodyStyles = window.getComputedStyle(document.body);
-  const cardScale = bodyStyles.getPropertyValue("--s1-card-scale").trim();
-  const cardY = bodyStyles.getPropertyValue("--s1-card-y").trim();
-  const alertsY = bodyStyles.getPropertyValue("--s1-alerts-y").trim();
-  const notificationTop = notificationUnsuccessful
-    ? window.getComputedStyle(notificationUnsuccessful).top
-    : "-";
-  const sheetHeight = riskSheet ? window.getComputedStyle(riskSheet).height : "-";
-  const sheetMaxHeight = riskSheet
-    ? window.getComputedStyle(riskSheet).maxHeight
-    : "-";
-  const tryAgainButton = document.getElementById("try-again-btn");
-  const tryAgainStyles = tryAgainButton
-    ? window.getComputedStyle(tryAgainButton)
-    : null;
-  const tryAgainMetrics = tryAgainStyles
-    ? `${tryAgainStyles.bottom}/${tryAgainStyles.height}`
-    : "-";
-
-  debugOverlay.innerHTML = `
-    <strong>${device}</strong>
-    <span>build: ${BUILD_VERSION}</span>
-    <span>inner: ${width}x${height}</span>
-    <span>visual: ${visualWidth}x${visualHeight}</span>
-    <span>vv-top: ${visualTop} | dpr: ${dpr}</span>
-    <span>safe: ${safeTop}${safeBottom ? ` / ${safeBottom}` : ""}</span>
-    <span>s1: ${cardScale} ${cardY} ${alertsY}</span>
-    <span>s3: n=${notificationTop} sh=${sheetHeight}/${sheetMaxHeight}</span>
-    <span>btn: ${tryAgainMetrics}</span>
-  `;
-}
-
-function scheduleDebugOverlayUpdate() {
-  if (!debugOverlay) {
-    return;
-  }
-
-  if (debugResizeTimer) {
-    clearTimeout(debugResizeTimer);
-  }
-
-  debugResizeTimer = setTimeout(() => {
-    updateDebugOverlay();
-    debugResizeTimer = null;
-  }, 120);
-}
 
 startScanButton.addEventListener("click", function () {
   stepTwo.style.display = "flex";
