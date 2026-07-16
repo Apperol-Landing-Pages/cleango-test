@@ -3539,7 +3539,7 @@ body.device-iphone-12-pro .step-three__try-again-button {
   position: absolute !important;
   left: 18px !important;
   right: 18px !important;
-  bottom: calc(86px + env(safe-area-inset-bottom, 0px)) !important;
+  bottom: calc(70px + env(safe-area-inset-bottom, 0px)) !important;
   width: auto !important;
   max-width: none !important;
   height: 58px !important;
