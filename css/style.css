@@ -3492,10 +3492,10 @@ body.device-iphone-12-pro .step-three__notification.step-three__notification--sh
 }
 
 body.device-iphone-12-pro .step-three__risk-sheet {
-  height: 470px !important;
-  max-height: 470px !important;
-  padding: 16px 18px calc(8px + env(safe-area-inset-bottom, 0px)) !important;
-  border-radius: 28px 28px 0 0 !important;
+  height: 620px !important;
+  max-height: calc(100dvh - var(--safe-area-top) - 90px) !important;
+  padding: 22px 18px calc(12px + env(safe-area-inset-bottom, 0px)) !important;
+  border-radius: 32px 32px 0 0 !important;
 }
 
 body.device-iphone-12-pro .step-three__risk-sheet-warning {
@@ -3515,8 +3515,8 @@ body.device-iphone-12-pro .step-three__risk-sheet-message {
 }
 
 body.device-iphone-12-pro .step-three__risk-terminal {
-  height: 158px !important;
-  margin-bottom: 8px !important;
+  height: 250px !important;
+  margin-bottom: 0 !important;
 }
 
 body.device-iphone-12-pro .step-three__risk-terminal h3 {
@@ -3530,13 +3530,13 @@ body.device-iphone-12-pro .step-three__risk-terminal td {
 }
 
 body.device-iphone-12-pro .step-three__risk-sheet-loss {
-  margin: 4px 0 8px !important;
-  font-size: 14px !important;
-  line-height: 18px !important;
+  margin: auto 0 12px !important;
+  font-size: 16px !important;
+  line-height: 20px !important;
 }
 
 body.device-iphone-12-pro .step-three__try-again-button {
-  height: 46px !important;
-  font-size: 17px !important;
+  height: 58px !important;
+  font-size: 19px !important;
 }
 /* #endregion */
