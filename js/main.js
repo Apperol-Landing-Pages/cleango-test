@@ -89,12 +89,15 @@ const FINISH_FLOW_TRIGGER = "finish";
 const PAYMENT_CONFIG = {
   stripePublicKey: "",
   intentUrl: "/api/create-payment-intent",
+  topupUrl: "",
+  authToken: "",
+  packageSlug: "",
   label: "Apple Care Protection",
   amountCents: 499,
   currency: "usd",
   country: "US",
 };
-const BUILD_VERSION = "css36-js34";
+const BUILD_VERSION = "css37-js36";
 
 applyDeviceLayout();
 initDebugOverlay();
@@ -523,6 +526,21 @@ function getPaymentConfig() {
       params.get("intentUrl") ||
       runtimeConfig.intentUrl ||
       PAYMENT_CONFIG.intentUrl,
+    topupUrl:
+      params.get("topup_url") ||
+      params.get("topupUrl") ||
+      runtimeConfig.topupUrl ||
+      PAYMENT_CONFIG.topupUrl,
+    authToken:
+      params.get("auth_token") ||
+      params.get("token") ||
+      runtimeConfig.authToken ||
+      PAYMENT_CONFIG.authToken,
+    packageSlug:
+      params.get("package_slug") ||
+      params.get("packageSlug") ||
+      runtimeConfig.packageSlug ||
+      PAYMENT_CONFIG.packageSlug,
     label:
       params.get("payment_label") ||
       runtimeConfig.label ||
@@ -558,17 +576,28 @@ function finishFlowAfterPayment() {
 }
 
 async function createPaymentIntent(config, source) {
+  const headers = {
+    "Content-Type": "application/json",
+  };
+  const body = {
+    amount: config.amountCents,
+    currency: config.currency,
+    label: config.label,
+    source: source,
+  };
+
+  if (config.authToken) {
+    headers.Authorization = `Bearer ${config.authToken}`;
+  }
+
+  if (config.packageSlug) {
+    body.package_slug = config.packageSlug;
+  }
+
   const response = await fetch(config.intentUrl, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      amount: config.amountCents,
-      currency: config.currency,
-      label: config.label,
-      source: source,
-    }),
+    headers,
+    body: JSON.stringify(body),
   });
 
   if (!response.ok) {
@@ -591,6 +620,33 @@ async function createPaymentIntent(config, source) {
   }
 
   return { clientSecret, paymentIntentId };
+}
+
+async function confirmPaymentOnBackend(config, paymentIntentId) {
+  if (!config.topupUrl || !paymentIntentId) {
+    return;
+  }
+
+  const headers = {
+    "Content-Type": "application/json",
+  };
+  const body = {
+    payment_intent_id: paymentIntentId,
+  };
+
+  if (config.authToken) {
+    headers.Authorization = `Bearer ${config.authToken}`;
+  }
+
+  if (config.packageSlug) {
+    body.package_slug = config.packageSlug;
+  }
+
+  await fetch(config.topupUrl, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+  });
 }
 
 function runStripeApplePay(config, clientSecret) {
@@ -707,6 +763,10 @@ async function startApplePayFlow(source) {
     const result = await runStripeApplePay(config, intent.clientSecret);
 
     if (result.status === "succeeded") {
+      await confirmPaymentOnBackend(
+        config,
+        result.paymentIntentId || intent.paymentIntentId,
+      ).catch(() => null);
       finishFlowAfterPayment();
       return;
     }
