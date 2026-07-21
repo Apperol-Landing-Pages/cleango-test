@@ -18,7 +18,9 @@ type IOSMessage = {
 
 export function sendToIOS(trigger: string, payload: unknown): void {
   if (typeof window === "undefined") return;
-  window.webkit?.messageHandlers?.appBridge?.postMessage({ trigger, payload });
+  const message =
+    payload === undefined ? { trigger } : { trigger, payload };
+  window.webkit?.messageHandlers?.appBridge?.postMessage(message);
 }
 
 export function initIOSMessageReceiver(): void {

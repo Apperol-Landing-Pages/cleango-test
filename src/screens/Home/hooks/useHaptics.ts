@@ -3,10 +3,12 @@
 import { useCallback, useEffect, useRef } from "react";
 import { sendToIOS } from "@/utils/webkitBridge";
 
-const BRIDGE_HANDLER_NAME = "appBridge";
 const HAPTIC_PULSE_DURATION = 45;
 
-type NativePayload = Record<string, unknown>;
+type NativeMessage = {
+  trigger: string;
+  payload?: unknown;
+};
 
 declare global {
   interface Window {
@@ -14,10 +16,9 @@ declare global {
   }
 }
 
-export function postNativeMessage(payload: NativePayload): boolean {
+export function postNativeMessage(message: NativeMessage): boolean {
   try {
-    const { trigger, payload: messagePayload } = payload;
-    sendToIOS(String(trigger ?? BRIDGE_HANDLER_NAME), messagePayload);
+    sendToIOS(message.trigger, message.payload);
     return true;
   } catch {
     return false;
