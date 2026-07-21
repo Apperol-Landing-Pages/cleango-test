@@ -1,0 +1,562 @@
+@import "@/styles/mixins";
+@import "../shared/landing-tokens";
+
+.page {
+  height: 100dvh;
+  min-height: 100dvh;
+  background: var(--grey900);
+  color: var(--white);
+  font-family: Poppins, sans-serif;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+.main {
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 48px 40px 100px;
+
+  @media (max-width: 767px) {
+    padding: 32px 24px 80px;
+  }
+}
+
+/* ─────────────────── Get Premium ─────────────────── */
+.premiumSection {
+  @include flex_center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.trustBadge {
+  width: 160px;
+  height: auto;
+  margin-bottom: 24px;
+}
+
+.premiumTitle {
+  @include flex_center;
+  gap: 12px;
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--white);
+  margin: 0 0 16px;
+  letter-spacing: -0.01em;
+
+  @media (max-width: 767px) {
+    font-size: 30px;
+    gap: 8px;
+  }
+}
+
+.avatars {
+  display: inline-flex;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--grey900);
+  margin-left: -12px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  @media (max-width: 767px) {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.premiumSubtitle {
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--grey200);
+  margin: 0 0 36px;
+
+  @media (max-width: 767px) {
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+}
+
+/* ─────────────────── Price card ─────────────────── */
+.priceCard {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  background: $landing-card-bg;
+  border: 1px solid $landing-card-border;
+  border-radius: 24px;
+  padding: 28px 32px;
+  margin-bottom: 32px;
+  cursor: pointer;
+}
+
+.radio {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.radioChecked {
+  border-color: $landing-brand;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: $landing-brand;
+  }
+}
+
+.priceCard > .radio {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+}
+
+.price {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--white);
+  text-align: center;
+  margin: 0 0 4px;
+}
+
+.priceSub {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  margin: 0 0 20px;
+}
+
+.priceDivider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin-bottom: 20px;
+}
+
+.featuredLabel {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--white);
+  text-align: center;
+  margin: 0 0 18px;
+}
+
+.featureList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  color: var(--grey100);
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 14px;
+  }
+}
+
+.showPlansBtn {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 0;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: $landing-brand;
+  text-align: center;
+  cursor: pointer;
+}
+
+.plansList {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.planOption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid transparent;
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+
+  span:last-child {
+    font-weight: 400;
+    color: var(--grey200);
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.planOptionPrice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ─────────────────── Buttons / badges ─────────────────── */
+.primaryBtn {
+  @include flex_center;
+  width: 100%;
+  max-width: 320px;
+  padding: 18px 36px;
+  border-radius: 999px;
+  background: $landing-brand;
+  color: var(--white);
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+
+  &:hover {
+    background: lighten($landing-brand, 5%);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  @media (max-width: 767px) {
+    font-size: 16px;
+    padding: 16px 28px;
+  }
+}
+
+.secureBadge {
+  @include flex_center;
+  gap: 8px;
+  margin-top: 16px;
+  font-size: 15px;
+  color: var(--white);
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 13px;
+  }
+}
+
+/* ─────────────────── Payment checkout ─────────────────── */
+.checkout {
+  @include flex_center;
+  flex-direction: column;
+  margin-top: 64px;
+
+  @media (max-width: 767px) {
+    margin-top: 48px;
+  }
+}
+
+.checkoutTitle {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--white);
+  text-align: center;
+  margin: 0 0 28px;
+  letter-spacing: -0.01em;
+
+  @media (max-width: 767px) {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+}
+
+.checkoutCard {
+  width: 100%;
+  max-width: 380px;
+  background: $landing-card-bg;
+  border: 1px solid $landing-card-border;
+  border-radius: 24px;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @media (max-width: 767px) {
+    padding: 24px 20px;
+  }
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 13px;
+  color: var(--grey200);
+}
+
+.field {
+  min-height: 54px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid transparent;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  cursor: text;
+
+  &:focus-within {
+    border-color: rgba(124, 148, 255, 0.6);
+  }
+
+  :global(.StripeElement) {
+    width: 100%;
+  }
+}
+
+.fieldInvalid {
+  border-color: var(--red);
+}
+
+.error {
+  color: var(--red);
+  font-size: 14px;
+  text-align: center;
+  margin: 0;
+}
+
+.confirmBtn {
+  @include flex_center;
+  width: 100%;
+  margin-top: 4px;
+  padding: 16px;
+  border-radius: 999px;
+  background: $landing-brand;
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+
+  &:hover:not(:disabled) {
+    background: lighten($landing-brand, 5%);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: default;
+  }
+}
+
+/* ─────────────────── Apple Pay ─────────────────── */
+.applePayBtn {
+  @include flex_center;
+  gap: 8px;
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  background: #000;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+
+  &:hover:not(:disabled) {
+    opacity: 0.85;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--grey300);
+  font-size: 13px;
+
+  &::before,
+  &::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* ─────────────────── Money-back ─────────────────── */
+.moneyBack {
+  text-align: center;
+  max-width: 480px;
+  margin: 40px auto 0;
+
+  @media (max-width: 767px) {
+    margin-top: 32px;
+  }
+}
+
+.moneyBackTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--white);
+  margin: 0 0 12px;
+}
+
+.moneyBackText {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--grey300);
+  margin: 0;
+}
+
+/* ─────────────────── Success modal ─────────────────── */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  @include flex_center;
+  padding: 24px;
+  background: rgba(4, 8, 24, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: overlayFade 0.25s ease;
+}
+
+@keyframes overlayFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modalCard {
+  width: 100%;
+  max-width: 420px;
+  background: #131b34;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 28px;
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: modalPop 0.3s ease;
+
+  @media (max-width: 767px) {
+    padding: 28px 24px;
+    border-radius: 24px;
+  }
+}
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modalBadge {
+  @include flex_center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: $landing-brand;
+  margin-bottom: 16px;
+}
+
+.modalTitle {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--white);
+  margin: 0 0 12px;
+
+  @media (max-width: 767px) {
+    font-size: 22px;
+  }
+}
+
+.modalText {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--grey100);
+  margin: 0 0 24px;
+}
+
+.modalBtn {
+  @include flex_center;
+  width: 100%;
+  padding: 16px;
+  border-radius: 999px;
+  background: $landing-brand;
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.1s;
+
+  &:hover {
+    background: lighten($landing-brand, 5%);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}

@@ -1,0 +1,151 @@
+:root {
+    --viewport-height: 100%;
+
+    --green: #00FF22;
+
+    --grey100: #CACDD6;
+    --grey200: #A0A3AE;
+    --grey300: #6a6e7a;
+    --grey600: #384057;
+    --grey700: #151E3B;
+    --grey800: #120F31;
+    --grey900: #EFEFEF;
+
+    --black: #000;
+    --pink: #ff4bd2;
+    --pink-light: #FF8696;
+
+    --red: #FF0004;
+
+    --orange: #fd603d;
+
+    --green: #0f2;
+
+    --white: #ffffff;
+
+    --white10: #FFFFFF1A;
+    --white15: #FFFFFF26;
+    --white50: #FFFFFF80;
+    --white75: #FFFFFFBF;
+
+    --header-height: calc(60px + env(safe-area-inset-top));
+    --bottom-navigation-bar-height: 66px;
+
+    --safe-top: env(safe-area-inset-top);
+    --safe-bottom: env(safe-area-inset-bottom);
+}
+
+html {
+    width: 100%;
+    overflow: hidden;
+    text-size-adjust: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    height: 100dvh;
+    min-height: -webkit-fill-available;
+    min-height: 100%;
+    min-width: 320px;
+
+    img {
+        -webkit-user-drag: none;
+        user-drag: none;
+    }
+}
+
+body {
+    text-rendering: optimizeLegibility;
+    -webkit-overflow-scrolling: touch;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    touch-action: manipulation;
+    overscroll-behavior: none;
+    color: var(--white);
+    background-color: var(--grey900);
+    font-family: Poppins, Poppins Fallback, sans-serif;
+    font-weight: 400;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+button {
+    font-family: Poppins, Poppins Fallback, sans-serif;
+    border: none;
+    background: unset;
+    cursor: pointer;
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+*::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+}
+
+img,
+video {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+input,
+textarea {
+    border-radius: 0;
+    outline: none;
+    background: transparent;
+    border: none;
+    resize: none;
+    -webkit-touch-callout: default;
+    -webkit-user-select: text;
+    user-select: text;
+
+    &::placeholder {
+        opacity: 1;
+    }
+
+    &:invalid {
+        box-shadow: none;
+    }
+}
+
+select {
+    border-radius: 0;
+    appearance: none;
+    color: inherit;
+}
+
+button {
+    border: none;
+    padding: 0;
+    background: unset;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+svg{
+  display: flex;
+}

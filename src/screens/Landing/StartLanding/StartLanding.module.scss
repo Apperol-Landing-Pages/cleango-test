@@ -1,0 +1,473 @@
+@import "@/styles/mixins";
+
+$brand: #ff7043;
+$brand-light: #ff936f;
+$card-bg: #ffffff;
+$card-border: #dedede;
+
+.page {
+  height: 100dvh;
+  min-height: 100dvh;
+  background: #f3f3f3;
+  color: #111111;
+  font-family: Poppins, sans-serif;
+  position: relative;
+  user-select: text;
+  -webkit-user-select: text;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ─────────────────── Hero ─────────────────── */
+.hero {
+  @include flex_center;
+  flex-direction: column;
+  text-align: center;
+  padding: 64px 40px 88px;
+
+  @media (max-width: 767px) {
+    padding: 32px 24px 64px;
+  }
+}
+
+/* Phone mockup */
+.phoneMockup {
+  position: relative;
+  width: 400px;
+  margin-bottom: 36px;
+
+  @media (max-width: 767px) {
+    width: min(90vw, 360px);
+    margin-bottom: 32px;
+  }
+}
+
+.phoneGlow {
+  position: absolute;
+  inset: -40px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 112, 67, 0.18) 0%,
+    transparent 65%
+  );
+  filter: blur(30px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.phoneImage {
+  display: block;
+  width: 68%;
+  height: auto;
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+}
+
+.scoreSection {
+  position: absolute;
+  top: 13%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 75%;
+  height: auto;
+  z-index: 2;
+  filter: drop-shadow(0 8px 32px rgba(30, 30, 30, 0.14));
+}
+
+.heroTitle {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #080808;
+  margin: 0 0 36px;
+  letter-spacing: -0.02em;
+
+  @media (max-width: 767px) {
+    font-size: 32px;
+    margin: 16px 0 28px;
+    letter-spacing: -0.01em;
+  }
+}
+
+.accent {
+  color: #080808;
+}
+
+/* ─────────────────── Buttons ─────────────────── */
+.primaryBtn {
+  @include flex_center;
+  width: 100%;
+  max-width: 320px;
+  padding: 18px 36px;
+  border-radius: 999px;
+  background: $brand;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.1s;
+
+  &:hover {
+    background: lighten($brand, 5%);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  @media (max-width: 767px) {
+    font-size: 15px;
+    padding: 16px 28px;
+  }
+}
+
+.primaryBtnTight {
+  margin-top: 32px;
+
+  @media (max-width: 767px) {
+    margin-top: 24px;
+  }
+}
+
+.secondaryBtn {
+  @include flex_center;
+  width: 100%;
+  max-width: 320px;
+  padding: 17px 36px;
+  border-radius: 999px;
+  background: transparent;
+  border: 1px solid #b7b7b7;
+  color: #151515;
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+
+  &:hover {
+    border-color: #151515;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 15px;
+    padding: 15px 28px;
+  }
+}
+
+.secureBadge {
+  @include flex_center;
+  gap: 8px;
+  margin-top: 18px;
+  font-size: 16px;
+  color: #6b6b6b;
+
+  @media (max-width: 767px) {
+    font-size: 13px;
+    margin-top: 14px;
+  }
+}
+
+/* ─────────────────── Section common ─────────────────── */
+.eyebrow {
+  font-size: 15px;
+  font-weight: 500;
+  color: #181818;
+  text-align: center;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+
+  @media (max-width: 767px) {
+    font-size: 13px;
+  }
+}
+
+.sectionTitle {
+  text-align: center;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #080808;
+  margin: 0 0 20px;
+
+  @media (max-width: 767px) {
+    font-size: 28px;
+    letter-spacing: -0.01em;
+  }
+}
+
+.sectionSubtitle {
+  text-align: center;
+  font-size: 18px;
+  color: #666666;
+  line-height: 1.6;
+  margin-bottom: 48px;
+
+  @media (max-width: 767px) {
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+}
+
+/* ─────────────────── Features ─────────────────── */
+.features {
+  @include flex_center;
+  flex-direction: column;
+  padding: 100px 40px 120px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+
+  @media (max-width: 767px) {
+    padding: 40px 24px 80px;
+  }
+}
+
+.featureGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 1000px;
+
+  > .featureCard {
+    width: calc(33.33% - 14px);
+
+    @media (max-width: 900px) {
+      width: calc(50% - 10px);
+    }
+
+    @media (max-width: 480px) {
+      width: 100%;
+    }
+  }
+}
+
+.featureCard {
+  background: $card-bg;
+  border: 1px solid $card-border;
+  border-radius: 20px;
+  padding: 28px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.featureIcon {
+  width: 72px;
+  height: 72px;
+  border-radius: 99px;
+  background: $brand;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+
+  svg {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.featureTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111111;
+  margin-bottom: 10px;
+
+  @media (max-width: 767px) {
+    font-size: 16px;
+  }
+}
+
+.featureText {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #6b6b6b;
+
+  @media (max-width: 767px) {
+    font-size: 12px;
+  }
+}
+
+/* ─────────────────── Steps ─────────────────── */
+.steps {
+  @include flex_center;
+  flex-direction: column;
+  padding: 100px 40px 120px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+
+  @media (max-width: 767px) {
+    padding: 40px 24px 80px;
+  }
+}
+
+.stepList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 640px;
+  margin-bottom: 48px;
+
+  @media (max-width: 767px) {
+    max-width: 100%;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+}
+
+.stepCard {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: $card-bg;
+  border: 1px solid $card-border;
+  border-radius: 20px;
+  padding: 24px 28px;
+
+  @media (max-width: 767px) {
+    padding: 18px;
+    gap: 14px;
+  }
+}
+
+.stepNumber {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid $brand;
+  color: $brand;
+  font-weight: 700;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 112, 67, 0.1);
+
+  @media (max-width: 767px) {
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+  }
+}
+
+.stepNumberActive {
+  background: $brand;
+  color: #ffffff;
+  border-color: $brand;
+}
+
+.stepTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #111111;
+  margin-bottom: 6px;
+
+  @media (max-width: 767px) {
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+}
+
+.stepText {
+  font-size: 16px;
+  color: #6b6b6b;
+  line-height: 1.4;
+
+  @media (max-width: 767px) {
+    font-size: 12px;
+  }
+}
+
+.ctaStack {
+  @include flex_center;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+
+  @media (max-width: 767px) {
+    gap: 12px;
+  }
+}
+
+/* ─────────────────── Support ─────────────────── */
+.support {
+  padding: 0 40px 120px;
+  display: flex;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+
+  @media (max-width: 767px) {
+    padding: 0 24px 80px;
+  }
+}
+
+.supportCard {
+  width: 100%;
+  max-width: 560px;
+  background: $card-bg;
+  border: 1px solid $card-border;
+  border-radius: 24px;
+  padding: 48px 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  @media (max-width: 767px) {
+    padding: 32px 24px;
+    max-width: 100%;
+    gap: 14px;
+  }
+}
+
+.supportIcon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+
+  path {
+    fill: $brand;
+  }
+}
+
+.supportTitle {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111111;
+  margin: 0;
+  letter-spacing: -0.02em;
+
+  @media (max-width: 767px) {
+    font-size: 24px;
+  }
+}
+
+.supportText {
+  font-size: 18px;
+  color: #6b6b6b;
+  line-height: 1.5;
+  margin-bottom: 8px;
+
+  @media (max-width: 767px) {
+    font-size: 13px;
+  }
+}

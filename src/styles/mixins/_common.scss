@@ -1,0 +1,18 @@
+@mixin flex_center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex_between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin gradient_border($surface, $border-gradient) {
+  background:
+    linear-gradient($surface, $surface) padding-box,
+    $border-gradient border-box;
+  background-clip: padding-box, border-box;
+}
