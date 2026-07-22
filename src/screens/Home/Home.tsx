@@ -377,9 +377,6 @@ const Home = () => {
 
   return (
     <main className={s.wrapper}>
-      <div className={s.demoBanner} role="status">
-        Security Scan Demo — this is not a real device scan
-      </div>
       {step === 1 && (
         <div className={`${s.container} ${s["step-one"]}`}>
           <div className={s["step-one__content"]}>
