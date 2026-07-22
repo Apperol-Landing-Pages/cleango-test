@@ -3141,12 +3141,12 @@
 /* #endregion */
 
 /* #region Device Hotfixes */
-:global(body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
+:global(body:is(.device-iphone-12-pro, .device-iphone-16, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
   .step-three__notification.step-three__notification--show {
   top: 12px !important;
 }
 
-:global(body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
+:global(body:is(.device-iphone-12-pro, .device-iphone-16, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
   .step-three__risk-sheet {
   height: 545px !important;
   max-height: calc(100dvh - var(--safe-area-top) - 90px) !important;
@@ -3154,53 +3154,53 @@
   border-radius: 32px 32px 0 0 !important;
 }
 
-:global(body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
+:global(body:is(.device-iphone-12-pro, .device-iphone-16, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
   .step-three__risk-sheet-warning {
   width: 24px !important;
   height: 24px !important;
   margin-bottom: 7px !important;
 }
 
-:global(body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
+:global(body:is(.device-iphone-12-pro, .device-iphone-16, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
   .step-three__risk-sheet-title {
   margin-bottom: 7px !important;
   font-size: 20px !important;
 }
 
-:global(body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
+:global(body:is(.device-iphone-12-pro, .device-iphone-16, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
   .step-three__risk-sheet-message {
   margin-bottom: 28px !important;
   font-size: 17px !important;
 }
 
-:global(body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
+:global(body:is(.device-iphone-12-pro, .device-iphone-16, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
   .step-three__risk-terminal {
   width: min(78%, 466px) !important;
   height: 225px !important;
   margin-bottom: 0 !important;
 }
 
-:global(body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
+:global(body:is(.device-iphone-12-pro, .device-iphone-16, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
   .step-three__risk-terminal h3 {
   font-size: 13px !important;
 }
 
-:global(body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
+:global(body:is(.device-iphone-12-pro, .device-iphone-16, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
   .step-three__risk-terminal th,
-:global(body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
+:global(body:is(.device-iphone-12-pro, .device-iphone-16, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
   .step-three__risk-terminal td {
   height: 22px !important;
   font-size: 10px !important;
 }
 
-:global(body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
+:global(body:is(.device-iphone-12-pro, .device-iphone-16, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
   .step-three__risk-sheet-loss {
   margin: 18px 0 0 !important;
   font-size: 16px !important;
   line-height: 20px !important;
 }
 
-:global(body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
+:global(body:is(.device-iphone-12-pro, .device-iphone-16, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
   .step-three__try-again-button {
   position: absolute !important;
   left: 18px !important;
