@@ -115,15 +115,18 @@ const Home = () => {
   const [step, setStep] = useState<Step>(1);
   const [progress, setProgress] = useState(0);
   const [isRiskOverlayVisible, setIsRiskOverlayVisible] = useState(false);
+  const [isRiskSheetVisible, setIsRiskSheetVisible] = useState(false);
   const [isPaymentRunning, setIsPaymentRunning] = useState(false);
   const [isEntryNotificationVisible, setIsEntryNotificationVisible] =
     useState(false);
   const [isFailureNotificationVisible, setIsFailureNotificationVisible] =
     useState(false);
+  const [failureSequence, setFailureSequence] = useState(0);
   const [notificationTime, setNotificationTime] = useState("9:41 AM");
   const [stripe, setStripe] = useState<Stripe | null>(null);
   const [isFaceIdVisible, setIsFaceIdVisible] = useState(false);
   const faceIdContainerRef = useRef<HTMLDivElement>(null);
+  const visibleThreatCountRef = useRef(0);
 
   useDeviceLayout();
   const { triggerHaptic, startPeriodicVibration, stopPeriodicVibration } =
@@ -163,6 +166,9 @@ const Home = () => {
 
   const startScan = () => {
     setIsRiskOverlayVisible(false);
+    setIsRiskSheetVisible(false);
+    setIsFailureNotificationVisible(false);
+    visibleThreatCountRef.current = 0;
     setProgress(0);
     setStep(2);
   };
@@ -194,8 +200,6 @@ const Home = () => {
           );
           setStep(3);
         }, 450);
-      } else if (nextProgress % 8 === 0) {
-        triggerHaptic();
       }
     }, 80);
 
@@ -203,6 +207,18 @@ const Home = () => {
       window.clearInterval(intervalId);
     };
   }, [step, triggerHaptic]);
+
+  useEffect(() => {
+    if (step !== 2) {
+      visibleThreatCountRef.current = 0;
+      return;
+    }
+
+    if (visibleThreats > visibleThreatCountRef.current) {
+      visibleThreatCountRef.current = visibleThreats;
+      triggerHaptic();
+    }
+  }, [step, triggerHaptic, visibleThreats]);
 
   useEffect(() => {
     if (step !== 2) return;
@@ -267,20 +283,24 @@ const Home = () => {
   }, [step]);
 
   useEffect(() => {
-    if (!isRiskOverlayVisible) return;
+    if (failureSequence === 0) return;
 
-    const showTimer = window.setTimeout(() => {
+    const notificationTimer = window.setTimeout(() => {
       setIsFailureNotificationVisible(true);
-    }, 1500);
+    }, 80);
+    const sheetTimer = window.setTimeout(() => {
+      setIsRiskSheetVisible(true);
+    }, 650);
     const hideTimer = window.setTimeout(() => {
       setIsFailureNotificationVisible(false);
-    }, 4000);
+    }, 3200);
 
     return () => {
-      window.clearTimeout(showTimer);
+      window.clearTimeout(notificationTimer);
+      window.clearTimeout(sheetTimer);
       window.clearTimeout(hideTimer);
     };
-  }, [isRiskOverlayVisible]);
+  }, [failureSequence]);
 
   const runPayment = useCallback(
     async () => {
@@ -332,7 +352,10 @@ const Home = () => {
       }
 
       if (result.status !== "succeeded") {
+        setIsFailureNotificationVisible(false);
+        setIsRiskSheetVisible(false);
         setIsRiskOverlayVisible(true);
+        setFailureSequence((sequence) => sequence + 1);
       }
 
       setIsPaymentRunning(false);
@@ -729,7 +752,9 @@ const Home = () => {
               </div>
 
               <div
-                className={`${s["step-three__risk-sheet"]} ${s["step-three__risk-sheet--show"]}`}
+                className={`${s["step-three__risk-sheet"]} ${
+                  isRiskSheetVisible ? s["step-three__risk-sheet--show"] : ""
+                }`}
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="risk-sheet-title"
