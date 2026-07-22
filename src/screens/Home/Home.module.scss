@@ -2471,6 +2471,7 @@
 
 .step-three__notification--unsuccessful {
   display: none;
+  top: calc(var(--home-content-top) + var(--safe-area-top) - 120px);
 }
 
 .step-three__notification--settings {
@@ -2495,6 +2496,11 @@
 
 .step-three__overlay--visible .step-three__notification--unsuccessful {
   display: flex;
+}
+
+.step-three__overlay
+  .step-three__notification--unsuccessful.step-three__notification--show {
+  top: calc(var(--home-content-top) + 12px) !important;
 }
 
 .step-three__risk-sheet {
