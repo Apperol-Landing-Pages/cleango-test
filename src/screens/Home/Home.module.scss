@@ -2346,7 +2346,7 @@
 
 .step-three__overlay {
   position: fixed;
-  top: 0;
+  top: calc(-1 * var(--home-content-top));
   left: 0;
   width: 100vw;
   height: 100dvh;
