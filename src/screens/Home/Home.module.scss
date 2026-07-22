@@ -3141,7 +3141,7 @@
 /* #region Device Hotfixes */
 :global(body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
   .step-three__notification.step-three__notification--show {
-  top: calc(var(--safe-area-top) + 40px) !important;
+  top: 12px !important;
 }
 
 :global(body:is(.device-iphone-12-pro, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
