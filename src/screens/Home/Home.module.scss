@@ -95,10 +95,11 @@
 /* #region Step 1 Styles */
 .container {
   position: absolute;
-  top: var(--home-content-top);
+  top: 0;
   left: 0;
   width: 100%;
-  height: calc(100% - var(--home-content-top));
+  height: 100%;
+  border-top: var(--home-content-top) solid transparent;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
