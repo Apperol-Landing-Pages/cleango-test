@@ -28,6 +28,7 @@
 
 .wrapper {
   --home-banner-height: 12px;
+  --home-notification-safe-top: max(env(safe-area-inset-top, 0px), 47px);
   --home-content-top: calc(
     env(safe-area-inset-top, 0px) + var(--home-banner-height)
   );
@@ -3205,11 +3206,24 @@
   position: absolute !important;
   left: 18px !important;
   right: 18px !important;
-  bottom: calc(18px + env(safe-area-inset-bottom, 0px)) !important;
+  bottom: 18px !important;
   width: auto !important;
   max-width: none !important;
   height: clamp(56px, 8.7dvh, 96px) !important;
   font-size: 19px !important;
+}
+
+:global(body:is(.device-iphone-12-pro, .device-iphone-16, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
+  .step-three__notification--settings.step-three__notification--show {
+  top: calc(
+    var(--home-notification-safe-top) + 12px - var(--home-content-top)
+  ) !important;
+}
+
+:global(body:is(.device-iphone-12-pro, .device-iphone-16, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
+  .step-three__overlay
+  .step-three__notification--unsuccessful.step-three__notification--show {
+  top: calc(var(--home-notification-safe-top) + 12px) !important;
 }
 /* #endregion */
   
