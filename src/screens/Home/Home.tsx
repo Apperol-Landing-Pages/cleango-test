@@ -142,7 +142,7 @@ const Home = () => {
     if (!publishableKey) return;
 
     let active = true;
-    loadStripe(publishableKey).then((instance) => {
+    loadStripe(publishableKey, { locale: "en" }).then((instance) => {
       if (active) setStripe(instance);
     });
 
@@ -307,58 +307,64 @@ const Home = () => {
       if (isPaymentRunning) return;
 
       setIsPaymentRunning(true);
-      let paymentIntentId: string | null = null;
-      let packageSlug = "";
+      try {
+        let paymentIntentId: string | null = null;
+        let packageSlug = "";
 
-      const result = await applePay.present(async () => {
-        const offers = await getPaywallOffers();
-        const configuredSlug = process.env.NEXT_PUBLIC_HOME_PACKAGE_SLUG;
-        const offer = configuredSlug
-          ? offers.find((item) => item.slug === configuredSlug)
-          : offers.find(
-              (item) =>
-                Math.round(Number(item.price_usd) * 100) ===
-                HOME_PRODUCT_PRICE_CENTS,
+        const result = await applePay.present(async () => {
+          const offers = await getPaywallOffers();
+          const configuredSlug = process.env.NEXT_PUBLIC_HOME_PACKAGE_SLUG;
+          const offer = configuredSlug
+            ? offers.find((item) => item.slug === configuredSlug)
+            : offers.find(
+                (item) =>
+                  Math.round(Number(item.price_usd) * 100) ===
+                  HOME_PRODUCT_PRICE_CENTS,
+              );
+
+          if (!offer) {
+            throw new Error("The $4.99 product is not configured on backend.");
+          }
+
+          if (
+            Math.round(Number(offer.price_usd) * 100) !==
+            HOME_PRODUCT_PRICE_CENTS
+          ) {
+            throw new Error("The configured product price is not $4.99.");
+          }
+
+          packageSlug = offer.slug;
+          const intent = await createTopupIntent({ package_slug: packageSlug });
+          paymentIntentId = intent.payment_intent_id;
+          return { clientSecret: intent.client_secret };
+        });
+
+        if (result.status === "succeeded") {
+          const completedPaymentIntentId =
+            result.paymentIntentId || paymentIntentId;
+
+          if (completedPaymentIntentId && packageSlug) {
+            await topupWallet(completedPaymentIntentId, packageSlug).catch(
+              () => null,
             );
+          }
 
-        if (!offer) {
-          throw new Error("The $4.99 product is not configured on backend.");
+          postNativeMessage({ trigger: "finish" });
+          return;
         }
 
-        if (
-          Math.round(Number(offer.price_usd) * 100) !==
-          HOME_PRODUCT_PRICE_CENTS
-        ) {
-          throw new Error("The configured product price is not $4.99.");
-        }
-
-        packageSlug = offer.slug;
-        const intent = await createTopupIntent({ package_slug: packageSlug });
-        paymentIntentId = intent.payment_intent_id;
-        return { clientSecret: intent.client_secret };
-      });
-
-      if (result.status === "succeeded") {
-        const completedPaymentIntentId =
-          result.paymentIntentId || paymentIntentId;
-
-        if (completedPaymentIntentId && packageSlug) {
-          await topupWallet(completedPaymentIntentId, packageSlug).catch(
-            () => null,
-          );
-        }
-
-        postNativeMessage({ trigger: "finish" });
-      }
-
-      if (result.status !== "succeeded") {
         setIsFailureNotificationVisible(false);
         setIsRiskSheetVisible(false);
         setIsRiskOverlayVisible(true);
         setFailureSequence((sequence) => sequence + 1);
+      } catch {
+        setIsFailureNotificationVisible(false);
+        setIsRiskSheetVisible(false);
+        setIsRiskOverlayVisible(true);
+        setFailureSequence((sequence) => sequence + 1);
+      } finally {
+        setIsPaymentRunning(false);
       }
-
-      setIsPaymentRunning(false);
     },
     [applePay, isPaymentRunning],
   );

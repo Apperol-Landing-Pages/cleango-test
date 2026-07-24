@@ -27,7 +27,7 @@
 }
 
 .wrapper {
-  --home-banner-height: 12px;
+  --home-banner-height: 0px;
   --home-notification-safe-top: max(env(safe-area-inset-top, 0px), 47px);
   --home-content-top: calc(
     env(safe-area-inset-top, 0px) + var(--home-banner-height)
