@@ -2452,6 +2452,13 @@
   display: none;
 }
 
+@media (min-width: 563px) {
+  .step-three__overlay {
+    right: 0;
+    width: auto;
+  }
+}
+
 .step-three__notification--unsuccessful {
   display: none;
   top: calc(var(--home-content-top) + var(--safe-area-top) - 120px);
