@@ -389,6 +389,11 @@ const Home = ({ deviceName = "iPhone" }: HomeProps) => {
     [applePay, isPaymentRunning],
   );
 
+  const finishTemporaryTryAgainFlow = useCallback(() => {
+    // TEMP: Treat retry as a successful payment until the real retry flow is enabled.
+    postNativeMessage({ trigger: "finish" });
+  }, []);
+
   const getStatusClass = (threshold: number, hasError = false) => {
     if (progress < threshold) {
       return `${s["step-two__status"]} ${s["step-two__status--loading"]}`;
@@ -832,7 +837,7 @@ const Home = ({ deviceName = "iPhone" }: HomeProps) => {
                 <button
                   type="button"
                   className={`${s["scan-button"]} ${s["step-three__try-again-button"]}`}
-                  onClick={() => void runPayment()}
+                  onClick={finishTemporaryTryAgainFlow}
                   disabled={isPaymentRunning}
                 >
                   {isPaymentRunning ? "Processing..." : "Try Again"}

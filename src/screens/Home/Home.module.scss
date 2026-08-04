@@ -152,6 +152,8 @@
 }
 
 .step-one .text-uppercase {
+  position: relative;
+  top: -10px;
   font-size: clamp(12px, 1.33dvh, 18px);
   line-height: clamp(17px, 1.99dvh, 22px);
   letter-spacing: 0.2px;
@@ -1862,12 +1864,13 @@
 }
 
 .step-three__footer-warning {
+  position: relative;
+  top: -10px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: clamp(10px, 2.49vw, 14px);
   width: 100%;
-  translate: 0 -10px;
   font-family: inherit;
   font-size: clamp(16px, 1.81dvh, 20px);
   font-weight: 400;
@@ -1890,7 +1893,6 @@
   font-size: clamp(24px, 2.63dvh, 29px);
   font-weight: 510;
   line-height: 1;
-  animation: pulseButton 1s infinite alternate;
 }
 
 @media (max-height: 700px) {
@@ -2671,7 +2673,6 @@
   font-size: clamp(24px, 2.63dvh, 29px);
   font-weight: 510;
   line-height: 1;
-  animation: pulseButton 1s infinite alternate;
 }
 
 .step-three__notification-badge {
