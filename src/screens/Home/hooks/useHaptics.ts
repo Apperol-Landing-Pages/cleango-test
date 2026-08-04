@@ -45,7 +45,6 @@ export function useHaptics() {
   }, []);
 
   const triggerHaptic = useCallback(() => {
-    postHapticAction("stop");
     postHapticAction("start");
 
     window.setTimeout(() => {
