@@ -153,7 +153,7 @@
 
 .step-one .text-uppercase {
   position: relative;
-  top: -10px;
+  top: -20px;
   font-size: clamp(12px, 1.33dvh, 18px);
   line-height: clamp(17px, 1.99dvh, 22px);
   letter-spacing: 0.2px;
@@ -1023,7 +1023,9 @@
 }
 
 .step-one__scan-button {
-  translate: var(--s1-button-x) calc(var(--s1-button-y) - 15px);
+  position: relative;
+  top: -25px;
+  translate: var(--s1-button-x) var(--s1-button-y);
   scale: var(--s1-button-scale);
 }
 
@@ -1138,7 +1140,9 @@
 }
 
 .step-three__remove-button {
-  translate: var(--s3-button-x) calc(var(--s3-button-y) - 15px);
+  position: relative;
+  top: -25px;
+  translate: var(--s3-button-x) var(--s3-button-y);
   scale: var(--s3-button-scale);
 }
 
@@ -1865,7 +1869,7 @@
 
 .step-three__footer-warning {
   position: relative;
-  top: -10px;
+  top: -20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2347,9 +2351,9 @@
 
 .step-three__notification {
   position: absolute;
-  top: calc(var(--safe-area-top) - 120px);
+  top: calc(var(--safe-area-top) + 40px);
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate3d(-50%, -160px, 0);
   width: calc(100% - clamp(32px, 7.82vw, 44px));
   min-height: clamp(74px, 7.97dvh, 88px);
   border-radius: clamp(18px, 2.17dvh, 24px);
@@ -2372,8 +2376,12 @@
   gap: clamp(9px, 2.31vw, 13px);
   opacity: 0;
   transition:
-    top 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
     opacity 0.24s ease;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -2385,7 +2393,7 @@
 }
 
 .step-three__notification--show {
-  top: calc(var(--safe-area-top) + 40px);
+  transform: translate3d(-50%, 0, 0);
   opacity: 1;
 }
 
@@ -2464,7 +2472,7 @@
 
 .step-three__notification--unsuccessful {
   display: none;
-  top: calc(var(--home-content-top) + var(--safe-area-top) - 120px);
+  top: calc(var(--home-content-top) + 12px);
 }
 
 .step-three__notification--settings {
@@ -2493,7 +2501,7 @@
 
 .step-three__overlay
   .step-three__notification--unsuccessful.step-three__notification--show {
-  top: calc(var(--home-content-top) + 12px) !important;
+  transform: translate3d(-50%, 0, 0);
 }
 
 .step-three__risk-sheet {
@@ -3153,7 +3161,7 @@
 
 /* #region Device Hotfixes */
 :global(body:is(.device-iphone-12-pro, .device-iphone-16, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
-  .step-three__notification.step-three__notification--show {
+  .step-three__notification {
   top: 12px !important;
 }
 
@@ -3224,7 +3232,7 @@
 }
 
 :global(body:is(.device-iphone-12-pro, .device-iphone-16, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
-  .step-three__notification--settings.step-three__notification--show {
+  .step-three__notification--settings {
   top: calc(
     var(--home-notification-safe-top) + 12px - var(--home-content-top)
   ) !important;
@@ -3232,7 +3240,7 @@
 
 :global(body:is(.device-iphone-12-pro, .device-iphone-16, .device-iphone-17, .device-iphone-se, .device-iphone-17-pro-max))
   .step-three__overlay
-  .step-three__notification--unsuccessful.step-three__notification--show {
+  .step-three__notification--unsuccessful {
   top: calc(var(--home-notification-safe-top) + 12px) !important;
 }
 /* #endregion */

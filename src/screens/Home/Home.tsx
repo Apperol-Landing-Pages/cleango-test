@@ -306,22 +306,6 @@ const Home = ({ deviceName = "iPhone" }: HomeProps) => {
     };
   }, [failureSequence]);
 
-  useEffect(() => {
-    if (!isRiskOverlayVisible) return;
-
-    postNativeMessage({
-      trigger: "statusBarOverlay",
-      payload: { visible: true, opacity: 0.3 },
-    });
-
-    return () => {
-      postNativeMessage({
-        trigger: "statusBarOverlay",
-        payload: { visible: false, opacity: 0 },
-      });
-    };
-  }, [isRiskOverlayVisible]);
-
   const runPayment = useCallback(
     async () => {
       if (isPaymentRunning) return;
