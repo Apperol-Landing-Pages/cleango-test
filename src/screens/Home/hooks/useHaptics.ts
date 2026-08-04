@@ -3,8 +3,6 @@
 import { useCallback, useEffect, useRef } from "react";
 import { sendToIOS } from "@/utils/webkitBridge";
 
-const HAPTIC_PULSE_DURATION = 45;
-
 type NativeMessage = {
   trigger: string;
   payload?: unknown;
@@ -46,10 +44,6 @@ export function useHaptics() {
 
   const triggerHaptic = useCallback(() => {
     postHapticAction("start");
-
-    window.setTimeout(() => {
-      postHapticAction("stop");
-    }, HAPTIC_PULSE_DURATION);
   }, []);
 
   const startPeriodicVibration = useCallback(() => {
