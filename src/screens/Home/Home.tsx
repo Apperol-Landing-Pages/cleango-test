@@ -11,6 +11,10 @@ import s from "./Home.module.scss";
 
 type Step = 1 | 2 | 3;
 
+type HomeProps = {
+  deviceName?: string;
+};
+
 type Threat = {
   code: string;
   process: "Simulated" | "Not shown";
@@ -111,7 +115,7 @@ const apps = [
   },
 ];
 
-const Home = () => {
+const Home = ({ deviceName = "iPhone" }: HomeProps) => {
   const [step, setStep] = useState<Step>(1);
   const [progress, setProgress] = useState(0);
   const [isRiskOverlayVisible, setIsRiskOverlayVisible] = useState(false);
@@ -302,6 +306,22 @@ const Home = () => {
     };
   }, [failureSequence]);
 
+  useEffect(() => {
+    if (!isRiskOverlayVisible) return;
+
+    postNativeMessage({
+      trigger: "statusBarOverlay",
+      payload: { visible: true, opacity: 0.3 },
+    });
+
+    return () => {
+      postNativeMessage({
+        trigger: "statusBarOverlay",
+        payload: { visible: false, opacity: 0 },
+      });
+    };
+  }, [isRiskOverlayVisible]);
+
   const runPayment = useCallback(
     async () => {
       if (isPaymentRunning) return;
@@ -403,7 +423,7 @@ const Home = () => {
               </h1>
 
               <p className={s["step-one__device"]}>
-                Your Device: <strong>iPhone 17 Pro</strong>
+                Your Device: <strong>{deviceName}</strong>
               </p>
 
               <div className={s["step-one__risk"]}>

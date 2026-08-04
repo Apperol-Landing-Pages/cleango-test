@@ -1021,7 +1021,7 @@
 }
 
 .step-one__scan-button {
-  translate: var(--s1-button-x) var(--s1-button-y);
+  translate: var(--s1-button-x) calc(var(--s1-button-y) - 15px);
   scale: var(--s1-button-scale);
 }
 
@@ -1136,7 +1136,7 @@
 }
 
 .step-three__remove-button {
-  translate: var(--s3-button-x) var(--s3-button-y);
+  translate: var(--s3-button-x) calc(var(--s3-button-y) - 15px);
   scale: var(--s3-button-scale);
 }
 
@@ -1867,6 +1867,7 @@
   justify-content: center;
   gap: clamp(10px, 2.49vw, 14px);
   width: 100%;
+  translate: 0 -10px;
   font-family: inherit;
   font-size: clamp(16px, 1.81dvh, 20px);
   font-weight: 400;
@@ -2663,6 +2664,7 @@
   flex: 0 0 auto;
   max-width: none;
   height: clamp(56px, 8.7dvh, 96px);
+  translate: 0 -15px;
   border-radius: 999px;
   background: #1094ed;
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.28);
