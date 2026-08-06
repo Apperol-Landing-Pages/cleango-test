@@ -8,6 +8,8 @@ type NativeMessage = {
   payload?: unknown;
 };
 
+type HapticStyle = "light" | "medium";
+
 declare global {
   interface Window {
     stopPeriodicVibration?: () => void;
@@ -23,10 +25,15 @@ export function postNativeMessage(message: NativeMessage): boolean {
   }
 }
 
-function postHapticAction(action: "start" | "stop"): boolean {
+function postHapticAction(
+  action: "start" | "stop",
+  style?: HapticStyle,
+  isSingular?: boolean,
+): boolean {
   return postNativeMessage({
     trigger: "haptic",
-    payload: { action },
+    payload:
+      action === "start" ? { action, style, isSingular } : { action },
   });
 }
 
@@ -42,16 +49,29 @@ export function useHaptics() {
     postHapticAction("stop");
   }, []);
 
-  const triggerHaptic = useCallback(() => {
-    postHapticAction("start");
+  const triggerHaptic = useCallback(
+    (style: HapticStyle = "light", isSingular = true) => {
+      postHapticAction("start", style, isSingular);
+    },
+    [],
+  );
+
+  const clearPeriodicVibration = useCallback(() => {
+    if (vibrationIntervalRef.current !== null) {
+      window.clearInterval(vibrationIntervalRef.current);
+      vibrationIntervalRef.current = null;
+    }
   }, []);
 
   const startPeriodicVibration = useCallback(() => {
-    stopPeriodicVibration();
-    triggerHaptic();
+    clearPeriodicVibration();
+    triggerHaptic("medium");
 
-    vibrationIntervalRef.current = window.setInterval(triggerHaptic, 1000);
-  }, [stopPeriodicVibration, triggerHaptic]);
+    vibrationIntervalRef.current = window.setInterval(
+      () => triggerHaptic("medium", false),
+      1000,
+    );
+  }, [clearPeriodicVibration, triggerHaptic]);
 
   useEffect(() => {
     window.stopPeriodicVibration = stopPeriodicVibration;
