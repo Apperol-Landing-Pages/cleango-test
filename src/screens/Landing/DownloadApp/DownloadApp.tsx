@@ -2,8 +2,8 @@
 
 import LandingHeader from "../shared/LandingHeader/LandingHeader";
 import LandingFooter from "../shared/LandingFooter/LandingFooter";
-import { CheckIcon, FEATURES, PhoneMockup } from "../shared/landingContent";
-import s from "../StartLanding/StartLanding.module.scss";
+import { CheckIcon, FEATURES, PhoneMockup } from "../shared/whiteLandingContent";
+import s from "../WhiteLanding/WhiteLanding.module.scss";
 
 const APP_STORE_URL =
   "https://apps.apple.com/pl/app/aurex-security-app/id6761459801";

@@ -1,0 +1,554 @@
+@use "@/styles/mixins" as *;
+
+$brand: #ff7138;
+$brand-end: #ff8f62;
+$page-bg: #efefef;
+$card-bg: #ffffff;
+$card-border: #e4e4e4;
+$text: #111111;
+$muted: #666666;
+
+.page {
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background: $page-bg;
+  color: $text;
+  font-family: Poppins, sans-serif;
+  position: relative;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* ─────────────────── Hero ─────────────────── */
+.hero {
+  @include flex_center;
+  flex-direction: column;
+  gap: 42px;
+  width: min(100%, 1200px);
+  min-height: 722px;
+  margin: 0 auto;
+  padding: 38px 32px 30px;
+  text-align: center;
+
+  @media (max-width: 767px) {
+    gap: 28px;
+    min-height: auto;
+    padding: 28px 20px 56px;
+  }
+}
+
+.phoneMockup {
+  position: relative;
+  width: 360px;
+  max-width: 88vw;
+
+  @media (max-width: 767px) {
+    width: min(86vw, 330px);
+  }
+}
+
+.phoneGlow {
+  position: absolute;
+  inset: -36px;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 113, 56, 0.16) 0%,
+    transparent 68%
+  );
+  filter: blur(30px);
+}
+
+.phoneImage {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 68%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.scoreSection {
+  position: absolute;
+  top: 26%;
+  left: 50%;
+  z-index: 2;
+  width: 78%;
+  padding: 18px 20px 16px;
+  transform: translateX(-50%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 12px 30px rgba(31, 31, 31, 0.12);
+  color: #242424;
+  text-align: left;
+
+  @media (max-width: 767px) {
+    padding: 15px 16px 13px;
+  }
+}
+
+.scoreLabel {
+  margin: 0 0 14px;
+  font-size: 13px;
+  font-weight: 600;
+
+  @media (max-width: 767px) {
+    margin-bottom: 10px;
+    font-size: 11px;
+  }
+}
+
+.scoreValue {
+  margin: 0 0 12px;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1;
+
+  @media (max-width: 767px) {
+    margin-bottom: 10px;
+    font-size: 27px;
+  }
+}
+
+.scoreTrack {
+  width: 100%;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e7e7e7;
+
+  span {
+    display: block;
+    width: 5%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, $brand, #ffa66e);
+  }
+}
+
+.scoreHint {
+  margin: 13px 0 0;
+  color: #747474;
+  font-size: 11px;
+
+  @media (max-width: 767px) {
+    margin-top: 10px;
+    font-size: 9px;
+  }
+}
+
+.heroTitle {
+  margin: 0;
+  color: #080808;
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+
+  @media (max-width: 767px) {
+    font-size: clamp(31px, 9vw, 40px);
+    letter-spacing: -0.02em;
+  }
+}
+
+.heroCta,
+.ctaStack {
+  @include flex_center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.heroCta {
+  gap: 14px;
+}
+
+/* ─────────────────── Buttons ─────────────────── */
+.primaryBtn,
+.secondaryBtn {
+  @include flex_center;
+  width: 100%;
+  max-width: 310px;
+  min-height: 60px;
+  padding: 15px 34px;
+  border-radius: 999px;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.16s ease, filter 0.2s ease, border-color 0.2s ease;
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  @media (max-width: 767px) {
+    max-width: 290px;
+    min-height: 54px;
+    padding: 14px 28px;
+    font-size: 15px;
+  }
+}
+
+.primaryBtn {
+  border: 0;
+  background: linear-gradient(100deg, $brand 0%, $brand-end 100%);
+  box-shadow: 0 8px 18px rgba(255, 113, 56, 0.14);
+  color: #ffffff;
+
+  &:hover {
+    filter: brightness(1.04);
+  }
+}
+
+.primaryBtnTight {
+  margin-top: 38px;
+
+  @media (max-width: 767px) {
+    margin-top: 28px;
+  }
+}
+
+.secondaryBtn {
+  border: 1px solid #8d8d8d;
+  background: transparent;
+  color: #151515;
+
+  &:hover {
+    border-color: #151515;
+  }
+}
+
+.secureBadge {
+  @include flex_center;
+  gap: 8px;
+  margin: 0;
+  color: #656565;
+  font-size: 14px;
+
+  @media (max-width: 767px) {
+    font-size: 12px;
+  }
+}
+
+/* ─────────────────── Shared section typography ─────────────────── */
+.eyebrow {
+  margin: 0 0 8px;
+  color: #181818;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+
+  @media (max-width: 767px) {
+    font-size: 13px;
+  }
+}
+
+.sectionTitle,
+.stepsTitle {
+  margin: 0;
+  color: #080808;
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  text-align: center;
+
+  @media (max-width: 767px) {
+    font-size: 31px;
+    letter-spacing: -0.02em;
+  }
+}
+
+.sectionSubtitle {
+  margin: 18px 0 42px;
+  color: $muted;
+  font-size: 16px;
+  line-height: 1.45;
+  text-align: center;
+
+  @media (max-width: 767px) {
+    margin: 14px 0 30px;
+    font-size: 13px;
+  }
+}
+
+/* ─────────────────── Steps ─────────────────── */
+.steps {
+  @include flex_center;
+  flex-direction: column;
+  width: min(100%, 556px);
+  margin: 0 auto;
+  padding: 92px 0 104px;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    padding: 64px 40px 76px;
+  }
+
+  @media (max-width: 420px) {
+    padding-inline: 32px;
+  }
+}
+
+.stepsTitle {
+  margin-bottom: 42px;
+
+  span {
+    color: $brand;
+  }
+}
+
+.stepList {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  margin: 0 0 44px;
+  padding: 0;
+  list-style: none;
+}
+
+.stepCard {
+  position: relative;
+  @include flex_center;
+  min-height: 132px;
+  padding: 24px 58px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 24px;
+  background: $card-bg;
+  box-shadow: 0 10px 24px rgba(27, 27, 27, 0.035);
+
+  &:nth-child(even) .stepNumber {
+    right: -24px;
+    left: auto;
+  }
+
+  @media (max-width: 767px) {
+    min-height: 112px;
+    padding: 20px 34px;
+    border-radius: 20px;
+  }
+}
+
+.stepNumber {
+  position: absolute;
+  top: 50%;
+  left: -24px;
+  @include flex_center;
+  width: 48px;
+  height: 48px;
+  transform: translateY(-50%);
+  border: 1px solid $brand;
+  border-radius: 50%;
+  background: $page-bg;
+  color: $brand;
+  font-size: 18px;
+  font-weight: 600;
+
+  @media (max-width: 767px) {
+    left: -20px;
+    width: 40px;
+    height: 40px;
+    font-size: 15px;
+  }
+}
+
+.stepCard:nth-child(even) .stepNumber {
+  @media (max-width: 767px) {
+    right: -20px;
+  }
+}
+
+.stepNumberActive {
+  border-color: transparent;
+  background: linear-gradient(135deg, $brand, $brand-end);
+  color: #ffffff;
+}
+
+.stepContent {
+  text-align: center;
+}
+
+.stepTitle {
+  margin: 0 0 8px;
+  color: $text;
+  font-size: 22px;
+  font-weight: 600;
+
+  @media (max-width: 767px) {
+    font-size: 16px;
+  }
+}
+
+.stepText {
+  margin: 0;
+  color: $muted;
+  font-size: 14px;
+  line-height: 1.35;
+
+  @media (max-width: 767px) {
+    font-size: 11px;
+  }
+}
+
+.ctaStack {
+  gap: 14px;
+}
+
+/* ─────────────────── Features ─────────────────── */
+.features {
+  @include flex_center;
+  flex-direction: column;
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  padding: 88px 72px 78px;
+
+  @media (max-width: 900px) {
+    padding-inline: 40px;
+  }
+
+  @media (max-width: 767px) {
+    padding: 64px 24px 72px;
+  }
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+  max-width: 984px;
+
+  @media (max-width: 800px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 520px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.featureCard {
+  @include flex_center;
+  flex-direction: column;
+  min-height: 268px;
+  padding: 30px 24px;
+  border: 1px solid $card-border;
+  border-radius: 22px;
+  background: $card-bg;
+  text-align: center;
+
+  @media (max-width: 767px) {
+    min-height: 230px;
+  }
+}
+
+.featureIcon {
+  @include flex_center;
+  width: 76px;
+  height: 76px;
+  margin-bottom: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $brand, $brand-end);
+
+  svg {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+.featureTitle {
+  margin: 0 0 10px;
+  color: $text;
+  font-size: 20px;
+  font-weight: 700;
+
+  @media (max-width: 767px) {
+    font-size: 17px;
+  }
+}
+
+.featureText {
+  margin: 0;
+  color: $muted;
+  font-size: 14px;
+  line-height: 1.45;
+
+  @media (max-width: 767px) {
+    font-size: 12px;
+  }
+}
+
+/* ─────────────────── Support ─────────────────── */
+.support {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  padding: 0 0 96px;
+
+  @media (max-width: 1240px) {
+    padding-inline: 20px;
+  }
+
+  @media (max-width: 767px) {
+    padding: 0 20px 72px;
+  }
+}
+
+.supportCard {
+  @include flex_center;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+  min-height: 439px;
+  padding: 42px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 32px;
+  background: rgba(255, 65, 1, 0.1);
+  text-align: center;
+
+  @media (max-width: 767px) {
+    gap: 24px;
+    min-height: 360px;
+    padding: 36px 24px;
+    border-radius: 24px;
+  }
+}
+
+.supportIcon {
+  @include flex_center;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $brand, $brand-end);
+  color: #ffffff;
+
+  svg {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+.supportTitle {
+  margin: 0 0 12px;
+  color: $text;
+  font-size: 42px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+
+  @media (max-width: 767px) {
+    font-size: 30px;
+  }
+}
+
+.supportText {
+  margin: 0;
+  color: $muted;
+  font-size: 16px;
+  line-height: 1.45;
+
+  @media (max-width: 767px) {
+    font-size: 13px;
+  }
+}

@@ -6,7 +6,7 @@ import { useState, ChangeEvent, MouseEvent } from "react";
 import cx from "clsx";
 
 import { ROUTER_ENDPOINTS } from "@/utils/constants";
-import { useValidators } from "@/utils/useValidators";
+import { validateEmail } from "@/utils/useValidators";
 
 import LandingHeader from "../shared/LandingHeader/LandingHeader";
 import LandingFooter from "../shared/LandingFooter/LandingFooter";
@@ -27,7 +27,6 @@ const EMAIL_DOMAIN_REGEXP = /@[^:]*/;
 
 const StepEmail = () => {
   const router = useRouter();
-  const { validateEmail } = useValidators();
   const [errorMessageAskEmail, setErrorMessageAskEmail] = useState({
     text: "",
   });

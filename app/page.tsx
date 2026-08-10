@@ -1,4 +1,4 @@
-import Landing from "@/screens/Landing/StartLanding/StartLanding";
+import Landing from "@/screens/Landing/WhiteLanding/WhiteLanding";
 
 function LandingPage() {
   return <Landing />;

@@ -1,5 +1,5 @@
-@import "@/styles/mixins";
-@import "../landing-tokens";
+@use "@/styles/mixins" as *;
+@use "../landing-tokens" as *;
 
 .page {
   height: 100dvh;

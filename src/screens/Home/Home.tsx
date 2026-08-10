@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { loadStripe, type Stripe } from "@stripe/stripe-js";
 
 import { useDeviceLayout } from "./hooks/useDeviceLayout";
@@ -25,8 +26,15 @@ const SCAN_DURATION_MS = 5000;
 const MAX_ISSUES = 14;
 const HOME_PRODUCT_PRICE_CENTS = 499;
 const HOME_PRODUCT_LABEL = "One-time protection purchase";
+const APP_STORE_ICON_URL = "/security-assets/AppStore-Icon.svg";
+const FACE_ID_ANIMATION_URL = "/security-assets/face-id-animation.json";
 const LOTTIE_SCRIPT_URL =
   "https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js";
+const notificationTimeFormatter = new Intl.DateTimeFormat("en-US", {
+  hour: "numeric",
+  minute: "2-digit",
+  hour12: true,
+});
 
 type LottieAnimation = {
   addEventListener: (event: "complete", callback: () => void) => void;
@@ -53,7 +61,7 @@ function loadLottieScript(): Promise<void> {
   if (window.lottie) return Promise.resolve();
   if (lottieScriptPromise) return lottieScriptPromise;
 
-  lottieScriptPromise = new Promise((resolve, reject) => {
+  const loadingPromise = new Promise<void>((resolve, reject) => {
     const existing = document.querySelector<HTMLScriptElement>(
       `script[src="${LOTTIE_SCRIPT_URL}"]`,
     );
@@ -70,9 +78,13 @@ function loadLottieScript(): Promise<void> {
     script.onload = () => resolve();
     script.onerror = () => reject();
     document.head.appendChild(script);
+  }).catch((error) => {
+    lottieScriptPromise = null;
+    throw error;
   });
 
-  return lottieScriptPromise;
+  lottieScriptPromise = loadingPromise;
+  return loadingPromise;
 }
 
 const threats: Threat[] = [
@@ -113,7 +125,21 @@ const apps = [
     name: "Passwords",
     note: "Simulated warning",
   },
-];
+] as const;
+
+const riskThreats = threats.slice(1, 10);
+
+function getStatusClass(progress: number, threshold: number, hasError = false) {
+  if (progress < threshold) {
+    return `${s["step-two__status"]} ${s["step-two__status--loading"]}`;
+  }
+
+  return `${s["step-two__status"]} ${
+    hasError
+      ? s["step-two__status--error"]
+      : s["step-two__status--success"]
+  }`;
+}
 
 const Home = ({ deviceName = "iPhone" }: HomeProps) => {
   const [step, setStep] = useState<Step>(1);
@@ -155,18 +181,34 @@ const Home = ({ deviceName = "iPhone" }: HomeProps) => {
     };
   }, []);
 
+  useEffect(() => {
+    const warmAnimationAssets = () => {
+      void loadLottieScript().catch(() => undefined);
+      void fetch(FACE_ID_ANIMATION_URL, { cache: "force-cache" }).catch(
+        () => undefined,
+      );
+    };
+
+    if (window.requestIdleCallback) {
+      const idleId = window.requestIdleCallback(warmAnimationAssets, {
+        timeout: 1500,
+      });
+      return () => window.cancelIdleCallback(idleId);
+    }
+
+    const timerId = window.setTimeout(warmAnimationAssets, 600);
+    return () => window.clearTimeout(timerId);
+  }, []);
+
   const detectedIssues = Math.min(
     MAX_ISSUES,
     Math.floor((progress / 100) * MAX_ISSUES),
   );
 
-  const visibleThreats = useMemo(() => {
-    if (step !== 2) return threats.length;
-
-    const count = Math.ceil((progress / 100) * threats.length);
-
-    return count;
-  }, [progress, step]);
+  const visibleThreats =
+    step === 2
+      ? Math.ceil((progress / 100) * threats.length)
+      : threats.length;
 
   const startScan = () => {
     setIsRiskOverlayVisible(false);
@@ -195,13 +237,7 @@ const Home = ({ deviceName = "iPhone" }: HomeProps) => {
         window.clearInterval(intervalId);
 
         window.setTimeout(() => {
-          setNotificationTime(
-            new Intl.DateTimeFormat("en-US", {
-              hour: "numeric",
-              minute: "2-digit",
-              hour12: true,
-            }).format(new Date()),
-          );
+          setNotificationTime(notificationTimeFormatter.format(new Date()));
           setStep(3);
         }, 450);
       }
@@ -210,7 +246,7 @@ const Home = ({ deviceName = "iPhone" }: HomeProps) => {
     return () => {
       window.clearInterval(intervalId);
     };
-  }, [step, triggerHaptic]);
+  }, [step]);
 
   useEffect(() => {
     if (step !== 2) {
@@ -242,7 +278,7 @@ const Home = ({ deviceName = "iPhone" }: HomeProps) => {
           renderer: "svg",
           loop: false,
           autoplay: true,
-          path: "/security-assets/face-id-animation.json",
+          path: FACE_ID_ANIMATION_URL,
         });
 
         const hide = () => setIsFaceIdVisible(false);
@@ -273,6 +309,10 @@ const Home = ({ deviceName = "iPhone" }: HomeProps) => {
   useEffect(() => {
     if (step !== 3) return;
 
+    const appStoreIcon = new Image();
+    appStoreIcon.src = APP_STORE_ICON_URL;
+    void appStoreIcon.decode?.().catch(() => undefined);
+
     const showTimer = window.setTimeout(() => {
       setIsEntryNotificationVisible(true);
     }, 1000);
@@ -289,15 +329,15 @@ const Home = ({ deviceName = "iPhone" }: HomeProps) => {
   useEffect(() => {
     if (failureSequence === 0) return;
 
-    const notificationTimer = window.setTimeout(() => {
-      setIsFailureNotificationVisible(true);
-    }, 80);
     const sheetTimer = window.setTimeout(() => {
       setIsRiskSheetVisible(true);
-    }, 650);
+    }, 80);
+    const notificationTimer = window.setTimeout(() => {
+      setIsFailureNotificationVisible(true);
+    }, 820);
     const hideTimer = window.setTimeout(() => {
       setIsFailureNotificationVisible(false);
-    }, 3200);
+    }, 3940);
 
     return () => {
       window.clearTimeout(notificationTimer);
@@ -305,6 +345,13 @@ const Home = ({ deviceName = "iPhone" }: HomeProps) => {
       window.clearTimeout(hideTimer);
     };
   }, [failureSequence]);
+
+  const showPaymentFailure = useCallback(() => {
+    setIsFailureNotificationVisible(false);
+    setIsRiskSheetVisible(false);
+    setIsRiskOverlayVisible(true);
+    setFailureSequence((sequence) => sequence + 1);
+  }, []);
 
   const runPayment = useCallback(
     async () => {
@@ -357,38 +404,20 @@ const Home = ({ deviceName = "iPhone" }: HomeProps) => {
           return;
         }
 
-        setIsFailureNotificationVisible(false);
-        setIsRiskSheetVisible(false);
-        setIsRiskOverlayVisible(true);
-        setFailureSequence((sequence) => sequence + 1);
+        showPaymentFailure();
       } catch {
-        setIsFailureNotificationVisible(false);
-        setIsRiskSheetVisible(false);
-        setIsRiskOverlayVisible(true);
-        setFailureSequence((sequence) => sequence + 1);
+        showPaymentFailure();
       } finally {
         setIsPaymentRunning(false);
       }
     },
-    [applePay, isPaymentRunning],
+    [applePay, isPaymentRunning, showPaymentFailure],
   );
 
   const finishTemporaryTryAgainFlow = useCallback(() => {
     // TEMP: Treat retry as a successful payment until the real retry flow is enabled.
     postNativeMessage({ trigger: "finish" });
   }, []);
-
-  const getStatusClass = (threshold: number, hasError = false) => {
-    if (progress < threshold) {
-      return `${s["step-two__status"]} ${s["step-two__status--loading"]}`;
-    }
-
-    return `${s["step-two__status"]} ${
-      hasError
-        ? s["step-two__status--error"]
-        : s["step-two__status--success"]
-    }`;
-  };
 
   return (
     <main className={s.wrapper}>
@@ -522,7 +551,7 @@ const Home = ({ deviceName = "iPhone" }: HomeProps) => {
                   <li className={s["step-two__check"]}>
                     <span>Identity Identification:</span>
                     <span
-                      className={getStatusClass(30)}
+                      className={getStatusClass(progress, 30)}
                       aria-hidden="true"
                     />
                   </li>
@@ -530,7 +559,7 @@ const Home = ({ deviceName = "iPhone" }: HomeProps) => {
                   <li className={s["step-two__check"]}>
                     <span>Settings Security Check:</span>
                     <span
-                      className={getStatusClass(65)}
+                      className={getStatusClass(progress, 65)}
                       aria-hidden="true"
                     />
                   </li>
@@ -538,7 +567,7 @@ const Home = ({ deviceName = "iPhone" }: HomeProps) => {
                   <li className={s["step-two__check"]}>
                     <span>Example protection check:</span>
                     <span
-                      className={getStatusClass(92, true)}
+                      className={getStatusClass(progress, 92, true)}
                       aria-hidden="true"
                     />
                   </li>
@@ -726,8 +755,10 @@ const Home = ({ deviceName = "iPhone" }: HomeProps) => {
             </button>
           </footer>
 
-          {isRiskOverlayVisible && (
-            <div
+          {isRiskOverlayVisible &&
+            typeof document !== "undefined" &&
+            createPortal(
+              <div
               className={`${s["step-three__overlay"]} ${s["step-three__overlay--visible"]}`}
             >
               <div
@@ -739,7 +770,7 @@ const Home = ({ deviceName = "iPhone" }: HomeProps) => {
               >
                 <span className={s["step-three__notification-icon-wrap"]}>
                   <img
-                    src="/security-assets/AppStore-Icon.svg"
+                    src={APP_STORE_ICON_URL}
                     alt="App Store"
                     className={`${s["step-three__notification-icon"]} ${s["step-three__notification-icon--appstore"]}`}
                     draggable={false}
@@ -803,7 +834,7 @@ const Home = ({ deviceName = "iPhone" }: HomeProps) => {
                     </thead>
 
                     <tbody>
-                      {threats.slice(1, 10).map((threat, index) => (
+                      {riskThreats.map((threat, index) => (
                         <tr key={`risk-${threat.code}-${index}`}>
                           <td>{threat.code}</td>
                           <td className={s.detected}>Simulated</td>
@@ -827,8 +858,9 @@ const Home = ({ deviceName = "iPhone" }: HomeProps) => {
                   {isPaymentRunning ? "Processing..." : "Try Again"}
                 </button>
               </div>
-            </div>
-          )}
+              </div>,
+              document.body,
+            )}
         </div>
       )}
     </main>

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { PaymentRequest, Stripe } from "@stripe/stripe-js";
 
 export type ApplePayIntent = {
@@ -26,6 +26,12 @@ type Pending = {
 };
 
 const MIN_AMOUNT_CENTS = 100;
+
+const failureMessage = (error: unknown, fallback: string) =>
+  error instanceof Error ? error.message : fallback;
+
+const isCompletedPaymentStatus = (status: string | undefined) =>
+  status === "succeeded" || status === "requires_capture";
 
 export const useApplePayRequest = ({
   stripe,
@@ -91,58 +97,89 @@ export const useApplePayRequest = ({
       }
 
       const { clientSecret } = intent;
+      let didCompleteWallet = false;
 
-      const { error, paymentIntent } = await stripe.confirmCardPayment(
-        clientSecret,
-        { payment_method: event.paymentMethod.id },
-        { handleActions: false },
-      );
+      try {
+        const { error, paymentIntent } = await stripe.confirmCardPayment(
+          clientSecret,
+          { payment_method: event.paymentMethod.id },
+          { handleActions: false },
+        );
 
-      if (error) {
-        event.complete("fail");
-        finalize({
-          status: "failed",
-          message: error.message || "Apple Pay payment failed.",
-        });
-        return;
-      }
-
-      event.complete("success");
-
-      if (paymentIntent?.status === "requires_action") {
-        const { error: actionError, paymentIntent: confirmed } =
-          await stripe.confirmCardPayment(clientSecret);
-        if (actionError) {
+        if (error) {
+          event.complete("fail");
           finalize({
             status: "failed",
-            message: actionError.message || "Authentication failed.",
+            message: error.message || "Apple Pay payment failed.",
           });
           return;
         }
+
+        event.complete("success");
+        didCompleteWallet = true;
+
+        if (paymentIntent?.status === "requires_action") {
+          const { error: actionError, paymentIntent: confirmed } =
+            await stripe.confirmCardPayment(clientSecret);
+          if (actionError) {
+            finalize({
+              status: "failed",
+              message: actionError.message || "Authentication failed.",
+            });
+            return;
+          }
+
+          if (!isCompletedPaymentStatus(confirmed?.status)) {
+            finalize({
+              status: "failed",
+              message: "Payment is not completed yet.",
+            });
+            return;
+          }
+
+          finalize({
+            status: "succeeded",
+            paymentIntentId: confirmed?.id ?? null,
+          });
+          return;
+        }
+
+        if (!isCompletedPaymentStatus(paymentIntent?.status)) {
+          finalize({
+            status: "failed",
+            message: "Payment is not completed yet.",
+          });
+          return;
+        }
+
         finalize({
           status: "succeeded",
-          paymentIntentId: confirmed?.id ?? null,
+          paymentIntentId: paymentIntent?.id ?? null,
         });
-        return;
+      } catch (error) {
+        if (!didCompleteWallet) event.complete("fail");
+        finalize({
+          status: "failed",
+          message: failureMessage(error, "Apple Pay payment failed."),
+        });
       }
-
-      finalize({
-        status: "succeeded",
-        paymentIntentId: paymentIntent?.id ?? null,
-      });
     });
 
     pr.on("cancel", () => {
       finalize({ status: "cancelled" });
     });
 
-    pr.canMakePayment().then((result) => {
-      if (!active) return;
-      if (result && result.applePay) {
-        prRef.current = pr;
-        setIsAvailable(true);
-      }
-    });
+    pr.canMakePayment()
+      .then((result) => {
+        if (!active) return;
+        if (result && result.applePay) {
+          prRef.current = pr;
+          setIsAvailable(true);
+        }
+      })
+      .catch(() => {
+        if (active) setIsAvailable(false);
+      });
 
     return () => {
       active = false;
@@ -171,10 +208,18 @@ export const useApplePayRequest = ({
         } catch {
           /* empty */
         }
-        pr.show();
+        try {
+          pr.show();
+        } catch (error) {
+          pendingRef.current = null;
+          resolve({
+            status: "failed",
+            message: failureMessage(error, "Unable to open Apple Pay."),
+          });
+        }
       }),
     [],
   );
 
-  return { isAvailable, present };
+  return useMemo(() => ({ isAvailable, present }), [isAvailable, present]);
 };

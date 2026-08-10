@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { getApiUrlDomain } from "@/api/config";
-import { DATA_STORAGE } from "@/utils/constants";
+import { ensureAccessToken } from "@/api/session";
 
 export type WalletOffer = {
   slug: string;
@@ -13,10 +13,18 @@ export type TopupIntent = {
   client_secret: string;
 };
 
-const authHeaders = () => ({
-  "Content-Type": "application/json",
-  Authorization: `Bearer ${localStorage.getItem(DATA_STORAGE.TOKEN)}`,
-});
+const authHeaders = async () => {
+  const token = await ensureAccessToken();
+
+  if (!token) {
+    throw new Error("Authentication is not ready.");
+  }
+
+  return {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+};
 
 const errorMessage = (error: unknown, fallback: string) => {
   if (!axios.isAxiosError(error)) {
@@ -30,7 +38,7 @@ const errorMessage = (error: unknown, fallback: string) => {
 export const getPaywallOffers = async (): Promise<WalletOffer[]> => {
   const response = await axios.get(
     `${getApiUrlDomain()}/wallets/packages`,
-    { headers: authHeaders() },
+    { headers: await authHeaders() },
   );
   return response.data;
 };
@@ -44,7 +52,7 @@ export const createTopupIntent = async ({
     const response = await axios.post(
       `${getApiUrlDomain()}/wallets/me/topup/create-intent`,
       { package_slug },
-      { headers: authHeaders() },
+      { headers: await authHeaders() },
     );
     const data = response.data ?? {};
     const clientSecret =
@@ -76,7 +84,7 @@ export const topupWallet = async (
     const response = await axios.post(
       `${getApiUrlDomain()}/wallets/me/topup`,
       { payment_intent_id, package_slug },
-      { headers: authHeaders() },
+      { headers: await authHeaders() },
     );
     return response.data;
   } catch (error) {

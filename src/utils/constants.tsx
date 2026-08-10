@@ -1,13 +1,13 @@
 export const ROUTER_ENDPOINTS = {
   HOME: "/home",
-  LANDING: "/scan",
-  LANDING_SCAN: "/scan/run",
-  LANDING_PREMIUM: "/scan/premium",
-  LANDING_DOWNLOAD: "/scan/download",
-  LANDING_EMAIL: "/scan/enter-email",
-  LANDING_PRIVACY: "/scan/privacy",
-  LANDING_TERMS: "/scan/terms",
-  LANDING_REFUND: "/scan/refund",
+  LANDING: "/",
+  LANDING_SCAN: "/security-scan",
+  LANDING_PREMIUM: "/premium",
+  LANDING_DOWNLOAD: "/download",
+  LANDING_EMAIL: "/email",
+  LANDING_PRIVACY: "/privacy-policy",
+  LANDING_TERMS: "/terms-of-use",
+  LANDING_REFUND: "/refund-policy",
 };
 
 export const DATA_STORAGE = {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import cx from "clsx";
@@ -97,6 +97,19 @@ const cardElementOptions = {
       color: "#FF7979",
     },
   },
+};
+
+const cardNumberElementOptions = {
+  ...cardElementOptions,
+  placeholder: "1234 5678 1234 5678",
+};
+const cardExpiryElementOptions = {
+  ...cardElementOptions,
+  placeholder: "MM/YY",
+};
+const cardCvcElementOptions = {
+  ...cardElementOptions,
+  placeholder: "CVC",
 };
 
 const TrustBadge = () => (
@@ -301,7 +314,7 @@ const CheckoutForm = ({ plan }: { plan: Plan }) => {
     expiry: false,
     cvc: false,
   });
-  const [fields, setFields] = useState<{
+  const fieldsRef = useRef<{
     number: StripeCardNumberElement | null;
     expiry: StripeCardExpiryElement | null;
     cvc: StripeCardCvcElement | null;
@@ -394,9 +407,9 @@ const CheckoutForm = ({ plan }: { plan: Plan }) => {
 
     if (nextErrors.number || nextErrors.expiry || nextErrors.cvc) {
       setFieldErrors(nextErrors);
-      if (nextErrors.number) fields.number?.focus();
-      else if (nextErrors.expiry) fields.expiry?.focus();
-      else if (nextErrors.cvc) fields.cvc?.focus();
+      if (nextErrors.number) fieldsRef.current.number?.focus();
+      else if (nextErrors.expiry) fieldsRef.current.expiry?.focus();
+      else if (nextErrors.cvc) fieldsRef.current.cvc?.focus();
       setErrorMessage("Please complete all card fields.");
       return;
     }
@@ -491,21 +504,20 @@ const CheckoutForm = ({ plan }: { plan: Plan }) => {
             className={cx(s.field, fieldErrors.number && s.fieldInvalid)}
             role="button"
             tabIndex={0}
-            onClick={() => fields.number?.focus()}
+            onClick={() => fieldsRef.current.number?.focus()}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
-                fields.number?.focus();
+                fieldsRef.current.number?.focus();
               }
             }}
           >
             <CardNumberElement
-              options={{
-                ...cardElementOptions,
-                placeholder: "1234 5678 1234 5678",
-              }}
+              options={cardNumberElementOptions}
               onChange={onNumberChange}
-              onReady={(el) => setFields((prev) => ({ ...prev, number: el }))}
+              onReady={(element) => {
+                fieldsRef.current.number = element;
+              }}
             />
           </div>
         </div>
@@ -516,18 +528,20 @@ const CheckoutForm = ({ plan }: { plan: Plan }) => {
             className={cx(s.field, fieldErrors.expiry && s.fieldInvalid)}
             role="button"
             tabIndex={0}
-            onClick={() => fields.expiry?.focus()}
+            onClick={() => fieldsRef.current.expiry?.focus()}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
-                fields.expiry?.focus();
+                fieldsRef.current.expiry?.focus();
               }
             }}
           >
             <CardExpiryElement
-              options={{ ...cardElementOptions, placeholder: "MM/YY" }}
+              options={cardExpiryElementOptions}
               onChange={onExpiryChange}
-              onReady={(el) => setFields((prev) => ({ ...prev, expiry: el }))}
+              onReady={(element) => {
+                fieldsRef.current.expiry = element;
+              }}
             />
           </div>
         </div>
@@ -538,18 +552,20 @@ const CheckoutForm = ({ plan }: { plan: Plan }) => {
             className={cx(s.field, fieldErrors.cvc && s.fieldInvalid)}
             role="button"
             tabIndex={0}
-            onClick={() => fields.cvc?.focus()}
+            onClick={() => fieldsRef.current.cvc?.focus()}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
-                fields.cvc?.focus();
+                fieldsRef.current.cvc?.focus();
               }
             }}
           >
             <CardCvcElement
-              options={{ ...cardElementOptions, placeholder: "CVC" }}
+              options={cardCvcElementOptions}
               onChange={onCvcChange}
-              onReady={(el) => setFields((prev) => ({ ...prev, cvc: el }))}
+              onReady={(element) => {
+                fieldsRef.current.cvc = element;
+              }}
             />
           </div>
         </div>

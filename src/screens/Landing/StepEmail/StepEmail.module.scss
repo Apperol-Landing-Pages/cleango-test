@@ -1,5 +1,6 @@
-@import "@/styles/mixins";
-@import "../shared/landing-tokens";
+@use "sass:color";
+@use "@/styles/mixins" as *;
+@use "../shared/landing-tokens" as *;
 
 .page {
   height: 100dvh;
@@ -112,7 +113,7 @@
     transform 0.1s;
 
   &:hover {
-    background: lighten($landing-brand, 5%);
+    background: color.adjust($landing-brand, $lightness: 5%);
   }
 
   &:active {

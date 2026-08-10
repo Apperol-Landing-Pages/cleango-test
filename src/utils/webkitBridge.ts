@@ -34,19 +34,3 @@ export function initIOSMessageReceiver(): void {
     }
   };
 }
-
-export function subscribeToIOSMessage(
-  event: string,
-  callback: (data: IOSMessage) => void,
-): () => void {
-  const handler = (e: Event) => {
-    const { detail } = e as CustomEvent<IOSMessage>;
-    if (detail?.event === event) callback(detail);
-  };
-  window.addEventListener("ios_message", handler);
-  return () => window.removeEventListener("ios_message", handler);
-}
-
-export function sendHaptic(action: "start" | "stop"): void {
-  sendToIOS("haptic", { action });
-}

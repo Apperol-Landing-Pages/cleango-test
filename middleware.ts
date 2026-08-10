@@ -11,6 +11,28 @@ const COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 // + docker-compose.local.yml). Empty in prod → full cloak stays active.
 const CLOAK_DISABLED = process.env.NEXT_PUBLIC_DISABLE_CLOAK === "true";
 
+const PUBLIC_LANDING_PATHS = new Set([
+  "/",
+  "/security-scan",
+  "/email",
+  "/premium",
+  "/download",
+  "/privacy-policy",
+  "/terms-of-use",
+  "/refund-policy",
+]);
+
+const LEGACY_LANDING_PATHS = new Set([
+  "/scan",
+  "/scan/run",
+  "/scan/enter-email",
+  "/scan/premium",
+  "/scan/download",
+  "/scan/privacy",
+  "/scan/terms",
+  "/scan/refund",
+]);
+
 export function middleware(req: NextRequest) {
   if (CLOAK_DISABLED) {
     return NextResponse.next();
@@ -36,8 +58,12 @@ export function middleware(req: NextRequest) {
   const idFromCookie = req.cookies.get(APPSFLYER_COOKIE)?.value;
   const appsflyerId = idFromQuery || idFromCookie;
 
-  // No appsflyer_id anywhere and not on root or landing funnel → redirect to root.
-  if (!appsflyerId && pathname !== "/" && !pathname.startsWith("/scan")) {
+  // No AppsFlyer id: keep the visitor inside the public White Landing funnel.
+  if (
+    !appsflyerId &&
+    !PUBLIC_LANDING_PATHS.has(pathname) &&
+    !LEGACY_LANDING_PATHS.has(pathname)
+  ) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
