@@ -8,6 +8,7 @@ import { trackAmplitudeEvent } from "@/lib/analytics/amplitude";
 import { getSnapshotRoute, readSavedQuizResult } from "@/lib/funnel/quiz-result";
 import {
   getPrivacyPlan,
+  getPrivacyPlanAnalyticsType,
   readSelectedPlan,
   type PrivacyPlanId,
 } from "@/lib/funnel/privacy-plan";
@@ -120,7 +121,7 @@ export function ConfirmationExperience() {
     if (paymentStatus === "active") {
       hasTrackedPaymentOutcome.current = true;
       trackAmplitudeEvent("payment_succeded", {
-        plan_type: selectedPlan.id,
+        plan_type: getPrivacyPlanAnalyticsType(selectedPlan.id),
       });
     } else if (paymentFailed) {
       hasTrackedPaymentOutcome.current = true;

@@ -21,11 +21,25 @@ export const privacyPlans = [
 ] as const;
 
 export type PrivacyPlanId = (typeof privacyPlans)[number]["id"];
+export type PrivacyPlanAnalyticsType = "plan1" | "plan2" | "plan3";
 
 type StorageReader = Pick<Storage, "getItem">;
 type StorageWriter = Pick<Storage, "setItem">;
 
 const selectedPlanKey = "security-white.checkout.selected-plan";
+
+const analyticsPlanTypes: Record<
+  PrivacyPlanId,
+  PrivacyPlanAnalyticsType
+> = {
+  essential: "plan1",
+  plus: "plan2",
+  complete: "plan3",
+};
+
+export function getPrivacyPlanAnalyticsType(planId: PrivacyPlanId) {
+  return analyticsPlanTypes[planId];
+}
 
 export function getPrivacyPlan(planId: PrivacyPlanId) {
   return privacyPlans.find((plan) => plan.id === planId) ?? privacyPlans[1];

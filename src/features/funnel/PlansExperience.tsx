@@ -10,6 +10,7 @@ import { paymentsMode } from "@/lib/payments/client";
 import { getSnapshotRoute, readSavedQuizResult } from "@/lib/funnel/quiz-result";
 import {
   getPrivacyPlan,
+  getPrivacyPlanAnalyticsType,
   privacyPlans,
   type PrivacyPlanId,
   saveSelectedPlan,
@@ -407,7 +408,7 @@ export function PlansExperience() {
               aria-label="Pay with Apple Pay — checkout preview"
               className={styles.applePayButton}
               data-amplitude-event="paywall_applepay_clicked"
-              data-amplitude-plan-type={selectedPlanId}
+              data-amplitude-plan-type={getPrivacyPlanAnalyticsType(selectedPlanId)}
               onClick={completeCheckout}
               type="button"
             >
