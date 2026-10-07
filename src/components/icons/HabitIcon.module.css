@@ -1,0 +1,9 @@
+.icon {
+  display: grid;
+  inline-size: 28px;
+  block-size: 28px;
+  place-items: center;
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--color-primary);
+}

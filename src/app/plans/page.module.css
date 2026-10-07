@@ -1,0 +1,694 @@
+.plansPage {
+  display: flex;
+  min-block-size: 100svh;
+  flex-direction: column;
+  gap: 32px;
+  padding-block: max(56px, calc(env(safe-area-inset-top) + 24px))
+    max(24px, calc(env(safe-area-inset-bottom) + 12px));
+}
+
+.backButton {
+  display: inline-flex;
+  min-block-size: 32px;
+  align-items: center;
+  align-self: flex-start;
+  gap: 5px;
+  padding: 4px 2px;
+  border: 0;
+  background: transparent;
+  color: #3478e5;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.backButton svg {
+  inline-size: 16px;
+  block-size: 16px;
+}
+
+.intro,
+.introCopy,
+.benefits,
+.planPicker,
+.planOptions,
+.guaranteeCard,
+.paymentSection,
+.paymentForm,
+.cardFields,
+.total,
+.checkoutAction,
+.reassuranceCard {
+  display: grid;
+}
+
+.intro {
+  gap: 24px;
+}
+
+.introCopy {
+  gap: 12px;
+}
+
+.eyebrow,
+.intro h1,
+.introDescription,
+.benefits,
+.planName,
+.planPrice,
+.planDescription,
+.billingNote,
+.guaranteeCard h2,
+.guaranteeCard p,
+.trustItem p,
+.paymentHeader h2,
+.paymentHeader p,
+.divider span,
+.field span,
+.total p,
+.checkoutAction p,
+.reassuranceCard p,
+.reassuranceCard h3,
+.footer p {
+  margin: 0;
+}
+
+.eyebrow {
+  color: #3478e5;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.intro h1 {
+  max-inline-size: 330px;
+  color: #202124;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.04;
+}
+
+.introDescription {
+  max-inline-size: 350px;
+  color: #6c7075;
+  font-size: 15px;
+  line-height: 21px;
+}
+
+.benefits {
+  gap: 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.benefits li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: #555a60;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.benefitCheck {
+  flex: 0 0 auto;
+  color: #3478e5;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.planPicker {
+  gap: 16px;
+}
+
+.planOptions {
+  gap: 12px;
+}
+
+.planOption {
+  position: relative;
+  display: grid;
+  min-block-size: 88px;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  column-gap: 12px;
+  padding: 17px 16px;
+  border: 1px solid #d8dadd;
+  border-radius: 12px;
+  background: #ffffff;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.planOption:hover {
+  border-color: #aebed8;
+}
+
+.planOption:active {
+  transform: translateY(1px);
+}
+
+.planOptionSelected {
+  border-color: #3478e5;
+  background: #f5f9ff;
+  box-shadow: 0 0 0 1px #3478e5;
+}
+
+.planRadio {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.radioMark {
+  display: grid;
+  inline-size: 20px;
+  block-size: 20px;
+  place-items: center;
+  margin-top: 1px;
+  border: 1.5px solid #9ca3ab;
+  border-radius: 50%;
+  background: #ffffff;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.radioMark::after {
+  inline-size: 8px;
+  block-size: 8px;
+  border-radius: 50%;
+  background: #ffffff;
+  content: "";
+  transform: scale(0);
+  transition: transform 160ms ease;
+}
+
+.planOptionSelected .radioMark {
+  border-color: #3478e5;
+  background: #3478e5;
+}
+
+.planOptionSelected .radioMark::after {
+  transform: scale(1);
+}
+
+.planCopy {
+  min-inline-size: 0;
+}
+
+.planTitleLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.planName,
+.planPrice {
+  color: #202124;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 21px;
+}
+
+.recommended {
+  color: #3478e5;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 14px;
+}
+
+.planDescription {
+  margin-top: 5px;
+  color: #777b80;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.planPrice {
+  white-space: nowrap;
+}
+
+.planPrice span {
+  color: #7b7f84;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.billingNote {
+  color: #898c90;
+  font-size: 12px;
+  line-height: 17px;
+}
+
+.guaranteeCard {
+  min-block-size: 386px;
+  place-items: center;
+  align-content: center;
+  gap: 12px;
+  padding: 24px 22px;
+  border-radius: 22px;
+  background: #eaf5ff;
+  text-align: center;
+}
+
+.guaranteeBadge {
+  inline-size: 173px;
+  block-size: 173px;
+  object-fit: contain;
+}
+
+.guaranteeCard h2 {
+  color: #202124;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 25px;
+}
+
+.guaranteeCard p {
+  max-inline-size: 310px;
+  color: #666b71;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.textLink {
+  color: #3478e5;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  text-decoration: none;
+}
+
+.trustGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.trustItem {
+  display: grid;
+  min-block-size: 108px;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  padding: 12px 6px;
+  border: 1px solid #d9eee1;
+  border-radius: 16px;
+  background: #f2faf5;
+  text-align: center;
+}
+
+.trustItem img {
+  inline-size: 42px;
+  block-size: 42px;
+}
+
+.trustItem p {
+  color: #254d33;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 14px;
+}
+
+.paymentSection {
+  gap: 20px;
+}
+
+.paymentHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.paymentHeader h2 {
+  color: #202124;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.paymentHeader p {
+  color: #adb0b4;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 12px;
+  text-transform: uppercase;
+}
+
+.applePayButton {
+  display: grid;
+  min-block-size: 56px;
+  place-items: center;
+  padding: 14px 24px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: #202020;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 20px;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.applePayButton:hover {
+  background: #090909;
+}
+
+.applePayButton:active {
+  transform: translateY(1px);
+}
+
+.divider {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.divider::before,
+.divider::after {
+  block-size: 1px;
+  background: #e2e4e7;
+  content: "";
+}
+
+.divider span {
+  color: #a0a3a7;
+  font-size: 10px;
+  line-height: 14px;
+}
+
+.paymentMethods {
+  inline-size: min(269px, 100%);
+  block-size: auto;
+  justify-self: center;
+}
+
+.paymentForm {
+  gap: 20px;
+}
+
+.stripeElement {
+  min-inline-size: 0;
+}
+
+.checkoutError {
+  margin: 0;
+  color: #c9362b;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 17px;
+  text-align: center;
+}
+
+.cardFields {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.field {
+  display: grid;
+  gap: 7px;
+}
+
+.fieldFull {
+  grid-column: 1 / -1;
+}
+
+.field span {
+  color: #686c71;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 15px;
+}
+
+.field input {
+  inline-size: 100%;
+  min-block-size: 52px;
+  padding: 13px 14px;
+  border: 1px solid #d9dce0;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #202124;
+  font-size: 16px;
+  line-height: 22px;
+  outline: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.field input::placeholder {
+  color: #b5b8bc;
+}
+
+.field input:focus {
+  border-color: #3478e5;
+  box-shadow: 0 0 0 3px rgb(52 120 229 / 13%);
+}
+
+.fieldInvalid > span:first-child {
+  color: #c9362b;
+}
+
+.fieldInvalid input,
+.fieldInvalid input:focus {
+  border-color: #df4d43;
+  background: #fffafa;
+  box-shadow: 0 0 0 3px rgb(223 77 67 / 12%);
+}
+
+.field .fieldError {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  color: #c9362b;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 15px;
+}
+
+.field .fieldError::before {
+  display: grid;
+  inline-size: 14px;
+  block-size: 14px;
+  flex: 0 0 14px;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  content: "!";
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.cardNumberWrap {
+  position: relative;
+}
+
+.cardNumberWrap input {
+  padding-right: 46px;
+}
+
+.cardGlyph {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: 14px;
+  inline-size: 22px;
+  block-size: 16px;
+  border: 1.4px solid #9ca2a9;
+  border-radius: 3px;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.cardGlyph::before {
+  position: absolute;
+  inset-block-start: 4px;
+  inset-inline: 0;
+  block-size: 1.5px;
+  background: #9ca2a9;
+  content: "";
+}
+
+.fieldInvalid .cardGlyph {
+  border-color: #df4d43;
+}
+
+.fieldInvalid .cardGlyph::before {
+  background: #df4d43;
+}
+
+.total {
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 16px;
+}
+
+.total p {
+  color: #202124;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+}
+
+.checkoutAction {
+  gap: 12px;
+}
+
+.subscribeButton {
+  min-block-size: 56px;
+  padding: 14px 18px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: #3478e5;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 20px;
+  transition:
+    background-color 160ms ease,
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.subscribeButton:hover:not(:disabled) {
+  background: #286bd2;
+}
+
+.subscribeButton:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.subscribeButton:disabled {
+  background: #b9d8fb;
+  cursor: not-allowed;
+}
+
+.checkoutAction p {
+  color: #8b8e93;
+  font-size: 11px;
+  line-height: 16px;
+}
+
+.reassuranceCard {
+  gap: 10px;
+  padding: 20px;
+  border: 1px solid #cfe4d6;
+  border-radius: 16px;
+  background: #f3faf5;
+}
+
+.reassuranceHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.reassuranceHeader img {
+  inline-size: 24px;
+  block-size: 24px;
+}
+
+.reassuranceEyebrow {
+  color: #4d8a62;
+  font-size: 11px;
+  line-height: 15px;
+}
+
+.reassuranceCard h3 {
+  color: #264b32;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 21px;
+}
+
+.reassuranceCard > p {
+  color: #6a746e;
+  font-size: 12px;
+  line-height: 17px;
+}
+
+.refundLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+  padding-top: 14px;
+  border-top: 1px solid #dceae1;
+  color: #4f8963;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.backButton:focus-visible,
+.planOption:has(.planRadio:focus-visible),
+.applePayButton:focus-visible,
+.subscribeButton:focus-visible,
+.textLink:focus-visible,
+.refundLink:focus-visible {
+  outline: 3px solid rgb(52 120 229 / 22%);
+  outline-offset: 3px;
+}
+
+.footer {
+  padding-top: 20px;
+  border-top: 1px solid #eceef0;
+  text-align: center;
+}
+
+.footer p {
+  color: #a0a3a7;
+  font-size: 11px;
+  line-height: 16px;
+}
+
+@media (max-width: 350px) {
+  .plansPage {
+    gap: 28px;
+  }
+
+  .intro h1 {
+    font-size: 28px;
+  }
+
+  .planOption {
+    column-gap: 9px;
+    padding-inline: 13px;
+  }
+
+  .planName,
+  .planPrice {
+    font-size: 14px;
+  }
+
+  .trustGrid {
+    gap: 7px;
+  }
+
+  .trustItem {
+    padding-inline: 3px;
+  }
+
+  .trustItem p {
+    font-size: 11px;
+  }
+}

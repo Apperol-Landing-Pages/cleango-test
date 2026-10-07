@@ -1,42 +1,59 @@
-# CleanGo landing and Home flow
+# Security White Funnel
 
-Next.js application with two entry flows:
+Mobile-first funnel based on the supplied Figma design. The implementation is
+structured as a sequence of focused screens, following the routing and shared
+screen-shell approach used by the provided HelloVocal reference.
 
-- `/` and `/scan/*` — landing funnel without an AppsFlyer ID.
-- `/home?appsflyer_id=...` — Home flow with Stripe Apple Pay and the iOS WebView bridge.
+## Stack
+
+- Next.js App Router
+- React + TypeScript in strict mode
+- CSS Modules and global design tokens
+- ESLint with the Next.js Core Web Vitals rules
 
 ## Local development
 
 ```bash
-npm ci
+npm install
 npm run dev
 ```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+## Project structure
+
+```text
+src/app/                    routes, metadata and global styles
+src/components/funnel/      reusable funnel layout primitives
+src/features/funnel/        step types, configuration and future state logic
+public/images/              raster assets exported from Figma
+public/icons/               SVG and icon assets exported from Figma
+```
+
+## Implementation notes
+
+- The design source uses a 393 px-wide mobile frame, so the base container is
+  mobile-first and capped at `393px` on larger viewports.
+- Shared colors, spacing, radii and typography live in `src/app/globals.css`.
+- Every funnel page should render inside `FunnelScreen` and provide a stable
+  `screenId` for styling, analytics and end-to-end tests.
+- Add a route only when its screen is implemented; the first screen currently
+  lives at `/`.
 
 ## Checks
 
 ```bash
+npm run typecheck
 npm run lint
 npm run build
 ```
 
-## Cloudflare Workers
+## Payments
 
-The project uses the official OpenNext Cloudflare adapter.
+The checkout supports a backend-free `preview` mode and a production `stripe`
+mode powered by Stripe Payment Element. Backend implementation details and the
+exact endpoint payloads are documented in
+[`docs/payments-backend-contract.md`](docs/payments-backend-contract.md).
 
-```bash
-npm run preview
-npm run deploy
-```
-
-Cloudflare configuration is stored in `wrangler.json`. Build output is generated
-in `.open-next` and is intentionally excluded from Git.
-
-## Public environment variables
-
-```env
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_...
-NEXT_PUBLIC_API_BASE_URL=https://api.example.com/api/v1
-NEXT_PUBLIC_HOME_PACKAGE_SLUG=protection-499
-```
-
-Stripe secret keys and webhook secrets must only be configured on the backend.
+Copy `.env.example` to `.env.local` for local configuration. Never commit Stripe
+secret keys or webhook secrets.

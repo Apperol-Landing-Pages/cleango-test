@@ -1,0 +1,327 @@
+.confirmationPage {
+  display: flex;
+  min-block-size: 100svh;
+  flex-direction: column;
+  gap: 32px;
+  padding-block: max(56px, calc(env(safe-area-inset-top) + 24px))
+    max(32px, calc(env(safe-area-inset-bottom) + 12px));
+}
+
+.hero,
+.heroCopy,
+.planCard,
+.firstMoveCard,
+.actions {
+  display: grid;
+}
+
+.hero {
+  gap: 24px;
+}
+
+.confirmedLabel {
+  display: flex;
+  min-block-size: 48px;
+  align-items: center;
+  gap: 14px;
+}
+
+.confirmedLabel p,
+.hero h1,
+.heroCopy > p,
+.planTopLine p,
+.planMiddle h2,
+.planBottomLine p,
+.firstMoveCard p,
+.firstMoveCard h2,
+.footer p {
+  margin: 0;
+}
+
+.confirmedIcon {
+  display: grid;
+  inline-size: 48px;
+  block-size: 48px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid #d5e9db;
+  border-radius: 50%;
+  background: #eaf6ee;
+  box-shadow: 0 0 0 7px rgb(234 246 238 / 55%);
+  color: #4d8d63;
+}
+
+.confirmedIcon svg {
+  inline-size: 25px;
+  block-size: 25px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.confirmedLabel p {
+  color: #4d8d63;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  line-height: 18px;
+  text-transform: uppercase;
+}
+
+.heroCopy {
+  gap: 20px;
+}
+
+.hero h1 {
+  display: grid;
+  color: #202124;
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 1.03;
+}
+
+.hero h1 span {
+  color: #3478e5;
+}
+
+.heroCopy > p {
+  color: #6a6e73;
+  font-size: 16px;
+  line-height: 23px;
+}
+
+.planCard {
+  min-block-size: 190px;
+  align-content: space-between;
+  gap: 18px;
+  padding: 20px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 78% 18%, rgb(104 132 166 / 22%), transparent 38%),
+    linear-gradient(135deg, #273344, #1f2b3c);
+  color: #ffffff;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 7%);
+}
+
+.planTopLine,
+.planMiddle,
+.planBottomLine {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.planTopLine > p {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.planTopLine > p span {
+  font-weight: 400;
+}
+
+.activeBadge {
+  display: inline-flex;
+  min-block-size: 28px;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px;
+  border: 1px solid rgb(255 255 255 / 19%);
+  border-radius: var(--radius-pill);
+  background: rgb(255 255 255 / 16%);
+  color: #dce5e0;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.activeBadge > span {
+  inline-size: 7px;
+  block-size: 7px;
+  border-radius: 50%;
+  background: #a7d7b7;
+  box-shadow: 0 0 0 3px rgb(167 215 183 / 12%);
+}
+
+.planMiddle h2 {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 25px;
+}
+
+.shieldIcon {
+  display: grid;
+  inline-size: 42px;
+  block-size: 48px;
+  flex: 0 0 auto;
+  place-items: center;
+  color: #b7d2f1;
+}
+
+.shieldIcon svg {
+  inline-size: 36px;
+  block-size: 42px;
+}
+
+.shieldIcon path:first-child {
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+.shieldIcon path:last-child {
+  stroke: #536e8c;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.2;
+}
+
+.planBottomLine {
+  padding-top: 16px;
+  border-top: 1px solid rgb(255 255 255 / 13%);
+}
+
+.planBottomLine p:first-child {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
+}
+
+.planBottomLine p:first-child span,
+.planBottomLine p:last-child {
+  color: #d1d7de;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 17px;
+}
+
+.firstMoveCard {
+  min-block-size: 288px;
+  align-content: start;
+  gap: 16px;
+  padding: 24px;
+  border: 1px solid #d6e7f5;
+  border-radius: 24px;
+  background: #eaf4ff;
+}
+
+.eyebrow,
+.selectedNote {
+  color: #3478e5;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.firstMoveCard h2 {
+  color: #202124;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 25px;
+}
+
+.firstMoveDescription {
+  color: #4f545a;
+  font-size: 16px;
+  line-height: 23px;
+}
+
+.selectedNote {
+  margin-top: auto !important;
+  font-weight: 500;
+}
+
+.actions {
+  gap: 10px;
+}
+
+.downloadButton,
+.overviewButton {
+  min-block-size: 56px;
+  border: 0;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 24px;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.downloadButton {
+  padding: 14px 24px;
+  border-radius: var(--radius-pill);
+  background: #3478e5;
+  color: #ffffff;
+}
+
+.downloadButton:hover:not(:disabled) {
+  background: #286bd2;
+}
+
+.downloadButton:disabled {
+  background: #b7d4f6;
+  cursor: wait;
+}
+
+.overviewButton {
+  padding: 12px 20px;
+  background: transparent;
+  color: #3478e5;
+}
+
+.overviewButton:hover {
+  color: #286bd2;
+}
+
+.downloadButton:active,
+.overviewButton:active {
+  transform: translateY(1px);
+}
+
+.downloadButton:focus-visible,
+.overviewButton:focus-visible {
+  outline: 3px solid rgb(52 120 229 / 22%);
+  outline-offset: 3px;
+}
+
+.footer {
+  margin-top: auto;
+  padding-top: 30px;
+  border-top: 1px solid #eceef0;
+  text-align: center;
+}
+
+.footer p {
+  color: #979ba0;
+  font-size: 11px;
+  line-height: 16px;
+}
+
+@media (max-width: 350px) {
+  .confirmationPage {
+    gap: 28px;
+  }
+
+  .hero h1 {
+    font-size: 36px;
+  }
+
+  .planCard {
+    padding-inline: 18px;
+  }
+
+  .firstMoveCard {
+    padding-inline: 20px;
+  }
+
+  .firstMoveCard h2 {
+    font-size: 21px;
+  }
+}

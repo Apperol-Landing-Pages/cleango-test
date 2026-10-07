@@ -1,0 +1,242 @@
+.mediumResults {
+  padding-bottom: max(32px, calc(env(safe-area-inset-bottom) + 20px));
+}
+
+.mediumSummary {
+  block-size: 492px !important;
+  border-color: #ffc99b;
+  background: #fff2e8;
+}
+
+.warningBadge {
+  border-color: #f0d8c6;
+  background: #fff0e4;
+  color: #9b4e1c;
+}
+
+.badgeIcon {
+  display: block;
+  inline-size: 14px;
+  block-size: 14px;
+  flex: 0 0 auto;
+}
+
+.mediumSummary h1 span,
+.alertScore {
+  color: #a65218 !important;
+}
+
+.riskTrack span:nth-child(-n + 3) {
+  background: #a65218;
+}
+
+.riskTrack span:nth-child(n + 4) {
+  background: #f2d9c8;
+}
+
+.recommendations {
+  display: grid;
+  block-size: 974px;
+  grid-template-rows: 104px 810px;
+  gap: 20px;
+  padding: 20px 16px;
+  border-radius: 16px;
+  background: #f5f5f7;
+}
+
+.recommendationsHeader {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.recommendationsHeader p,
+.recommendationsHeader h2,
+.recommendationCard h3,
+.recommendationCard p,
+.strongHabits p {
+  margin: 0;
+}
+
+.eyebrow {
+  color: #6b6d71;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.recommendationsHeader h2 {
+  color: #202124;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 28px;
+}
+
+.recommendationsHeader > p:last-child {
+  max-inline-size: 294px;
+  color: #6b6d71;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.recommendationsBody {
+  display: grid;
+  grid-template-rows: 600px 194px;
+  gap: 16px;
+}
+
+.recommendationList,
+.strongHabits ul {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.recommendationList {
+  grid-template-rows: repeat(3, 194.667px);
+}
+
+.recommendationCard {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  align-content: start;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #dedfe2;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgb(20 24 23 / 4%);
+}
+
+.recommendationNumber {
+  display: grid;
+  inline-size: 28px;
+  block-size: 28px;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff0e4;
+  color: #a65218;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.recommendationCard > div {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.recommendationCard h3 {
+  color: #2c2e31;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 18px;
+}
+
+.answerQuote {
+  color: #65686c;
+  font-size: 11px;
+  line-height: 15px;
+}
+
+.recommendationDescription {
+  margin-top: 4px !important;
+  color: #4f5256;
+  font-size: 11px;
+  line-height: 15px;
+}
+
+.strongHabits {
+  display: grid;
+  grid-template-rows: 16px 170px;
+  gap: 8px;
+}
+
+.strongHabits > p {
+  color: #77797d;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+.strongHabits ul {
+  grid-template-rows: repeat(3, 51.333px);
+}
+
+.strongHabits li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border: 1px solid #e2e2e5;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgb(20 24 23 / 4%);
+  color: #2d2f32;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.check {
+  display: block;
+  inline-size: 24px;
+  block-size: 24px;
+  flex: 0 0 auto;
+}
+
+.mediumSupport :global(li > span) {
+  color: #a65218;
+}
+
+.mediumSupport {
+  block-size: 370px;
+  min-block-size: 370px;
+}
+
+.mediumPlan {
+  block-size: 292px;
+  min-block-size: 292px;
+  border-color: #ffc99b;
+  background: #fff2e8;
+}
+
+@media (max-width: 359px) {
+  .mediumSummary {
+    block-size: auto !important;
+    min-block-size: 492px;
+  }
+
+  .recommendations {
+    block-size: auto;
+    min-block-size: 974px;
+    grid-template-rows: auto auto;
+  }
+
+  .mediumSupport,
+  .mediumPlan {
+    block-size: auto;
+  }
+
+  .recommendationsBody,
+  .recommendationList,
+  .strongHabits,
+  .strongHabits ul {
+    grid-template-rows: none;
+  }
+
+  .recommendationCard {
+    min-block-size: 178px;
+    padding-inline: 12px;
+  }
+
+  .strongHabits li {
+    min-block-size: 52px;
+    padding-inline: 12px;
+    font-size: 13px;
+  }
+}

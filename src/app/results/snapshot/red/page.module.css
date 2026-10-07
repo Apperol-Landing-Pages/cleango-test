@@ -1,0 +1,250 @@
+.redResults {
+  padding-bottom: max(32px, calc(env(safe-area-inset-bottom) + 20px));
+}
+
+.redSummary {
+  block-size: 494px !important;
+  border-color: #f5c2c0;
+  background: #fdecec;
+}
+
+.dangerBadge {
+  border-color: #f3c9c7;
+  background: #f9dedd;
+  color: #9f3431;
+}
+
+.badgeIcon {
+  display: block;
+  inline-size: 16px;
+  block-size: 16px;
+  flex: 0 0 auto;
+}
+
+.redSummary h1 span,
+.alertScore {
+  color: #c5413f !important;
+}
+
+.redSummary h1 {
+  display: block;
+}
+
+.riskTrack span:nth-child(-n + 5) {
+  background: #cf4a47;
+}
+
+.riskTrack span:last-child {
+  background: #f1cfce;
+}
+
+.recommendations {
+  display: grid;
+  block-size: 1210px;
+  grid-template-rows: 104px 1046px;
+  gap: 20px;
+  padding: 20px 16px;
+  border-radius: 16px;
+  background: #f5f5f7;
+}
+
+.recommendationsHeader {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.recommendationsHeader p,
+.recommendationsHeader h2,
+.recommendationCard h3,
+.recommendationCard p,
+.strongHabit p {
+  margin: 0;
+}
+
+.eyebrow {
+  color: #6b6d71;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.recommendationsHeader h2 {
+  color: #202124;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 28px;
+}
+
+.recommendationsHeader > p:last-child {
+  max-inline-size: 294px;
+  color: #6b6d71;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.recommendationsBody {
+  display: grid;
+  grid-template-rows: 954px 76px;
+  gap: 16px;
+}
+
+.recommendationList {
+  display: grid;
+  grid-template-rows: repeat(5, 184.4px);
+  align-content: start;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.recommendationCard {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  align-content: start;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #dedfe2;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgb(20 24 23 / 4%);
+}
+
+.recommendationNumber {
+  display: grid;
+  inline-size: 28px;
+  block-size: 28px;
+  place-items: center;
+  border-radius: 50%;
+  background: #fbe6e5;
+  color: #c5413f;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.recommendationCard > div {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+}
+
+.priority {
+  color: #c5413f;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 11px;
+  text-transform: uppercase;
+}
+
+.recommendationCard h3 {
+  color: #2c2e31;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 18px;
+}
+
+.answerQuote {
+  color: #65686c;
+  font-size: 11px;
+  line-height: 15px;
+}
+
+.recommendationDescription {
+  margin-top: 4px !important;
+  color: #4f5256;
+  font-size: 11px;
+  line-height: 15px;
+}
+
+.strongHabit {
+  display: grid;
+  grid-template-rows: 16px 52px;
+  gap: 8px;
+}
+
+.strongHabit > p {
+  color: #77797d;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+.strongHabit > div {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border: 1px solid #e2e2e5;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgb(20 24 23 / 4%);
+  color: #2d2f32;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.check {
+  display: block;
+  inline-size: 24px;
+  block-size: 24px;
+  flex: 0 0 auto;
+}
+
+.redSupport h2 span {
+  color: #c5413f;
+}
+
+.redSupport :global(li > span) {
+  color: #c5413f;
+}
+
+.redSupport {
+  block-size: 388px;
+  min-block-size: 388px;
+}
+
+.redPlan {
+  block-size: 304px;
+  min-block-size: 304px;
+  border-color: #f5c2c0;
+  background: #fdecec;
+}
+
+@media (max-width: 359px) {
+  .redSummary {
+    block-size: auto !important;
+    min-block-size: 494px;
+  }
+
+  .recommendations {
+    block-size: auto;
+    min-block-size: 1210px;
+    grid-template-rows: auto auto;
+  }
+
+  .redSupport,
+  .redPlan {
+    block-size: auto;
+  }
+
+  .recommendationsBody,
+  .recommendationList,
+  .strongHabit {
+    grid-template-rows: none;
+  }
+
+  .recommendationCard {
+    min-block-size: 180px;
+    padding-inline: 12px;
+  }
+
+  .strongHabit > div {
+    min-block-size: 52px;
+    padding-inline: 12px;
+    font-size: 13px;
+  }
+}

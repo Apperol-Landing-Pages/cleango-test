@@ -1,36 +1,38 @@
 {
-  "name": "cleango-test",
-  "version": "1.2.0",
+  "name": "security-white-funnel",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "dev:https": "next dev --experimental-https",
+    "dev": "next dev --turbopack",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "dependencies": {
-    "@stripe/react-stripe-js": "^6.2.0",
-    "@stripe/stripe-js": "^9.3.1",
-    "axios": "^1.13.6",
-    "clsx": "^2.1.1",
-    "next": "16.2.6",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "sass": "^1.98.0"
+    "@amplitude/analytics-browser": "^2.47.2",
+    "@amplitude/plugin-session-replay-browser": "^1.35.5",
+    "@stripe/react-stripe-js": "^6.12.0",
+    "@stripe/stripe-js": "^9.17.0",
+    "next": "16.3.8",
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
   },
   "devDependencies": {
-    "@opennextjs/cloudflare": "^1.20.1",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.2.6",
-    "typescript": "^5",
-    "wrangler": "^4.112.0"
+    "@opennextjs/cloudflare": "^1.20.9",
+    "@types/node": "22.20.1",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.4",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.3.8",
+    "typescript": "5.9.3",
+    "wrangler": "^4.148.0"
   }
 }
