@@ -302,6 +302,38 @@
     gap: 40px;
     padding-top: max(32px, calc(env(safe-area-inset-top) + 16px));
   }
+
+  .resultCard {
+    min-block-size: 582px;
+  }
+
+  .resultCopy {
+    min-block-size: 281px;
+  }
+
+  .liteCard {
+    min-block-size: 589px;
+  }
+
+  .liteCopy {
+    min-block-size: 288px;
+  }
+
+  .mediumCard {
+    min-block-size: 611px;
+  }
+
+  .mediumCopy {
+    min-block-size: 310px;
+  }
+
+  .redCard {
+    min-block-size: 628px;
+  }
+
+  .redCopy {
+    min-block-size: 327px;
+  }
 }
 
 @media (max-width: 359px) {

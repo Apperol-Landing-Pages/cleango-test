@@ -9,34 +9,55 @@ import {
 } from "@/lib/analytics/amplitude";
 
 const pageViewEvents: Readonly<Record<string, string>> = {
-  "/": "quiz_screen1_view",
-  "/quiz/browsing-habits": "quiz_screen2_view",
-  "/quiz/network-privacy": "quiz_screen3_view",
-  "/quiz/shared-website-data": "quiz_screen3_view",
-  "/quiz/private-mode-sign-in": "quiz_screen3_view",
-  "/quiz/account-security": "quiz_screen4_view",
-  "/quiz/two-factor-auth": "quiz_screen5_view",
-  "/quiz/app-permissions": "quiz_screen6_view",
-  "/quiz/device-security": "quiz_screen7_view",
-  "/quiz/progress": "quiz_screen8_view",
-  "/results": "quiz_screen9_view",
-  "/results/lite": "quiz_screen9_view",
-  "/results/medium": "quiz_screen9_view",
-  "/results/red": "quiz_screen9_view",
-  "/results/snapshot": "quiz_screen10_view",
-  "/results/snapshot/lite": "quiz_screen10_view",
-  "/results/snapshot/medium": "quiz_screen10_view",
-  "/results/snapshot/red": "quiz_screen10_view",
+  "/": "quiz_startscreen_viewed",
+  "/quiz/browsing-habits": "quiz_screen1_viewed",
+  "/quiz/network-privacy": "quiz_screen21_viewed",
+  "/quiz/shared-website-data": "quiz_screen22_viewed",
+  "/quiz/private-mode-sign-in": "quiz_screen2_option3_viewed",
+  "/quiz/account-security": "quiz_screen3_viewed",
+  "/quiz/two-factor-auth": "quiz_screen4_viewed",
+  "/quiz/app-permissions": "quiz_screen5_viewed",
+  "/quiz/device-security": "quiz_screen6_viewed",
+  "/quiz/progress": "quiz_loader_viewed",
+  "/results": "quiz_email_6_6_viewed",
+  "/results/lite": "quiz_email_45_6_viewed",
+  "/results/medium": "quiz_email_23_6_viewed",
+  "/results/red": "quiz_email_01_6_viewed",
+  "/results/snapshot": "quiz_snapshot_green_viewed",
+  "/results/snapshot/lite": "quiz_snapshot_lite_viewed",
+  "/results/snapshot/medium": "quiz_snapshot_medium_viewed",
+  "/results/snapshot/red": "quiz_snapshot_red_viewed",
+  "/plans": "paywall_viewed",
+  "/confirmation": "download_app_screen_viewed",
 };
 
 let lastPageView: { pathname: string; trackedAt: number } | null = null;
 
-function readEventName(target: EventTarget | null, attribute: string) {
+function readEvent(target: EventTarget | null, attribute: string) {
   if (!(target instanceof Element)) {
     return null;
   }
 
-  return target.closest<HTMLElement>(`[${attribute}]`)?.getAttribute(attribute) ?? null;
+  const element = target.closest<HTMLElement>(`[${attribute}]`);
+  const eventName = element?.getAttribute(attribute);
+
+  if (!element || !eventName) {
+    return null;
+  }
+
+  const properties: Record<string, string> = {};
+  const screenName = element.dataset.amplitudeScreenName;
+  const planType = element.dataset.amplitudePlanType;
+
+  if (screenName) {
+    properties.screen_name = screenName;
+  }
+
+  if (planType) {
+    properties.plan_type = planType;
+  }
+
+  return { eventName, properties };
 }
 
 export function AmplitudeProvider() {
@@ -63,32 +84,32 @@ export function AmplitudeProvider() {
 
   useEffect(() => {
     function handleClick(event: MouseEvent) {
-      const eventName = readEventName(event.target, "data-amplitude-event");
+      const trackedEvent = readEvent(event.target, "data-amplitude-event");
 
-      if (eventName) {
-        trackAmplitudeEvent(eventName);
+      if (trackedEvent) {
+        trackAmplitudeEvent(trackedEvent.eventName, trackedEvent.properties);
       }
     }
 
     function handleChange(event: Event) {
-      const eventName = readEventName(
+      const trackedEvent = readEvent(
         event.target,
         "data-amplitude-change-event",
       );
 
-      if (eventName) {
-        trackAmplitudeEvent(eventName);
+      if (trackedEvent) {
+        trackAmplitudeEvent(trackedEvent.eventName, trackedEvent.properties);
       }
     }
 
     function handleSubmit(event: SubmitEvent) {
-      const eventName = readEventName(
+      const trackedEvent = readEvent(
         event.target,
         "data-amplitude-submit-event",
       );
 
-      if (eventName) {
-        trackAmplitudeEvent(eventName);
+      if (trackedEvent) {
+        trackAmplitudeEvent(trackedEvent.eventName, trackedEvent.properties);
       }
     }
 

@@ -20,7 +20,8 @@ export default function BrowsingHabitsPage() {
             <div className={styles.topLine}>
               <Link
                 className={styles.backLink}
-                data-amplitude-event="quiz_screen2_back_click"
+                data-amplitude-event="quiz_back_button_clicked"
+                data-amplitude-screen-name="quiz_screen1"
                 href="/"
               >
                 <svg

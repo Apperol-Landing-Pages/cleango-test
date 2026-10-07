@@ -20,7 +20,8 @@ export default function NetworkPrivacyPage() {
             <div className={styles.topLine}>
               <Link
                 className={styles.backLink}
-                data-amplitude-event="quiz_screen3_back_click"
+                data-amplitude-event="quiz_back_button_clicked"
+                data-amplitude-screen-name="quiz_screen21"
                 href="/quiz/browsing-habits"
               >
                 <svg

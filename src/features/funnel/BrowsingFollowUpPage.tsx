@@ -27,7 +27,8 @@ export function BrowsingFollowUpPage({
   screenId,
   storageKey,
 }: BrowsingFollowUpPageProps) {
-  const eventPrefix = "quiz_screen3";
+  const analyticsScreenName =
+    screenId === "shared-website-data" ? "quiz_screen22" : "quiz_screen23";
 
   return (
     <FunnelScreen screenId={screenId}>
@@ -37,7 +38,8 @@ export function BrowsingFollowUpPage({
             <div className={styles.topLine}>
               <Link
                 className={styles.backLink}
-                data-amplitude-event={`${eventPrefix}_back_click`}
+                data-amplitude-event="quiz_back_button_clicked"
+                data-amplitude-screen-name={analyticsScreenName}
                 href="/quiz/browsing-habits"
               >
                 <svg

@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import styles from "@/app/plans/page.module.css";
+import { trackAmplitudeEvent } from "@/lib/analytics/amplitude";
 import { paymentsMode } from "@/lib/payments/client";
 import { getSnapshotRoute, readSavedQuizResult } from "@/lib/funnel/quiz-result";
 import {
@@ -24,6 +25,12 @@ const initialTouchedFields: Record<CardField, boolean> = {
   cardholderName: false,
   cvc: false,
   expiry: false,
+};
+
+const planSelectionEvents: Record<PrivacyPlanId, string> = {
+  essential: "paywall_plan1_clicked",
+  plus: "paywall_plan2_clicked",
+  complete: "paywall_plan3_clicked",
 };
 
 const trustItems = [
@@ -212,6 +219,7 @@ export function PlansExperience() {
   const [cvc, setCvc] = useState("");
   const [cardholderName, setCardholderName] = useState("");
   const [touchedFields, setTouchedFields] = useState(initialTouchedFields);
+  const hasTrackedCompletedCardForm = useRef(false);
 
   const selectedPlan = useMemo(
     () => getPrivacyPlan(selectedPlanId),
@@ -226,6 +234,17 @@ export function PlansExperience() {
     expiry: validateExpiry(expiry),
   };
   const formIsComplete = Object.values(fieldErrors).every((error) => !error);
+
+  useEffect(() => {
+    if (
+      paymentsMode === "preview" &&
+      formIsComplete &&
+      !hasTrackedCompletedCardForm.current
+    ) {
+      hasTrackedCompletedCardForm.current = true;
+      trackAmplitudeEvent("checkout_form_completed");
+    }
+  }, [formIsComplete]);
 
   function markFieldAsTouched(field: CardField) {
     setTouchedFields((currentFields) => ({ ...currentFields, [field]: true }));
@@ -251,7 +270,13 @@ export function PlansExperience() {
 
   return (
     <div className={styles.plansPage}>
-      <button className={styles.backButton} onClick={handleBack} type="button">
+      <button
+        className={styles.backButton}
+        data-amplitude-event="quiz_back_button_clicked"
+        data-amplitude-screen-name="paywall"
+        onClick={handleBack}
+        type="button"
+      >
         <svg aria-hidden="true" viewBox="0 0 16 16" fill="none">
           <path
             d="m9.75 3.5-4.5 4.5 4.5 4.5M5.5 8h7"
@@ -305,6 +330,7 @@ export function PlansExperience() {
                 <input
                   checked={isSelected}
                   className={styles.planRadio}
+                  data-amplitude-change-event={planSelectionEvents[plan.id]}
                   name="privacy-plan"
                   onChange={() => setSelectedPlanId(plan.id)}
                   type="radio"
@@ -380,6 +406,8 @@ export function PlansExperience() {
             <button
               aria-label="Pay with Apple Pay — checkout preview"
               className={styles.applePayButton}
+              data-amplitude-event="paywall_applepay_clicked"
+              data-amplitude-plan-type={selectedPlanId}
               onClick={completeCheckout}
               type="button"
             >
@@ -529,6 +557,7 @@ export function PlansExperience() {
           <div className={styles.checkoutAction}>
             <button
               className={styles.subscribeButton}
+              data-amplitude-event="payment_button_clicked"
               disabled={!formIsComplete}
               type="submit"
             >

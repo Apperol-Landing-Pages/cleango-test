@@ -83,7 +83,7 @@ export default function PrivacySnapshotPage() {
           <div className={styles.actionGroup}>
             <Link
               className={styles.primaryButton}
-              data-amplitude-event="quiz_screen10_top_plan_click"
+              data-amplitude-event="quiz_snapshot_top_button_clicked"
               href="/plans"
             >
               Find my privacy plan
@@ -141,7 +141,7 @@ export default function PrivacySnapshotPage() {
           <div className={styles.actionGroup}>
             <Link
               className={styles.primaryButton}
-              data-amplitude-event="quiz_screen10_bottom_plan_click"
+              data-amplitude-event="quiz_snapshot_bottom_button_clicked"
               href="/plans"
             >
               See plans
@@ -157,7 +157,7 @@ export default function PrivacySnapshotPage() {
 
         <Link
           className={styles.reviewLink}
-          data-amplitude-event="quiz_screen10_review_answers_click"
+          data-amplitude-event="quiz_snapshot_review_clicked"
           href="/quiz/browsing-habits"
         >
           Review my answers

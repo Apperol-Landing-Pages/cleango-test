@@ -8,9 +8,10 @@ import {
 } from "@stripe/react-stripe-js";
 import { loadStripe, type Appearance, type StripeElementsOptions } from "@stripe/stripe-js";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 import styles from "@/app/plans/page.module.css";
+import { trackAmplitudeEvent } from "@/lib/analytics/amplitude";
 import {
   createSubscriptionSession,
   type PlanId,
@@ -73,6 +74,7 @@ function CheckoutForm({ plan }: StripeSubscriptionCheckoutProps) {
   const stripe = useStripe();
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const hasTrackedCompletedCardForm = useRef(false);
   const price = `$${plan.price.toFixed(2)}`;
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -91,6 +93,11 @@ function CheckoutForm({ plan }: StripeSubscriptionCheckoutProps) {
       if (validationError) {
         setErrorMessage(validationError.message ?? "Check your payment details.");
         return;
+      }
+
+      if (!hasTrackedCompletedCardForm.current) {
+        hasTrackedCompletedCardForm.current = true;
+        trackAmplitudeEvent("checkout_form_completed");
       }
 
       const leadId = sessionStorage.getItem("security-white.lead-id");
@@ -118,12 +125,14 @@ function CheckoutForm({ plan }: StripeSubscriptionCheckoutProps) {
       });
 
       if (error) {
+        trackAmplitudeEvent("payment_failed");
         setErrorMessage(error.message ?? "Payment could not be completed.");
         return;
       }
 
       router.push(`/confirmation?payment_id=${encodeURIComponent(session.paymentId)}`);
     } catch (error) {
+      trackAmplitudeEvent("payment_failed");
       setErrorMessage(
         error instanceof Error ? error.message : "Payment could not be completed.",
       );
@@ -157,6 +166,7 @@ function CheckoutForm({ plan }: StripeSubscriptionCheckoutProps) {
       <div className={styles.checkoutAction}>
         <button
           className={styles.subscribeButton}
+          data-amplitude-event="payment_button_clicked"
           disabled={!elements || !stripe || isSubmitting}
           type="submit"
         >

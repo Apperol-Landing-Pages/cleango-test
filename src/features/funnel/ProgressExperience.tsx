@@ -124,7 +124,7 @@ export function ProgressExperience() {
 
       if (progress >= threshold && !startedSteps.current.has(stepNumber)) {
         startedSteps.current.add(stepNumber);
-        trackAmplitudeEvent(`quiz_screen8_stage${stepNumber}_start`);
+        trackAmplitudeEvent(`quiz_progress_stage_${stepNumber}_started`);
       }
     });
 
@@ -133,13 +133,13 @@ export function ProgressExperience() {
 
       if (progress >= threshold && !completedSteps.current.has(stepNumber)) {
         completedSteps.current.add(stepNumber);
-        trackAmplitudeEvent(`quiz_screen8_stage${stepNumber}_complete`);
+        trackAmplitudeEvent(`quiz_progress_stage_${stepNumber}_completed`);
       }
     });
 
     if (progress === 100 && !analysisCompleted.current) {
       analysisCompleted.current = true;
-      trackAmplitudeEvent("quiz_screen8_complete");
+      trackAmplitudeEvent("quiz_progress_completed");
     }
   }, [progress]);
 
@@ -171,7 +171,8 @@ export function ProgressExperience() {
     <div className={styles.progressScreen}>
       <Link
         className={styles.backLink}
-        data-amplitude-event="quiz_screen8_back_click"
+        data-amplitude-event="quiz_back_button_clicked"
+        data-amplitude-screen-name="quiz_loader"
         href="/quiz/device-security"
       >
         <svg
@@ -261,7 +262,7 @@ export function ProgressExperience() {
               className={`${styles.continueButton} ${
                 isComplete ? styles.continueButtonReady : ""
               }`}
-              data-amplitude-event="quiz_screen8_continue_click"
+              data-amplitude-event="quiz_progress_continue_clicked"
               disabled={!isComplete}
               onClick={handleContinue}
               type="button"

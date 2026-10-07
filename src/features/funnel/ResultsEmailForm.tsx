@@ -46,16 +46,16 @@ export function ResultsEmailForm({
     }
 
     hasTrackedFocus.current = true;
-    trackAmplitudeEvent("quiz_screen9_email_start");
+    trackAmplitudeEvent("quiz_email_field_clicked");
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setEmailTouched(true);
     setSubmissionError("");
+    trackAmplitudeEvent("quiz_email_button_clicked");
 
     if (emailError || isSubmitting) {
-      trackAmplitudeEvent("quiz_screen9_email_validation_fail");
       return;
     }
 
@@ -68,7 +68,6 @@ export function ResultsEmailForm({
       sessionStorage.setItem("security-white.email", normalizedEmail);
       sessionStorage.setItem("security-white.lead-id", leadId);
 
-      trackAmplitudeEvent("quiz_screen9_email_submit");
       router.push(action);
     } catch (error) {
       setSubmissionError(

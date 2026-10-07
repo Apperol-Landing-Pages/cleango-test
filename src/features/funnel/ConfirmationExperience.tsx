@@ -1,9 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 import styles from "@/app/confirmation/page.module.css";
+import { trackAmplitudeEvent } from "@/lib/analytics/amplitude";
 import { getSnapshotRoute, readSavedQuizResult } from "@/lib/funnel/quiz-result";
 import {
   getPrivacyPlan,
@@ -39,6 +40,7 @@ function getOverviewRoute() {
 
 export function ConfirmationExperience() {
   const router = useRouter();
+  const hasTrackedPaymentOutcome = useRef(false);
   const [confirmedPlanId, setConfirmedPlanId] = useState<PrivacyPlanId | null>(
     null,
   );
@@ -109,6 +111,22 @@ export function ConfirmationExperience() {
       window.clearTimeout(timeoutId);
     };
   }, []);
+
+  useEffect(() => {
+    if (hasTrackedPaymentOutcome.current) {
+      return;
+    }
+
+    if (paymentStatus === "active") {
+      hasTrackedPaymentOutcome.current = true;
+      trackAmplitudeEvent("payment_succeded", {
+        plan_type: selectedPlan.id,
+      });
+    } else if (paymentFailed) {
+      hasTrackedPaymentOutcome.current = true;
+      trackAmplitudeEvent("payment_failed");
+    }
+  }, [paymentFailed, paymentStatus, selectedPlan.id]);
 
   return (
     <div className={styles.confirmationPage}>
@@ -196,11 +214,17 @@ export function ConfirmationExperience() {
       </section>
 
       <div className={styles.actions}>
-        <button className={styles.downloadButton} disabled={!isActive} type="button">
+        <button
+          className={styles.downloadButton}
+          data-amplitude-event="download_button_clicked"
+          disabled={!isActive}
+          type="button"
+        >
           Download app
         </button>
         <button
           className={styles.overviewButton}
+          data-amplitude-event="back_to_overview_clicked"
           onClick={() => router.push(getOverviewRoute())}
           type="button"
         >

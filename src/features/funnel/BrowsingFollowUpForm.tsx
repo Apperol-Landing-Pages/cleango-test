@@ -22,7 +22,8 @@ export function BrowsingFollowUpForm({
   storageKey,
 }: BrowsingFollowUpFormProps) {
   const router = useRouter();
-  const eventPrefix = "quiz_screen3";
+  const eventPrefix =
+    formName === "shared-website-data" ? "quiz_screen22" : "quiz_screen23";
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -46,7 +47,7 @@ export function BrowsingFollowUpForm({
     <form
       className={styles.questionForm}
       action="/quiz/account-security"
-      data-amplitude-submit-event={`${eventPrefix}_continue_click`}
+      data-amplitude-submit-event={`${eventPrefix}_continue_clicked`}
       onSubmit={handleSubmit}
     >
       <fieldset className={styles.options}>
@@ -55,7 +56,7 @@ export function BrowsingFollowUpForm({
           <label className={styles.option} key={answer.id}>
             <span>{answer.label}</span>
             <input
-              data-amplitude-change-event={`${eventPrefix}_option${index + 1}_select`}
+              data-amplitude-change-event={`${eventPrefix}_option${index + 1}_clicked`}
               type="radio"
               name={formName}
               value={answer.id}
