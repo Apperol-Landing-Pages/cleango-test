@@ -118,7 +118,7 @@ export default function MediumPrivacySnapshotPage() {
           <div className={baseStyles.actionGroup}>
             <Link
               className={baseStyles.primaryButton}
-              data-amplitude-event="quiz_snapshot_top_plan_clicked"
+              data-amplitude-event="quiz_screen10_top_plan_click"
               href="/plans"
             >
               Find my privacy plan
@@ -206,7 +206,7 @@ export default function MediumPrivacySnapshotPage() {
           <div className={baseStyles.actionGroup}>
             <Link
               className={baseStyles.primaryButton}
-              data-amplitude-event="quiz_snapshot_bottom_plan_clicked"
+              data-amplitude-event="quiz_screen10_bottom_plan_click"
               href="/plans"
             >
               See plans
@@ -222,7 +222,7 @@ export default function MediumPrivacySnapshotPage() {
 
         <Link
           className={baseStyles.reviewLink}
-          data-amplitude-event="quiz_snapshot_review_answers_clicked"
+          data-amplitude-event="quiz_screen10_review_answers_click"
           href="/quiz/browsing-habits"
         >
           Review my answers

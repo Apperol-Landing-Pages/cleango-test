@@ -106,7 +106,7 @@ export default function HomePage() {
         <div className={styles.actionBlock}>
           <Link
             className={styles.primaryAction}
-            data-amplitude-event="quiz_started"
+            data-amplitude-event="quiz_screen1_start_click"
             href="/quiz/browsing-habits"
           >
             Show my privacy blind spots

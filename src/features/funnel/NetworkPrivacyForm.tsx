@@ -50,7 +50,7 @@ export function NetworkPrivacyForm() {
     <form
       className={styles.questionForm}
       action="/quiz/account-security"
-      data-amplitude-submit-event="quiz_network_privacy_continue_clicked"
+      data-amplitude-submit-event="quiz_screen3_continue_click"
       onSubmit={handleSubmit}
     >
       <fieldset className={styles.options}>
@@ -59,7 +59,7 @@ export function NetworkPrivacyForm() {
           <label className={styles.option} key={answer.id}>
             <span>{answer.label}</span>
             <input
-              data-amplitude-change-event={`quiz_network_privacy_option_${index + 1}_selected`}
+              data-amplitude-change-event={`quiz_screen3_option${index + 1}_select`}
               type="radio"
               name="network-privacy"
               value={answer.id}

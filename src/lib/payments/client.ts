@@ -54,6 +54,35 @@ function buildApiUrl(path: string) {
   return `${apiBaseUrl}${path}`;
 }
 
+function createPreviewLeadId() {
+  const browserCrypto = globalThis.crypto;
+
+  if (typeof browserCrypto?.randomUUID === "function") {
+    return browserCrypto.randomUUID();
+  }
+
+  if (typeof browserCrypto?.getRandomValues === "function") {
+    const bytes = new Uint8Array(16);
+    browserCrypto.getRandomValues(bytes);
+    bytes[6] = (bytes[6] & 0x0f) | 0x40;
+    bytes[8] = (bytes[8] & 0x3f) | 0x80;
+
+    const hex = Array.from(bytes, (byte) =>
+      byte.toString(16).padStart(2, "0"),
+    ).join("");
+
+    return [
+      hex.slice(0, 8),
+      hex.slice(8, 12),
+      hex.slice(12, 16),
+      hex.slice(16, 20),
+      hex.slice(20),
+    ].join("-");
+  }
+
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+}
+
 async function readJson<T>(response: Response): Promise<T> {
   const payload = (await response.json().catch(() => null)) as
     | ({ message?: string } & T)
@@ -72,7 +101,7 @@ async function readJson<T>(response: Response): Promise<T> {
 
 export async function createLead(email: string) {
   if (paymentsMode === "preview") {
-    return `preview_${crypto.randomUUID()}`;
+    return `preview_${createPreviewLeadId()}`;
   }
 
   const response = await fetch(buildApiUrl("/leads"), {

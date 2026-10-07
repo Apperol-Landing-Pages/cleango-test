@@ -50,7 +50,7 @@ export function TwoFactorAuthForm() {
     <form
       className={styles.questionForm}
       action="/quiz/app-permissions"
-      data-amplitude-submit-event="quiz_two_factor_auth_continue_clicked"
+      data-amplitude-submit-event="quiz_screen5_continue_click"
       onSubmit={handleSubmit}
     >
       <fieldset className={styles.options}>
@@ -59,7 +59,7 @@ export function TwoFactorAuthForm() {
           <label className={styles.option} key={answer.id}>
             <span>{answer.label}</span>
             <input
-              data-amplitude-change-event={`quiz_two_factor_auth_option_${index + 1}_selected`}
+              data-amplitude-change-event={`quiz_screen5_option${index + 1}_select`}
               type="radio"
               name="two-factor-auth"
               value={answer.id}

@@ -20,7 +20,7 @@ export default function TwoFactorAuthPage() {
             <div className={styles.topLine}>
               <Link
                 className={styles.backLink}
-                data-amplitude-event="quiz_two_factor_auth_back_clicked"
+                data-amplitude-event="quiz_screen5_back_click"
                 href="/quiz/account-security"
               >
                 <svg

@@ -22,7 +22,7 @@ export function BrowsingFollowUpForm({
   storageKey,
 }: BrowsingFollowUpFormProps) {
   const router = useRouter();
-  const eventPrefix = `quiz_${formName.replaceAll("-", "_")}`;
+  const eventPrefix = "quiz_screen3";
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -46,7 +46,7 @@ export function BrowsingFollowUpForm({
     <form
       className={styles.questionForm}
       action="/quiz/account-security"
-      data-amplitude-submit-event={`${eventPrefix}_continue_clicked`}
+      data-amplitude-submit-event={`${eventPrefix}_continue_click`}
       onSubmit={handleSubmit}
     >
       <fieldset className={styles.options}>
@@ -55,7 +55,7 @@ export function BrowsingFollowUpForm({
           <label className={styles.option} key={answer.id}>
             <span>{answer.label}</span>
             <input
-              data-amplitude-change-event={`${eventPrefix}_option_${index + 1}_selected`}
+              data-amplitude-change-event={`${eventPrefix}_option${index + 1}_select`}
               type="radio"
               name={formName}
               value={answer.id}

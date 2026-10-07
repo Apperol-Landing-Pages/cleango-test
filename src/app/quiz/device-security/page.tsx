@@ -20,7 +20,7 @@ export default function DeviceSecurityPage() {
             <div className={styles.topLine}>
               <Link
                 className={styles.backLink}
-                data-amplitude-event="quiz_device_security_back_clicked"
+                data-amplitude-event="quiz_screen7_back_click"
                 href="/quiz/app-permissions"
               >
                 <svg

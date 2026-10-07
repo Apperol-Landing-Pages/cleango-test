@@ -50,7 +50,7 @@ export function AccountSecurityForm() {
     <form
       className={styles.questionForm}
       action="/quiz/two-factor-auth"
-      data-amplitude-submit-event="quiz_account_security_continue_clicked"
+      data-amplitude-submit-event="quiz_screen4_continue_click"
       onSubmit={handleSubmit}
     >
       <fieldset className={styles.options}>
@@ -59,7 +59,7 @@ export function AccountSecurityForm() {
           <label className={styles.option} key={answer.id}>
             <span>{answer.label}</span>
             <input
-              data-amplitude-change-event={`quiz_account_security_option_${index + 1}_selected`}
+              data-amplitude-change-event={`quiz_screen4_option${index + 1}_select`}
               type="radio"
               name="account-security"
               value={answer.id}

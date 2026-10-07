@@ -63,7 +63,7 @@ export function BrowsingHabitsForm() {
     <form
       className={styles.questionForm}
       action="/quiz/network-privacy"
-      data-amplitude-submit-event="quiz_browsing_habits_continue_clicked"
+      data-amplitude-submit-event="quiz_screen2_continue_click"
       onSubmit={handleSubmit}
     >
       <fieldset className={styles.options}>
@@ -72,7 +72,7 @@ export function BrowsingHabitsForm() {
           <label className={styles.option} key={answer.id}>
             <span>{answer.label}</span>
             <input
-              data-amplitude-change-event={`quiz_browsing_habits_option_${index + 1}_selected`}
+              data-amplitude-change-event={`quiz_screen2_option${index + 1}_select`}
               type="radio"
               name="browsing-habits"
               value={answer.id}

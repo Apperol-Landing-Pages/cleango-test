@@ -50,7 +50,7 @@ export function AppPermissionsForm() {
     <form
       className={styles.questionForm}
       action="/quiz/device-security"
-      data-amplitude-submit-event="quiz_app_permissions_continue_clicked"
+      data-amplitude-submit-event="quiz_screen6_continue_click"
       onSubmit={handleSubmit}
     >
       <fieldset className={styles.options}>
@@ -59,7 +59,7 @@ export function AppPermissionsForm() {
           <label className={styles.option} key={answer.id}>
             <span>{answer.label}</span>
             <input
-              data-amplitude-change-event={`quiz_app_permissions_option_${index + 1}_selected`}
+              data-amplitude-change-event={`quiz_screen6_option${index + 1}_select`}
               type="radio"
               name="app-permissions"
               value={answer.id}

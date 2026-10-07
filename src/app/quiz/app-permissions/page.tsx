@@ -20,7 +20,7 @@ export default function AppPermissionsPage() {
             <div className={styles.topLine}>
               <Link
                 className={styles.backLink}
-                data-amplitude-event="quiz_app_permissions_back_clicked"
+                data-amplitude-event="quiz_screen6_back_click"
                 href="/quiz/two-factor-auth"
               >
                 <svg

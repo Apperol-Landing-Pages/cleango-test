@@ -50,7 +50,7 @@ export function DeviceSecurityForm() {
     <form
       className={styles.questionForm}
       action="/quiz/progress"
-      data-amplitude-submit-event="quiz_device_security_continue_clicked"
+      data-amplitude-submit-event="quiz_screen7_continue_click"
       onSubmit={handleSubmit}
     >
       <fieldset className={styles.options}>
@@ -59,7 +59,7 @@ export function DeviceSecurityForm() {
           <label className={styles.option} key={answer.id}>
             <span>{answer.label}</span>
             <input
-              data-amplitude-change-event={`quiz_device_security_option_${index + 1}_selected`}
+              data-amplitude-change-event={`quiz_screen7_option${index + 1}_select`}
               type="radio"
               name="device-security"
               value={answer.id}

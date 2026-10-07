@@ -26,6 +26,7 @@
 
   --screen-inline-padding: 1rem;
   --screen-max-width: 430px;
+  --mobile-browser-bottom-clearance: 0px;
 }
 
 *,
@@ -44,7 +45,9 @@ html {
 
 body {
   margin: 0;
+  min-block-size: 100vh;
   min-block-size: 100svh;
+  min-block-size: 100dvh;
 }
 
 button,
@@ -63,6 +66,12 @@ img,
 svg {
   display: block;
   max-inline-size: 100%;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --mobile-browser-bottom-clearance: 88px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

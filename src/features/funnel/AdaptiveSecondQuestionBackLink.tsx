@@ -33,7 +33,7 @@ export function AdaptiveSecondQuestionBackLink() {
   return (
     <Link
       className={styles.backLink}
-      data-amplitude-event="quiz_account_security_back_clicked"
+      data-amplitude-event="quiz_screen4_back_click"
       href="/quiz/network-privacy"
       onClick={handleClick}
     >

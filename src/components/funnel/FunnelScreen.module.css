@@ -1,12 +1,17 @@
 .page {
+  min-block-size: 100vh;
   min-block-size: 100svh;
+  min-block-size: 100dvh;
   background: var(--color-background);
 }
 
 .screen {
   inline-size: min(100%, var(--screen-max-width));
+  min-block-size: 100vh;
   min-block-size: 100svh;
+  min-block-size: 100dvh;
   margin-inline: auto;
+  padding-block-end: var(--mobile-browser-bottom-clearance);
   padding-inline: var(--screen-inline-padding);
 }
 

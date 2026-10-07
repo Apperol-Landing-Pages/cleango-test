@@ -27,7 +27,7 @@ export function BrowsingFollowUpPage({
   screenId,
   storageKey,
 }: BrowsingFollowUpPageProps) {
-  const eventPrefix = `quiz_${formName.replaceAll("-", "_")}`;
+  const eventPrefix = "quiz_screen3";
 
   return (
     <FunnelScreen screenId={screenId}>
@@ -37,7 +37,7 @@ export function BrowsingFollowUpPage({
             <div className={styles.topLine}>
               <Link
                 className={styles.backLink}
-                data-amplitude-event={`${eventPrefix}_back_clicked`}
+                data-amplitude-event={`${eventPrefix}_back_click`}
                 href="/quiz/browsing-habits"
               >
                 <svg
