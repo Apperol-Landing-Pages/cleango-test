@@ -12,6 +12,7 @@ import {
   readSelectedPlan,
   type PrivacyPlanId,
 } from "@/lib/funnel/privacy-plan";
+import { trackMetaPurchase } from "@/lib/marketing/meta-pixel";
 import {
   getSubscriptionStatus,
   paymentsMode,
@@ -48,6 +49,11 @@ export function ConfirmationExperience() {
   const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>(
     paymentsMode === "preview" ? "active" : "pending",
   );
+  const [paymentDetails, setPaymentDetails] = useState<{
+    amount?: number;
+    currency?: string;
+    paymentId: string;
+  } | null>(null);
   const selectedPlanId = useSyncExternalStore<PrivacyPlanId>(
     subscribeToPlan,
     readPlanFromBrowser,
@@ -88,6 +94,11 @@ export function ConfirmationExperience() {
         }
 
         setPaymentStatus(result.status);
+        setPaymentDetails({
+          amount: result.amount,
+          currency: result.currency,
+          paymentId: paymentId as string,
+        });
 
         if (result.planId) {
           setConfirmedPlanId(result.planId);
@@ -119,15 +130,28 @@ export function ConfirmationExperience() {
     }
 
     if (paymentStatus === "active") {
+      if (paymentsMode === "stripe" && !paymentDetails) {
+        return;
+      }
+
       hasTrackedPaymentOutcome.current = true;
       trackAmplitudeEvent("payment_succeded", {
         plan_type: getPrivacyPlanAnalyticsType(selectedPlan.id),
       });
+
+      if (paymentsMode === "stripe" && paymentDetails) {
+        trackMetaPurchase({
+          currency: paymentDetails.currency ?? "usd",
+          eventId: paymentDetails.paymentId,
+          planId: selectedPlan.id,
+          value: (paymentDetails.amount ?? Math.round(selectedPlan.price * 100)) / 100,
+        });
+      }
     } else if (paymentFailed) {
       hasTrackedPaymentOutcome.current = true;
       trackAmplitudeEvent("payment_failed");
     }
-  }, [paymentFailed, paymentStatus, selectedPlan.id]);
+  }, [paymentDetails, paymentFailed, paymentStatus, selectedPlan]);
 
   return (
     <div className={styles.confirmationPage}>

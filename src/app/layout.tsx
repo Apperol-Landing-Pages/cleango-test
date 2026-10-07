@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 
 import { AmplitudeProvider } from "@/components/analytics/AmplitudeProvider";
+import { AttributionProvider } from "@/components/marketing/AttributionProvider";
+import { MetaPixelProvider } from "@/components/marketing/MetaPixelProvider";
 
 import "./globals.css";
 
@@ -27,7 +29,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body>
+        <AttributionProvider />
         <AmplitudeProvider />
+        <MetaPixelProvider />
         {children}
       </body>
     </html>

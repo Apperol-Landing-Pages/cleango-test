@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 
 import styles from "@/app/results/page.module.css";
 import { trackAmplitudeEvent } from "@/lib/analytics/amplitude";
+import { trackMetaLead } from "@/lib/marketing/meta-pixel";
 import { createLead } from "@/lib/payments/client";
 
 type ResultsEmailFormProps = Readonly<{
@@ -67,6 +68,7 @@ export function ResultsEmailForm({
 
       sessionStorage.setItem("security-white.email", normalizedEmail);
       sessionStorage.setItem("security-white.lead-id", leadId);
+      trackMetaLead(leadId);
 
       router.push(action);
     } catch (error) {

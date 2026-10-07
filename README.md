@@ -57,3 +57,15 @@ exact endpoint payloads are documented in
 
 Copy `.env.example` to `.env.local` for local configuration. Never commit Stripe
 secret keys or webhook secrets.
+
+## Advertising attribution
+
+The root attribution provider captures `subid`, `fbclid`, legacy `clickid`, and
+UTM parameters from the entry URL and keeps them for the current browser tab.
+The lead request includes that attribution together with Meta `_fbc` and `_fbp`
+cookies when available.
+
+Set `NEXT_PUBLIC_META_PIXEL_ID` to enable browser `PageView`, `Lead`, and verified
+`Purchase` events. Keitaro postbacks and Meta Conversions API remain backend-only;
+their complete payload and deduplication contract is documented in
+[`docs/payments-backend-contract.md`](docs/payments-backend-contract.md).

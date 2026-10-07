@@ -1,3 +1,5 @@
+import { getLeadAttribution } from "@/lib/marketing/attribution";
+
 export const paymentsMode =
   process.env.NEXT_PUBLIC_PAYMENTS_MODE === "stripe" ? "stripe" : "preview";
 
@@ -104,10 +106,12 @@ export async function createLead(email: string) {
     return `preview_${createPreviewLeadId()}`;
   }
 
+  const attribution = getLeadAttribution();
   const response = await fetch(buildApiUrl("/leads"), {
     body: JSON.stringify({
       email,
       source: "security-white",
+      ...(attribution ?? {}),
     }),
     credentials: "include",
     headers: { "Content-Type": "application/json" },
