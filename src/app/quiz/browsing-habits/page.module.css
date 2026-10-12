@@ -9,13 +9,16 @@
     max(32px, calc(env(safe-area-inset-bottom) + 20px));
 }
 
-.questionScreenPinned {
+.questionScreen.questionScreenPinned {
   --question-footer-height: calc(
     129px + max(16px, env(safe-area-inset-bottom))
   );
 
+  min-block-size: 100svh;
+  gap: 24px;
   animation-fill-mode: backwards !important;
   will-change: opacity !important;
+  padding-block-start: max(32px, calc(env(safe-area-inset-top) + 12px));
   padding-block-end: max(
     24px,
     calc(
@@ -30,6 +33,11 @@
   min-block-size: 250px;
   align-content: start;
   gap: 32px;
+}
+
+.questionScreenPinned .questionIntro {
+  min-block-size: 0;
+  gap: 24px;
 }
 
 .progressHeader {
@@ -130,8 +138,9 @@
   gap: 42px;
 }
 
-.questionFormPinned {
+.questionForm.questionFormPinned {
   min-block-size: 0;
+  flex: 0 0 auto;
   gap: 0;
 }
 
@@ -350,16 +359,6 @@
 
   .footer {
     padding-top: 24px;
-  }
-
-  .questionScreenPinned {
-    padding-block-end: max(
-      24px,
-      calc(
-        var(--question-footer-height) + 24px -
-          var(--mobile-browser-bottom-clearance)
-      )
-    );
   }
 
   .footerPinned {
