@@ -9,6 +9,7 @@ import styles from "@/app/quiz/browsing-habits/page.module.css";
 const previousRoutes = {
   "local-history": "/quiz/network-privacy",
   "websites-and-provider": "/quiz/shared-website-data",
+  "everything-online": "/quiz/private-mode-sign-in",
   "not-sure": "/quiz/private-mode-sign-in",
 } as const;
 

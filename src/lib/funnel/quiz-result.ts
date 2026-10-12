@@ -23,6 +23,10 @@ const followUpByFirstAnswer = {
     key: "security-white.answers.shared-website-data",
     correctAnswer: "website-keeps-it",
   },
+  "everything-online": {
+    key: "security-white.answers.private-mode-sign-in",
+    correctAnswer: "recognised",
+  },
   "not-sure": {
     key: "security-white.answers.private-mode-sign-in",
     correctAnswer: "recognised",

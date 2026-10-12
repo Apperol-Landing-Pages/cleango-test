@@ -58,6 +58,10 @@ exact endpoint payloads are documented in
 Copy `.env.example` to `.env.local` for local configuration. Never commit Stripe
 secret keys or webhook secrets.
 
+The welcome footer accepts separate `NEXT_PUBLIC_PRIVACY_POLICY_URL` and
+`NEXT_PUBLIC_TERMS_OF_USE_URL` values. Until real URLs are provided, the labels
+remain visible but are not clickable.
+
 ## Advertising attribution
 
 The root attribution provider captures `subid`, `fbclid`, legacy `clickid`, and

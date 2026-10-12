@@ -2,70 +2,67 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { FunnelScreen } from "@/components/funnel/FunnelScreen";
-import {
-  HabitIcon,
-  type HabitIconName,
-} from "@/components/icons/HabitIcon";
 
 import styles from "./page.module.css";
 
 const steps = [
   {
-    title: "Start with your habits.",
-    description:
-      "Answer six simple questions. Each next question adapts to your answers.",
+    title: "Answer 6 quick questions",
+    description: "Tell us about your everyday online habits.",
     highlighted: false,
   },
   {
-    title: "Connect the dots.",
+    title: "Discover your strengths",
     description:
-      "See which habits are working for you and which deserve a closer look.",
+      "See where your habits may leave you exposed — and what you already do well.",
     highlighted: false,
   },
   {
-    title: "Know your next move.",
-    description:
-      "Enter your email to view your snapshot and practical recommendations.",
+    title: "Get your next steps",
+    description: "Find out which changes deserve your attention first.",
     highlighted: true,
   },
 ] as const;
 
 const habits: ReadonlyArray<{
-  icon: HabitIconName;
+  icon: string;
   title: string;
   description: string;
 }> = [
   {
-    icon: "globe",
-    title: "Browsing privacy",
-    description: "See what private mode does – and what it doesn’t.",
+    icon: "/icons/habit-private-browsing.svg",
+    title: "Private browsing",
+    description: "Understand what private mode can and can’t do.",
   },
   {
-    icon: "wifi",
-    title: "Wi-Fi habits",
-    description: "Rethink auto-join and everyday connection choices.",
+    icon: "/icons/habit-wifi-safety.svg",
+    title: "Wi-Fi safety",
+    description: "Make smarter choices when connecting online.",
   },
   {
-    icon: "key",
-    title: "Password habits",
-    description: "Spot password reuse across your accounts.",
+    icon: "/icons/habit-password-security.svg",
+    title: "Password security",
+    description: "Learn why unique passwords matter.",
   },
   {
-    icon: "shield",
-    title: "Sign-in security",
-    description: "Review the extra steps protecting your accounts.",
+    icon: "/icons/habit-account-protection.svg",
+    title: "Account protection",
+    description: "Explore ways to keep important accounts safer.",
   },
   {
-    icon: "sliders",
+    icon: "/icons/habit-app-permissions.svg",
     title: "App permissions",
-    description: "Consider who can access your location and photos.",
+    description: "Stay in control of what apps can access.",
   },
   {
-    icon: "refresh",
-    title: "Device updates",
-    description: "Keep security updates current.",
+    icon: "/icons/habit-software-updates.svg",
+    title: "Software updates",
+    description: "Keep your devices up to date.",
   },
 ];
+
+const privacyPolicyUrl = process.env.NEXT_PUBLIC_PRIVACY_POLICY_URL?.trim();
+const termsOfUseUrl = process.env.NEXT_PUBLIC_TERMS_OF_USE_URL?.trim();
 
 export default function HomePage() {
   return (
@@ -84,46 +81,27 @@ export default function HomePage() {
           <div className={styles.heroCopy}>
             <p className={styles.eyebrow}>Your online privacy</p>
             <h1 id="screen-title" className={styles.title}>
-              How private are
-              <br />
-              your <span>“private”</span>
-              <br />
-              <span>habits?</span>
+              Are your online habits putting your privacy at risk?
             </h1>
             <p className={styles.lead}>
-              What feels private online
+              Small everyday choices can expose more
               <br />
-              may leave more of a trail than you think.
+              information than you realize.
             </p>
             <p className={styles.supportingCopy}>
-              Answer 6 quick questions to discover your
+              Take this 1-minute check to uncover overlooked
               <br />
-              privacy blind spots – and where to start.
+              privacy habits — and learn what to fix first.
             </p>
           </div>
         </section>
 
-        <div className={styles.actionBlock}>
-          <Link
-            className={styles.primaryAction}
-            data-amplitude-event="quiz_startscreen_button_clicked"
-            href="/quiz/browsing-habits"
-          >
-            Show my privacy blind spots
-          </Link>
-          <p className={styles.actionNote}>
-            <span>About 1 minute</span>
-            <span aria-hidden="true">·</span>
-            <span>No card needed</span>
-          </p>
-        </div>
-
         <section className={styles.stepsSection} aria-labelledby="steps-title">
-          <h2 id="steps-title">Small steps. Better habits.</h2>
+          <h2 id="steps-title">How it works</h2>
           <ol className={styles.stepsList}>
             {steps.map((step, index) => (
               <li
-                className={step.highlighted ? styles.stepHighlighted : styles.step}
+                className={`${styles.step} ${step.highlighted ? styles.stepHighlighted : ""}`}
                 key={step.title}
               >
                 <span className={styles.stepNumber} aria-hidden="true">
@@ -140,18 +118,13 @@ export default function HomePage() {
 
         <section className={styles.habitsSection} aria-labelledby="habits-title">
           <div className={styles.sectionHeading}>
-            <h2 id="habits-title">The habits we explore.</h2>
-            <p>
-              Your answers guide which topics
-              <br />
-              we look at more closely.
-            </p>
+            <h2 id="habits-title">What we’ll cover</h2>
           </div>
 
           <ul className={styles.habitsGrid}>
             {habits.map((habit) => (
               <li className={styles.habitCard} key={habit.title}>
-                <HabitIcon name={habit.icon} />
+                <Image alt="" height={32} src={habit.icon} width={32} />
                 <h3>{habit.title}</h3>
                 <p>{habit.description}</p>
               </li>
@@ -160,7 +133,27 @@ export default function HomePage() {
         </section>
 
         <footer className={styles.footer}>
-          <p>© VEIL, Inc. 2026 – All rights reserved.</p>
+          <Link
+            className={styles.primaryAction}
+            data-amplitude-event="quiz_startscreen_button_clicked"
+            href="/quiz/browsing-habits"
+          >
+            Find my privacy blind spots
+          </Link>
+          <p className={styles.legalLinks}>
+            {privacyPolicyUrl ? (
+              <a href={privacyPolicyUrl}>Privacy Policy</a>
+            ) : (
+              <span>Privacy Policy</span>
+            )}
+            {" & "}
+            {termsOfUseUrl ? (
+              <a href={termsOfUseUrl}>Terms of Use</a>
+            ) : (
+              <span>Terms of Use</span>
+            )}
+          </p>
+          <p className={styles.copyright}>© Veylo, Inc. 2026 - All rights reserved.</p>
         </footer>
       </div>
     </FunnelScreen>

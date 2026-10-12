@@ -7,14 +7,14 @@ import { BrowsingHabitsForm } from "@/features/funnel/BrowsingHabitsForm";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
-  title: "Browsing habits",
+  title: "Browsing privacy",
   description: "Question 1 of the Security White privacy habits quiz.",
 };
 
 export default function BrowsingHabitsPage() {
   return (
     <FunnelScreen screenId="browsing-habits">
-      <div className={styles.questionScreen}>
+      <div className={`${styles.questionScreen} ${styles.questionScreenPinned}`}>
         <div className={styles.questionIntro}>
           <div className={styles.progressHeader}>
             <div className={styles.topLine}>
@@ -63,14 +63,15 @@ export default function BrowsingHabitsPage() {
           </div>
 
           <header className={styles.questionHeading}>
-            <p className={styles.category}>Browsing habits</p>
+            <p className={styles.category}>Browsing privacy</p>
             <h1 id="question-title">
-              <span aria-hidden="true">🕶️</span> What do you expect
+              <span aria-hidden="true">🕶️</span> Does private mode really hide
               <br />
-              private browsing to hide?
+              what you do online?
             </h1>
             <p className={styles.hint}>
-              Think about the incognito or private mode in your browser.
+              It can feel invisible — but what does incognito mode actually
+              protect?
             </p>
           </header>
         </div>

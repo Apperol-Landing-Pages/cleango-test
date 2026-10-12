@@ -8,23 +8,31 @@ import styles from "@/app/quiz/browsing-habits/page.module.css";
 const answers = [
   {
     id: "local-history",
-    label: "Just the history saved on this device",
+    label: "Your browsing history on this device",
   },
   {
     id: "websites-and-provider",
-    label: "My activity from websites and my internet provider",
+    label: "Your activity from websites and internet providers",
+  },
+  {
+    id: "everything-online",
+    label: "Everything I do online",
   },
   {
     id: "not-sure",
-    label: "I’m not sure what it hides",
+    label: "I’m not sure",
   },
 ] as const;
 
 const followUpRoutes = {
   "local-history": "/quiz/network-privacy",
   "websites-and-provider": "/quiz/shared-website-data",
+  "everything-online": "/quiz/private-mode-sign-in",
   "not-sure": "/quiz/private-mode-sign-in",
 } as const;
+
+const privacyPolicyUrl = process.env.NEXT_PUBLIC_PRIVACY_POLICY_URL?.trim();
+const termsOfUseUrl = process.env.NEXT_PUBLIC_TERMS_OF_USE_URL?.trim();
 
 export function BrowsingHabitsForm() {
   const router = useRouter();
@@ -61,12 +69,12 @@ export function BrowsingHabitsForm() {
 
   return (
     <form
-      className={styles.questionForm}
+      className={`${styles.questionForm} ${styles.questionFormPinned}`}
       action="/quiz/network-privacy"
       data-amplitude-submit-event="quiz_screen1_continue_clicked"
       onSubmit={handleSubmit}
     >
-      <fieldset className={styles.options}>
+      <fieldset className={`${styles.options} ${styles.optionsPinned}`}>
         <legend className={styles.visuallyHidden}>Choose one answer</legend>
         {answers.map((answer, index) => (
           <label className={styles.option} key={answer.id}>
@@ -82,23 +90,27 @@ export function BrowsingHabitsForm() {
         ))}
       </fieldset>
 
-      <div className={styles.formBottom}>
-        <div className={styles.formActions}>
-          <button
-            className={styles.continueButton}
-            type="submit"
-          >
-            Continue
-          </button>
-          <p className={styles.privacyNote}>
-            No scans. No browsing history. Just the answers you choose.
-          </p>
-        </div>
-
-        <footer className={styles.footer}>
-          <p>© VEIL, Inc. 2026 – All rights reserved.</p>
-        </footer>
-      </div>
+      <footer className={`${styles.footer} ${styles.footerPinned}`}>
+        <button className={styles.continueButton} type="submit">
+          Continue
+        </button>
+        <p className={styles.legalLinks}>
+          {privacyPolicyUrl ? (
+            <a href={privacyPolicyUrl}>Privacy Policy</a>
+          ) : (
+            <span>Privacy Policy</span>
+          )}
+          {" & "}
+          {termsOfUseUrl ? (
+            <a href={termsOfUseUrl}>Terms of Use</a>
+          ) : (
+            <span>Terms of Use</span>
+          )}
+        </p>
+        <p className={styles.copyright}>
+          © Veylo, Inc. 2026 - All rights reserved.
+        </p>
+      </footer>
     </form>
   );
 }
