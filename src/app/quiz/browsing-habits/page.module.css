@@ -16,8 +16,6 @@
 
   min-block-size: 100svh;
   gap: 24px;
-  animation-fill-mode: backwards !important;
-  will-change: opacity !important;
   padding-block-start: max(32px, calc(env(safe-area-inset-top) + 12px));
   padding-block-end: max(
     24px,
@@ -142,7 +140,7 @@
   min-block-size: 0;
   flex: 0 0 auto;
   gap: 0;
-  margin-block-start: auto;
+  margin-block-start: 32px;
 }
 
 .questionScreenFollowUp .questionForm.questionFormPinned {
@@ -293,15 +291,14 @@
 .footerPinned {
   position: fixed;
   z-index: 20;
-  inset-inline-start: 50%;
+  inset-inline: 0;
   inset-block-end: 0;
   display: grid;
   inline-size: min(100vw, var(--screen-max-width));
   gap: 12px;
-  margin: 0;
+  margin: 0 auto;
   padding: 16px var(--screen-inline-padding)
     max(16px, env(safe-area-inset-bottom));
-  transform: translateX(-50%);
   border-top: 1px solid #dce0e5;
   background: #ffffff;
 }
@@ -337,7 +334,7 @@
 
 @media (max-width: 600px) {
   .questionScreen.questionScreenPinned {
-    min-block-size: 100dvh;
+    min-block-size: 100svh;
     gap: 16px;
     padding-block-start: max(16px, calc(env(safe-area-inset-top) + 8px));
     padding-block-end: calc(var(--question-footer-height) + 24px);
@@ -348,7 +345,7 @@
   }
 
   .questionForm.questionFormPinned {
-    margin-block: auto;
+    margin-block: 24px 0;
   }
 }
 

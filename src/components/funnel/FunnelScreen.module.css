@@ -31,6 +31,18 @@
   will-change: opacity, transform;
 }
 
+/* A transformed ancestor makes the quiz's fixed footer move with the page. */
+.page[data-screen="browsing-habits"] .screen > *,
+.page[data-screen="network-privacy"] .screen > *,
+.page[data-screen="private-mode-sign-in"] .screen > *,
+.page[data-screen="account-security"] .screen > *,
+.page[data-screen="two-factor-auth"] .screen > *,
+.page[data-screen="app-permissions"] .screen > *,
+.page[data-screen="device-security"] .screen > * {
+  animation: funnel-screen-fade 320ms ease-out both;
+  will-change: opacity;
+}
+
 @keyframes funnel-screen-enter {
   from {
     opacity: 0;
@@ -40,6 +52,16 @@
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes funnel-screen-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }
 
