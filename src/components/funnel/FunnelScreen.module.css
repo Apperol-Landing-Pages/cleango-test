@@ -21,7 +21,10 @@
 .page[data-screen="account-security"] .screen,
 .page[data-screen="two-factor-auth"] .screen,
 .page[data-screen="app-permissions"] .screen,
-.page[data-screen="device-security"] .screen {
+.page[data-screen="device-security"] .screen,
+.page[data-screen="progress"] .screen,
+.page[data-screen="results"] .screen,
+.page[data-screen="privacy-snapshot"] .screen {
   padding-block-end: 0;
 }
 
@@ -39,7 +42,9 @@
 .page[data-screen="account-security"] .screen > *,
 .page[data-screen="two-factor-auth"] .screen > *,
 .page[data-screen="app-permissions"] .screen > *,
-.page[data-screen="device-security"] .screen > * {
+.page[data-screen="device-security"] .screen > *,
+.page[data-screen="progress"] .screen > *,
+.page[data-screen="privacy-snapshot"] .screen > * {
   animation: funnel-screen-fade 320ms ease-out both;
   will-change: opacity;
 }

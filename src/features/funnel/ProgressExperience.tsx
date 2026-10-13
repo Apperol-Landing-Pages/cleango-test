@@ -17,10 +17,13 @@ const radius = 64;
 const circumference = 2 * Math.PI * radius;
 
 const steps = [
-  "Reviewing browsing habits",
-  "Identifying habits to improve",
+  "Reviewing your answers",
+  "Identifying areas to improve",
   "Preparing your recommendations",
 ] as const;
+
+const privacyPolicyUrl = process.env.NEXT_PUBLIC_PRIVACY_POLICY_URL?.trim();
+const termsOfUseUrl = process.env.NEXT_PUBLIC_TERMS_OF_USE_URL?.trim();
 
 type StepStatus = "complete" | "loading" | "pending";
 
@@ -195,15 +198,16 @@ export function ProgressExperience() {
 
       <div className={styles.content}>
         <section className={styles.intro} aria-labelledby="progress-title">
-          <p className={styles.eyebrow}>Turning answers into next steps</p>
+          <p className={styles.eyebrow}>Putting your answers together</p>
           <h1 id="progress-title">
-            Finding what
+            Your privacy blind spots are
             <br />
-            matters for you
+            coming into focus
           </h1>
           <p className={styles.description}>
-            We’re reviewing your habits to highlight where
-            <br />a small change could make a difference.
+            We’re checking your answers for habits that
+            <br />
+            may deserve attention.
           </p>
         </section>
 
@@ -250,48 +254,51 @@ export function ProgressExperience() {
             );
           })}
         </ol>
-
-        <div className={styles.bottom}>
-          <div className={styles.actions}>
-            <button
-              aria-label={
-                isComplete
-                  ? "Continue to my snapshot"
-                  : "Preparing your snapshot"
-              }
-              className={`${styles.continueButton} ${
-                isComplete ? styles.continueButtonReady : ""
-              }`}
-              data-amplitude-event="quiz_progress_continue_clicked"
-              disabled={!isComplete}
-              onClick={handleContinue}
-              type="button"
-            >
-              <span
-                aria-hidden="true"
-                className={`${styles.buttonLabel} ${styles.preparingLabel}`}
-              >
-                Preparing your snapshot…
-              </span>
-              <span
-                aria-hidden="true"
-                className={`${styles.buttonLabel} ${styles.readyLabel}`}
-              >
-                Continue to my snapshot
-              </span>
-            </button>
-            <p className={styles.supportingNote}>
-              Based on your six answers.
-              <br />
-              No access to your device or browsing history.
-            </p>
-          </div>
-
-          <footer className={styles.footer}>
-            <p>© VEIL, Inc. 2026 – All rights reserved.</p>
-          </footer>
-        </div>
       </div>
+
+      <footer className={styles.footer}>
+        <button
+          aria-label={
+            isComplete ? "Continue to my snapshot" : "Preparing your snapshot"
+          }
+          className={`${styles.continueButton} ${
+            isComplete ? styles.continueButtonReady : ""
+          }`}
+          data-amplitude-event="quiz_progress_continue_clicked"
+          disabled={!isComplete}
+          onClick={handleContinue}
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+            className={`${styles.buttonLabel} ${styles.preparingLabel}`}
+          >
+            Preparing your snapshot…
+          </span>
+          <span
+            aria-hidden="true"
+            className={`${styles.buttonLabel} ${styles.readyLabel}`}
+          >
+            Continue to my snapshot
+          </span>
+        </button>
+        <p className={styles.legalLinks}>
+          {privacyPolicyUrl ? (
+            <a href={privacyPolicyUrl}>Privacy Policy</a>
+          ) : (
+            <span>Privacy Policy</span>
+          )}
+          {" & "}
+          {termsOfUseUrl ? (
+            <a href={termsOfUseUrl}>Terms of Use</a>
+          ) : (
+            <span>Terms of Use</span>
+          )}
+        </p>
+        <p className={styles.copyright}>
+          © Veylo, Inc. 2026 - All rights reserved.
+        </p>
+      </footer>
     </div>
   );
 }

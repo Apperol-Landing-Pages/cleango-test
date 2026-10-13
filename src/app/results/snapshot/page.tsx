@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { FunnelScreen } from "@/components/funnel/FunnelScreen";
-import { QuizResultScore } from "@/features/funnel/QuizResultDisplay";
 
 import styles from "./page.module.css";
 
@@ -11,30 +10,39 @@ export const metadata: Metadata = {
   title: "Your privacy snapshot",
 };
 
-const strongHabits = [
-  "Every account has its own password",
-  "I review what apps can access",
-  "I check networks before connecting",
-  "On for all key accounts",
-  "I limit tracking while browsing",
-  "I install updates within days",
-] as const;
+const privacyPolicyUrl = process.env.NEXT_PUBLIC_PRIVACY_POLICY_URL?.trim();
+const termsOfUseUrl = process.env.NEXT_PUBLIC_TERMS_OF_USE_URL?.trim();
 
-const supportLevels = [
+const strongHabits = [
   {
-    number: "1",
-    title: "Your priorities",
-    description: "Your strong habits, plus what to watch for.",
+    icon: "/icons/habit-password-security.svg",
+    title: "Password Security",
+    description: "You know how to create strong passwords and keep your accounts secure.",
   },
   {
-    number: "2",
-    title: "Practical checklists",
-    description: "Everyday actions to work through with Plus.",
+    icon: "/icons/habit-app-permissions.svg",
+    title: "App Permissions",
+    description: "You're thoughtful about what apps can access.",
   },
   {
-    number: "3",
-    title: "Deeper guidance",
-    description: "More detailed walkthroughs with Complete.",
+    icon: "/icons/habit-wifi-safety.svg",
+    title: "Public Wi-Fi",
+    description: "You're wisely choosing how to connect to public networks.",
+  },
+  {
+    icon: "/icons/habit-account-protection.svg",
+    title: "Account Protection",
+    description: "You understand how to protect your accounts from unauthorized access.",
+  },
+  {
+    icon: "/icons/habit-software-updates.svg",
+    title: "Software Updates",
+    description: "You're keeping your software up to date.",
+  },
+  {
+    icon: "/icons/habit-private-browsing.svg",
+    title: "Private Browsing",
+    description: "You understand the limits of private browsing.",
   },
 ] as const;
 
@@ -45,7 +53,6 @@ function CheckIcon({ small = false }: Readonly<{ small?: boolean }>) {
       aria-hidden="true"
       className={small ? styles.smallCheck : styles.check}
       height={small ? 18 : 24}
-      priority={small}
       src="/icons/result-check-green.svg"
       width={small ? 18 : 24}
     />
@@ -55,118 +62,107 @@ function CheckIcon({ small = false }: Readonly<{ small?: boolean }>) {
 export default function PrivacySnapshotPage() {
   return (
     <FunnelScreen screenId="privacy-snapshot">
-      <div className={styles.results}>
-        <section className={styles.summaryCard} aria-labelledby="snapshot-title">
-          <div className={styles.summaryCopy}>
-            <div className={styles.badge}>
-              <CheckIcon small />
-              <span>Your privacy snapshot</span>
-            </div>
-
-            <h1 id="snapshot-title">
-              Strong habits.
-              <span>Nothing major to fix.</span>
-            </h1>
-
-            <p className={styles.intro}>
-              Conduct a more in-depth analysis to identify where your weaknesses lie.
-            </p>
+      <main className={`${styles.results} ${styles.greenResults}`}>
+        <section className={styles.greenSummary} aria-labelledby="snapshot-title">
+          <div className={styles.badge}>
+            <CheckIcon small />
+            <span>Your privacy snapshot</span>
           </div>
 
-          <QuizResultScore
-            activeColor="#3f8054"
-            ariaLabel="Low privacy risk"
-            defaultIncorrectCount={0}
-            inactiveColor="#cfe2d6"
-          />
+          <h1 id="snapshot-title">
+            You&apos;re building <span>strong privacy habits.</span>
+          </h1>
+          <p className={styles.greenIntro}>
+            This is not a device scan. Your answers point to habits that could
+            increase exposure — and steps you can take.
+          </p>
 
-          <div className={styles.actionGroup}>
-            <Link
-              className={styles.primaryButton}
-              data-amplitude-event="quiz_snapshot_top_button_clicked"
-              href="/plans"
-            >
-              Find my privacy plan
-            </Link>
-            <p>Compare 3 plans. Choose what fits you.</p>
+          <div className={styles.greenScores} aria-label="0 areas to improve, 6 of 6 positive answers">
+            <div>
+              <strong>0</strong>
+              <span>areas to improve</span>
+            </div>
+            <div>
+              <strong>6 <small>of 6</small></strong>
+              <span>positive answers</span>
+            </div>
+          </div>
+          <div className={styles.greenScoreTrack} aria-hidden="true">
+            {Array.from({ length: 6 }, (_, index) => <span key={index} />)}
           </div>
         </section>
 
-        <section className={styles.habitsCard} aria-labelledby="habits-title">
-          <header className={styles.habitsHeader}>
+        <section className={styles.greenHabits} aria-labelledby="habits-title">
+          <header>
             <p className={styles.eyebrow}>Based on your answers</p>
-            <h2 id="habits-title">Keep doing this.</h2>
-            <p>These habits already protect you. Here&apos;s what you&apos;re doing right.</p>
+            <h2 id="habits-title">Here&apos;s what you&apos;re doing right.</h2>
+            <p>
+              Your answers show no obvious privacy gaps. Here&apos;s what you&apos;re
+              already doing right — and how to keep it that way.
+            </p>
           </header>
 
-          <ul className={styles.habitsList}>
+          <ul>
             {strongHabits.map((habit) => (
-              <li key={habit}>
-                <CheckIcon />
-                <span>{habit}</span>
+              <li key={habit.title}>
+                <span className={styles.greenHabitIcon}>
+                  <Image alt="" aria-hidden="true" height={24} src={habit.icon} width={24} />
+                </span>
+                <span>
+                  <strong>{habit.title}</strong>
+                  <span>{habit.description}</span>
+                </span>
               </li>
             ))}
           </ul>
         </section>
 
-        <section className={styles.supportSection} aria-labelledby="support-title">
-          <header className={styles.supportHeader}>
-            <h2 id="support-title">
-              Stay ahead.
-              <span>Keep it effortless.</span>
-            </h2>
-            <p>Choose how much support you want to keep your habits strong.</p>
-          </header>
-
-          <ol className={styles.supportGrid}>
-            {supportLevels.map((level) => (
-              <li key={level.number}>
-                <span className={styles.supportNumber}>{level.number}</span>
-                <h3>{level.title}</h3>
-                <p>{level.description}</p>
-              </li>
-            ))}
-          </ol>
-        </section>
-
-        <section className={styles.planCard} aria-labelledby="plan-title">
-          <div className={styles.planCopy}>
-            <h2 id="plan-title">Keep your privacy strong.</h2>
-            <p>
-              Small habits, kept up over time, do most of the work. Pick a plan that keeps
-              you on track.
-            </p>
-          </div>
-
-          <div className={styles.actionGroup}>
-            <Link
-              className={styles.primaryButton}
-              data-amplitude-event="quiz_snapshot_bottom_button_clicked"
-              href="/plans"
-            >
-              See plans
-            </Link>
-            <p>Monthly plans. Cancel anytime.</p>
-          </div>
+        <section className={styles.greenPlan} aria-labelledby="plan-title">
+          <h2 id="plan-title">Turn your privacy tips into a simple plan.</h2>
+          <p>Turn your results into a clear, manageable action plan.</p>
+          <ul>
+            <li><CheckIcon small /> Follow easy, practical checklists</li>
+            <li><CheckIcon small /> Build better habits at your own pace</li>
+          </ul>
+          <Link
+            className={styles.primaryButton}
+            data-amplitude-event="quiz_snapshot_bottom_button_clicked"
+            href="/plans"
+          >
+            Build my privacy plan
+          </Link>
+          <p className={styles.greenPlanNote}>Monthly plans · Cancel anytime</p>
         </section>
 
         <p className={styles.disclaimer}>
-          Based on your answers, not a device scan. This check does not detect tracking or
-          data breaches.
+          Based on your answers, not a device scan. This check does not detect
+          tracking or data breaches.
         </p>
+      </main>
 
+      <footer className={styles.greenFixedFooter}>
         <Link
-          className={styles.reviewLink}
-          data-amplitude-event="quiz_snapshot_review_clicked"
-          href="/quiz/browsing-habits"
+          className={styles.primaryButton}
+          data-amplitude-event="quiz_snapshot_top_button_clicked"
+          href="/plans"
         >
-          Review my answers
+          See what I should fix first
         </Link>
-
-        <footer className={styles.footer}>
-          <p>© VEIL, Inc. 2026 - All rights reserved.</p>
-        </footer>
-      </div>
+        <p className={styles.greenLegal}>
+          {privacyPolicyUrl ? (
+            <a href={privacyPolicyUrl}>Privacy Policy</a>
+          ) : (
+            <span>Privacy Policy</span>
+          )}
+          {" & "}
+          {termsOfUseUrl ? (
+            <a href={termsOfUseUrl}>Terms of Use</a>
+          ) : (
+            <span>Terms of Use</span>
+          )}
+        </p>
+        <p className={styles.greenCopyright}>© Veylo, Inc. 2026 - All rights reserved.</p>
+      </footer>
     </FunnelScreen>
   );
 }

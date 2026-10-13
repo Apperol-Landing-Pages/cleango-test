@@ -12,6 +12,7 @@ import { createLead } from "@/lib/payments/client";
 type ResultsEmailFormProps = Readonly<{
   action?: string;
   buttonLabel?: string;
+  greenLayout?: boolean;
 }>;
 
 function validateEmail(value: string) {
@@ -31,6 +32,7 @@ function validateEmail(value: string) {
 export function ResultsEmailForm({
   action = "/results/snapshot",
   buttonLabel = "Show my results",
+  greenLayout = false,
 }: ResultsEmailFormProps) {
   const router = useRouter();
   const hasTrackedFocus = useRef(false);
@@ -84,7 +86,7 @@ export function ResultsEmailForm({
 
   return (
     <form
-      className={styles.form}
+      className={`${styles.form} ${greenLayout ? styles.greenForm : ""}`}
       action={action}
       onSubmit={handleSubmit}
       noValidate
@@ -92,25 +94,36 @@ export function ResultsEmailForm({
       <div
         className={`${styles.field} ${showEmailError ? styles.fieldInvalid : ""}`}
       >
-        <label htmlFor="results-email">
+        <label
+          className={greenLayout ? styles.visuallyHidden : undefined}
+          htmlFor="results-email"
+        >
           Email <span className={styles.required}>*</span>
         </label>
-        <input
-          className="amp-mask"
-          id="results-email"
-          name="email"
-          type="email"
-          inputMode="email"
-          autoComplete="email"
-          placeholder="you@example.com"
-          value={email}
-          aria-describedby={showEmailError ? "results-email-error" : undefined}
-          aria-invalid={showEmailError}
-          onBlur={() => setEmailTouched(true)}
-          onChange={(event) => setEmail(event.target.value)}
-          onFocus={handleFocus}
-          required
-        />
+        <div className={greenLayout ? styles.greenInputWrap : undefined}>
+          <input
+            className="amp-mask"
+            id="results-email"
+            name="email"
+            type="email"
+            inputMode="email"
+            autoComplete="email"
+            placeholder={greenLayout ? "Enter your email address" : "you@example.com"}
+            value={email}
+            aria-describedby={showEmailError ? "results-email-error" : undefined}
+            aria-invalid={showEmailError}
+            onBlur={() => setEmailTouched(true)}
+            onChange={(event) => setEmail(event.target.value)}
+            onFocus={handleFocus}
+            required
+          />
+          {greenLayout ? (
+            <svg aria-hidden="true" className={styles.emailIcon} fill="none" viewBox="0 0 24 24">
+              <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.7" />
+              <path d="m4 7 8 6 8-6" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.7" />
+            </svg>
+          ) : null}
+        </div>
         {showEmailError ? (
           <span
             className={styles.fieldError}
@@ -136,11 +149,13 @@ export function ResultsEmailForm({
         >
           {isSubmitting ? "Saving securely…" : buttonLabel}
         </button>
-        <p className={styles.privacyNote}>
-          View your results free. No card required.
-          <br />
-          Based on your answers, not a device scan.
-        </p>
+        {greenLayout ? null : (
+          <p className={styles.privacyNote}>
+            View your results free. No card required.
+            <br />
+            Based on your answers, not a device scan.
+          </p>
+        )}
       </div>
     </form>
   );

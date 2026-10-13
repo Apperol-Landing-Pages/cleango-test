@@ -383,3 +383,148 @@
     gap: 24px;
   }
 }
+
+/* The zero-gap email capture has its own, naturally scrolling layout. */
+.resultScreen.greenScreen {
+  min-block-size: 100svh;
+  min-block-size: 100dvh;
+  justify-content: flex-start;
+  gap: 24px;
+  padding-block: max(48px, calc(env(safe-area-inset-top) + 20px))
+    max(24px, calc(env(safe-area-inset-bottom) + 16px));
+}
+
+.greenContent {
+  display: grid;
+  gap: 32px;
+}
+
+.greenIntro {
+  display: grid;
+  justify-items: start;
+  gap: 20px;
+}
+
+.greenIntro h1,
+.greenIntro p,
+.greenCard h2,
+.greenCard p,
+.greenFooter p {
+  margin: 0;
+}
+
+.greenIntro h1 {
+  color: #202124;
+  font-size: clamp(33px, 9vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 1.05;
+}
+
+.greenIntro h1 span,
+.greenScore strong {
+  color: #3c7951;
+}
+
+.greenIntro > p:last-child {
+  color: #5f6267;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.greenCard {
+  display: grid;
+  gap: 20px;
+  padding: 24px 20px;
+  border: 1px solid #e7e9e7;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 8px 30px rgb(25 40 29 / 7%);
+}
+
+.greenScore {
+  color: #32383a;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 32px;
+}
+
+.greenScore strong {
+  font-size: 36px;
+  letter-spacing: -0.05em;
+}
+
+.greenScore span {
+  margin-right: 7px;
+  color: #909595;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.greenCardDivider {
+  block-size: 1px;
+  background: #e8ebea;
+}
+
+.greenCard h2 {
+  color: #202124;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 26px;
+}
+
+.greenForm.form {
+  gap: 14px;
+}
+
+.visuallyHidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.greenInputWrap {
+  position: relative;
+}
+
+.greenInputWrap input {
+  min-block-size: 56px;
+  padding-right: 48px;
+}
+
+.emailIcon {
+  position: absolute;
+  inset-block-start: 16px;
+  inset-inline-end: 16px;
+  inline-size: 24px;
+  block-size: 24px;
+  color: #94999b;
+  pointer-events: none;
+}
+
+.greenFooter {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 16px;
+  color: #898b8e;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+}
+
+.greenLegal {
+  color: #77797d;
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.greenLegal a {
+  color: inherit;
+}

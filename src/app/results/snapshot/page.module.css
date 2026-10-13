@@ -459,3 +459,262 @@
     font-size: 32px;
   }
 }
+
+/* Zero-gap result: intentionally scoped so the other result variants keep their layout. */
+.greenResults.results {
+  gap: 24px;
+  padding-block: max(56px, calc(env(safe-area-inset-top) + 24px))
+    calc(190px + env(safe-area-inset-bottom));
+}
+
+.greenSummary {
+  display: grid;
+  gap: 20px;
+  padding: 24px 20px;
+  border: 1px solid #cfdfd5;
+  border-radius: 24px;
+  background: #f1f8f4;
+}
+
+.greenSummary h1,
+.greenSummary p,
+.greenHabits h2,
+.greenHabits p,
+.greenPlan h2,
+.greenPlan p,
+.greenFixedFooter p {
+  margin: 0;
+}
+
+.greenSummary h1 {
+  color: #202124;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 1.04;
+}
+
+.greenSummary h1 span {
+  display: block;
+  color: #3c7951;
+}
+
+.greenIntro {
+  color: #515458;
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.greenScores {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-block: 16px 4px;
+  border-top: 1px solid #d8e2dc;
+}
+
+.greenScores > div {
+  display: grid;
+  align-content: start;
+  gap: 2px;
+}
+
+.greenScores > div + div {
+  padding-inline-start: 24px;
+  border-left: 1px solid #d8e2dc;
+}
+
+.greenScores strong {
+  color: #202124;
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 38px;
+}
+
+.greenScores small {
+  color: #808782;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.greenScores span {
+  color: #777b78;
+  font-size: 12px;
+  line-height: 17px;
+}
+
+.greenScoreTrack {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.greenScoreTrack span {
+  block-size: 7px;
+  border-radius: 999px;
+  background: #cfe2d6;
+}
+
+.greenHabits {
+  display: grid;
+  gap: 20px;
+  padding: 20px 16px;
+  border-radius: 16px;
+  background: #f5f5f7;
+}
+
+.greenHabits header {
+  display: grid;
+  gap: 8px;
+}
+
+.greenHabits h2 {
+  color: #202124;
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 29px;
+}
+
+.greenHabits header > p:last-child {
+  color: #6b6d71;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.greenHabits ul,
+.greenPlan ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.greenHabits li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-block-size: 72px;
+  padding: 12px;
+  border: 1px solid #e2e2e5;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.greenHabitIcon {
+  display: grid;
+  inline-size: 42px;
+  block-size: 42px;
+  flex: 0 0 42px;
+  place-items: center;
+  border-radius: 50%;
+  background: #f1f8f4;
+}
+
+.greenHabits li > span:last-child {
+  display: grid;
+  gap: 3px;
+}
+
+.greenHabits li strong {
+  color: #292d2f;
+  font-size: 14px;
+  line-height: 19px;
+}
+
+.greenHabits li > span:last-child > span {
+  color: #6b6d71;
+  font-size: 12px;
+  line-height: 17px;
+}
+
+.greenPlan {
+  display: grid;
+  gap: 20px;
+  padding: 24px 20px;
+  border: 1px solid #cfdfd5;
+  border-radius: 24px;
+  background: #f1f8f4;
+}
+
+.greenPlan h2 {
+  color: #202124;
+  font-size: 31px;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 1.06;
+}
+
+.greenPlan > p:not(.greenPlanNote) {
+  color: #515458;
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.greenPlan ul {
+  gap: 14px;
+  padding-block: 20px;
+  border-top: 1px solid #d8e2dc;
+}
+
+.greenPlan li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #3d4641;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.greenPlanNote {
+  color: #777b78;
+  font-size: 12px;
+  line-height: 17px;
+  text-align: center;
+}
+
+.greenFixedFooter {
+  position: fixed;
+  z-index: 10;
+  inset-block-end: 0;
+  inset-inline: 0;
+  display: grid;
+  inline-size: min(100%, var(--screen-max-width));
+  gap: 10px;
+  margin-inline: auto;
+  padding: 12px 16px max(16px, env(safe-area-inset-bottom));
+  border-top: 1px solid #e5e7e9;
+  background: #fff;
+  text-align: center;
+}
+
+.greenFixedFooter .primaryButton {
+  min-block-size: 56px;
+}
+
+.greenLegal {
+  color: #77797d;
+  font-size: 13px;
+  line-height: 18px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.greenLegal a {
+  color: inherit;
+}
+
+.greenCopyright {
+  color: #77797d;
+  font-size: 12px;
+  line-height: 17px;
+}
+
+@media (max-width: 359px) {
+  .greenSummary h1,
+  .greenPlan h2 {
+    font-size: 28px;
+  }
+}
