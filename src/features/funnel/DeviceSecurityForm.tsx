@@ -4,19 +4,20 @@ import { useRouter } from "next/navigation";
 import type { FormEvent } from "react";
 
 import styles from "@/app/quiz/browsing-habits/page.module.css";
+import { QuestionFooter } from "@/features/funnel/QuestionFooter";
 
 const answers = [
   {
+    id: "promptly",
+    label: "I use automatic updates or install them promptly",
+  },
+  {
     id: "put-off",
-    label: "I often put them off for weeks",
+    label: "I often delay updates for weeks",
   },
   {
     id: "when-remembered",
-    label: "I install them when I remember",
-  },
-  {
-    id: "promptly",
-    label: "Automatic updates are on, or I install them promptly",
+    label: "Sometimes, I install updates when I remember",
   },
 ] as const;
 
@@ -48,12 +49,12 @@ export function DeviceSecurityForm() {
 
   return (
     <form
-      className={styles.questionForm}
+      className={`${styles.questionForm} ${styles.questionFormPinned}`}
       action="/quiz/progress"
       data-amplitude-submit-event="quiz_screen6_continue_clicked"
       onSubmit={handleSubmit}
     >
-      <fieldset className={styles.options}>
+      <fieldset className={`${styles.options} ${styles.optionsPinned}`}>
         <legend className={styles.visuallyHidden}>Choose one answer</legend>
         {answers.map((answer, index) => (
           <label className={styles.option} key={answer.id}>
@@ -69,20 +70,7 @@ export function DeviceSecurityForm() {
         ))}
       </fieldset>
 
-      <div className={styles.formBottom}>
-        <div className={styles.formActions}>
-          <button className={styles.continueButton} type="submit">
-            Continue
-          </button>
-          <p className={styles.privacyNote}>
-            No scans. No browsing history. Just the answers you choose.
-          </p>
-        </div>
-
-        <footer className={styles.footer}>
-          <p>© VEIL, Inc. 2026 – All rights reserved.</p>
-        </footer>
-      </div>
+      <QuestionFooter />
     </form>
   );
 }

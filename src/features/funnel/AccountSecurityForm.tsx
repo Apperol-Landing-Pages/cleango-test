@@ -4,19 +4,20 @@ import { useRouter } from "next/navigation";
 import type { FormEvent } from "react";
 
 import styles from "@/app/quiz/browsing-habits/page.module.css";
+import { QuestionFooter } from "@/features/funnel/QuestionFooter";
 
 const answers = [
   {
     id: "reuse-often",
-    label: "Yes, I reuse passwords quite often",
-  },
-  {
-    id: "some-shared",
-    label: "A few accounts share a password",
+    label: "I reuse passwords across several accounts",
   },
   {
     id: "all-unique",
-    label: "No, every account has a unique password",
+    label: "I use a unique password for every account",
+  },
+  {
+    id: "some-shared",
+    label: "I use the same password for a few accounts",
   },
 ] as const;
 
@@ -48,12 +49,12 @@ export function AccountSecurityForm() {
 
   return (
     <form
-      className={styles.questionForm}
+      className={`${styles.questionForm} ${styles.questionFormPinned}`}
       action="/quiz/two-factor-auth"
       data-amplitude-submit-event="quiz_screen3_continue_clicked"
       onSubmit={handleSubmit}
     >
-      <fieldset className={styles.options}>
+      <fieldset className={`${styles.options} ${styles.optionsPinned}`}>
         <legend className={styles.visuallyHidden}>Choose one answer</legend>
         {answers.map((answer, index) => (
           <label className={styles.option} key={answer.id}>
@@ -69,20 +70,7 @@ export function AccountSecurityForm() {
         ))}
       </fieldset>
 
-      <div className={styles.formBottom}>
-        <div className={styles.formActions}>
-          <button className={styles.continueButton} type="submit">
-            Continue
-          </button>
-          <p className={styles.privacyNote}>
-            No scans. No browsing history. Just the answers you choose.
-          </p>
-        </div>
-
-        <footer className={styles.footer}>
-          <p>© VEIL, Inc. 2026 – All rights reserved.</p>
-        </footer>
-      </div>
+      <QuestionFooter />
     </form>
   );
 }

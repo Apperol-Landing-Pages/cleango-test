@@ -15,7 +15,13 @@
   padding-inline: var(--screen-inline-padding);
 }
 
-.page[data-screen="browsing-habits"] .screen {
+.page[data-screen="browsing-habits"] .screen,
+.page[data-screen="network-privacy"] .screen,
+.page[data-screen="private-mode-sign-in"] .screen,
+.page[data-screen="account-security"] .screen,
+.page[data-screen="two-factor-auth"] .screen,
+.page[data-screen="app-permissions"] .screen,
+.page[data-screen="device-security"] .screen {
   padding-block-end: 0;
 }
 

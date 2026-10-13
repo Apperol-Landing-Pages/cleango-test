@@ -4,26 +4,24 @@ import { useRouter } from "next/navigation";
 import type { FormEvent } from "react";
 
 import styles from "@/app/quiz/browsing-habits/page.module.css";
+import { QuestionFooter } from "@/features/funnel/QuestionFooter";
 
-type FollowUpAnswer = Readonly<{
-  id: string;
-  label: string;
-}>;
+type Answer = Readonly<{ id: string; label: string }>;
 
-type BrowsingFollowUpFormProps = Readonly<{
-  answers: readonly FollowUpAnswer[];
+type SecondQuestionFormProps = Readonly<{
+  analyticsScreenName: string;
+  answers: readonly Answer[];
   formName: string;
   storageKey: string;
 }>;
 
-export function BrowsingFollowUpForm({
+export function SecondQuestionForm({
+  analyticsScreenName,
   answers,
   formName,
   storageKey,
-}: BrowsingFollowUpFormProps) {
+}: SecondQuestionFormProps) {
   const router = useRouter();
-  const eventPrefix =
-    formName === "shared-website-data" ? "quiz_screen22" : "quiz_screen23";
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -45,18 +43,18 @@ export function BrowsingFollowUpForm({
 
   return (
     <form
-      className={styles.questionForm}
+      className={`${styles.questionForm} ${styles.questionFormPinned}`}
       action="/quiz/account-security"
-      data-amplitude-submit-event={`${eventPrefix}_continue_clicked`}
+      data-amplitude-submit-event={`${analyticsScreenName}_continue_clicked`}
       onSubmit={handleSubmit}
     >
-      <fieldset className={styles.options}>
+      <fieldset className={`${styles.options} ${styles.optionsPinned}`}>
         <legend className={styles.visuallyHidden}>Choose one answer</legend>
         {answers.map((answer, index) => (
           <label className={styles.option} key={answer.id}>
             <span>{answer.label}</span>
             <input
-              data-amplitude-change-event={`${eventPrefix}_option${index + 1}_clicked`}
+              data-amplitude-change-event={`${analyticsScreenName}_option${index + 1}_clicked`}
               type="radio"
               name={formName}
               value={answer.id}
@@ -66,20 +64,7 @@ export function BrowsingFollowUpForm({
         ))}
       </fieldset>
 
-      <div className={styles.formBottom}>
-        <div className={styles.formActions}>
-          <button className={styles.continueButton} type="submit">
-            Continue
-          </button>
-          <p className={styles.privacyNote}>
-            No scans. No browsing history. Just the answers you choose.
-          </p>
-        </div>
-
-        <footer className={styles.footer}>
-          <p>© VEIL, Inc. 2026 – All rights reserved.</p>
-        </footer>
-      </div>
+      <QuestionFooter />
     </form>
   );
 }

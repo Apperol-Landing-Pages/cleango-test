@@ -4,19 +4,20 @@ import { useRouter } from "next/navigation";
 import type { FormEvent } from "react";
 
 import styles from "@/app/quiz/browsing-habits/page.module.css";
+import { QuestionFooter } from "@/features/funnel/QuestionFooter";
 
 const answers = [
   {
     id: "allow-immediately",
-    label: "Allow it so I can get started",
+    label: "I usually allow permissions without checking",
   },
   {
     id: "check-some",
-    label: "Check some requests, but not every one",
+    label: "I check some requests but not all",
   },
   {
     id: "only-necessary",
-    label: "Only allow what the app really needs",
+    label: "I only allow access when it's needed",
   },
 ] as const;
 
@@ -48,12 +49,12 @@ export function AppPermissionsForm() {
 
   return (
     <form
-      className={styles.questionForm}
+      className={`${styles.questionForm} ${styles.questionFormPinned}`}
       action="/quiz/device-security"
       data-amplitude-submit-event="quiz_screen5_continue_clicked"
       onSubmit={handleSubmit}
     >
-      <fieldset className={styles.options}>
+      <fieldset className={`${styles.options} ${styles.optionsPinned}`}>
         <legend className={styles.visuallyHidden}>Choose one answer</legend>
         {answers.map((answer, index) => (
           <label className={styles.option} key={answer.id}>
@@ -69,20 +70,7 @@ export function AppPermissionsForm() {
         ))}
       </fieldset>
 
-      <div className={styles.formBottom}>
-        <div className={styles.formActions}>
-          <button className={styles.continueButton} type="submit">
-            Continue
-          </button>
-          <p className={styles.privacyNote}>
-            No scans. No browsing history. Just the answers you choose.
-          </p>
-        </div>
-
-        <footer className={styles.footer}>
-          <p>© VEIL, Inc. 2026 – All rights reserved.</p>
-        </footer>
-      </div>
+      <QuestionFooter />
     </form>
   );
 }

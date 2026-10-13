@@ -1,17 +1,16 @@
 import Link from "next/link";
 
 import { FunnelScreen } from "@/components/funnel/FunnelScreen";
-import { BrowsingFollowUpForm } from "@/features/funnel/BrowsingFollowUpForm";
+import { SecondQuestionForm } from "@/features/funnel/SecondQuestionForm";
 
 import styles from "@/app/quiz/browsing-habits/page.module.css";
 
-type FollowUpAnswer = Readonly<{
-  id: string;
-  label: string;
-}>;
+type Answer = Readonly<{ id: string; label: string }>;
 
-type BrowsingFollowUpPageProps = Readonly<{
-  answers: readonly FollowUpAnswer[];
+type SecondQuestionPageProps = Readonly<{
+  analyticsScreenName: string;
+  answers: readonly Answer[];
+  category: string;
   formName: string;
   hint: string;
   question: string;
@@ -19,20 +18,21 @@ type BrowsingFollowUpPageProps = Readonly<{
   storageKey: string;
 }>;
 
-export function BrowsingFollowUpPage({
+export function SecondQuestionPage({
+  analyticsScreenName,
   answers,
+  category,
   formName,
   hint,
   question,
   screenId,
   storageKey,
-}: BrowsingFollowUpPageProps) {
-  const analyticsScreenName =
-    screenId === "shared-website-data" ? "quiz_screen22" : "quiz_screen23";
-
+}: SecondQuestionPageProps) {
   return (
     <FunnelScreen screenId={screenId}>
-      <div className={styles.questionScreen}>
+      <div
+        className={`${styles.questionScreen} ${styles.questionScreenPinned} ${styles.questionScreenFollowUp}`}
+      >
         <div className={styles.questionIntro}>
           <div className={styles.progressHeader}>
             <div className={styles.topLine}>
@@ -81,7 +81,7 @@ export function BrowsingFollowUpPage({
           </div>
 
           <header className={styles.questionHeading}>
-            <p className={styles.category}>Browsing habits</p>
+            <p className={styles.category}>{category}</p>
             <h1 id="question-title">
               <span aria-hidden="true">🛜</span> {question}
             </h1>
@@ -89,7 +89,8 @@ export function BrowsingFollowUpPage({
           </header>
         </div>
 
-        <BrowsingFollowUpForm
+        <SecondQuestionForm
+          analyticsScreenName={analyticsScreenName}
           answers={answers}
           formName={formName}
           storageKey={storageKey}

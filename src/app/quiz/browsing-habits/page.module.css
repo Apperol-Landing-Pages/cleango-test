@@ -145,6 +145,10 @@
   margin-block-start: auto;
 }
 
+.questionScreenFollowUp .questionForm.questionFormPinned {
+  margin-block: 0;
+}
+
 .options {
   display: grid;
   min-block-size: 246px;

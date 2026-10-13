@@ -7,14 +7,16 @@ import { AdaptiveSecondQuestionBackLink } from "@/features/funnel/AdaptiveSecond
 import styles from "../browsing-habits/page.module.css";
 
 export const metadata: Metadata = {
-  title: "Account security",
+  title: "Password security",
   description: "Question 3 of the Security White privacy habits quiz.",
 };
 
 export default function AccountSecurityPage() {
   return (
     <FunnelScreen screenId="account-security">
-      <div className={styles.questionScreen}>
+      <div
+        className={`${styles.questionScreen} ${styles.questionScreenPinned} ${styles.questionScreenFollowUp}`}
+      >
         <div className={styles.questionIntro}>
           <div className={styles.progressHeader}>
             <div className={styles.topLine}>
@@ -41,14 +43,14 @@ export default function AccountSecurityPage() {
           </div>
 
           <header className={styles.questionHeading}>
-            <p className={styles.category}>Account security</p>
+            <p className={styles.category}>Password security</p>
             <h1 id="question-title">
-              <span aria-hidden="true">🔑</span> Does the same password
-              <br />
-              unlock more than one account?
+              <span aria-hidden="true">🔑</span> Could reusing a password put
+              several of your accounts at risk?
             </h1>
             <p className={styles.hint}>
-              Even a strong password can create problems when it is reused.
+              If one account is compromised, other accounts using the same
+              password could be affected too.
             </p>
           </header>
         </div>

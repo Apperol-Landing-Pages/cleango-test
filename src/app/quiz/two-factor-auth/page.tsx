@@ -7,14 +7,16 @@ import { TwoFactorAuthForm } from "@/features/funnel/TwoFactorAuthForm";
 import styles from "../browsing-habits/page.module.css";
 
 export const metadata: Metadata = {
-  title: "Two-factor authentication",
+  title: "Account protection",
   description: "Question 4 of the Security White privacy habits quiz.",
 };
 
 export default function TwoFactorAuthPage() {
   return (
     <FunnelScreen screenId="two-factor-auth">
-      <div className={styles.questionScreen}>
+      <div
+        className={`${styles.questionScreen} ${styles.questionScreenPinned} ${styles.questionScreenFollowUp}`}
+      >
         <div className={styles.questionIntro}>
           <div className={styles.progressHeader}>
             <div className={styles.topLine}>
@@ -63,14 +65,14 @@ export default function TwoFactorAuthPage() {
           </div>
 
           <header className={styles.questionHeading}>
-            <p className={styles.category}>Account security</p>
+            <p className={styles.category}>Account protection</p>
             <h1 id="question-title">
-              <span aria-hidden="true">🔐</span> Do your important accounts
-              <br />
-              have a second sign-in step?
+              <span aria-hidden="true">🔐</span> Could someone access your
+              important accounts with just your password?
             </h1>
             <p className={styles.hint}>
-              Such as an authenticator code, security key, or a passkey.
+              Without extra sign-in protection, a stolen password could be
+              enough to access an account.
             </p>
           </header>
         </div>

@@ -1,3 +1,5 @@
+import { getSecondQuestion } from "./second-question";
+
 export type ResultSeverity = "green" | "lite" | "medium" | "red";
 
 export type QuizResult = Readonly<{
@@ -13,25 +15,6 @@ const resultCountKey = "security-white.result.incorrect-count";
 const resultSeverityKey = "security-white.result.severity";
 
 const firstQuestionKey = "security-white.answers.browsing-habits";
-
-const followUpByFirstAnswer = {
-  "local-history": {
-    key: "security-white.answers.network-privacy",
-    correctAnswer: "mobile-connection",
-  },
-  "websites-and-provider": {
-    key: "security-white.answers.shared-website-data",
-    correctAnswer: "website-keeps-it",
-  },
-  "everything-online": {
-    key: "security-white.answers.private-mode-sign-in",
-    correctAnswer: "recognised",
-  },
-  "not-sure": {
-    key: "security-white.answers.private-mode-sign-in",
-    correctAnswer: "recognised",
-  },
-} as const;
 
 const commonQuestions = [
   {
@@ -77,13 +60,13 @@ export function calculateQuizResult(storage: StorageReader): QuizResult {
     },
   ];
 
-  const followUp =
-    firstAnswer && firstAnswer in followUpByFirstAnswer
-      ? followUpByFirstAnswer[firstAnswer as keyof typeof followUpByFirstAnswer]
-      : null;
+  const followUp = getSecondQuestion(firstAnswer);
 
   if (followUp) {
-    questions.push(followUp);
+    questions.push({
+      key: followUp.storageKey,
+      correctAnswer: followUp.correctAnswer,
+    });
   }
 
   questions.push(...commonQuestions);

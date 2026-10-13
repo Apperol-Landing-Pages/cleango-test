@@ -5,13 +5,7 @@ import { useRouter } from "next/navigation";
 import type { MouseEvent } from "react";
 
 import styles from "@/app/quiz/browsing-habits/page.module.css";
-
-const previousRoutes = {
-  "local-history": "/quiz/network-privacy",
-  "websites-and-provider": "/quiz/shared-website-data",
-  "everything-online": "/quiz/private-mode-sign-in",
-  "not-sure": "/quiz/private-mode-sign-in",
-} as const;
+import { getSecondQuestion } from "@/lib/funnel/second-question";
 
 export function AdaptiveSecondQuestionBackLink() {
   const router = useRouter();
@@ -22,9 +16,11 @@ export function AdaptiveSecondQuestionBackLink() {
         "security-white.answers.browsing-habits",
       );
 
-      if (answer && answer in previousRoutes) {
+      const previousQuestion = getSecondQuestion(answer);
+
+      if (previousQuestion) {
         event.preventDefault();
-        router.push(previousRoutes[answer as keyof typeof previousRoutes]);
+        router.push(previousQuestion.pathname);
       }
     } catch {
       // Keep the default route when browser storage is unavailable.

@@ -1,34 +1,27 @@
 import type { Metadata } from "next";
 
-import { BrowsingFollowUpPage } from "@/features/funnel/BrowsingFollowUpPage";
+import { SecondQuestionPage } from "@/features/funnel/SecondQuestionPage";
 
 export const metadata: Metadata = {
-  title: "Private mode sign-in",
+  title: "Browsing privacy",
   description: "Question 2 of the Security White privacy habits quiz.",
 };
 
 const answers = [
-  {
-    id: "recognised",
-    label: "Yes, signing in lets the website recognise you",
-  },
-  {
-    id: "anonymous",
-    label: "No, private mode keeps me completely anonymous",
-  },
-  {
-    id: "not-sure",
-    label: "I’m not sure",
-  },
+  { id: "recognised", label: "Yes, the website can recognize my account" },
+  { id: "anonymous", label: "No, private mode makes me anonymous" },
+  { id: "not-sure", label: "I’m not sure" },
 ] as const;
 
 export default function PrivateModeSignInPage() {
   return (
-    <BrowsingFollowUpPage
+    <SecondQuestionPage
+      analyticsScreenName="quiz_screen22"
       answers={answers}
+      category="Browsing privacy"
       formName="private-mode-sign-in"
-      hint="For example, if you sign in while using private mode."
-      question="Can a website recognise you if you sign in while using private mode?"
+      hint="What happens when you sign in to an account using a private window?"
+      question="Can websites still identify you in private mode?"
       screenId="private-mode-sign-in"
       storageKey="security-white.answers.private-mode-sign-in"
     />

@@ -14,7 +14,9 @@ export const metadata: Metadata = {
 export default function AppPermissionsPage() {
   return (
     <FunnelScreen screenId="app-permissions">
-      <div className={styles.questionScreen}>
+      <div
+        className={`${styles.questionScreen} ${styles.questionScreenPinned} ${styles.questionScreenFollowUp}`}
+      >
         <div className={styles.questionIntro}>
           <div className={styles.progressHeader}>
             <div className={styles.topLine}>
@@ -65,12 +67,12 @@ export default function AppPermissionsPage() {
           <header className={styles.questionHeading}>
             <p className={styles.category}>App permissions</p>
             <h1 id="question-title">
-              <span aria-hidden="true">📱</span> When an app asks for
-              <br />
-              access, what do you usually do?
+              <span aria-hidden="true">📱</span> Are you giving apps more access
+              to your personal data than they need?
             </h1>
             <p className={styles.hint}>
-              Think about location, contacts, microphone, or photos.
+              Some apps request access to your location, photos, contacts, or
+              microphone — even when it may not be necessary.
             </p>
           </header>
         </div>

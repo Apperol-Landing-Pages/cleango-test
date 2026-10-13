@@ -14,7 +14,9 @@ export const metadata: Metadata = {
 export default function DeviceSecurityPage() {
   return (
     <FunnelScreen screenId="device-security">
-      <div className={styles.questionScreen}>
+      <div
+        className={`${styles.questionScreen} ${styles.questionScreenPinned} ${styles.questionScreenFollowUp}`}
+      >
         <div className={styles.questionIntro}>
           <div className={styles.progressHeader}>
             <div className={styles.topLine}>
@@ -65,12 +67,12 @@ export default function DeviceSecurityPage() {
           <header className={styles.questionHeading}>
             <p className={styles.category}>Device security</p>
             <h1 id="question-title">
-              <span aria-hidden="true">🔄</span> How quickly do you install
-              <br />
-              security updates?
+              <span aria-hidden="true">🔄</span> Could outdated software leave
+              your devices vulnerable to security threats?
             </h1>
             <p className={styles.hint}>
-              For your phone, computer, browser, and apps.
+              Delaying updates can leave known security weaknesses unfixed on
+              your phone or apps.
             </p>
           </header>
         </div>

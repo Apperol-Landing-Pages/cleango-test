@@ -15,7 +15,6 @@ export const funnelSteps = [
   { id: "intro", pathname: "/" },
   { id: "questions", pathname: "/quiz/browsing-habits" },
   { id: "questions", pathname: "/quiz/network-privacy" },
-  { id: "questions", pathname: "/quiz/shared-website-data" },
   { id: "questions", pathname: "/quiz/private-mode-sign-in" },
   { id: "questions", pathname: "/quiz/account-security" },
   { id: "questions", pathname: "/quiz/two-factor-auth" },

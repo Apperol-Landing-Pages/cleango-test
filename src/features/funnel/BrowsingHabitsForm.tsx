@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import type { FormEvent } from "react";
 
 import styles from "@/app/quiz/browsing-habits/page.module.css";
+import { QuestionFooter } from "@/features/funnel/QuestionFooter";
+import { getSecondQuestion } from "@/lib/funnel/second-question";
 
 const answers = [
   {
@@ -24,16 +26,6 @@ const answers = [
   },
 ] as const;
 
-const followUpRoutes = {
-  "local-history": "/quiz/network-privacy",
-  "websites-and-provider": "/quiz/shared-website-data",
-  "everything-online": "/quiz/private-mode-sign-in",
-  "not-sure": "/quiz/private-mode-sign-in",
-} as const;
-
-const privacyPolicyUrl = process.env.NEXT_PUBLIC_PRIVACY_POLICY_URL?.trim();
-const termsOfUseUrl = process.env.NEXT_PUBLIC_TERMS_OF_USE_URL?.trim();
-
 export function BrowsingHabitsForm() {
   const router = useRouter();
 
@@ -49,6 +41,15 @@ export function BrowsingHabitsForm() {
     }
 
     try {
+      const previousAnswer = sessionStorage.getItem(
+        "security-white.answers.browsing-habits",
+      );
+
+      if (previousAnswer !== selectedAnswer) {
+        sessionStorage.removeItem("security-white.answers.network-privacy");
+        sessionStorage.removeItem("security-white.answers.private-mode-sign-in");
+      }
+
       sessionStorage.setItem(
         "security-white.answers.browsing-habits",
         selectedAnswer,
@@ -57,8 +58,7 @@ export function BrowsingHabitsForm() {
       // The funnel still works when browser storage is unavailable.
     }
 
-    const nextRoute =
-      followUpRoutes[selectedAnswer as keyof typeof followUpRoutes];
+    const nextRoute = getSecondQuestion(selectedAnswer)?.pathname;
 
     if (!nextRoute) {
       return;
@@ -90,27 +90,7 @@ export function BrowsingHabitsForm() {
         ))}
       </fieldset>
 
-      <footer className={`${styles.footer} ${styles.footerPinned}`}>
-        <button className={styles.continueButton} type="submit">
-          Continue
-        </button>
-        <p className={styles.legalLinks}>
-          {privacyPolicyUrl ? (
-            <a href={privacyPolicyUrl}>Privacy Policy</a>
-          ) : (
-            <span>Privacy Policy</span>
-          )}
-          {" & "}
-          {termsOfUseUrl ? (
-            <a href={termsOfUseUrl}>Terms of Use</a>
-          ) : (
-            <span>Terms of Use</span>
-          )}
-        </p>
-        <p className={styles.copyright}>
-          © Veylo, Inc. 2026 - All rights reserved.
-        </p>
-      </footer>
+      <QuestionFooter />
     </form>
   );
 }
