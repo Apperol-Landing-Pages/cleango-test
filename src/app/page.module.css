@@ -6,8 +6,6 @@
   position: relative;
   display: grid;
   gap: 32px;
-  animation-fill-mode: backwards !important;
-  will-change: opacity !important;
   padding-block: max(56px, calc(env(safe-area-inset-top) + 24px))
     max(
       24px,
@@ -209,14 +207,14 @@
 .footer {
   position: fixed;
   z-index: 20;
-  inset-inline-start: 50%;
+  inset-inline: 0;
   inset-block-end: 0;
   display: grid;
   inline-size: min(100vw, var(--screen-max-width));
   gap: 12px;
+  margin: 0 auto;
   padding: 16px var(--screen-inline-padding)
     max(16px, env(safe-area-inset-bottom));
-  transform: translateX(-50%);
   border-top: 1px solid #dce0e5;
   background: #ffffff;
   text-align: center;

@@ -31,7 +31,8 @@
   will-change: opacity, transform;
 }
 
-/* A transformed ancestor makes the quiz's fixed footer move with the page. */
+/* A transformed ancestor makes a fixed footer move with the page. */
+.page[data-screen="intro"] .screen > *,
 .page[data-screen="browsing-habits"] .screen > *,
 .page[data-screen="network-privacy"] .screen > *,
 .page[data-screen="private-mode-sign-in"] .screen > *,
