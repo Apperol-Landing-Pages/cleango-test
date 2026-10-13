@@ -15,6 +15,10 @@
   padding-inline: var(--screen-inline-padding);
 }
 
+.page[data-screen="browsing-habits"] .screen {
+  padding-block-end: 0;
+}
+
 .screen > * {
   transform-origin: 50% 24%;
   animation: funnel-screen-enter 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
