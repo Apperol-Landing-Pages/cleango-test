@@ -4,7 +4,7 @@ import { FunnelScreen } from "@/components/funnel/FunnelScreen";
 import { ConfirmationExperience } from "@/features/funnel/ConfirmationExperience";
 
 export const metadata: Metadata = {
-  title: "Your privacy plan is active",
+  title: "Payment confirmation",
 };
 
 export default function ConfirmationPage() {

@@ -101,6 +101,19 @@ const protectionItems = [
 
 const availablePlans = privacyPlans.filter((plan) => plan.id !== "essential");
 
+// The preview checkout never charges a card. These Stripe test numbers only
+// reproduce the declined-payment UI until the real sandbox is connected.
+const previewDeclinedCards = new Set([
+  "4000000000000002",
+  "4000000000009995",
+  "4000000000009987",
+  "4000000000009979",
+  "4000000000000127",
+  "4000000000000069",
+  "4000000000000119",
+  "4000000000000341",
+]);
+
 const privacyPolicyUrl = process.env.NEXT_PUBLIC_PRIVACY_POLICY_URL?.trim();
 const termsOfUseUrl = process.env.NEXT_PUBLIC_TERMS_OF_USE_URL?.trim();
 const refundPolicyUrl = process.env.NEXT_PUBLIC_REFUND_POLICY_URL?.trim();
@@ -173,7 +186,8 @@ function getCardBrand(digits: string): CardBrand {
 }
 
 function formatCardNumber(value: string) {
-  const digits = value.replace(/\D/g, "").slice(0, 19);
+  const enteredDigits = value.replace(/\D/g, "");
+  const digits = enteredDigits.slice(0, getCardBrand(enteredDigits) === "amex" ? 15 : 16);
 
   if (getCardBrand(digits) === "amex") {
     return [digits.slice(0, 4), digits.slice(4, 10), digits.slice(10, 15)]
@@ -185,7 +199,10 @@ function formatCardNumber(value: string) {
 }
 
 function formatExpiry(value: string) {
-  const digits = value.replace(/\D/g, "").slice(0, 4);
+  const enteredDigits = value.replace(/\D/g, "");
+  const digits = enteredDigits.length === 6 && /^(19|20)/.test(enteredDigits.slice(2))
+    ? `${enteredDigits.slice(0, 2)}${enteredDigits.slice(-2)}`
+    : enteredDigits.slice(0, 4);
   return digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
 }
 
@@ -221,8 +238,8 @@ function validateCardNumber(value: string) {
   const validLength =
     (brand === "amex" && digits.length === 15) ||
     (brand === "mastercard" && digits.length === 16) ||
-    (brand === "discover" && digits.length >= 16 && digits.length <= 19) ||
-    (brand === "visa" && [13, 16, 19].includes(digits.length));
+    (brand === "discover" && digits.length === 16) ||
+    (brand === "visa" && digits.length === 16);
 
   if (brand === "unknown") {
     return "Use Visa, Mastercard, Discover or Amex";
@@ -421,14 +438,16 @@ export function PlansExperience() {
     );
   }
 
-  function completeCheckout() {
+  function completeCheckout(previewStatus: "active" | "failed" = "active") {
     try {
       saveSelectedPlan(sessionStorage, selectedPlanId);
     } catch {
       // The confirmation screen falls back to Plus when storage is unavailable.
     }
 
-    router.push("/confirmation");
+    router.push(
+      previewStatus === "failed" ? "/confirmation?preview_status=failed" : "/confirmation",
+    );
   }
 
   return (
@@ -546,7 +565,7 @@ export function PlansExperience() {
               className={styles.applePayButton}
               data-amplitude-event="paywall_applepay_clicked"
               data-amplitude-plan-type={getPrivacyPlanAnalyticsType(selectedPlanId)}
-              onClick={completeCheckout}
+              onClick={() => completeCheckout()}
               type="button"
             >
               <svg aria-hidden="true" className={styles.appleLogo} viewBox="0 0 24 24" fill="currentColor"><path d="M17.8 12.6c0-2.1 1.7-3.1 1.8-3.2-.9-1.4-2.3-1.6-2.8-1.6-1.2-.1-2.3.7-2.9.7-.6 0-1.5-.7-2.5-.7-1.3 0-2.6.8-3.3 1.9-1.4 2.5-.4 6.1 1 8 .7 1 1.5 2.1 2.6 2.1 1 0 1.4-.7 2.6-.7 1.1 0 1.5.7 2.6.7 1.1 0 1.8-1 2.5-2  .7-1 1-1.9 1-2-.1 0-2.6-1-2.6-3.2ZM15.9 6.4c.6-.7 1-1.6.9-2.5-.9 0-1.9.6-2.5 1.2-.6.7-1 1.5-.9 2.4.9.1 1.9-.5 2.5-1.1Z" /></svg>
@@ -556,7 +575,7 @@ export function PlansExperience() {
             <button
               aria-label="Pay with PayPal — checkout preview"
               className={styles.paypalButton}
-              onClick={completeCheckout}
+              onClick={() => completeCheckout()}
               type="button"
             >
               <strong>PayPal</strong>
@@ -580,7 +599,8 @@ export function PlansExperience() {
                 event.preventDefault();
 
                 if (formIsComplete) {
-                  completeCheckout();
+                  const digits = cardNumber.replace(/\D/g, "");
+                  completeCheckout(previewDeclinedCards.has(digits) ? "failed" : "active");
                 }
               }}
             >
@@ -597,10 +617,16 @@ export function PlansExperience() {
                   aria-invalid={Boolean(showFieldError("cardNumber"))}
                   autoComplete="cc-number"
                   inputMode="numeric"
-                  maxLength={23}
+                  maxLength={cardBrand === "amex" ? 17 : 19}
                   name="card-number"
                   onBlur={() => markFieldAsTouched("cardNumber")}
-                  onChange={(event) => setCardNumber(formatCardNumber(event.target.value))}
+                  onChange={(event) => {
+                    const formattedNumber = formatCardNumber(event.target.value);
+                    setCardNumber(formattedNumber);
+                    if (getCardBrand(formattedNumber.replace(/\D/g, "")) !== "amex") {
+                      setCvc((current) => current.slice(0, 3));
+                    }
+                  }}
                   placeholder="4232 4232 4321 4323"
                   required
                   value={cardNumber}
@@ -651,11 +677,11 @@ export function PlansExperience() {
                 aria-invalid={Boolean(showFieldError("cvc"))}
                 autoComplete="cc-csc"
                 inputMode="numeric"
-                maxLength={4}
+                maxLength={cardBrand === "amex" ? 4 : 3}
                 name="cvc"
                 onBlur={() => markFieldAsTouched("cvc")}
                 onChange={(event) =>
-                  setCvc(event.target.value.replace(/\D/g, "").slice(0, 4))
+                  setCvc(event.target.value.replace(/\D/g, "").slice(0, cardBrand === "amex" ? 4 : 3))
                 }
                 placeholder="CVC"
                 required

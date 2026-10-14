@@ -29,6 +29,7 @@
 .page[data-screen="privacy-snapshot"] .screen,
 .page[data-screen="privacy-snapshot-medium"] .screen,
 .page[data-screen="privacy-snapshot-red"] .screen,
+.page[data-screen="plans"] .screen,
 .page[data-screen="confirmation"] .screen {
   padding-block-end: 0;
 }
