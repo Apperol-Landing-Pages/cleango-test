@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { FunnelScreen } from "@/components/funnel/FunnelScreen";
+import { ResultHabitIcon } from "@/features/funnel/ResultHabitIcon";
 
 import styles from "./page.module.css";
 
@@ -15,32 +16,32 @@ const termsOfUseUrl = process.env.NEXT_PUBLIC_TERMS_OF_USE_URL?.trim();
 
 const strongHabits = [
   {
-    icon: "/icons/habit-password-security.svg",
+    icon: "password",
     title: "Password Security",
     description: "You know how to create strong passwords and keep your accounts secure.",
   },
   {
-    icon: "/icons/habit-app-permissions.svg",
+    icon: "permissions",
     title: "App Permissions",
     description: "You're thoughtful about what apps can access.",
   },
   {
-    icon: "/icons/habit-wifi-safety.svg",
+    icon: "wifi",
     title: "Public Wi-Fi",
     description: "You're wisely choosing how to connect to public networks.",
   },
   {
-    icon: "/icons/habit-account-protection.svg",
+    icon: "account",
     title: "Account Protection",
     description: "You understand how to protect your accounts from unauthorized access.",
   },
   {
-    icon: "/icons/habit-software-updates.svg",
+    icon: "updates",
     title: "Software Updates",
     description: "You're keeping your software up to date.",
   },
   {
-    icon: "/icons/habit-private-browsing.svg",
+    icon: "browsing",
     title: "Private Browsing",
     description: "You understand the limits of private browsing.",
   },
@@ -106,7 +107,7 @@ export default function PrivacySnapshotPage() {
             {strongHabits.map((habit) => (
               <li key={habit.title}>
                 <span className={styles.greenHabitIcon}>
-                  <Image alt="" aria-hidden="true" height={24} src={habit.icon} width={24} />
+                  <ResultHabitIcon name={habit.icon} tone="green" />
                 </span>
                 <span>
                   <strong>{habit.title}</strong>

@@ -126,18 +126,14 @@
 
 .orangeIcon {
   display: grid;
-  inline-size: 30px;
-  block-size: 30px;
-  flex: 0 0 30px;
+  inline-size: 28px;
+  block-size: 28px;
+  flex: 0 0 28px;
   place-items: center;
-  border-radius: 50%;
-  background: var(--risk-badge-surface);
 }
 
-.orangeIcon svg {
-  inline-size: 25px;
-  block-size: 25px;
-  color: var(--risk-accent);
+.orangeIcon img {
+  display: block;
 }
 
 .focusCardBody {

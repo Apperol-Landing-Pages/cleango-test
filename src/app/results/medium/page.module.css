@@ -10,7 +10,8 @@
 }
 
 .emailCard {
-  background: #f8f8f9;
+  background: #f7f7f8;
+  box-shadow: 0 0 32px rgb(154 65 0 / 25%);
 }
 .screen {
   --capture-accent: #a65218;

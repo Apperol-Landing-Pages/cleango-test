@@ -6,7 +6,7 @@ import { useSyncExternalStore } from "react";
 
 import baseStyles from "@/app/results/snapshot/page.module.css";
 import styles from "@/app/results/snapshot/medium/page.module.css";
-import { MediumHabitIcon } from "@/features/funnel/MediumHabitIcon";
+import { ResultHabitIcon } from "@/features/funnel/ResultHabitIcon";
 import { getMediumResultCards } from "@/lib/funnel/medium-result-cards";
 import {
   readQuizQuestionOutcomes,
@@ -127,7 +127,7 @@ export function RiskSnapshotExperience({ tone }: Readonly<{ tone: "medium" | "re
                 <li className={`${styles.focusCard} ${card.isCorrect ? styles.focusCardCollapsed : ""}`} key={card.key}>
                   <div className={styles.focusCardLabel}>
                     <span className={styles.orangeIcon}>
-                      <MediumHabitIcon name={card.icon} />
+                      <ResultHabitIcon name={card.icon} tone={tone} />
                     </span>
                     <span>{card.label}</span>
                   </div>

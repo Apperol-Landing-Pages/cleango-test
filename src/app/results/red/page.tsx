@@ -45,7 +45,7 @@ export default function RedResultsPage() {
             </p>
           </div>
 
-          <section className={`${baseStyles.greenCard} ${sharedStyles.emailCard}`} aria-labelledby="email-title">
+          <section className={`${baseStyles.greenCard} ${sharedStyles.emailCard} ${styles.emailCard}`} aria-labelledby="email-title">
             <RiskEmailPositiveCount defaultIncorrectCount={5} />
             <div className={baseStyles.greenCardDivider} />
             <h2 id="email-title">Get your full results by email</h2>

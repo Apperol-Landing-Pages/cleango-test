@@ -1,3 +1,7 @@
 .screen.screen {
   --capture-accent: #c43e43;
 }
+
+.screen .emailCard {
+  box-shadow: 0 0 32px rgb(217 45 31 / 25%);
+}
