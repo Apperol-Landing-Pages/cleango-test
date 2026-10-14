@@ -20,6 +20,9 @@ import { saveSelectedPlan } from "@/lib/funnel/privacy-plan";
 
 const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? "";
 const stripePromise = publishableKey ? loadStripe(publishableKey) : null;
+const privacyPolicyUrl = process.env.NEXT_PUBLIC_PRIVACY_POLICY_URL?.trim();
+const termsOfUseUrl = process.env.NEXT_PUBLIC_TERMS_OF_USE_URL?.trim();
+const refundPolicyUrl = process.env.NEXT_PUBLIC_REFUND_POLICY_URL?.trim();
 
 const appearance: Appearance = {
   labels: "above",
@@ -125,8 +128,9 @@ function CheckoutForm({ plan }: StripeSubscriptionCheckoutProps) {
       });
 
       if (error) {
-        trackAmplitudeEvent("payment_failed");
-        setErrorMessage(error.message ?? "Payment could not be completed.");
+        router.push(
+          `/confirmation?payment_id=${encodeURIComponent(session.paymentId)}&payment_error=failed`,
+        );
         return;
       }
 
@@ -146,7 +150,7 @@ function CheckoutForm({ plan }: StripeSubscriptionCheckoutProps) {
       <div className={`${styles.stripeElement} amp-block`}>
         <PaymentElement
           options={{
-            business: { name: "VEIL" },
+            business: { name: "Veylo" },
             layout: "tabs",
           }}
         />
@@ -158,10 +162,12 @@ function CheckoutForm({ plan }: StripeSubscriptionCheckoutProps) {
         </p>
       ) : null}
 
-      <div className={styles.total} aria-live="polite">
-        <p>Due today</p>
-        <p>{price}</p>
-      </div>
+      <p className={styles.paymentLegal}>
+        By continuing, you agree to our{" "}
+        {termsOfUseUrl ? <a href={termsOfUseUrl}>Terms of Service</a> : <span>Terms of Service</span>},{" "}
+        {privacyPolicyUrl ? <a href={privacyPolicyUrl}>Privacy Policy</a> : <span>Privacy Policy</span>}{" "}
+        and {refundPolicyUrl ? <a href={refundPolicyUrl}>Refund Policy</a> : <span>Refund Policy</span>}.
+      </p>
 
       <div className={styles.checkoutAction}>
         <button
@@ -173,9 +179,8 @@ function CheckoutForm({ plan }: StripeSubscriptionCheckoutProps) {
           {isSubmitting ? "Processing securely…" : `Subscribe for ${price} / month`}
         </button>
         <p>
-          {price} charged today, then monthly until cancelled.
-          <br />
-          Cancel before your next renewal in your account.
+          You&apos;ll be charged {price} today and {price} each month until you cancel.
+          You can cancel future renewals according to the subscription terms.
         </p>
       </div>
     </form>

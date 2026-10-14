@@ -5,19 +5,20 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 import styles from "@/app/confirmation/page.module.css";
 import { trackAmplitudeEvent } from "@/lib/analytics/amplitude";
-import { getSnapshotRoute, readSavedQuizResult } from "@/lib/funnel/quiz-result";
-import {
-  getPrivacyPlan,
-  getPrivacyPlanAnalyticsType,
-  readSelectedPlan,
-  type PrivacyPlanId,
-} from "@/lib/funnel/privacy-plan";
+import { getPrivacyPlan, getPrivacyPlanAnalyticsType, readSelectedPlan, type PrivacyPlanId } from "@/lib/funnel/privacy-plan";
 import { trackMetaPurchase } from "@/lib/marketing/meta-pixel";
-import {
-  getSubscriptionStatus,
-  paymentsMode,
-  type PaymentStatus,
-} from "@/lib/payments/client";
+import { getSubscriptionStatus, paymentsMode, type PaymentStatus } from "@/lib/payments/client";
+
+const privacyPolicyUrl = process.env.NEXT_PUBLIC_PRIVACY_POLICY_URL?.trim();
+const termsOfUseUrl = process.env.NEXT_PUBLIC_TERMS_OF_USE_URL?.trim();
+const appDownloadUrl = process.env.NEXT_PUBLIC_APP_DOWNLOAD_URL?.trim();
+const usesLiveStripeKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.startsWith("pk_live_");
+
+const benefits = [
+  { icon: "shield", text: "Discover more ways to protect your personal information." },
+  { icon: "list", text: "Follow simple steps to improve your account security." },
+  { icon: "check", text: "Build safer online habits with easy-to-use guidance." },
+] as const;
 
 function subscribeToPlan() {
   return () => undefined;
@@ -31,24 +32,40 @@ function readPlanFromBrowser(): PrivacyPlanId {
   }
 }
 
-function getOverviewRoute() {
-  try {
-    const result = readSavedQuizResult(sessionStorage);
-    return getSnapshotRoute(result?.severity ?? "green");
-  } catch {
-    return "/results/snapshot";
-  }
+function readPreviewStatus(): PaymentStatus {
+  const scenario = new URLSearchParams(window.location.search).get("preview_status");
+  return scenario === "failed" || scenario === "canceled" ? scenario : "active";
+}
+
+function readPaymentErrorHint() {
+  return new URLSearchParams(window.location.search).get("payment_error") === "failed";
+}
+
+function BenefitIcon({ name }: Readonly<{ name: (typeof benefits)[number]["icon"] }>) {
+  return (
+    <span className={styles.benefitIcon} aria-hidden="true">
+      <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24">
+        {name === "shield" ? (
+          <><path d="m12 2 8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3Z" /><path d="m8.5 12 2.5 2.5 4.5-5" /></>
+        ) : name === "list" ? (
+          <><path d="M9 6h11M9 12h11M9 18h11" /><path d="M4 6h.01M4 12h.01M4 18h.01" /></>
+        ) : (
+          <path d="m4 12 5 5L20 6" />
+        )}
+      </svg>
+    </span>
+  );
 }
 
 export function ConfirmationExperience() {
   const router = useRouter();
   const hasTrackedPaymentOutcome = useRef(false);
-  const [confirmedPlanId, setConfirmedPlanId] = useState<PrivacyPlanId | null>(
-    null,
-  );
-  const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>(
-    paymentsMode === "preview" ? "active" : "pending",
-  );
+  const retryButtonRef = useRef<HTMLButtonElement>(null);
+  const [confirmedPlanId, setConfirmedPlanId] = useState<PrivacyPlanId | null>(null);
+  const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>("pending");
+  const [outcomeConfirmed, setOutcomeConfirmed] = useState(false);
+  const [verificationUnavailable, setVerificationUnavailable] = useState(false);
+  const [downloadNotice, setDownloadNotice] = useState("");
   const [paymentDetails, setPaymentDetails] = useState<{
     amount?: number;
     currency?: string;
@@ -59,25 +76,27 @@ export function ConfirmationExperience() {
     readPlanFromBrowser,
     () => "plus",
   );
-  const selectedPlan = getPrivacyPlan(confirmedPlanId ?? selectedPlanId);
-  const price = `$${selectedPlan.price.toFixed(2)}`;
-  const isActive = paymentStatus === "active";
-  const paymentFailed = paymentStatus === "failed" || paymentStatus === "canceled";
+  const previewStatus = useSyncExternalStore(subscribeToPlan, readPreviewStatus, () => "active");
+  const paymentErrorFromUrl = useSyncExternalStore(subscribeToPlan, readPaymentErrorHint, () => false);
+  const currentPlanId = confirmedPlanId ?? selectedPlanId;
+  const effectiveStatus = paymentsMode === "preview" ? previewStatus : paymentStatus;
+  const isActive = effectiveStatus === "active";
+  const paymentFailed = effectiveStatus === "failed" || effectiveStatus === "canceled";
+  const paymentErrorHint = paymentsMode === "stripe" && paymentErrorFromUrl && !outcomeConfirmed;
+  const showFailureDialog = paymentFailed || paymentErrorHint;
+  const simpleFailureDialog = effectiveStatus === "canceled";
 
   useEffect(() => {
-    if (paymentsMode === "preview") {
-      return;
-    }
+    const query = new URLSearchParams(window.location.search);
 
-    const paymentId =
-      new URLSearchParams(window.location.search).get("payment_id") ??
-      sessionStorage.getItem("security-white.payment-id");
+    if (paymentsMode === "preview") return;
 
+    const paymentId = query.get("payment_id") ?? sessionStorage.getItem("security-white.payment-id");
     let canceled = false;
     let timeoutId = 0;
 
     if (!paymentId) {
-      timeoutId = window.setTimeout(() => setPaymentStatus("failed"), 0);
+      timeoutId = window.setTimeout(() => setVerificationUnavailable(true), 0);
       return () => window.clearTimeout(timeoutId);
     }
 
@@ -88,10 +107,7 @@ export function ConfirmationExperience() {
 
       try {
         const result = await getSubscriptionStatus(paymentId as string);
-
-        if (canceled) {
-          return;
-        }
+        if (canceled) return;
 
         setPaymentStatus(result.status);
         setPaymentDetails({
@@ -100,18 +116,18 @@ export function ConfirmationExperience() {
           paymentId: paymentId as string,
         });
 
-        if (result.planId) {
-          setConfirmedPlanId(result.planId);
-        }
+        if (result.planId) setConfirmedPlanId(result.planId);
+        if (result.status !== "pending") setOutcomeConfirmed(true);
 
         if (result.status === "pending" && attempts < 20) {
           timeoutId = window.setTimeout(checkStatus, 1500);
         }
       } catch {
-        if (!canceled && attempts < 20) {
+        if (canceled) return;
+        if (attempts < 20) {
           timeoutId = window.setTimeout(checkStatus, 1500);
-        } else if (!canceled) {
-          setPaymentStatus("failed");
+        } else {
+          setVerificationUnavailable(true);
         }
       }
     }
@@ -125,141 +141,122 @@ export function ConfirmationExperience() {
   }, []);
 
   useEffect(() => {
-    if (hasTrackedPaymentOutcome.current) {
-      return;
-    }
+    if (paymentsMode === "preview" || hasTrackedPaymentOutcome.current) return;
 
-    if (paymentStatus === "active") {
-      if (paymentsMode === "stripe" && !paymentDetails) {
-        return;
-      }
-
+    if (paymentStatus === "active" && paymentDetails) {
       hasTrackedPaymentOutcome.current = true;
       trackAmplitudeEvent("payment_succeded", {
-        plan_type: getPrivacyPlanAnalyticsType(selectedPlan.id),
+        plan_type: getPrivacyPlanAnalyticsType(currentPlanId),
       });
 
-      if (paymentsMode === "stripe" && paymentDetails) {
+      // Sandbox transactions must not be reported as real Meta purchases.
+      if (usesLiveStripeKey) {
         trackMetaPurchase({
           currency: paymentDetails.currency ?? "usd",
           eventId: paymentDetails.paymentId,
-          planId: selectedPlan.id,
-          value: (paymentDetails.amount ?? Math.round(selectedPlan.price * 100)) / 100,
+          planId: currentPlanId,
+          value: (paymentDetails.amount ?? Math.round(getPrivacyPlan(currentPlanId).price * 100)) / 100,
         });
       }
-    } else if (paymentFailed) {
+    } else if (paymentFailed && paymentDetails) {
       hasTrackedPaymentOutcome.current = true;
       trackAmplitudeEvent("payment_failed");
     }
-  }, [paymentDetails, paymentFailed, paymentStatus, selectedPlan]);
+  }, [currentPlanId, paymentDetails, paymentFailed, paymentStatus]);
+
+  useEffect(() => {
+    if (showFailureDialog) retryButtonRef.current?.focus();
+  }, [showFailureDialog]);
+
+  function returnToCheckout() {
+    router.push("/plans?checkout=1");
+  }
+
+  function openAppDownload() {
+    if (!appDownloadUrl) {
+      setDownloadNotice("The app download link isn’t configured yet.");
+      return;
+    }
+
+    window.location.assign(appDownloadUrl);
+  }
 
   return (
     <div className={styles.confirmationPage}>
-      <header className={styles.hero}>
-        <div className={styles.confirmedLabel}>
-          <span className={styles.confirmedIcon} aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="m7.5 12.1 3 3 6-6" />
-            </svg>
-          </span>
-          <p>
-            {isActive
-              ? "Payment confirmed"
-              : paymentFailed
-                ? "Payment needs attention"
-                : "Confirming payment…"}
+      <div className={styles.content} aria-hidden={showFailureDialog}>
+        <header className={styles.hero}>
+          <div className={styles.confirmedLabel}>
+            <span className={styles.confirmedIcon} aria-hidden="true">
+              <svg fill="none" viewBox="0 0 24 24"><path d="m5 12 4.5 4.5L19 7" /></svg>
+            </span>
+            <span>{isActive ? "Payment confirmed" : paymentFailed ? "Payment not completed" : "Confirming payment"}</span>
+          </div>
+
+          <div className={styles.statusLine}>
+            <span><i aria-hidden="true" />{isActive ? "Your plan is active." : paymentFailed ? "Your plan isn’t active yet." : verificationUnavailable ? "Payment status unavailable." : "We’re checking your payment."}</span>
+            <span>Get started in the app.</span>
+          </div>
+
+          <h1>Take control of your <span>online security.</span></h1>
+          <p className={styles.intro}>
+            Your privacy check was just the beginning. Download the Veylo app to explore more
+            security tools, follow your personalized recommendations, and take practical steps
+            to reduce everyday online risks.
           </p>
-        </div>
+          {verificationUnavailable ? (
+            <p className={styles.verificationNotice} role="status">
+              We couldn’t verify your payment yet. Please refresh this page before trying to pay again, to avoid a duplicate charge.
+            </p>
+          ) : null}
+        </header>
 
-        <div className={styles.heroCopy}>
-          <h1>
-            Your plan.
-            <span>Your next move.</span>
-          </h1>
-          <p>
-            {paymentFailed ? (
-              "We couldn’t confirm this subscription. Please return to checkout."
-            ) : (
-              <>
-                A clearer path to better privacy.
-                <br />
-                Made around your everyday habits.
-              </>
-            )}
-          </p>
-        </div>
-      </header>
-
-      <section className={styles.planCard} aria-label={`Active VEIL ${selectedPlan.name} plan`}>
-        <div className={styles.planTopLine}>
-          <p>
-            VEIL <span>{selectedPlan.name}</span>
-          </p>
-          <span className={styles.activeBadge}>
-            <span aria-hidden="true" />
-            {isActive ? "Active" : paymentFailed ? "Not active" : "Pending"}
-          </span>
-        </div>
-
-        <div className={styles.planMiddle}>
-          <h2>
-            Your personal
-            <br />
-            privacy plan
-          </h2>
-          <span className={styles.shieldIcon} aria-hidden="true">
-            <svg viewBox="0 0 40 46" fill="none">
-              <path d="M20 1.8 37 8v12.7c0 10.7-6.6 19.2-17 23.5C9.6 39.9 3 31.4 3 20.7V8l17-6.2Z" />
-              <path d="m12.5 22.8 5.1 5.1 10-10" />
-            </svg>
-          </span>
-        </div>
-
-        <div className={styles.planBottomLine}>
-          <p>
-            {price} <span>/ month</span>
-          </p>
-          <p>Cancel anytime</p>
-        </div>
-      </section>
-
-      <section className={styles.firstMoveCard} aria-labelledby="first-move-title">
-        <p className={styles.eyebrow}>Your first move</p>
-        <h2 id="first-move-title">
-          Give every account its own
-          <br />
-          password
-        </h2>
-        <p className={styles.firstMoveDescription}>
-          Start with your email and most important accounts. A password manager can help
-          you create and store unique passwords, so a leak from one service is less likely
-          to affect others.
-        </p>
-        <p className={styles.selectedNote}>Selected from your answers</p>
-      </section>
-
-      <div className={styles.actions}>
-        <button
-          className={styles.downloadButton}
-          data-amplitude-event="download_button_clicked"
-          disabled={!isActive}
-          type="button"
-        >
-          Download app
-        </button>
-        <button
-          className={styles.overviewButton}
-          data-amplitude-event="back_to_overview_clicked"
-          onClick={() => router.push(getOverviewRoute())}
-          type="button"
-        >
-          Back to overview
-        </button>
+        <section className={styles.benefitsCard} aria-labelledby="benefits-title">
+          <h2 id="benefits-title">Benefits:</h2>
+          <ul>
+            {benefits.map((benefit) => (
+              <li key={benefit.text}>
+                <BenefitIcon name={benefit.icon} />
+                <span>{benefit.text}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
 
-      <footer className={styles.footer}>
-        <p>© VEIL, Inc. 2026 - All rights reserved.</p>
+      <footer className={styles.footer} aria-hidden={showFailureDialog}>
+        <button
+          className={styles.downloadButton}
+          data-amplitude-event={appDownloadUrl && isActive ? "download_button_clicked" : undefined}
+          disabled={!isActive}
+          onClick={openAppDownload}
+          type="button"
+        >
+          Download Veylo App
+        </button>
+        {downloadNotice ? <p className={styles.downloadNotice} role="status">{downloadNotice}</p> : null}
+        <p className={styles.footerLinks}>
+          {privacyPolicyUrl ? <a href={privacyPolicyUrl}>Privacy Policy</a> : <span>Privacy Policy</span>}
+          {" & "}
+          {termsOfUseUrl ? <a href={termsOfUseUrl}>Terms of Use</a> : <span>Terms of Use</span>}
+        </p>
+        <p>© Veylo, Inc. 2026 - All rights reserved.</p>
       </footer>
+
+      {showFailureDialog ? (
+        <div className={styles.failureOverlay}>
+          <section aria-labelledby="payment-failure-title" aria-modal="true" className={styles.failureDialog} role="alertdialog">
+            <span className={styles.failureIcon} aria-hidden="true">
+              <svg fill="none" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2" /><path d="M3 10h18" /></svg>
+            </span>
+            <h2 id="payment-failure-title">{simpleFailureDialog ? "Payment Failed" : "Payment didn’t go through"}</h2>
+            <p>{simpleFailureDialog ? "Payment attempt failed. Please try again." : "Please try again or choose another payment method."}</p>
+            <button className={styles.retryButton} onClick={returnToCheckout} ref={retryButtonRef} type="button">Try again</button>
+            {!simpleFailureDialog ? (
+              <button className={styles.changeMethodButton} onClick={returnToCheckout} type="button">Change payment method</button>
+            ) : null}
+          </section>
+        </div>
+      ) : null}
     </div>
   );
 }

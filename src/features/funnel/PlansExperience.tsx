@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 
 import styles from "@/app/plans/page.module.css";
 import { trackAmplitudeEvent } from "@/lib/analytics/amplitude";
@@ -12,6 +12,7 @@ import {
   getPrivacyPlan,
   getPrivacyPlanAnalyticsType,
   privacyPlans,
+  readSelectedPlan,
   type PrivacyPlanId,
   saveSelectedPlan,
 } from "@/lib/funnel/privacy-plan";
@@ -27,6 +28,22 @@ const initialTouchedFields: Record<CardField, boolean> = {
   cvc: false,
   expiry: false,
 };
+
+function subscribeToBrowserState() {
+  return () => undefined;
+}
+
+function readCheckoutRequested() {
+  return new URLSearchParams(window.location.search).get("checkout") === "1";
+}
+
+function readSavedPlanFromBrowser(): PrivacyPlanId {
+  try {
+    return readSelectedPlan(sessionStorage);
+  } catch {
+    return "plus";
+  }
+}
 
 const planSelectionEvents: Record<PrivacyPlanId, string> = {
   essential: "paywall_plan1_clicked",
@@ -48,6 +65,81 @@ const trustItems = [
     lines: ["Cancel", "anytime"],
   },
 ] as const;
+
+const protectionItems = [
+  {
+    icon: "browser",
+    title: "Recognise dangerous websites in time",
+    description: "Receive warnings about suspicious pages before entering personal information.",
+  },
+  {
+    icon: "shield",
+    title: "Don’t let scammers trick you into giving away your data",
+    description: "Spot fake websites designed to steal passwords and card information.",
+  },
+  {
+    icon: "wifi",
+    title: "More privacy on public Wi-Fi",
+    description: "Protect your connection with a VPN — in cafes, hotels, or airports.",
+  },
+  {
+    icon: "bell",
+    title: "Find out if your data has been compromised",
+    description: "Receive notifications to take timely action to protect your accounts.",
+  },
+  {
+    icon: "privacy",
+    title: "Less tracking of your activities",
+    description: "Block trackers that collect information about your online activity.",
+  },
+  {
+    icon: "link",
+    title: "Check suspicious links",
+    description: "Learn about potential threats before visiting an unfamiliar website.",
+  },
+] as const;
+
+const availablePlans = privacyPlans.filter((plan) => plan.id !== "essential");
+
+const privacyPolicyUrl = process.env.NEXT_PUBLIC_PRIVACY_POLICY_URL?.trim();
+const termsOfUseUrl = process.env.NEXT_PUBLIC_TERMS_OF_USE_URL?.trim();
+const refundPolicyUrl = process.env.NEXT_PUBLIC_REFUND_POLICY_URL?.trim();
+
+function PolicyLabel({ href, children }: Readonly<{ href?: string; children: ReactNode }>) {
+  return href ? <a href={href}>{children}</a> : <span>{children}</span>;
+}
+
+function PlansFooter() {
+  return (
+    <footer className={styles.footer}>
+      <p className={styles.footerLinks}>
+        <PolicyLabel href={privacyPolicyUrl}>Privacy Policy</PolicyLabel>
+        {" & "}
+        <PolicyLabel href={termsOfUseUrl}>Terms of Use</PolicyLabel>
+      </p>
+      <p>© Veylo, Inc. 2026 - All rights reserved.</p>
+    </footer>
+  );
+}
+
+function ProtectionIcon({ name }: Readonly<{ name: (typeof protectionItems)[number]["icon"] }>) {
+  const paths = {
+    browser: <><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M3 9h18M7 6.5h.01M10 6.5h.01M8 13h8M8 16h5" /></>,
+    shield: <><path d="m12 2 8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3Z" /><path d="m8.5 12 2.5 2.5 4.5-5" /></>,
+    wifi: <><path d="M2 8a16 16 0 0 1 20 0M5 11a11 11 0 0 1 14 0M8 14a6 6 0 0 1 8 0" /><circle cx="12" cy="18" r="1" /></>,
+    bell: <><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4" /></>,
+    privacy: <><path d="M3 3 21 21M10.5 5.2c.5-.1 1-.2 1.5-.2 5 0 9 4 10 7-1 1.7-2.5 3.3-4.3 4.5M6.5 6.5C4.5 7.7 3 9.6 2 12c1 3 5 7 10 7 1.2 0 2.3-.2 3.3-.6" /><path d="M9.2 9.2a4 4 0 0 0 5.6 5.6" /></>,
+    link: <><path d="m10 13 4-4M8 16H6a4 4 0 0 1 0-8h4M14 8h4a4 4 0 0 1 0 8h-4" /></>,
+  } as const;
+
+  return (
+    <span className={styles.protectionIcon} aria-hidden="true">
+      <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24">
+        {paths[name]}
+      </svg>
+    </span>
+  );
+}
 
 function getCardBrand(digits: string): CardBrand {
   if (/^3[47]/.test(digits)) {
@@ -214,7 +306,12 @@ function getPreviousSnapshotRoute() {
 
 export function PlansExperience() {
   const router = useRouter();
-  const [selectedPlanId, setSelectedPlanId] = useState<PrivacyPlanId>("plus");
+  const checkoutRequested = useSyncExternalStore(subscribeToBrowserState, readCheckoutRequested, () => false);
+  const savedPlanId = useSyncExternalStore<PrivacyPlanId>(subscribeToBrowserState, readSavedPlanFromBrowser, () => "plus");
+  const [selectedPlanOverride, setSelectedPlanOverride] = useState<PrivacyPlanId | null>(null);
+  const [checkoutOverride, setCheckoutOverride] = useState<boolean | null>(null);
+  const selectedPlanId = selectedPlanOverride ?? (checkoutRequested ? savedPlanId : "plus");
+  const checkoutOpen = checkoutOverride ?? checkoutRequested;
   const [cardNumber, setCardNumber] = useState("");
   const [expiry, setExpiry] = useState("");
   const [cvc, setCvc] = useState("");
@@ -259,6 +356,71 @@ export function PlansExperience() {
     router.push(getPreviousSnapshotRoute());
   }
 
+  function openCheckout() {
+    setCheckoutOverride(true);
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }
+
+  function closeCheckout() {
+    setCheckoutOverride(false);
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }
+
+  function renderPlanPicker(group: "top" | "bottom") {
+    return (
+      <div
+        className={styles.planOptions}
+        role="radiogroup"
+        aria-label={`${group === "top" ? "Top" : "Bottom"} privacy plans`}
+      >
+        {availablePlans.map((plan) => {
+          const isSelected = selectedPlanId === plan.id;
+
+          return (
+            <label
+              className={`${styles.planOption} ${isSelected ? styles.planOptionSelected : ""}`}
+              key={plan.id}
+            >
+              <input
+                checked={isSelected}
+                className={styles.planRadio}
+                data-amplitude-change-event={planSelectionEvents[plan.id]}
+                name={`privacy-plan-${group}`}
+                onChange={() => setSelectedPlanOverride(plan.id)}
+                type="radio"
+                value={plan.id}
+              />
+              <span className={styles.radioMark} aria-hidden="true" />
+              <span className={styles.planCopy}>
+                <span className={styles.planTitleLine}>
+                  <span className={styles.planName}>{plan.name}</span>
+                  {"recommended" in plan ? (
+                    <span className={styles.recommended}>Recommended</span>
+                  ) : null}
+                </span>
+                <span className={styles.planDescription}>{plan.description}</span>
+              </span>
+              <span className={styles.planPrice}>
+                ${plan.price.toFixed(2)} <span>/mo</span>
+              </span>
+            </label>
+          );
+        })}
+      </div>
+    );
+  }
+
+  function renderContinueAction() {
+    return (
+      <div className={styles.continueAction}>
+        <button className={styles.continueButton} onClick={openCheckout} type="button">
+          Continue with {price}
+        </button>
+        <p>Billed monthly. Renews automatically until cancelled.</p>
+      </div>
+    );
+  }
+
   function completeCheckout() {
     try {
       saveSelectedPlan(sessionStorage, selectedPlanId);
@@ -271,134 +433,109 @@ export function PlansExperience() {
 
   return (
     <div className={styles.plansPage}>
-      <button
-        className={styles.backButton}
-        data-amplitude-event="quiz_back_button_clicked"
-        data-amplitude-screen-name="paywall"
-        onClick={handleBack}
-        type="button"
-      >
-        <svg aria-hidden="true" viewBox="0 0 16 16" fill="none">
-          <path
-            d="m9.75 3.5-4.5 4.5 4.5 4.5M5.5 8h7"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1.3"
-          />
-        </svg>
-        Back
-      </button>
+      {!checkoutOpen ? (
+        <>
+          <button
+            className={styles.backButton}
+            data-amplitude-event="quiz_back_button_clicked"
+            data-amplitude-screen-name="paywall"
+            onClick={handleBack}
+            type="button"
+          >
+            <svg aria-hidden="true" viewBox="0 0 16 16" fill="none">
+              <path
+                d="m9.75 3.5-4.5 4.5 4.5 4.5M5.5 8h7"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.3"
+              />
+            </svg>
+            Back
+          </button>
 
-      <section className={styles.intro} aria-labelledby="plans-title">
-        <div className={styles.introCopy}>
-          <p className={styles.eyebrow}>From knowing to doing</p>
-          <h1 id="plans-title">Make your next step a simple one.</h1>
-          <p className={styles.introDescription}>
-            Choose the guidance you need to turn better privacy habits into everyday
-            actions.
-          </p>
-        </div>
+          <section className={styles.intro} aria-labelledby="plans-title">
+            <div className={styles.introCopy}>
+              <p className={styles.eyebrow}>From knowing to doing</p>
+              <h1 id="plans-title">Your next step to better privacy</h1>
+              <p className={styles.introDescription}>
+                Your results show where to start. Choose the guidance that helps you take action.
+              </p>
+            </div>
 
-        <ul className={styles.benefits}>
-          <li>
-            <span className={styles.benefitCheck} aria-hidden="true">✓</span>
-            <span>A personal plan: know where to start</span>
-          </li>
-          <li>
-            <span className={styles.benefitCheck} aria-hidden="true">✓</span>
-            <span>Clear guidance, without the jargon</span>
-          </li>
-          <li>
-            <span className={styles.benefitCheck} aria-hidden="true">✓</span>
-            <span>Choose more support as you need it</span>
-          </li>
-        </ul>
-      </section>
+            <ul className={styles.benefits}>
+              <li><span className={styles.benefitCheck} aria-hidden="true">✓</span>Focus on the habits that may expose you</li>
+              <li><span className={styles.benefitCheck} aria-hidden="true">✓</span>Follow simple steps to reduce avoidable risks</li>
+              <li><span className={styles.benefitCheck} aria-hidden="true">✓</span>Make progress without technical jargon</li>
+            </ul>
+          </section>
 
-      <section className={styles.planPicker} aria-label="Choose your privacy plan">
-        <div className={styles.planOptions} role="radiogroup" aria-label="Privacy plans">
-          {privacyPlans.map((plan) => {
-            const isSelected = selectedPlanId === plan.id;
+          <section className={styles.planPicker} aria-label="Choose your privacy plan">
+            {renderPlanPicker("top")}
+            {renderContinueAction()}
+          </section>
 
-            return (
-              <label
-                className={`${styles.planOption} ${
-                  isSelected ? styles.planOptionSelected : ""
-                }`}
-                key={plan.id}
-              >
-                <input
-                  checked={isSelected}
-                  className={styles.planRadio}
-                  data-amplitude-change-event={planSelectionEvents[plan.id]}
-                  name="privacy-plan"
-                  onChange={() => setSelectedPlanId(plan.id)}
-                  type="radio"
-                  value={plan.id}
-                />
-                <span className={styles.radioMark} aria-hidden="true" />
-                <span className={styles.planCopy}>
-                  <span className={styles.planTitleLine}>
-                    <span className={styles.planName}>{plan.name}</span>
-                    {"recommended" in plan ? (
-                      <span className={styles.recommended}>Recommended</span>
-                    ) : null}
-                  </span>
-                  <span className={styles.planDescription}>{plan.description}</span>
-                </span>
-                <span className={styles.planPrice}>
-                  ${plan.price.toFixed(2)} <span>/mo</span>
-                </span>
-              </label>
-            );
-          })}
-        </div>
-
-        <p className={styles.billingNote}>
-          All plans billed monthly. Cancel anytime.
-          <br />
-          Example prices for this design - final pricing to be confirmed.
-        </p>
-      </section>
-
-      <section className={styles.guaranteeCard} aria-labelledby="guarantee-title">
-        <Image
-          alt="Money-back guarantee badge"
-          className={styles.guaranteeBadge}
-          height={173}
-          src="/images/money-back-guarantee.svg"
-          width={173}
-        />
-        <h2 id="guarantee-title">Money-back guarantee.</h2>
-        <p>
-          Choose your plan with confidence.
-          <br />
-          If it isn&apos;t the right fit, request a refund under our refund policy.
-        </p>
-        <a className={styles.textLink} href="#refund-policy">
-          See how refunds work →
-        </a>
-      </section>
-
-      <section className={styles.trustGrid} aria-label="Payment benefits">
-        {trustItems.map((item) => (
-          <div className={styles.trustItem} key={item.icon}>
-            <Image alt="" height={42} src={item.icon} width={42} />
+          <section className={styles.guaranteeCard} aria-labelledby="guarantee-title">
+            <Image
+              alt="Money-back guarantee badge"
+              className={styles.guaranteeBadge}
+              height={173}
+              src="/images/money-back-guarantee.svg"
+              width={173}
+            />
+            <h2 id="guarantee-title">14-day money-back guarantee</h2>
             <p>
-              {item.lines[0]}
-              <br />
-              {item.lines[1]}
+              If the plan isn&apos;t right for you, you can request a refund within 14 days
+              of purchase, subject to our refund policy.
             </p>
-          </div>
-        ))}
-      </section>
+            {refundPolicyUrl ? (
+              <a className={styles.textLink} href={refundPolicyUrl}>View refund policy →</a>
+            ) : (
+              <span className={styles.textLink}>View refund policy →</span>
+            )}
+          </section>
 
+          <section className={styles.trustGrid} aria-label="Payment benefits">
+            {trustItems.map((item) => (
+              <div className={styles.trustItem} key={item.icon}>
+                <Image alt="" height={42} src={item.icon} width={42} />
+                <p>{item.lines[0]}<br />{item.lines[1]}</p>
+              </div>
+            ))}
+          </section>
+
+          <section className={styles.protectionSection} aria-labelledby="protection-title">
+            <h2 id="protection-title">Your privacy is under additional protection</h2>
+            <p>Find out what needs attention based on the test results and how the app can help protect your data.</p>
+            <ul>
+              {protectionItems.map((item) => (
+                <li key={item.title}>
+                  <ProtectionIcon name={item.icon} />
+                  <span><strong>{item.title}</strong><span>{item.description}</span></span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className={styles.planPicker} aria-label="Choose your privacy plan again">
+            {renderPlanPicker("bottom")}
+            {renderContinueAction()}
+          </section>
+        </>
+      ) : (
+        <>
       <section className={styles.paymentSection} aria-labelledby="payment-title">
         <header className={styles.paymentHeader}>
           <h2 id="payment-title">Payment method</h2>
-          <p>{paymentsMode === "stripe" ? "Secure checkout" : "Checkout preview"}</p>
+          <button aria-label="Close payment method" className={styles.closeButton} onClick={closeCheckout} type="button">
+            <svg aria-hidden="true" fill="none" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5" /></svg>
+          </button>
         </header>
+
+        <div className={styles.dueCard} aria-live="polite">
+          <div><span>Due today:</span><strong>{price}</strong></div>
+          <p>{price} — Monthly subscription.</p>
+        </div>
 
         {paymentsMode === "stripe" ? (
           <StripeSubscriptionCheckout plan={selectedPlan} />
@@ -412,7 +549,17 @@ export function PlansExperience() {
               onClick={completeCheckout}
               type="button"
             >
+              <svg aria-hidden="true" className={styles.appleLogo} viewBox="0 0 24 24" fill="currentColor"><path d="M17.8 12.6c0-2.1 1.7-3.1 1.8-3.2-.9-1.4-2.3-1.6-2.8-1.6-1.2-.1-2.3.7-2.9.7-.6 0-1.5-.7-2.5-.7-1.3 0-2.6.8-3.3 1.9-1.4 2.5-.4 6.1 1 8 .7 1 1.5 2.1 2.6 2.1 1 0 1.4-.7 2.6-.7 1.1 0 1.5.7 2.6.7 1.1 0 1.8-1 2.5-2  .7-1 1-1.9 1-2-.1 0-2.6-1-2.6-3.2ZM15.9 6.4c.6-.7 1-1.6.9-2.5-.9 0-1.9.6-2.5 1.2-.6.7-1 1.5-.9 2.4.9.1 1.9-.5 2.5-1.1Z" /></svg>
               Pay with Apple Pay
+            </button>
+
+            <button
+              aria-label="Pay with PayPal — checkout preview"
+              className={styles.paypalButton}
+              onClick={completeCheckout}
+              type="button"
+            >
+              <strong>PayPal</strong>
             </button>
 
             <div className={styles.divider}>
@@ -498,7 +645,7 @@ export function PlansExperience() {
                 showFieldError("cvc") ? styles.fieldInvalid : ""
               }`}
             >
-              <span>CVC</span>
+              <span>Security code</span>
               <input
                 aria-describedby="cvc-error"
                 aria-invalid={Boolean(showFieldError("cvc"))}
@@ -550,11 +697,11 @@ export function PlansExperience() {
             </label>
           </div>
 
-          <div className={styles.total} aria-live="polite">
-            <p>Due today</p>
-            <p>{price}</p>
-          </div>
-
+          <p className={styles.paymentLegal}>
+            By continuing, you agree to our <PolicyLabel href={termsOfUseUrl}>Terms of Service</PolicyLabel>,
+            {" "}<PolicyLabel href={privacyPolicyUrl}>Privacy Policy</PolicyLabel> and{" "}
+            <PolicyLabel href={refundPolicyUrl}>Refund Policy</PolicyLabel>.
+          </p>
           <div className={styles.checkoutAction}>
             <button
               className={styles.subscribeButton}
@@ -565,9 +712,8 @@ export function PlansExperience() {
               Subscribe for {price} / month
             </button>
             <p>
-              {price} charged today, then monthly until cancelled.
-              <br />
-              Cancel before your next renewal in your account.
+              You&apos;ll be charged {price} today and {price} each month until you cancel.
+              You can cancel future renewals according to the subscription terms.
             </p>
           </div>
             </form>
@@ -587,15 +733,20 @@ export function PlansExperience() {
           Your plan should feel right for you. If it doesn&apos;t, you can request a
           refund under our refund policy.
         </p>
-        <a className={styles.refundLink} href="#refund-policy">
-          <span>Explore the refund policy</span>
-          <span aria-hidden="true">↗</span>
-        </a>
+        {refundPolicyUrl ? (
+          <a className={styles.refundLink} href={refundPolicyUrl}>
+            <span>Explore the refund policy</span><span aria-hidden="true">↗</span>
+          </a>
+        ) : (
+          <span className={styles.refundLink}>
+            <span>Explore the refund policy</span><span aria-hidden="true">↗</span>
+          </span>
+        )}
       </section>
+        </>
+      )}
 
-      <footer className={styles.footer}>
-        <p>© VEIL, Inc. 2026 - All rights reserved.</p>
-      </footer>
+      <PlansFooter />
     </div>
   );
 }

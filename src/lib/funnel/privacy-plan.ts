@@ -9,14 +9,14 @@ export const privacyPlans = [
     id: "plus",
     name: "Plus",
     price: 9.99,
-    description: "Your plan, plus practical checklists",
+    description: "Everything in Essential, plus practical checklists.",
     recommended: true,
   },
   {
     id: "complete",
     name: "Complete",
     price: 19.99,
-    description: "All guides, plus deeper walkthroughs",
+    description: "All checklists, plus more detailed step-by-step guides.",
   },
 ] as const;
 
