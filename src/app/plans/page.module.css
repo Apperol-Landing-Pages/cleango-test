@@ -7,6 +7,12 @@
     max(24px, calc(env(safe-area-inset-bottom) + 12px));
 }
 
+@media (max-width: 600px) {
+  .plansPage {
+    padding-block-start: 20px;
+  }
+}
+
 .backButton {
   display: inline-flex;
   min-block-size: 32px;

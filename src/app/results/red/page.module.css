@@ -2,6 +2,9 @@
   --capture-accent: #c43e43;
 }
 
-.screen .emailCard {
-  box-shadow: 0 0 32px rgb(217 45 31 / 25%);
+.screen.screen .emailCard {
+  border-color: #f5d9d7;
+  box-shadow:
+    0 0 12px rgb(217 45 31 / 12%),
+    0 0 32px rgb(217 45 31 / 20%);
 }
