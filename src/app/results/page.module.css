@@ -10,58 +10,6 @@
     max(32px, calc(env(safe-area-inset-bottom) + 20px));
 }
 
-.resultCard {
-  display: grid;
-  min-block-size: 617px;
-  gap: 32px;
-  padding: 24px 20px;
-  border: 1px solid #cfdfd5;
-  border-radius: 24px;
-  background: #f1f8f4;
-}
-
-.liteCard {
-  min-block-size: 589px;
-  border-color: #ead9ca;
-  background: #f8f6f1;
-}
-
-.mediumCard {
-  min-block-size: 611px;
-  border-color: #ffc99b;
-  background: #fff2e8;
-}
-
-.redCard {
-  min-block-size: 658px;
-  border-color: #f5c2c0;
-  background: #fdecec;
-}
-
-.resultCopy {
-  display: grid;
-  min-block-size: 316px;
-  align-content: start;
-  gap: 24px;
-}
-
-.liteCopy {
-  min-block-size: 288px;
-}
-
-.mediumCopy {
-  min-block-size: 310px;
-}
-
-.redCopy {
-  min-block-size: 357px;
-}
-
-.resultCopy p,
-.resultCopy h1 {
-  margin: 0;
-}
-
 .badge {
   display: inline-flex;
   min-block-size: 34px;
@@ -99,52 +47,6 @@
   border-color: #f3c9c7;
   background: #f9dedd;
   color: #9f3431;
-}
-
-.resultCopy h1 {
-  color: #202124;
-  font-size: 40px;
-  font-weight: 700;
-  letter-spacing: -0.05em;
-  line-height: 0.98;
-}
-
-.resultCopy h1 span,
-.summary strong {
-  color: #3c7951;
-}
-
-.liteCard .resultCopy h1 span,
-.liteCard .summary strong {
-  color: #a65218;
-}
-
-.mediumCard .resultCopy h1 span,
-.mediumCard .summary strong {
-  color: #a65218;
-}
-
-.redCard .resultCopy h1 span,
-.redCard .summary strong {
-  color: #c5413f;
-}
-
-.summary {
-  color: #3f4145;
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  line-height: 24px;
-}
-
-.summary strong {
-  font-weight: 700;
-}
-
-.description {
-  color: #5f6267;
-  font-size: 15px;
-  line-height: 22px;
 }
 
 .form {
@@ -284,101 +186,7 @@
   text-align: center;
 }
 
-.footer {
-  padding-top: 32px;
-  border-top: 1px solid #e8e8ea;
-  text-align: center;
-}
-
-.footer p {
-  margin: 0;
-  color: #77797d;
-  font-size: 12px;
-  line-height: 12px;
-}
-
-@media (max-width: 600px) and (max-height: 760px) {
-  .resultScreen {
-    gap: 40px;
-    padding-top: max(32px, calc(env(safe-area-inset-top) + 16px));
-  }
-
-  .resultCard {
-    min-block-size: 582px;
-  }
-
-  .resultCopy {
-    min-block-size: 281px;
-  }
-
-  .liteCard {
-    min-block-size: 589px;
-  }
-
-  .liteCopy {
-    min-block-size: 288px;
-  }
-
-  .mediumCard {
-    min-block-size: 611px;
-  }
-
-  .mediumCopy {
-    min-block-size: 310px;
-  }
-
-  .redCard {
-    min-block-size: 628px;
-  }
-
-  .redCopy {
-    min-block-size: 327px;
-  }
-}
-
-@media (max-width: 359px) {
-  .resultScreen {
-    gap: 40px;
-    padding-top: max(32px, calc(env(safe-area-inset-top) + 16px));
-  }
-
-  .resultCard {
-    min-block-size: 617px;
-    padding-inline: 18px;
-  }
-
-  .redCard {
-    min-block-size: 658px;
-  }
-
-  .resultCopy h1 {
-    font-size: 36px;
-  }
-
-  .summary {
-    font-size: 18px;
-    line-height: 22px;
-  }
-}
-
 @media (max-width: 600px) and (max-height: 620px) {
-  .resultCard,
-  .liteCard,
-  .mediumCard,
-  .redCard {
-    min-block-size: 0;
-    gap: 24px;
-    padding-block: 20px;
-  }
-
-  .resultCopy,
-  .liteCopy,
-  .mediumCopy,
-  .redCopy {
-    min-block-size: 0;
-    gap: 20px;
-  }
-
   .form {
     gap: 24px;
   }
