@@ -2,61 +2,77 @@ import type { Metadata } from "next";
 import Image from "next/image";
 
 import { FunnelScreen } from "@/components/funnel/FunnelScreen";
-import { QuizResultEntrySummary } from "@/features/funnel/QuizResultDisplay";
+import {
+  RiskEmailHeading,
+  RiskEmailPositiveCount,
+} from "@/features/funnel/MediumEmailSummary";
 import { ResultsEmailForm } from "@/features/funnel/ResultsEmailForm";
 
-import styles from "../page.module.css";
+import baseStyles from "../page.module.css";
+import sharedStyles from "../medium/page.module.css";
+import styles from "./page.module.css";
 
 export const metadata: Metadata = {
-  title: "Your privacy exposure",
+  title: "Your privacy blind spots",
 };
+
+const privacyPolicyUrl = process.env.NEXT_PUBLIC_PRIVACY_POLICY_URL?.trim();
+const termsOfUseUrl = process.env.NEXT_PUBLIC_TERMS_OF_USE_URL?.trim();
 
 export default function RedResultsPage() {
   return (
     <FunnelScreen screenId="results-red">
-      <div className={styles.resultScreen}>
-        <section
-          className={`${styles.resultCard} ${styles.redCard}`}
-          aria-labelledby="result-title"
-        >
-          <div className={`${styles.resultCopy} ${styles.redCopy}`}>
-            <p className={`${styles.badge} ${styles.dangerBadge}`}>
+      <div className={`${baseStyles.resultScreen} ${baseStyles.greenScreen} ${sharedStyles.screen} ${styles.screen}`}>
+        <main className={baseStyles.greenContent}>
+          <div className={`${baseStyles.greenIntro} ${sharedStyles.intro}`}>
+            <p className={`${baseStyles.badge} ${baseStyles.dangerBadge}`}>
               <Image
                 alt=""
                 aria-hidden="true"
-                className={styles.badgeIcon}
-                height={18}
+                className={baseStyles.badgeIcon}
+                height={16}
                 priority
                 src="/icons/result-info-dark-red.svg"
-                width={18}
+                width={16}
               />
-              High exposure
+              Privacy blind spots identified
             </p>
 
-            <h1 id="result-title">
-              Your data is
-              <br />
-              <span>more exposed</span>
-              <br />
-              than you think.
-            </h1>
-
-            <QuizResultEntrySummary variant="red" />
-
-            <p className={styles.description}>
-              These gaps add up. Enter your email to see what’s most exposed and what to
-              fix first.
+            <RiskEmailHeading defaultIncorrectCount={5} />
+            <p>
+              Some everyday habits can make your information easier to expose.
+              Your answers suggest where to pay attention.
             </p>
           </div>
 
-          <ResultsEmailForm
-            action="/results/snapshot/red"
-            buttonLabel="Show my gaps & fix plan"
-          />
-        </section>
+          <section className={`${baseStyles.greenCard} ${sharedStyles.emailCard}`} aria-labelledby="email-title">
+            <RiskEmailPositiveCount defaultIncorrectCount={5} />
+            <div className={baseStyles.greenCardDivider} />
+            <h2 id="email-title">Get your full results by email</h2>
+            <ResultsEmailForm
+              action="/results/snapshot/red"
+              buttonLabel="Reveal my privacy gaps"
+              greenLayout
+            />
+          </section>
+        </main>
 
-        <footer className={styles.footer}>
-          <p>© VEIL, Inc. 2026 – All rights reserved.</p>
+        <footer className={baseStyles.greenFooter}>
+          <p>Free to view. No payment required.</p>
+          <p className={baseStyles.greenLegal}>
+            {privacyPolicyUrl ? (
+              <a href={privacyPolicyUrl}>Privacy Policy</a>
+            ) : (
+              <span>Privacy Policy</span>
+            )}
+            {" & "}
+            {termsOfUseUrl ? (
+              <a href={termsOfUseUrl}>Terms of Use</a>
+            ) : (
+              <span>Terms of Use</span>
+            )}
+          </p>
+          <p>© Veylo, Inc. 2026 - All rights reserved.</p>
         </footer>
       </div>
     </FunnelScreen>

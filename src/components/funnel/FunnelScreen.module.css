@@ -24,7 +24,11 @@
 .page[data-screen="device-security"] .screen,
 .page[data-screen="progress"] .screen,
 .page[data-screen="results"] .screen,
-.page[data-screen="privacy-snapshot"] .screen {
+.page[data-screen="results-medium"] .screen,
+.page[data-screen="results-red"] .screen,
+.page[data-screen="privacy-snapshot"] .screen,
+.page[data-screen="privacy-snapshot-medium"] .screen,
+.page[data-screen="privacy-snapshot-red"] .screen {
   padding-block-end: 0;
 }
 
@@ -44,7 +48,9 @@
 .page[data-screen="app-permissions"] .screen > *,
 .page[data-screen="device-security"] .screen > *,
 .page[data-screen="progress"] .screen > *,
-.page[data-screen="privacy-snapshot"] .screen > * {
+.page[data-screen="privacy-snapshot"] .screen > *,
+.page[data-screen="privacy-snapshot-medium"] .screen > *,
+.page[data-screen="privacy-snapshot-red"] .screen > * {
   animation: funnel-screen-fade 320ms ease-out both;
   will-change: opacity;
 }

@@ -1,0 +1,17 @@
+.intro.intro h1 {
+  font-size: clamp(29px, 8vw, 34px);
+  letter-spacing: -0.05em;
+  line-height: 1.07;
+}
+
+.intro h1 span,
+.emailCard strong {
+  color: var(--capture-accent);
+}
+
+.emailCard {
+  background: #f8f8f9;
+}
+.screen {
+  --capture-accent: #a65218;
+}

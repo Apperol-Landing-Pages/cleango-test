@@ -1,6 +1,6 @@
 import { getSecondQuestion } from "./second-question";
 
-export type ResultSeverity = "green" | "lite" | "medium" | "red";
+export type ResultSeverity = "green" | "medium" | "red";
 
 export type QuizResult = Readonly<{
   answeredCount: number;
@@ -35,29 +35,17 @@ const commonQuestions = [
   },
 ] as const;
 
-export function getResultSeverity(incorrectCount: number): ResultSeverity {
-  if (incorrectCount === 0) {
-    return "green";
-  }
+export type QuizQuestionOutcome = Readonly<{
+  key: string;
+  answer: string | null;
+  correctAnswer: string;
+  isCorrect: boolean | null;
+}>;
 
-  if (incorrectCount <= 2) {
-    return "lite";
-  }
-
-  if (incorrectCount <= 4) {
-    return "medium";
-  }
-
-  return "red";
-}
-
-export function calculateQuizResult(storage: StorageReader): QuizResult {
+export function readQuizQuestionOutcomes(storage: StorageReader): QuizQuestionOutcome[] {
   const firstAnswer = storage.getItem(firstQuestionKey);
   const questions: Array<Readonly<{ key: string; correctAnswer: string }>> = [
-    {
-      key: firstQuestionKey,
-      correctAnswer: "local-history",
-    },
+    { key: firstQuestionKey, correctAnswer: "local-history" },
   ];
 
   const followUp = getSecondQuestion(firstAnswer);
@@ -71,22 +59,34 @@ export function calculateQuizResult(storage: StorageReader): QuizResult {
 
   questions.push(...commonQuestions);
 
-  let answeredCount = 0;
-  let incorrectCount = 0;
+  return questions.map(({ key, correctAnswer }) => {
+    const answer = storage.getItem(key);
 
-  for (const question of questions) {
-    const answer = storage.getItem(question.key);
+    return {
+      key,
+      answer,
+      correctAnswer,
+      isCorrect: answer === null ? null : answer === correctAnswer,
+    };
+  });
+}
 
-    if (answer === null) {
-      continue;
-    }
-
-    answeredCount += 1;
-
-    if (answer !== question.correctAnswer) {
-      incorrectCount += 1;
-    }
+export function getResultSeverity(incorrectCount: number): ResultSeverity {
+  if (incorrectCount === 0) {
+    return "green";
   }
+
+  if (incorrectCount <= 3) {
+    return "medium";
+  }
+
+  return "red";
+}
+
+export function calculateQuizResult(storage: StorageReader): QuizResult {
+  const outcomes = readQuizQuestionOutcomes(storage);
+  const answeredCount = outcomes.filter((outcome) => outcome.isCorrect !== null).length;
+  const incorrectCount = outcomes.filter((outcome) => outcome.isCorrect === false).length;
 
   return {
     answeredCount,
@@ -102,17 +102,12 @@ export function saveQuizResult(storage: StorageWriter, result: QuizResult) {
 
 export function readSavedQuizResult(storage: StorageReader): QuizResult | null {
   const storedCount = storage.getItem(resultCountKey);
-  const storedSeverity = storage.getItem(resultSeverityKey);
   const incorrectCount = storedCount === null ? Number.NaN : Number(storedCount);
 
   if (
     !Number.isInteger(incorrectCount) ||
     incorrectCount < 0 ||
-    incorrectCount > 6 ||
-    (storedSeverity !== "green" &&
-      storedSeverity !== "lite" &&
-      storedSeverity !== "medium" &&
-      storedSeverity !== "red")
+    incorrectCount > 6
   ) {
     return null;
   }
@@ -120,7 +115,7 @@ export function readSavedQuizResult(storage: StorageReader): QuizResult | null {
   return {
     answeredCount: 6,
     incorrectCount,
-    severity: storedSeverity,
+    severity: getResultSeverity(incorrectCount),
   };
 }
 

@@ -2,59 +2,76 @@ import type { Metadata } from "next";
 import Image from "next/image";
 
 import { FunnelScreen } from "@/components/funnel/FunnelScreen";
-import { QuizResultEntrySummary } from "@/features/funnel/QuizResultDisplay";
+import {
+  RiskEmailHeading,
+  RiskEmailPositiveCount,
+} from "@/features/funnel/MediumEmailSummary";
 import { ResultsEmailForm } from "@/features/funnel/ResultsEmailForm";
 
-import styles from "../page.module.css";
+import baseStyles from "../page.module.css";
+import styles from "./page.module.css";
 
 export const metadata: Metadata = {
-  title: "Your privacy gaps",
+  title: "Your privacy blind spots",
 };
+
+const privacyPolicyUrl = process.env.NEXT_PUBLIC_PRIVACY_POLICY_URL?.trim();
+const termsOfUseUrl = process.env.NEXT_PUBLIC_TERMS_OF_USE_URL?.trim();
 
 export default function MediumResultsPage() {
   return (
     <FunnelScreen screenId="results-medium">
-      <div className={styles.resultScreen}>
-        <section
-          className={`${styles.resultCard} ${styles.mediumCard}`}
-          aria-labelledby="result-title"
-        >
-          <div className={`${styles.resultCopy} ${styles.mediumCopy}`}>
-            <p className={`${styles.badge} ${styles.warningBadge}`}>
+      <div className={`${baseStyles.resultScreen} ${baseStyles.greenScreen} ${styles.screen}`}>
+        <main className={baseStyles.greenContent}>
+          <div className={`${baseStyles.greenIntro} ${styles.intro}`}>
+            <p className={`${baseStyles.badge} ${baseStyles.warningBadge}`}>
               <Image
                 alt=""
                 aria-hidden="true"
-                className={`${styles.badgeIcon} ${styles.warningIcon}`}
+                className={`${baseStyles.badgeIcon} ${baseStyles.warningIcon}`}
                 height={16}
                 priority
                 src="/icons/result-warning-solid.svg"
                 width={17}
               />
-              Privacy gaps identified
+              Privacy blind spots identified
             </p>
 
-            <h1 id="result-title">
-              Feeling private
-              <br />
-              isn’t <span>enough.</span>
-            </h1>
-
-            <QuizResultEntrySummary variant="medium" />
-
-            <p className={styles.description}>
-              Don’t leave them unchecked. Enter your email to see where your
-              habits fall short - and what to change first.
+            <RiskEmailHeading />
+            <p>
+              Some everyday habits can make your information easier to expose.
+              Your answers suggest where to pay attention.
             </p>
           </div>
 
-          <ResultsEmailForm
-            action="/results/snapshot/medium"
-            buttonLabel="Show my gaps & next steps"
-          />
-        </section>
+          <section className={`${baseStyles.greenCard} ${styles.emailCard}`} aria-labelledby="email-title">
+            <RiskEmailPositiveCount />
+            <div className={baseStyles.greenCardDivider} />
+            <h2 id="email-title">Get your full results by email</h2>
+            <ResultsEmailForm
+              action="/results/snapshot/medium"
+              buttonLabel="Reveal my privacy gaps"
+              greenLayout
+            />
+          </section>
+        </main>
 
-        <footer className={styles.footer}>
-          <p>© VEIL, Inc. 2026 – All rights reserved.</p>
+        <footer className={baseStyles.greenFooter}>
+          <p>Free to view. No payment required.</p>
+          <p className={baseStyles.greenLegal}>
+            {privacyPolicyUrl ? (
+              <a href={privacyPolicyUrl}>Privacy Policy</a>
+            ) : (
+              <span>Privacy Policy</span>
+            )}
+            {" & "}
+            {termsOfUseUrl ? (
+              <a href={termsOfUseUrl}>Terms of Use</a>
+            ) : (
+              <span>Terms of Use</span>
+            )}
+          </p>
+          <p>© Veylo, Inc. 2026 - All rights reserved.</p>
         </footer>
       </div>
     </FunnelScreen>
