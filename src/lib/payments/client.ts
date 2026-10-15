@@ -8,6 +8,23 @@ const apiBaseUrl = (process.env.NEXT_PUBLIC_PAYMENTS_API_BASE_URL ?? "").replace
   "",
 );
 
+export const paymentApiConfigured = (() => {
+  try {
+    const url = new URL(apiBaseUrl);
+    const isLocalHttp =
+      url.protocol === "http:" &&
+      (url.hostname === "localhost" || url.hostname === "127.0.0.1");
+
+    return (
+      (url.protocol === "https:" || isLocalHttp) &&
+      url.hostname !== "example.com" &&
+      !url.hostname.endsWith(".example.com")
+    );
+  } catch {
+    return false;
+  }
+})();
+
 export type PlanId = "essential" | "plus" | "complete";
 
 export type PaymentStatus =
@@ -49,7 +66,7 @@ export type SubscriptionStatus = {
 };
 
 function buildApiUrl(path: string) {
-  if (!apiBaseUrl) {
+  if (!paymentApiConfigured) {
     throw new Error("Payment API URL is not configured.");
   }
 

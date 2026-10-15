@@ -5,7 +5,7 @@ import { FunnelScreen } from "@/components/funnel/FunnelScreen";
 import {
   RiskEmailHeading,
   RiskEmailPositiveCount,
-} from "@/features/funnel/MediumEmailSummary";
+} from "@/features/funnel/RiskEmailSummary";
 import { ResultsEmailForm } from "@/features/funnel/ResultsEmailForm";
 
 import baseStyles from "../page.module.css";

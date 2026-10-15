@@ -6,6 +6,11 @@ The Security White frontend is complete in two modes:
 - `stripe`: uses Stripe Payment Element and the API contract below.
 
 Set `NEXT_PUBLIC_PAYMENTS_MODE=stripe` only after every endpoint is available.
+The frontend checks for a non-placeholder HTTPS API URL and a Stripe
+publishable key before displaying the Payment Element. Test keys (`pk_test_`
+and `sk_test_`) are for sandbox verification; live keys and matching live Price
+IDs are required for real charges. Never prefill or store real card details in
+application code: Stripe Payment Element owns those fields.
 
 ## Environment
 

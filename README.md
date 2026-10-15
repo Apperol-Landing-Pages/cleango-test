@@ -25,20 +25,28 @@ Open [http://localhost:3000](http://localhost:3000).
 ```text
 src/app/                    routes, metadata and global styles
 src/components/funnel/      reusable funnel layout primitives
-src/features/funnel/        step types, configuration and future state logic
-public/images/              raster assets exported from Figma
-public/icons/               SVG and icon assets exported from Figma
+src/features/funnel/        quiz, result, and checkout experiences
+public/images/              illustration and payment SVG assets
+public/icons/               SVG icon assets
 ```
 
 ## Implementation notes
 
-- The design source uses a 393 px-wide mobile frame, so the base container is
-  mobile-first and capped at `393px` on larger viewports.
+- The layout is mobile-first and capped at `430px` on larger viewports.
 - Shared colors, spacing, radii and typography live in `src/app/globals.css`.
 - Every funnel page should render inside `FunnelScreen` and provide a stable
   `screenId` for styling, analytics and end-to-end tests.
 - Add a route only when its screen is implemented; the first screen currently
   lives at `/`.
+
+## Result screens
+
+The result routes are kept stable for existing links and analytics. `/results`
+is the green email capture (6 correct answers), `/results/medium` is the amber
+email capture (3–5 correct), and `/results/red` is the high-risk email capture
+(0–2 correct). Each has a matching detailed page under `/results/snapshot`.
+The old `/quiz/shared-website-data` URL redirects to the current second-question
+screen for compatibility; it is not an extra quiz step.
 
 ## Checks
 
@@ -54,6 +62,13 @@ The checkout supports a backend-free `preview` mode and a production `stripe`
 mode powered by Stripe Payment Element. Backend implementation details and the
 exact endpoint payloads are documented in
 [`docs/payments-backend-contract.md`](docs/payments-backend-contract.md).
+
+`preview` only simulates card outcomes; it must not be treated as a real payment.
+For live payments, deploy with `NEXT_PUBLIC_PAYMENTS_MODE=stripe`, a live Stripe
+publishable key, and the working HTTPS payment API. Stripe Payment Element
+collects card details; real card numbers, expiry dates, and CVC values never
+belong in frontend source or environment variables. These public variables are
+embedded during the Next.js build, so changing them requires a rebuild.
 
 Copy `.env.example` to `.env.local` for local configuration. Never commit Stripe
 secret keys or webhook secrets.

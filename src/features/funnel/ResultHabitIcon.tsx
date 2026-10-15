@@ -1,8 +1,8 @@
 import Image from "next/image";
 
-import type { MediumResultCard } from "@/lib/funnel/medium-result-cards";
+import type { RiskResultCard } from "@/lib/funnel/risk-result-cards";
 
-type Habit = MediumResultCard["icon"];
+type Habit = RiskResultCard["icon"];
 type Tone = "green" | "medium" | "red";
 
 export function ResultHabitIcon({ name, tone }: Readonly<{ name: Habit; tone: Tone }>) {

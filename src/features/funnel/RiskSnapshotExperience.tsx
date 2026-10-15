@@ -7,7 +7,7 @@ import { useSyncExternalStore } from "react";
 import baseStyles from "@/app/results/snapshot/page.module.css";
 import styles from "@/app/results/snapshot/medium/page.module.css";
 import { ResultHabitIcon } from "@/features/funnel/ResultHabitIcon";
-import { getMediumResultCards } from "@/lib/funnel/medium-result-cards";
+import { getRiskResultCards } from "@/lib/funnel/risk-result-cards";
 import {
   readQuizQuestionOutcomes,
   type QuizQuestionOutcome,
@@ -61,8 +61,9 @@ export function RiskSnapshotExperience({ tone }: Readonly<{ tone: "medium" | "re
   const outcomes = JSON.parse(serialized) as QuizQuestionOutcome[];
   const hasCompleteAnswers =
     outcomes.length === 6 && outcomes.every((outcome) => outcome.isCorrect !== null);
-  const cards = hasCompleteAnswers ? getMediumResultCards(outcomes) : [];
-  const incorrectCount = cards.filter((card) => !card.isCorrect).length;
+  const cards = hasCompleteAnswers ? getRiskResultCards(outcomes) : [];
+  const gapCards = cards.filter((card) => !card.isCorrect);
+  const incorrectCount = gapCards.length;
   const positiveCount = cards.length - incorrectCount;
   const strongCards = cards.filter((card) => card.isCorrect);
 
@@ -123,20 +124,18 @@ export function RiskSnapshotExperience({ tone }: Readonly<{ tone: "medium" | "re
 
           {hasCompleteAnswers ? (
             <ul className={styles.focusList}>
-              {cards.map((card) => (
-                <li className={`${styles.focusCard} ${card.isCorrect ? styles.focusCardCollapsed : ""}`} key={card.key}>
+              {gapCards.map((card) => (
+                <li className={styles.focusCard} key={card.key}>
                   <div className={styles.focusCardLabel}>
                     <span className={styles.orangeIcon}>
                       <ResultHabitIcon name={card.icon} tone={tone} />
                     </span>
                     <span>{card.label}</span>
                   </div>
-                  {card.isCorrect ? null : (
-                    <div className={styles.focusCardBody}>
-                      <h3>{card.riskTitle}</h3>
-                      <p>{card.riskDescription}</p>
-                    </div>
-                  )}
+                  <div className={styles.focusCardBody}>
+                    <h3>{card.riskTitle}</h3>
+                    <p>{card.riskDescription}</p>
+                  </div>
                 </li>
               ))}
             </ul>

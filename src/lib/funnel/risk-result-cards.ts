@@ -9,7 +9,7 @@ type ResultCardCopy = Readonly<{
   strengthDescription: string;
 }>;
 
-export type MediumResultCard = ResultCardCopy & Readonly<{ isCorrect: boolean }>;
+export type RiskResultCard = ResultCardCopy & Readonly<{ isCorrect: boolean }>;
 
 const cards: Record<string, ResultCardCopy> = {
   password: {
@@ -81,7 +81,7 @@ const cards: Record<string, ResultCardCopy> = {
   },
 };
 
-export function getMediumResultCards(outcomes: readonly QuizQuestionOutcome[]) {
+export function getRiskResultCards(outcomes: readonly QuizQuestionOutcome[]) {
   const byKey = new Map(outcomes.map((outcome) => [outcome.key, outcome]));
   const secondQuestion = byKey.has(cards.wifi.key) ? cards.wifi : cards.privateSignIn;
 

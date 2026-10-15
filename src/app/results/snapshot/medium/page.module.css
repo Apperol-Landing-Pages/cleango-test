@@ -109,11 +109,6 @@
   background: #fff;
 }
 
-.focusCardCollapsed {
-  min-block-size: 64px;
-  align-content: center;
-}
-
 .focusCardLabel {
   display: flex;
   align-items: center;

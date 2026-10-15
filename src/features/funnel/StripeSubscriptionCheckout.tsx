@@ -14,12 +14,16 @@ import styles from "@/app/plans/page.module.css";
 import { trackAmplitudeEvent } from "@/lib/analytics/amplitude";
 import {
   createSubscriptionSession,
+  paymentApiConfigured,
   type PlanId,
 } from "@/lib/payments/client";
 import { saveSelectedPlan } from "@/lib/funnel/privacy-plan";
 
 const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? "";
-const stripePromise = publishableKey ? loadStripe(publishableKey) : null;
+const stripeKeyConfigured =
+  /^(pk_test_|pk_live_)[A-Za-z0-9]+$/.test(publishableKey) &&
+  publishableKey.length > 16;
+const stripePromise = stripeKeyConfigured ? loadStripe(publishableKey) : null;
 const privacyPolicyUrl = process.env.NEXT_PUBLIC_PRIVACY_POLICY_URL?.trim();
 const termsOfUseUrl = process.env.NEXT_PUBLIC_TERMS_OF_USE_URL?.trim();
 const refundPolicyUrl = process.env.NEXT_PUBLIC_REFUND_POLICY_URL?.trim();
@@ -204,6 +208,14 @@ export function StripeSubscriptionCheckout({
     return (
       <p className={styles.checkoutError} role="alert">
         Stripe publishable key is not configured.
+      </p>
+    );
+  }
+
+  if (!paymentApiConfigured) {
+    return (
+      <p className={styles.checkoutError} role="alert">
+        Payment service is not configured.
       </p>
     );
   }
