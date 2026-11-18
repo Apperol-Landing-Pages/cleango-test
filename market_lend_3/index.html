@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#43342f">
+  <title>VPN App</title>
+  <link rel="preload" as="image" href="./assets/background-blurred.jpg" fetchpriority="high">
+  <link rel="stylesheet" href="./css/styles.css">
+
+  <script>(function (w, d, s, l, i) {
+    w[l] = w[l] || []; w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+    var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+    j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, 'script', 'dataLayer', 'GTM-WHRV45S5');</script>
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '636359672211566');
+  fbq('track', 'PageView');
+  </script>
+</head>
+<body>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHRV45S5" height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=636359672211566&amp;ev=PageView&amp;noscript=1" alt=""></noscript>
+
+  <main class="landing" data-step="1" aria-label="VPN App install landing">
+    <img class="background" src="./assets/background-blurred.jpg" alt="" aria-hidden="true">
+    <div class="background-shade" aria-hidden="true"></div>
+
+    <section class="step step-intro" aria-label="Preview">
+      <button class="play-button" type="button" aria-label="Continue to install VPN App">
+        <img src="./assets/play.svg" alt="">
+        <span data-i18n="tap"></span>
+      </button>
+      <img class="bottom-controls" src="./assets/bottom.svg" alt="" aria-hidden="true">
+    </section>
+
+    <!-- Keitaro replaces {offer} when the landing is uploaded. -->
+    <a class="step step-install" href="{offer}" aria-label="Install VPN App" aria-describedby="dialog-description" aria-hidden="true" inert>
+      <div class="dialog">
+        <div class="dialog-copy">
+          <h1 id="dialog-title" data-i18n="attention"></h1>
+          <p id="dialog-description" data-i18n="description"><br class="desktop-break"></p>
+        </div>
+        <span class="install-button" data-i18n="install"></span>
+      </div>
+    </a>
+  </main>
+  <script src="./js/app.js"></script>
+</body>
+</html>

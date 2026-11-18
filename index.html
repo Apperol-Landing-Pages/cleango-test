@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10151d">
+  <meta name="description" content="Страница выбора четырёх вариантов лендинга для проверки.">
+  <title>Выбор лендинга · VPN App</title>
+  <style>
+    :root { color-scheme: dark; font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    * { box-sizing: border-box; }
+    body { min-width: 320px; margin: 0; color: #f7f8fa; background: radial-gradient(circle at 84% -10%, #29364b 0, transparent 32rem), #10151d; }
+    a { color: inherit; }
+    .wrap { width: min(1240px, calc(100% - 48px)); margin: auto; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 32px 0; border-bottom: 1px solid #ffffff19; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 15px; font-weight: 750; letter-spacing: .02em; }
+    .brand-mark { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 11px; color: #10151d; background: #ffbd78; font-size: 19px; font-weight: 900; }
+    .count { padding: 8px 12px; border: 1px solid #ffffff24; border-radius: 999px; color: #b7c0cc; font-size: 12px; font-weight: 650; }
+    main { padding: 72px 0 88px; }
+    .eyebrow { margin: 0 0 18px; color: #ffbd78; font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    h1 { max-width: 800px; margin: 0; font-size: clamp(40px, 5vw, 72px); line-height: 1.04; letter-spacing: -.055em; }
+    .intro { max-width: 670px; margin: 24px 0 44px; color: #aeb8c6; font-size: clamp(16px, 1.6vw, 19px); line-height: 1.6; }
+    .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+    .card { display: flex; flex-direction: column; min-width: 0; overflow: hidden; border: 1px solid #ffffff20; border-radius: 20px; background: #1b222d; text-decoration: none; transition: transform .2s, border-color .2s, box-shadow .2s; }
+    .card:hover { transform: translateY(-5px); border-color: #ffbd78; box-shadow: 0 18px 42px #0005; }
+    .card:focus-visible { outline: 3px solid #ffbd78; outline-offset: 4px; }
+    .preview { position: relative; display: grid; place-items: center; height: 280px; overflow: hidden; background: #252b33; }
+    .preview::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, #0003, #0008); }
+    .preview.one { background: url("./market_lend_1/assets/background-poster.jpg") center 25% / cover; }
+    .preview.two { background: url("./market_lend_2/assets/first-frame-poster.jpg") center 30% / cover; }
+    .preview.three { background: url("./market_lend_3/assets/background-blurred.jpg") center / cover; }
+    .preview.four { background: #050505 url("./market_lend_4/assets/image-top.svg") center top / cover no-repeat; }
+    .phone { position: relative; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; width: 126px; height: 240px; padding: 14px; overflow: hidden; border: 4px solid #f2f2f2b8; border-radius: 23px; background: #0d1016a8; box-shadow: 0 15px 32px #0009; }
+    .phone::before { content: ""; position: absolute; top: 6px; width: 43px; height: 8px; border-radius: 99px; background: #050608; }
+    .phone strong { z-index: 1; width: 100%; margin-bottom: 9px; padding: 12px 5px; border-radius: 8px; background: #fff; color: #181818; font-size: 11px; text-align: center; }
+    .phone span { z-index: 1; width: 88%; padding: 7px; border-radius: 5px; background: #348fff; font-size: 9px; font-weight: 800; text-align: center; }
+    .three .phone span { background: #ffb159; color: #1d1d1d; }
+    .four .phone strong { background: #e7e8e9; }
+    .card-body { display: flex; flex: 1; flex-direction: column; padding: 22px 22px 20px; }
+    .number { color: #ffbd78; font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    h2 { margin: 10px 0 8px; font-size: 21px; line-height: 1.2; letter-spacing: -.025em; }
+    .description { flex: 1; margin: 0 0 24px; color: #aeb8c6; font-size: 14px; line-height: 1.5; }
+    .open { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid #ffffff1b; color: #ffbd78; font-size: 13px; font-weight: 750; }
+    .arrow { font-size: 20px; line-height: 1; }
+    footer { padding: 24px 0 40px; border-top: 1px solid #ffffff19; color: #83909f; font-size: 13px; }
+    @media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .preview { height: 250px; } }
+    @media (max-width: 580px) { .wrap { width: min(100% - 32px, 440px); } header { padding: 22px 0; } main { padding: 52px 0 64px; } .intro { margin-bottom: 32px; } .grid { grid-template-columns: 1fr; } .preview { height: 210px; } .phone { transform: scale(.78); } }
+    @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">V</span><span>VPN App / Лендинги</span></div>
+    <span class="count">4 варианта</span>
+  </header>
+  <main class="wrap">
+    <p class="eyebrow">Тестовая страница</p>
+    <h1>Выберите лендинг для проверки</h1>
+    <p class="intro">Все четыре варианта собраны в одном месте. Откройте нужный, чтобы проверить его на компьютере или телефоне.</p>
+    <div class="grid">
+      <a class="card" href="./market_lend_1/">
+        <div class="preview one" aria-hidden="true"><div class="phone"><strong>VPN App</strong><span>INSTALL</span></div></div>
+        <div class="card-body"><span class="number">Вариант 01</span><h2>Видео и уведомление</h2><p class="description">Фоновое видео, карточка приложения и сообщение об установке.</p><span class="open">Открыть лендинг <span class="arrow" aria-hidden="true">↗</span></span></div>
+      </a>
+      <a class="card" href="./market_lend_2/">
+        <div class="preview two" aria-hidden="true"><div class="phone"><strong>App unavailable</strong><span>INSTALL VPN</span></div></div>
+        <div class="card-body"><span class="number">Вариант 02</span><h2>Видео и диалог</h2><p class="description">Видеоэкран с карточкой приложения, диалогом и кнопкой звука.</p><span class="open">Открыть лендинг <span class="arrow" aria-hidden="true">↗</span></span></div>
+      </a>
+      <a class="card" href="./market_lend_3/">
+        <div class="preview three" aria-hidden="true"><div class="phone"><strong>▶ Preview</strong><span>CONTINUE</span></div></div>
+        <div class="card-body"><span class="number">Вариант 03</span><h2>Превью в два шага</h2><p class="description">Сначала экран просмотра, затем предложение установить приложение.</p><span class="open">Открыть лендинг <span class="arrow" aria-hidden="true">↗</span></span></div>
+      </a>
+      <a class="card" href="./market_lend_4/">
+        <div class="preview four" aria-hidden="true"><div class="phone"><strong>VPN App</strong><span>INSTALL VPN</span></div></div>
+        <div class="card-body"><span class="number">Вариант 04</span><h2>Графический фон</h2><p class="description">Статичный коллаж с диалогом установки поверх изображения.</p><span class="open">Открыть лендинг <span class="arrow" aria-hidden="true">↗</span></span></div>
+      </a>
+    </div>
+  </main>
+  <footer><div class="wrap">Страница выбора для внутреннего тестирования.</div></footer>
+  <script>
+    // Carry test query parameters into the selected landing.
+    if (location.search) {
+      document.querySelectorAll('.card').forEach((card) => { card.href += location.search; });
+    }
+  </script>
+</body>
+</html>

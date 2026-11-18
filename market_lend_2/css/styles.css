@@ -1,0 +1,187 @@
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", Arial, sans-serif;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  color: #000;
+}
+
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; }
+body { display: flex; justify-content: center; background: #211917; overflow: hidden; }
+
+.landing {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: 402px;
+  height: var(--viewport-height, 100dvh);
+  overflow: hidden;
+  background: linear-gradient(155deg, #716751 0%, #49362c 46%, #1b1217 100%);
+}
+.background-video, .background-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.14);
+  filter: blur(17px);
+  pointer-events: none;
+}
+.background-video { z-index: -3; }
+.background-poster { z-index: -2; opacity: 1; transition: opacity .45s ease; }
+.landing.video-ready .background-poster { opacity: 0; }
+.video-shade { position: absolute; z-index: -1; inset: 0; background: rgba(15, 11, 12, .35); pointer-events: none; }
+.screen-offer { position: absolute; z-index: 0; inset: 0; }
+
+.app-panel {
+  position: absolute;
+  z-index: 2;
+  top: 9.04%;
+  left: 50%;
+  width: min(364px, calc(100% - 42px));
+  height: 156px;
+  padding: 21px;
+  display: flex;
+  gap: 21px;
+  border-radius: 40px;
+  background: rgba(0, 0, 0, .51);
+  color: #fff;
+  text-decoration: none;
+  transform: translateX(-50%);
+}
+.app-icon { flex: 0 0 114px; width: 114px; height: 114px; }
+.app-info { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; padding-top: 17px; }
+.app-name { font-size: 20px; font-weight: 500; line-height: 24px; white-space: nowrap; }
+.app-publisher { color: #aaa7aa; font-size: 14px; line-height: 18px; white-space: nowrap; }
+.small-install {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 84px;
+  height: 26px;
+  margin-top: 34px;
+  padding: 2px 12px;
+  border-radius: 20px;
+  background: #497de8;
+  font-size: 14px;
+  line-height: 20px;
+  white-space: nowrap;
+}
+.share-icon { position: absolute; right: 27px; bottom: 25px; width: 18px; height: 23px; }
+
+.sound-toggle {
+  position: absolute;
+  z-index: 3;
+  right: 20px;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, .48);
+  color: #fff;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  transition: opacity .2s ease;
+}
+.sound-toggle:not(:disabled) { opacity: 1; pointer-events: auto; }
+.sound-toggle[aria-pressed="false"] .sound-waves,
+.sound-toggle[aria-pressed="true"] .sound-slash { display: none; }
+.sound-toggle:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+
+.dialog {
+  position: absolute;
+  z-index: 2;
+  top: 52.86%;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: min(356px, calc(100% - 50px));
+  min-height: 266px;
+  padding: 24px;
+  border-radius: 42px;
+  background: rgba(255, 255, 255, .90);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .11);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  transform: translate(-50%, -50%);
+}
+.dialog-copy { flex: 1; min-width: 0; }
+.warning { display: flex; align-items: center; gap: 8px; min-height: 38px; color: #ed333a; font-size: 14px; font-weight: 500; line-height: 18px; }
+.warning img { width: 24px; height: 24px; flex: 0 0 24px; }
+.message { margin-top: 8px; }
+.message h1 { margin: 0; font-size: 26px; font-weight: 700; line-height: 31px; letter-spacing: -.3px; }
+.message p { margin: 12px 0 0; max-width: 277px; font-size: 16px; font-weight: 400; line-height: 19px; }
+.message strong { font-weight: 600; }
+.install-button {
+  display: flex;
+  flex: 0 0 59px;
+  align-items: center;
+  justify-content: center;
+  min-height: 59px;
+  border-radius: 30px;
+  background: #416ff3;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 26px;
+  text-align: center;
+  text-decoration: none;
+}
+.app-panel:focus-visible, .install-button:focus-visible, .screen-offer:focus-visible { outline: 3px solid #fff; outline-offset: -4px; }
+
+.landing[data-fit="compact"] .dialog { gap: 20px; }
+.landing[data-fit="compact"] .message h1 { font-size: 23px; line-height: 27px; }
+.landing[data-fit="compact"] .message p { margin-top: 8px; font-size: 15px; line-height: 18px; }
+.landing[data-fit="compact"] .warning { font-size: 13px; }
+.landing[data-fit="tight"] .dialog { gap: 15px; padding: 20px; border-radius: 34px; }
+.landing[data-fit="tight"] .message h1 { font-size: 21px; line-height: 25px; }
+.landing[data-fit="tight"] .message p { margin-top: 7px; font-size: 14px; line-height: 17px; }
+.landing[data-fit="tight"] .warning { min-height: 31px; font-size: 12px; }
+.landing[data-fit="tight"] .install-button { flex-basis: 54px; min-height: 54px; font-size: 19px; }
+
+@media (max-width: 600px) {
+  .landing { max-width: none; }
+}
+
+@media (max-width: 370px) {
+  .app-panel { gap: 14px; padding: 18px; height: 140px; border-radius: 34px; }
+  .app-icon { width: 104px; height: 104px; flex-basis: 104px; }
+  .app-info { padding-top: 13px; }
+  .app-name { font-size: 18px; }
+  .app-publisher { font-size: 12px; }
+  .small-install { margin-top: 25px; }
+  .share-icon { right: 22px; bottom: 21px; }
+  .dialog { width: calc(100% - 34px); padding: 21px; }
+  .message h1 { font-size: 23px; line-height: 27px; }
+  .message p { font-size: 15px; line-height: 18px; }
+}
+@media (max-height: 700px) {
+  .app-panel { top: 7%; height: 130px; padding: 16px; border-radius: 34px; }
+  .app-icon { width: 98px; height: 98px; flex-basis: 98px; }
+  .app-info { padding-top: 10px; }
+  .small-install { margin-top: 23px; }
+  .share-icon { bottom: 18px; }
+  .dialog { top: 55%; min-height: 238px; padding: 20px; gap: 19px; border-radius: 34px; }
+  .warning { min-height: 32px; }
+  .message h1 { font-size: 23px; line-height: 27px; }
+  .message p { margin-top: 8px; font-size: 15px; line-height: 18px; }
+  .install-button { flex-basis: 54px; min-height: 54px; font-size: 20px; }
+}
+@media (max-height: 550px) {
+  .app-panel { top: 7%; height: 116px; }
+  .app-icon { width: 84px; height: 84px; flex-basis: 84px; }
+  .app-info { padding-top: 4px; }
+  .small-install { margin-top: 13px; }
+  .dialog { top: 60%; min-height: 220px; padding: 17px; gap: 12px; }
+}

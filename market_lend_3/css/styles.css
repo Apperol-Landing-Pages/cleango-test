@@ -1,0 +1,174 @@
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", Arial, sans-serif;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; }
+body { display: flex; justify-content: center; overflow: hidden; background: #261f1d; }
+
+.landing {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 402px);
+  height: var(--viewport-height, 100dvh);
+  overflow: hidden;
+  background: #69554f;
+}
+@media (max-width: 470px) {
+  .landing { width: 100%; }
+}
+.background {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+}
+.background-shade {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: rgba(24, 19, 20, .20);
+  pointer-events: none;
+}
+.step { position: absolute; inset: 0; }
+.step-intro {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .42s ease, visibility 0s linear .42s;
+}
+.landing[data-step="2"] .step-intro {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.play-button {
+  position: absolute;
+  top: 49%;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: 160px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  font: inherit;
+  font-size: 16px;
+  line-height: 20px;
+  white-space: nowrap;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+}
+.play-button img {
+  display: block;
+  width: 110px;
+  height: 110px;
+  animation: play-pulse 2.8s ease-in-out infinite;
+}
+.play-button span { text-shadow: 0 1px 3px rgba(0, 0, 0, .35); }
+.play-button:focus-visible { outline: 3px solid #fff; outline-offset: 5px; }
+@keyframes play-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 14px rgba(255,255,255,.9));
+  }
+  50% {
+    opacity: .35;
+    transform: scale(.96);
+    filter: drop-shadow(0 0 1px rgba(255,255,255,.1));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .play-button img { animation: none; }
+  .step-intro, .dialog { transition: none !important; }
+}
+
+.bottom-controls {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.step-install {
+  display: grid;
+  place-items: center;
+  padding: 0 23px;
+  visibility: hidden;
+  pointer-events: none;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.step-install:focus-visible .dialog { outline: 3px solid #3285df; outline-offset: 4px; }
+.landing[data-step="2"] .step-install {
+  visibility: visible;
+  pointer-events: auto;
+}
+.dialog {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 356px;
+  min-height: 197px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #fff;
+  color: #000;
+  text-align: center;
+  box-shadow: 0 5px 22px rgba(0, 0, 0, .13);
+  opacity: 0;
+  transform: translateY(18px) scale(.97);
+  transition: opacity .58s ease .12s, transform .58s cubic-bezier(.2, .8, .2, 1) .12s;
+}
+.landing[data-step="2"] .dialog {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.dialog-copy {
+  display: flex;
+  flex: 1 1 136px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 16px 12px;
+}
+.dialog h1 { margin: 0; font-size: 20px; font-weight: 700; line-height: 24px; }
+.dialog p { max-width: 280px; margin: 8px 0 0; font-size: 16px; font-weight: 400; line-height: 19px; }
+.install-button {
+  display: flex;
+  flex: 0 0 61px;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid #e6e6e6;
+  color: #3285df;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 26px;
+  text-decoration: none;
+}
+@media (max-width: 370px) {
+  .step-install { padding: 0 17px; }
+  .dialog p { font-size: 14px; line-height: 18px; }
+  .desktop-break { display: none; }
+}
+@media (max-height: 550px) {
+  .dialog { min-height: 176px; }
+  .dialog-copy { flex-basis: 120px; }
+  .install-button { flex-basis: 56px; }
+}

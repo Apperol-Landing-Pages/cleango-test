@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#241c1b">
+  <title></title>
+  <link rel="preload" as="image" href="./assets/first-frame-poster.jpg" fetchpriority="high">
+  <link rel="preload" as="image" href="./assets/app-icon.svg">
+  <link rel="stylesheet" href="./css/styles.css">
+
+  <script>(function (w, d, s, l, i) {
+    w[l] = w[l] || []; w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+    var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+    j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, 'script', 'dataLayer', 'GTM-WHRV45S5');</script>
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '636359672211566');
+  fbq('track', 'PageView');
+  </script>
+</head>
+<body>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHRV45S5" height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=636359672211566&amp;ev=PageView&amp;noscript=1" alt=""></noscript>
+
+  <main class="landing" data-fit="regular">
+    <video class="background-video" loop playsinline webkit-playsinline preload="auto" aria-hidden="true">
+      <source src="./assets/background-video.mp4" type="video/mp4">
+    </video>
+    <img class="background-poster" src="./assets/first-frame-poster.jpg" alt="" aria-hidden="true" fetchpriority="high" decoding="sync">
+    <div class="video-shade" aria-hidden="true"></div>
+    <a class="screen-offer" href="{offer}"></a>
+
+    <a class="app-panel" href="{offer}">
+      <img class="app-icon" src="./assets/app-icon.svg" alt="">
+      <span class="app-info">
+        <span class="app-name" data-i18n="appName"></span>
+        <span class="app-publisher" data-i18n="publisher"></span>
+        <span class="small-install" data-i18n="install"></span>
+      </span>
+      <img class="share-icon" src="./assets/share.svg" alt="">
+    </a>
+
+    <section class="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description">
+      <div class="dialog-copy">
+        <div class="warning">
+          <img src="./assets/unavailable.svg" alt="">
+          <span data-i18n="unavailable"></span>
+        </div>
+        <div class="message">
+          <h1 id="dialog-title" data-i18n="headline"></h1>
+          <p id="dialog-description"><span></span><strong></strong><span> </span></p>
+        </div>
+      </div>
+      <a class="install-button" href="{offer}" data-i18n="installVpn"></a>
+    </section>
+
+    <button class="sound-toggle" type="button" aria-pressed="false" disabled>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+        <path d="M4 9v6h4l5 4V5L8 9H4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        <path class="sound-waves" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        <path class="sound-slash" d="m17 9 5 6m0-6-5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </main>
+  <script src="./js/app.js"></script>
+</body>
+</html>
