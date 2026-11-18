@@ -72,32 +72,6 @@ body { display: flex; justify-content: center; background: #211917; overflow: hi
 }
 .share-icon { position: absolute; right: 27px; bottom: 25px; width: 18px; height: 23px; }
 
-.sound-toggle {
-  position: absolute;
-  z-index: 3;
-  right: 20px;
-  bottom: max(20px, env(safe-area-inset-bottom));
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  border: 1px solid rgba(255, 255, 255, .28);
-  border-radius: 50%;
-  background: rgba(0, 0, 0, .48);
-  color: #fff;
-  cursor: pointer;
-  opacity: 0;
-  pointer-events: none;
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  transition: opacity .2s ease;
-}
-.sound-toggle:not(:disabled) { opacity: 1; pointer-events: auto; }
-.sound-toggle[aria-pressed="false"] .sound-waves,
-.sound-toggle[aria-pressed="true"] .sound-slash { display: none; }
-.sound-toggle:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
-
 .dialog {
   position: absolute;
   z-index: 2;

@@ -171,7 +171,14 @@ function syncViewportHeight() {
 function keepVideoPlaying() {
   if (!video.paused) return;
   const playAttempt = video.play();
-  if (playAttempt?.catch) playAttempt.catch(() => {});
+  if (playAttempt?.catch) {
+    playAttempt.catch((error) => {
+      // Safari blocks autoplay with sound. Keep the video running silently.
+      if (error.name !== 'NotAllowedError' || video.muted) return;
+      video.muted = true;
+      video.play().catch(() => {});
+    });
+  }
 }
 
 async function useBlobFallback() {

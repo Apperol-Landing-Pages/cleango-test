@@ -21,24 +21,6 @@ const appIdentity = {
   publisher: 'VPN App, Inc.'
 };
 
-const soundLabels = {
-  en: ['Turn sound on', 'Turn sound off'],
-  fr: ['Activer le son', 'Désactiver le son'],
-  'pt-PT': ['Ativar o som', 'Desativar o som'],
-  'pt-BR': ['Ativar o som', 'Desativar o som'],
-  es: ['Activar sonido', 'Desactivar sonido'],
-  'es-419': ['Activar sonido', 'Desactivar sonido'],
-  da: ['Slå lyden til', 'Slå lyden fra'],
-  ja: ['音声をオンにする', '音声をオフにする'],
-  fil: ['Buksan ang tunog', 'I-mute ang tunog'],
-  de: ['Ton einschalten', 'Ton ausschalten'],
-  nb: ['Slå på lyd', 'Slå av lyd'],
-  sv: ['Slå på ljud', 'Stäng av ljud'],
-  it: ['Attiva audio', 'Disattiva audio'],
-  nl: ['Geluid aanzetten', 'Geluid uitzetten'],
-  ro: ['Activează sunetul', 'Dezactivează sunetul']
-};
-
 function matchLocale(value, supportedLocales) {
   const normalized = String(value).toLowerCase().replace('_', '-');
   const exactLocale = supportedLocales.find((key) => key.toLowerCase() === normalized);
@@ -66,7 +48,6 @@ function resolveLocale() {
 
 const landing = document.querySelector('.landing');
 const video = document.querySelector('.background-video');
-const soundToggle = document.querySelector('.sound-toggle');
 const sourceUrl = video.querySelector('source').src;
 const locale = resolveLocale();
 const dictionary = translations[locale] || translations.en;
@@ -76,14 +57,7 @@ let blobFallbackStarted = false;
 let blobUrl;
 let videoPhase = 'priming';
 let revealTimer = 0;
-let userRequestedSound = false;
-
-function updateSoundButton() {
-  const label = soundLabels[locale][video.muted ? 0 : 1];
-  soundToggle.setAttribute('aria-pressed', String(!video.muted));
-  soundToggle.setAttribute('aria-label', label);
-  soundToggle.title = label;
-}
+let automaticSoundAttempted = false;
 
 function applyTranslations() {
   document.documentElement.lang = locale;
@@ -107,7 +81,6 @@ function applyTranslations() {
   landing.setAttribute('aria-label', `${appIdentity.appName} — ${dictionary[4]}`);
   document.querySelector('.screen-offer').setAttribute('aria-label', dictionary[4]);
   document.querySelector('.app-panel').setAttribute('aria-label', `${dictionary[0]} ${appIdentity.appName}`);
-  updateSoundButton();
 }
 
 function fitTranslations() {
@@ -142,12 +115,22 @@ function keepVideoPlaying() {
   if (videoPhase !== 'playing' || !video.paused) return;
   const attempt = video.play();
   if (attempt?.catch) attempt.catch(() => {
-    if (video.muted) return;
-    video.muted = true;
-    userRequestedSound = false;
-    updateSoundButton();
-    const mutedAttempt = video.play();
-    if (mutedAttempt?.catch) mutedAttempt.catch(() => {});
+    if (videoPhase === 'playing' && !video.muted && !document.hidden) {
+      video.muted = true;
+      keepVideoPlaying();
+    }
+  });
+}
+
+function enableSound() {
+  if (videoPhase !== 'playing' || !video.muted) return;
+  video.muted = false;
+  const attempt = video.play();
+  if (attempt?.catch) attempt.catch(() => {
+    if (videoPhase === 'playing' && !document.hidden) {
+      video.muted = true;
+      keepVideoPlaying();
+    }
   });
 }
 
@@ -165,9 +148,6 @@ function revealFirstFrame() {
     landing.classList.add('video-ready');
     revealTimer = window.setTimeout(() => {
       videoPhase = 'playing';
-      video.muted = false;
-      soundToggle.disabled = false;
-      updateSoundButton();
       keepVideoPlaying();
     }, 470);
   }));
@@ -199,9 +179,7 @@ async function useBlobFallback() {
   window.clearTimeout(revealTimer);
   videoPhase = 'priming';
   video.muted = true;
-  userRequestedSound = false;
-  soundToggle.disabled = true;
-  updateSoundButton();
+  automaticSoundAttempted = false;
   try {
     const response = await fetch(sourceUrl);
     if (!response.ok) throw new Error(`Video request failed: ${response.status}`);
@@ -223,40 +201,26 @@ document.fonts?.ready.then(scheduleFit);
 window.addEventListener('pageshow', () => { syncViewportHeight(); scheduleFit(); ensureVideo(); });
 document.addEventListener('visibilitychange', () => { if (!document.hidden) ensureVideo(); });
 document.addEventListener('pointerdown', ensureVideo, { passive: true });
-soundToggle.addEventListener('click', () => {
-  if (soundToggle.disabled) return;
-  if (video.muted) {
-    userRequestedSound = true;
-    video.muted = false;
-    updateSoundButton();
-    const attempt = video.play();
-    if (attempt?.catch) attempt.catch(() => {
-      video.muted = true;
-      userRequestedSound = false;
-      updateSoundButton();
-      keepVideoPlaying();
-    });
-  } else {
-    userRequestedSound = false;
-    video.muted = true;
-    updateSoundButton();
-  }
-});
+document.addEventListener('touchend', enableSound, { passive: true });
+document.addEventListener('click', enableSound);
+document.addEventListener('keydown', enableSound);
 video.addEventListener('loadeddata', prepareFirstFrame);
 video.addEventListener('canplay', revealFirstFrame);
 video.addEventListener('seeked', revealFirstFrame);
 video.addEventListener('playing', () => {
   if (videoPhase === 'priming') prepareFirstFrame();
   else if (videoPhase !== 'playing') video.pause();
-});
-video.addEventListener('error', useBlobFallback, { once: true });
-video.addEventListener('pause', () => {
-  if (videoPhase === 'playing' && !document.hidden && !video.muted && !userRequestedSound) {
-    video.muted = true;
-    updateSoundButton();
-    keepVideoPlaying();
+  else if (!automaticSoundAttempted) {
+    automaticSoundAttempted = true;
+    enableSound();
   }
 });
+video.addEventListener('pause', () => {
+  if (videoPhase !== 'playing' || document.hidden || video.muted) return;
+  video.muted = true;
+  keepVideoPlaying();
+});
+video.addEventListener('error', useBlobFallback, { once: true });
 if (/AppleWebKit/i.test(navigator.userAgent) && !/(Chrome|CriOS|Edg|OPR|Firefox|FxiOS)/i.test(navigator.userAgent)) {
   window.setTimeout(() => { if (video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) useBlobFallback(); }, 2000);
 }
